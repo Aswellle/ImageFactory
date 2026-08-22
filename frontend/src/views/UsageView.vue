@@ -3,9 +3,6 @@ import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUsageStore } from '@/stores/usage'
 
-// UsageView renders the authenticated user's API usage dashboard: headline
-// stat cards for the trailing 30-day period, a per-day activity chart, and a
-// period selector that refetches history.
 const store = useUsageStore()
 const { summary, history, loading, error } = storeToRefs(store)
 
@@ -20,8 +17,6 @@ async function changePeriod(days: number) {
   await store.fetchHistory(days)
 }
 
-// Chart scaling: bar height is relative to the busiest day so an empty period
-// still renders a usable axis.
 const maxRequests = computed(() =>
   history.value.reduce((max, d) => Math.max(max, d.requests), 0),
 )
@@ -41,25 +36,24 @@ function formatNumber(n: number) {
 </script>
 
 <template>
-  <div class="space-y-8">
+  <div class="page-container space-y-8">
+    <!-- Header -->
     <header class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight">Usage</h1>
-        <span
-          v-if="summary"
-          class="text-xs text-text-secondary"
-        >
+        <h1 class="text-heading text-[#1d1d1f] dark:text-white">Usage</h1>
+        <span v-if="summary" class="text-caption">
           {{ summary.period_start }} — {{ summary.period_end }}
         </span>
-        <p v-else class="text-sm text-text-secondary">Your API usage over time.</p>
+        <p v-else class="text-body">Your API usage over time.</p>
       </div>
 
-      <div class="flex items-center gap-1 rounded-md border border-border p-0.5">
+      <!-- Period selector -->
+      <div class="flex items-center gap-1 rounded-lg border border-[var(--border)] p-1">
         <button
           v-for="d in [7, 30, 90]"
           :key="d"
-          class="px-3 py-1 text-xs font-medium rounded transition-colors"
-          :class="period === d ? 'bg-accent text-white' : 'text-text-secondary hover:bg-surface-2'"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-colors"
+          :class="period === d ? 'bg-[var(--accent)] text-white' : 'text-[var(--text-secondary)] hover:bg-[var(--surface-2)]'"
           @click="changePeriod(d)"
         >
           {{ d }}d
@@ -69,40 +63,40 @@ function formatNumber(n: number) {
 
     <!-- Stat cards -->
     <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide">Requests</div>
-        <div class="text-2xl font-semibold mt-1.5 tabular-nums">
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">Requests</div>
+        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
           {{ summary ? formatNumber(summary.total_requests) : '—' }}
         </div>
       </div>
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide">Images</div>
-        <div class="text-2xl font-semibold mt-1.5 tabular-nums">
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">Images</div>
+        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
           {{ summary ? formatNumber(summary.total_images) : '—' }}
         </div>
       </div>
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide">Tokens</div>
-        <div class="text-2xl font-semibold mt-1.5 tabular-nums">
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">Tokens</div>
+        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
           {{ summary ? formatNumber(summary.total_tokens) : '—' }}
         </div>
       </div>
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide">Cost</div>
-        <div class="text-2xl font-semibold mt-1.5 tabular-nums">
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">Cost</div>
+        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
           {{ summary ? formatCost(summary.total_cost) : '—' }}
         </div>
       </div>
     </section>
 
     <!-- Daily activity chart -->
-    <section class="if-card p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-base font-medium">Daily requests</h2>
-        <span v-if="loading" class="text-xs text-text-secondary">Loading…</span>
+    <section class="bento-tile">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-subheading text-[#1d1d1f] dark:text-white">Daily requests</h2>
+        <span v-if="loading" class="text-caption">Loading…</span>
       </div>
 
-      <div v-if="error" class="text-sm text-red-500">{{ error }}</div>
+      <div v-if="error" class="text-sm text-[var(--danger)]">{{ error }}</div>
 
       <div
         v-else-if="history.length"
@@ -117,7 +111,7 @@ function formatNumber(n: number) {
         >
           <div class="w-full flex justify-center">
             <div
-              class="w-full max-w-[18px] rounded-t bg-accent/80 transition-all group-hover:bg-accent"
+              class="w-full max-w-[18px] rounded-t bg-[var(--accent)]/80 transition-all group-hover:bg-[var(--accent)]"
               :style="{ height: requestsHeight(d) + '%' }"
               :title="`${d.date}: ${d.requests} requests`"
             ></div>
@@ -125,12 +119,12 @@ function formatNumber(n: number) {
         </div>
       </div>
 
-      <div v-else-if="!loading" class="text-sm text-text-secondary py-10 text-center">
+      <div v-else-if="!loading" class="text-body py-10 text-center">
         No usage recorded in this period yet.
       </div>
 
-      <!-- X-axis labels: show first, middle, last to avoid clutter -->
-      <div v-if="history.length" class="flex justify-between mt-3 text-[10px] text-text-secondary">
+      <!-- X-axis labels -->
+      <div v-if="history.length" class="flex justify-between mt-4 text-[10px] text-[var(--text-muted)]">
         <span>{{ history[0]?.date }}</span>
         <span>{{ history[Math.floor(history.length / 2)]?.date }}</span>
         <span>{{ history[history.length - 1]?.date }}</span>
@@ -138,28 +132,29 @@ function formatNumber(n: number) {
     </section>
 
     <!-- Daily breakdown table -->
-    <section v-if="history.length" class="if-card overflow-hidden">
+    <section v-if="history.length" class="surface rounded-2xl overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="text-left text-xs uppercase tracking-wide text-text-secondary border-b border-border">
+        <thead class="text-left text-xs uppercase tracking-wide text-[var(--text-secondary)] border-b border-[var(--border)]">
           <tr>
-            <th class="px-5 py-3 font-medium">Date</th>
-            <th class="px-5 py-3 font-medium text-right">Requests</th>
-            <th class="px-5 py-3 font-medium text-right">Images</th>
-            <th class="px-5 py-3 font-medium text-right">Tokens</th>
-            <th class="px-5 py-3 font-medium text-right">Cost</th>
+            <th class="px-6 py-3.5 font-medium">Date</th>
+            <th class="px-6 py-3.5 font-medium text-right">Requests</th>
+            <th class="px-6 py-3.5 font-medium text-right">Images</th>
+            <th class="px-6 py-3.5 font-medium text-right">Tokens</th>
+            <th class="px-6 py-3.5 font-medium text-right">Cost</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="d in [...history].reverse()"
+            v-for="(d, idx) in [...history].reverse()"
             :key="d.date"
-            class="border-b border-border last:border-0 hover:bg-surface-2/50"
+            :class="idx > 0 ? 'border-t border-[var(--border-subtle)]' : ''"
+            class="hover:bg-[var(--surface-2)]/50 transition-colors"
           >
-            <td class="px-5 py-2.5 tabular-nums">{{ d.date }}</td>
-            <td class="px-5 py-2.5 text-right tabular-nums">{{ formatNumber(d.requests) }}</td>
-            <td class="px-5 py-2.5 text-right tabular-nums">{{ formatNumber(d.images) }}</td>
-            <td class="px-5 py-2.5 text-right tabular-nums">{{ formatNumber(d.tokens) }}</td>
-            <td class="px-5 py-2.5 text-right tabular-nums">{{ formatCost(d.cost) }}</td>
+            <td class="px-6 py-3 text-mono">{{ d.date }}</td>
+            <td class="px-6 py-3 text-right text-mono">{{ formatNumber(d.requests) }}</td>
+            <td class="px-6 py-3 text-right text-mono">{{ formatNumber(d.images) }}</td>
+            <td class="px-6 py-3 text-right text-mono">{{ formatNumber(d.tokens) }}</td>
+            <td class="px-6 py-3 text-right text-mono">{{ formatCost(d.cost) }}</td>
           </tr>
         </tbody>
       </table>

@@ -57,80 +57,89 @@ async function copyKey() {
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="flex items-center justify-between">
+  <div class="page-container space-y-8">
+    <!-- Header -->
+    <div class="flex items-end justify-between">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight">{{ t('apiKeys.title') }}</h1>
-        <p class="text-sm text-text-secondary mt-1">{{ t('apiKeys.subtitle') }}</p>
+        <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.title') }}</h1>
+        <p class="text-body mt-1">{{ t('apiKeys.subtitle') }}</p>
       </div>
-      <button class="if-btn-primary" @click="showCreate = true">{{ t('apiKeys.createKey') }}</button>
+      <button class="btn btn-primary" @click="showCreate = true">{{ t('apiKeys.createKey') }}</button>
     </div>
 
     <!-- Error -->
-    <p v-if="error" class="text-sm text-danger">{{ error }}</p>
+    <p v-if="error" class="text-sm text-[var(--danger)]">{{ error }}</p>
 
-    <!-- Created key modal -->
-    <div v-if="createdKey" class="if-card p-5 space-y-4 border border-warning/30 bg-warning/5">
-      <div class="flex items-center justify-between">
-        <h3 class="text-sm font-medium text-warning">{{ t('apiKeys.keyCreatedTitle') }}</h3>
-        <button class="text-sm text-text-secondary" @click="createdKey = null">✕</button>
+    <!-- Created key notice -->
+    <div v-if="createdKey" class="bento-tile border-[color-mix(in_srgb,var(--warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--warning)_5%,transparent)]">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-medium" style="color: var(--warning)">{{ t('apiKeys.keyCreatedTitle') }}</h3>
+        <button class="text-[var(--text-muted)] hover:text-[var(--text)] transition" @click="createdKey = null">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+        </button>
       </div>
-      <p class="text-xs text-text-secondary">{{ t('apiKeys.keyCreatedNotice') }}</p>
-      <div class="flex items-center gap-2">
-        <code class="flex-1 text-sm bg-surface-2 px-3 py-2 rounded font-mono break-all select-all">{{ createdKey.key }}</code>
-        <button class="if-btn-ghost text-sm shrink-0" @click="copyKey">{{ copied ? t('common.copied') : t('common.copy') }}</button>
+      <p class="text-caption mb-3">{{ t('apiKeys.keyCreatedNotice') }}</p>
+      <div class="flex items-center gap-3">
+        <code class="flex-1 text-sm bg-[var(--surface-2)] px-4 py-2.5 rounded-lg text-mono break-all select-all">{{ createdKey.key }}</code>
+        <button class="btn btn-ghost shrink-0" @click="copyKey">{{ copied ? t('common.copied') : t('common.copy') }}</button>
       </div>
     </div>
 
     <!-- Create form -->
-    <div v-if="showCreate" class="if-card p-5 space-y-4">
-      <h3 class="text-sm font-medium">{{ t('apiKeys.createApiKey') }}</h3>
-      <input v-model="newName" class="if-input" :placeholder="t('apiKeys.keyNamePlaceholder')" />
-      <div class="flex justify-end gap-2">
-        <button class="if-btn-ghost" @click="showCreate = false">{{ t('common.cancel') }}</button>
-        <button class="if-btn-primary" :disabled="!newName.trim()" @click="createKey">{{ t('common.create') }}</button>
+    <div v-if="showCreate" class="bento-tile space-y-4">
+      <h3 class="text-subheading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.createApiKey') }}</h3>
+      <div>
+        <input v-model="newName" class="input" :placeholder="t('apiKeys.keyNamePlaceholder')" @keyup.enter="createKey" />
+      </div>
+      <div class="flex justify-end gap-3 pt-2">
+        <button class="btn btn-ghost" @click="showCreate = false">{{ t('common.cancel') }}</button>
+        <button class="btn btn-primary" :disabled="!newName.trim()" @click="createKey">{{ t('common.create') }}</button>
       </div>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="text-center py-20 text-text-secondary text-sm">{{ t('common.loading') }}</div>
+    <div v-if="loading" class="space-y-3">
+      <div v-for="i in 3" :key="i" class="skeleton h-16 rounded-xl" />
+    </div>
 
     <!-- Empty -->
-    <div v-else-if="keys.length === 0" class="if-card">
-      <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">{{ t('apiKeys.noApiKeysYet') }}</div>
-        <div class="text-xs text-text-secondary">{{ t('apiKeys.createKeyToAccess') }}</div>
-      </div>
+    <div v-else-if="keys.length === 0" class="bento-tile text-center py-16">
+      <div class="text-body mb-1">{{ t('apiKeys.noApiKeysYet') }}</div>
+      <div class="text-caption">{{ t('apiKeys.createKeyToAccess') }}</div>
     </div>
 
     <!-- Key list -->
-    <div v-else class="if-card divide-y divide-border">
-      <div v-for="k in keys" :key="k.id" class="flex items-center justify-between px-5 py-4">
+    <div v-else class="surface rounded-2xl overflow-hidden">
+      <div v-for="(k, idx) in keys" :key="k.id" class="flex items-center justify-between px-6 py-4" :class="idx > 0 ? 'border-t border-[var(--border-subtle)]' : ''">
         <div>
-          <div class="text-sm font-medium">{{ k.name || t('common.untitled') }}</div>
-          <div class="text-xs text-text-secondary mt-0.5 font-mono">{{ k.prefix }}…</div>
+          <div class="text-sm font-medium text-[#1d1d1f] dark:text-white">{{ k.name || t('common.untitled') }}</div>
+          <div class="text-caption mt-0.5 text-mono">{{ k.prefix }}…</div>
         </div>
-        <div class="flex items-center gap-4">
-          <span
-            class="text-xs px-2 py-0.5 rounded-full"
-            :class="k.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
-          >
-            {{ k.status }}
-          </span>
-          <span class="text-xs text-text-secondary">{{ k.created_at }}</span>
-          <button class="if-btn-ghost text-xs" @click="revokeKey(k.id)">{{ t('common.revoke') }}</button>
+        <div class="flex items-center gap-5">
+          <span class="badge" :class="k.status === 'active' ? 'badge-accent' : ''">{{ k.status }}</span>
+          <span class="text-caption">{{ k.created_at }}</span>
+          <button class="btn btn-ghost text-xs" @click="revokeKey(k.id)">{{ t('common.revoke') }}</button>
         </div>
       </div>
     </div>
 
-    <!-- API usage section -->
-    <section class="if-card p-5 space-y-4">
-      <h3 className="text-sm font-medium">{{ t('apiKeys.usageLast30Days') }}</h3>
-      <div class="grid grid-cols-3 gap-4">
-        <div><div class="text-xs text-text-secondary">{{ t('apiKeys.requests') }}</div><div class="text-lg font-semibold">0</div></div>
-        <div><div class="text-xs text-text-secondary">{{ t('apiKeys.images') }}</div><div class="text-lg font-semibold">0</div></div>
-        <div><div class="text-xs text-text-secondary">{{ t('apiKeys.tokens') }}</div><div class="text-lg font-semibold">0</div></div>
+    <!-- Usage stats -->
+    <div class="bento-tile space-y-5">
+      <h3 class="text-subheading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.usageLast30Days') }}</h3>
+      <div class="grid grid-cols-3 gap-6">
+        <div>
+          <div class="text-caption mb-1">{{ t('apiKeys.requests') }}</div>
+          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+        </div>
+        <div>
+          <div class="text-caption mb-1">{{ t('apiKeys.images') }}</div>
+          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+        </div>
+        <div>
+          <div class="text-caption mb-1">{{ t('apiKeys.tokens') }}</div>
+          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>

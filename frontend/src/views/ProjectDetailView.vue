@@ -31,21 +31,21 @@ function deleteAsset(id: number) {
 </script>
 
 <template>
-  <div v-if="loading" class="text-center py-20 text-text-secondary text-sm">Loading…</div>
+  <div v-if="loading" class="text-center py-20 text-body">Loading…</div>
   <div v-else-if="project" class="space-y-6">
     <header>
-      <button class="text-sm text-text-secondary hover:text-text mb-3" @click="$router.push('/projects')">← Back</button>
-      <h1 class="text-xl font-semibold tracking-tight">{{ project.name }}</h1>
-      <p v-if="project.description" class="text-sm text-text-secondary mt-1">{{ project.description }}</p>
+      <button class="text-sm text-text-secondary hover:text-text mb-3 transition-colors" @click="$router.push('/projects')">← Back</button>
+      <h1 class="text-heading">{{ project.name }}</h1>
+      <p v-if="project.description" class="text-body mt-1">{{ project.description }}</p>
     </header>
 
-    <div v-if="assetStore.assets.length === 0" class="if-card">
-      <div class="py-16 text-center text-text-secondary text-sm">No images in this project.</div>
+    <div v-if="assetStore.assets.length === 0" class="card animate-fade-in">
+      <div class="py-16 text-center text-body">No images in this project.</div>
     </div>
 
     <div v-else class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
       <div v-for="asset in assetStore.assets" :key="asset.id" class="break-inside-avoid mb-4">
-        <div class="if-card overflow-hidden group relative cursor-pointer" @click="$router.push(`/assets/${asset.id}`)">
+        <div class="card card-interactive overflow-hidden group relative" @click="$router.push(`/assets/${asset.id}`)">
           <div class="aspect-auto min-h-[100px] bg-surface-2">
             <img v-if="asset.thumbnail_key || asset.storage_key" :src="`/v1/assets/${asset.id}/content`" class="w-full h-auto object-cover" loading="lazy" />
           </div>

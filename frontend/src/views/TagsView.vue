@@ -30,25 +30,20 @@ async function deleteTag(id: number) {
 
 <template>
   <div class="space-y-6">
-    <div class="flex items-center justify-between">
+    <!-- Header -->
+    <div class="flex items-center justify-between gap-4">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight">Tags</h1>
-        <p class="text-sm text-text-secondary mt-1">{{ store.tags.length }} tags</p>
+        <h1 class="text-heading">Tags</h1>
+        <p class="text-body mt-1">{{ store.tags.length }} tags</p>
       </div>
-      <button
-        type="button"
-        class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90"
-        @click="showForm = !showForm"
-      >
-        + New Tag
-      </button>
+      <button class="btn btn-primary" @click="showForm = !showForm">+ New Tag</button>
     </div>
 
     <!-- Create form -->
-    <div v-if="showForm" class="if-card p-5 space-y-4">
-      <h3 class="text-sm font-medium">Create Tag</h3>
+    <div v-if="showForm" class="card p-5 space-y-4 animate-scale-in">
+      <h3 class="text-subheading">Create Tag</h3>
       <div class="space-y-3">
-        <input v-model="newName" class="if-input w-full" placeholder="Tag name…" />
+        <input v-model="newName" class="input" placeholder="Tag name…" />
         <div class="flex items-center gap-2">
           <span class="text-sm text-text-secondary">Color:</span>
           <div class="flex gap-1.5">
@@ -69,55 +64,46 @@ async function deleteTag(id: number) {
           />
         </div>
         <div class="flex gap-2">
-          <button
-            type="button"
-            class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90"
-            @click="createTag"
-          >
-            Create
-          </button>
-          <button
-            type="button"
-            class="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-hover"
-            @click="showForm = false"
-          >
-            Cancel
-          </button>
+          <button class="btn btn-primary" @click="createTag">Create</button>
+          <button class="btn btn-ghost" @click="showForm = false">Cancel</button>
         </div>
       </div>
     </div>
 
     <!-- Loading -->
-    <div v-if="store.loading" class="text-center py-20 text-text-secondary text-sm">Loading…</div>
+    <div v-if="store.loading" class="text-center py-20 text-body">Loading…</div>
 
     <!-- Empty state -->
-    <div v-else-if="store.tags.length === 0" class="if-card">
+    <div v-else-if="store.tags.length === 0" class="card animate-fade-in">
       <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">No tags yet</div>
-        <div class="text-xs text-text-secondary">Create tags to organize your assets</div>
+        <div class="text-body mb-1">No tags yet</div>
+        <div class="text-caption">Create tags to organize your assets</div>
       </div>
     </div>
 
     <!-- Tag list -->
-    <div v-else class="space-y-2">
+    <div v-else class="card divide-y divide-border overflow-hidden stagger">
       <div
         v-for="tag in store.tags"
         :key="tag.id"
-        class="if-card flex items-center justify-between p-4"
+        class="flex items-center justify-between px-5 py-4"
       >
-        <div class="flex items-center gap-3">
+        <span
+          class="badge"
+          :style="tag.color ? { backgroundColor: tag.color + '1a', color: tag.color, borderColor: tag.color + '33' } : {}"
+        >
           <span
             v-if="tag.color"
-            class="inline-block h-3 w-3 rounded-full"
+            class="inline-block h-2.5 w-2.5 rounded-full"
             :style="{ backgroundColor: tag.color }"
           />
-          <span class="font-medium">{{ tag.name }}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-xs text-text-secondary">{{ tag.created_at }}</span>
+          {{ tag.name }}
+        </span>
+        <div class="flex items-center gap-3">
+          <span class="text-caption">{{ tag.created_at }}</span>
           <button
             type="button"
-            class="text-text-secondary hover:text-red-500 transition-colors"
+            class="btn btn-ghost !p-2 text-text-muted hover:text-danger transition-colors"
             title="Delete tag"
             @click="deleteTag(tag.id)"
           >

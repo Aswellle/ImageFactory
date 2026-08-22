@@ -61,41 +61,39 @@ function formatSize(bytes?: number): string {
 </script>
 
 <template>
-  <div class="space-y-6">
     <!-- Header -->
     <div class="flex items-center justify-between gap-4">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight">{{ t('gallery.title') }}</h1>
-        <p class="text-sm text-text-secondary mt-1">{{ t('gallery.imagesCount', { count: assetStore.total }) }}</p>
+        <h1 class="text-heading">{{ t('gallery.title') }}</h1>
+        <p class="text-caption mt-1">{{ t('gallery.imagesCount', { count: assetStore.total }) }}</p>
       </div>
       <div class="flex items-center gap-3">
         <input
           v-model="searchQuery"
-          class="if-input w-56"
+          class="input w-56"
           :placeholder="t('gallery.searchPlaceholder')"
         />
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm font-medium transition-all duration-150"
-          :class="onlyFavorites ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300' : 'border-border text-text-secondary hover:text-text hover:bg-surface-hover'"
+          class="btn btn-ghost"
+          :class="onlyFavorites ? 'badge-accent !rounded-md' : ''"
           @click="onlyFavorites = !onlyFavorites"
         >
           <svg class="h-4 w-4" :fill="onlyFavorites ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
-          {{ t('gallery.favorites') }}
         </button>
-        <div class="flex border border-border rounded-md overflow-hidden">
+        <div class="flex border border-border rounded-lg overflow-hidden">
           <button
             class="px-2.5 py-1.5 text-sm transition-colors"
-            :class="viewMode === 'grid' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:text-text hover:bg-surface-hover'"
+            :class="viewMode === 'grid' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:bg-surface-2'"
             @click="viewMode = 'grid'"
           >
             {{ t('gallery.grid') }}
           </button>
           <button
             class="px-2.5 py-1.5 text-sm border-l border-border transition-colors"
-            :class="viewMode === 'list' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:text-text hover:bg-surface-hover'"
+            :class="viewMode === 'list' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:bg-surface-2'"
             @click="viewMode = 'list'"
           >
             {{ t('gallery.list') }}
@@ -108,8 +106,8 @@ function formatSize(bytes?: number): string {
     <div v-if="tagStore.tags.length > 0" class="flex flex-wrap items-center gap-2">
       <button
         type="button"
-        class="rounded-full border px-2.5 py-0.5 text-xs font-medium transition-all duration-150"
-        :class="selectedTagId === null ? 'border-accent bg-accent/10 text-accent' : 'border-border text-text-secondary hover:border-text-muted hover:bg-surface-hover'"
+        class="badge"
+        :class="selectedTagId === null ? 'badge-accent' : ''"
         @click="selectedTagId = null"
       >
         {{ t('gallery.all') }}
@@ -125,9 +123,9 @@ function formatSize(bytes?: number): string {
     </div>
 
     <!-- Loading -->
-    <div v-if="assetStore.loading" class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 animate-stagger">
+    <div v-if="assetStore.loading" class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 stagger">
       <div v-for="n in 8" :key="n" class="break-inside-avoid mb-4">
-        <div class="if-card overflow-hidden">
+        <div class="card overflow-hidden">
           <div class="skeleton aspect-[4/3]"></div>
           <div class="p-3 space-y-2">
             <div class="skeleton h-3 w-3/4"></div>
@@ -138,13 +136,15 @@ function formatSize(bytes?: number): string {
     </div>
 
     <!-- Empty state -->
-    <div v-else-if="filteredAssets.length === 0" class="if-card animate-fade-in">
-      <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">
-          {{ searchQuery || onlyFavorites ? t('gallery.noMatchingImages') : t('gallery.noImagesYet') }}
-        </div>
-        <div class="text-xs text-text-muted">
-          {{ searchQuery || onlyFavorites ? t('gallery.tryDifferentFilter') : t('gallery.generateFirstImage') }}
+    <div v-else-if="filteredAssets.length === 0">
+      <div class="card animate-fade-in">
+        <div class="py-20 text-center">
+          <div class="text-body mb-1">
+            {{ searchQuery || onlyFavorites ? t('gallery.noMatchingImages') : t('gallery.noImagesYet') }}
+          </div>
+          <div class="text-caption">
+            {{ searchQuery || onlyFavorites ? t('gallery.tryDifferentFilter') : t('gallery.generateFirstImage') }}
+          </div>
         </div>
       </div>
     </div>
@@ -156,7 +156,7 @@ function formatSize(bytes?: number): string {
         class="break-inside-avoid mb-4 group"
         @click="openAsset(asset)"
       >
-        <div class="if-card if-card-interactive overflow-hidden">
+        <div class="card card-interactive overflow-hidden">
           <div class="relative overflow-hidden">
             <div class="aspect-auto min-h-[120px] bg-surface-2 flex items-center justify-center">
               <img
@@ -166,7 +166,7 @@ function formatSize(bytes?: number): string {
                 loading="lazy"
                 @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
               />
-              <div v-else class="text-text-muted text-xs p-4 text-center">
+              <div v-else class="text-caption p-4 text-center">
                 {{ asset.prompt?.slice(0, 60) || t('common.noPreview') }}
               </div>
             </div>
@@ -183,11 +183,11 @@ function formatSize(bytes?: number): string {
 
 
     <!-- List View -->
-    <div v-else class="if-card divide-y divide-border overflow-hidden">
+    <div v-else class="card divide-y divide-border overflow-hidden">
       <div
         v-for="asset in filteredAssets"
         :key="asset.id"
-        class="flex items-center gap-4 px-4 py-3 hover:bg-surface-hover cursor-pointer transition-colors duration-150"
+        class="flex items-center gap-4 px-4 py-3 hover:bg-surface-2 cursor-pointer transition-colors duration-150"
         @click="openAsset(asset)"
       >
         <div class="w-16 h-16 bg-surface-2 rounded-md shrink-0 overflow-hidden">
@@ -200,10 +200,10 @@ function formatSize(bytes?: number): string {
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm truncate">{{ asset.prompt || t('common.untitled') }}</p>
-          <p class="text-xs text-text-secondary mt-0.5">{{ asset.model }} · {{ formatSize(asset.file_size) }}</p>
+          <p class="text-caption mt-0.5">{{ asset.model }} · {{ formatSize(asset.file_size) }}</p>
         </div>
         <FavoriteButton :asset-id="asset.id" size="sm" @click.stop />
-        <span class="text-xs text-text-muted">{{ asset.created_at }}</span>
+        <span class="text-caption">{{ asset.created_at }}</span>
       </div>
     </div>
   </div>

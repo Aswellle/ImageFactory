@@ -29,27 +29,29 @@ async function createProject() {
 
 <template>
   <div class="space-y-6">
-    <div class="flex items-center justify-between">
+    <!-- Header -->
+    <div class="flex items-center justify-between gap-4">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight">{{ t('projects.title') }}</h1>
-        <p class="text-sm text-text-secondary mt-1">{{ t('projects.projectsCount', { count: projectStore.projects.length }) }}</p>
+        <h1 class="text-heading">{{ t('projects.title') }}</h1>
+        <p class="text-body mt-1">{{ t('projects.projectsCount', { count: projectStore.projects.length }) }}</p>
       </div>
-      <button class="if-btn-primary" @click="showCreate = true">{{ t('projects.newProject') }}</button>
+      <button class="btn btn-primary" @click="showCreate = true">{{ t('projects.newProject') }}</button>
     </div>
-    <!-- Create modal -->
-    <div v-if="showCreate" class="if-card p-5 space-y-4 animate-scale-in">
-      <h3 class="text-sm font-medium">Create project</h3>
-      <input v-model="newName" class="if-input" placeholder="Project name" />
-      <textarea v-model="newDesc" class="if-input resize-none" rows="2" placeholder="Description (optional)" />
+
+    <!-- Create form -->
+    <div v-if="showCreate" class="card p-5 space-y-4 animate-scale-in">
+      <h3 class="text-subheading">{{ t('projects.createProject') }}</h3>
+      <input v-model="newName" class="input" :placeholder="t('projects.projectNamePlaceholder')" />
+      <textarea v-model="newDesc" class="input resize-none" rows="2" :placeholder="t('projects.projectDescPlaceholder')" />
       <div class="flex justify-end gap-2">
-        <button class="if-btn-ghost" @click="showCreate = false">Cancel</button>
-        <button class="if-btn-primary" :disabled="!newName.trim()" @click="createProject">Create</button>
+        <button class="btn btn-ghost" @click="showCreate = false">{{ t('common.cancel') }}</button>
+        <button class="btn btn-primary" :disabled="!newName.trim()" @click="createProject">{{ t('common.create') }}</button>
       </div>
     </div>
 
     <!-- Loading -->
-    <div v-if="projectStore.loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-stagger">
-      <div v-for="n in 6" :key="n" class="if-card p-5 space-y-3">
+    <div v-if="projectStore.loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
+      <div v-for="n in 6" :key="n" class="card p-5 space-y-3">
         <div class="skeleton h-4 w-2/3"></div>
         <div class="skeleton h-3 w-full"></div>
         <div class="skeleton h-3 w-1/2"></div>
@@ -57,26 +59,25 @@ async function createProject() {
     </div>
 
     <!-- Empty -->
-    <div v-else-if="projectStore.projects.length === 0" class="if-card animate-fade-in">
+    <div v-else-if="projectStore.projects.length === 0" class="card animate-fade-in">
       <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">{{ t('projects.noProjectsYet') }}</div>
-        <div class="text-xs text-text-muted">{{ t('projects.createProjectToOrganize') }}</div>
+        <div class="text-body mb-1">{{ t('projects.noProjectsYet') }}</div>
+        <div class="text-caption">{{ t('projects.createProjectToOrganize') }}</div>
       </div>
     </div>
+
     <!-- Project grid -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-stagger">
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
       <div
         v-for="p in projectStore.projects"
         :key="p.id"
-        class="if-card if-card-interactive p-5 transition-all duration-200"
+        class="card card-interactive p-5"
         @click="$router.push(`/projects/${p.id}`)"
       >
         <h3 class="text-sm font-medium truncate">{{ p.name }}</h3>
-        <p v-if="p.description" class="text-xs text-text-secondary mt-1 line-clamp-2">{{ p.description }}</p>
-        <div class="text-xs text-text-muted mt-3">{{ p.created_at }}</div>
+        <p v-if="p.description" class="text-caption mt-1 line-clamp-2">{{ p.description }}</p>
+        <div class="text-caption mt-3">{{ p.created_at }}</div>
       </div>
     </div>
-
   </div>
 </template>
-

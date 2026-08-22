@@ -96,40 +96,44 @@ async function applyExistingTag(tag: Tag) {
 </script>
 
 <template>
+  <!-- Loading state -->
   <div v-if="loading" class="space-y-6 animate-fade-in">
     <div class="skeleton h-6 w-32"></div>
-    <div class="skeleton aspect-[16/10] rounded-lg"></div>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="skeleton h-40 rounded-lg"></div>
-      <div class="skeleton h-40 rounded-lg"></div>
+    <div class="skeleton aspect-[16/10] rounded-2xl"></div>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="skeleton h-40 rounded-2xl"></div>
+      <div class="skeleton h-40 rounded-2xl"></div>
     </div>
   </div>
+
+  <!-- Content -->
   <div v-else-if="asset" class="space-y-6 animate-fade-in">
+    <!-- Header -->
     <header class="flex items-start justify-between">
       <div>
-        <button class="text-sm text-text-secondary hover:text-text mb-3 transition-colors" @click="$router.back()">{{ t('common.back') }}</button>
-        <h1 class="text-xl font-semibold tracking-tight">{{ asset.title || t('common.untitled') }}</h1>
+        <button class="mb-3 text-sm text-text-secondary transition-colors hover:text-text" @click="$router.back()">{{ t('common.back') }}</button>
+        <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ asset.title || t('common.untitled') }}</h1>
       </div>
       <FavoriteButton :asset-id="asset.id" size="lg" />
     </header>
 
     <!-- Image preview -->
-    <section class="if-card overflow-hidden">
-      <div class="bg-surface-2 flex items-center justify-center min-h-[300px]">
+    <section class="bento-tile overflow-hidden">
+      <div class="flex min-h-[300px] items-center justify-center bg-surface-2">
         <img
           v-if="asset.storage_key"
           :src="`/v1/assets/${asset.id}/content`"
-          class="max-w-full max-h-[70vh] object-contain img-loading"
+          class="max-h-[70vh] max-w-full object-contain img-loading"
           @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
         />
-        <div v-else class="text-text-secondary text-sm p-8 text-center">
+        <div v-else class="p-8 text-center text-sm text-text-secondary">
           {{ asset.prompt?.slice(0, 200) || t('asset.noPreviewAvailable') }}
         </div>
       </div>
     </section>
 
     <!-- Tags & Collections -->
-    <section class="if-card p-5 space-y-4">
+    <section class="bento-tile space-y-4">
       <h3 class="text-sm font-medium">{{ t('asset.tags') }}</h3>
       <div class="flex flex-wrap gap-2">
         <TagBadge
@@ -140,7 +144,7 @@ async function applyExistingTag(tag: Tag) {
         />
         <button
           type="button"
-          class="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs text-text-secondary transition-all duration-150 hover:border-text-muted hover:text-text hover:bg-surface-hover"
+          class="badge border-dashed text-text-secondary transition-colors hover:text-text hover:bg-surface-2"
           @click="showTagForm = !showTagForm"
         >
           {{ t('asset.addTag') }}
@@ -148,22 +152,22 @@ async function applyExistingTag(tag: Tag) {
       </div>
 
       <!-- Tag form -->
-      <div v-if="showTagForm" class="space-y-3 rounded-lg border border-border p-3 animate-scale-in">
+      <div v-if="showTagForm" class="space-y-3 rounded-xl border border-border p-4 animate-scale-in">
         <div class="flex gap-2">
           <input
             v-model="tagInput"
-            class="if-input flex-1"
+            class="input flex-1"
             :placeholder="t('asset.tagNamePlaceholder')"
             @keyup.enter="addTag"
           />
           <input
             v-model="tagColor"
             type="color"
-            class="h-9 w-9 cursor-pointer rounded border-0 bg-transparent"
+            class="h-9 w-9 cursor-pointer rounded-lg border-0 bg-transparent"
           />
           <button
             type="button"
-            class="if-btn-primary"
+            class="btn-primary"
             @click="addTag"
           >
             {{ t('common.add') }}
@@ -172,7 +176,7 @@ async function applyExistingTag(tag: Tag) {
 
         <!-- Quick-pick existing tags -->
         <div v-if="tagStore.tags.length > 0" class="space-y-2">
-          <p class="text-xs text-text-secondary">{{ t('asset.quickAddExisting') }}</p>
+          <p class="text-caption">{{ t('asset.quickAddExisting') }}</p>
           <div class="flex flex-wrap gap-1.5">
             <button
               v-for="tag in tagStore.tags.filter((t) => !assetTags.some((at: Tag) => at.id === t.id))"
@@ -193,8 +197,8 @@ async function applyExistingTag(tag: Tag) {
     </section>
 
     <!-- Details -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="if-card p-5 space-y-4">
+    <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div class="bento-tile space-y-4">
         <h3 class="text-sm font-medium">{{ t('asset.details') }}</h3>
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
@@ -228,26 +232,26 @@ async function applyExistingTag(tag: Tag) {
         </dl>
       </div>
 
-      <div class="if-card p-5 space-y-4">
+      <div class="bento-tile space-y-4">
         <h3 class="text-sm font-medium">{{ t('asset.prompt') }}</h3>
-        <p class="text-sm text-text-secondary whitespace-pre-wrap">{{ asset.prompt || '-' }}</p>
+        <p class="whitespace-pre-wrap text-sm text-text-secondary">{{ asset.prompt || '-' }}</p>
       </div>
     </section>
 
     <!-- Versions -->
-    <section v-if="versions.length > 0" class="if-card p-5 space-y-4">
+    <section v-if="versions.length > 0" class="bento-tile space-y-4">
       <h3 class="text-sm font-medium">{{ t('asset.versionHistory') }}</h3>
       <div class="flex gap-3">
-        <div v-for="v in versions" :key="v.current_version" class="w-24 group">
-          <div class="aspect-square bg-surface-2 rounded-md overflow-hidden transition-transform duration-150 group-hover:scale-[1.03]">
+        <div v-for="v in versions" :key="v.current_version" class="group w-24">
+          <div class="aspect-square overflow-hidden rounded-lg bg-surface-2 transition-transform duration-150 group-hover:scale-[1.03]">
             <img
               v-if="v.thumbnail_key"
               :src="`/v1/assets/${v.id}/content`"
-              class="w-full h-full object-cover img-loading"
+              class="h-full w-full object-cover img-loading"
               @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
             />
           </div>
-          <div class="text-xs text-text-muted mt-1 text-center">v{{ v.current_version }}</div>
+          <div class="mt-1 text-center text-xs text-text-muted">v{{ v.current_version }}</div>
         </div>
       </div>
     </section>

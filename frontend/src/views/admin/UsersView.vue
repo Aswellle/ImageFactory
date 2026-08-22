@@ -120,7 +120,7 @@ onMounted(load)
   <TablePageLayout>
     <template #title>
       <h1 class="text-xl font-semibold tracking-tight">Users</h1>
-      <p class="text-sm text-text-secondary mt-1">Manage user accounts and access.</p>
+      <p class="text-sm text-[var(--text-secondary)] mt-1">Manage user accounts and access.</p>
     </template>
 
     <template #filters>
@@ -130,17 +130,17 @@ onMounted(load)
             v-model="search"
             type="text"
             placeholder="Search by email or name…"
-            class="if-input pl-9"
+            class="input pl-9"
             @input="onSearch"
           />
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-xs">⌕</span>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] text-xs">⌕</span>
         </div>
-        <select v-model="roleFilter" class="if-input !w-auto">
+        <select v-model="roleFilter" class="input !w-auto">
           <option value="">All roles</option>
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>
-        <select v-model="statusFilter" class="if-input !w-auto">
+        <select v-model="statusFilter" class="input !w-auto">
           <option value="">All statuses</option>
           <option value="active">Active</option>
           <option value="suspended">Suspended</option>
@@ -168,12 +168,12 @@ onMounted(load)
           <span class="font-mono text-xs">{{ row.email }}</span>
         </template>
         <template #cell-name="{ value }">
-          <span class="text-text-secondary">{{ value || '—' }}</span>
+          <span class="text-[var(--text-secondary)]">{{ value || '—' }}</span>
         </template>
         <template #cell-role="{ value }">
           <span
             class="text-xs px-2 py-0.5 rounded-full font-medium"
-            :class="value === 'admin' ? 'bg-accent/10 text-accent' : 'bg-surface-2 text-text-secondary'"
+            :class="value === 'admin' ? 'bg-[var(--accent-soft)] text-[var(--accent)]' : 'bg-[var(--surface-2)] text-[var(--text-secondary)]'"
           >
             {{ value }}
           </span>
@@ -191,14 +191,14 @@ onMounted(load)
           </span>
         </template>
         <template #cell-last_login_at="{ value }">
-          <span class="text-xs text-text-secondary">{{ fmt(value) }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
         <template #cell-created_at="{ value }">
-          <span class="text-xs text-text-secondary">{{ fmt(value) }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
         <template #cell-actions="{ row }">
           <button
-            class="if-btn-ghost !px-2 !py-1 text-xs"
+            class="btn btn-ghost !px-2 !py-1 text-xs"
             :disabled="row.status === 'deleted'"
             @click.stop="askToggleSuspend(row)"
           >
@@ -220,11 +220,11 @@ onMounted(load)
 
   <!-- Status change confirmation -->
   <div v-if="showSuspend" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 animate-fade-in">
-    <div class="if-card p-6 w-full max-w-sm animate-scale-in">
+    <div class="surface rounded-2xl p-6 w-full max-w-sm animate-scale-in">
       <h3 class="text-base font-semibold">
         {{ pendingStatus === 'suspended' ? 'Suspend' : 'Restore' }} user?
       </h3>
-      <p class="text-sm text-text-secondary mt-2">
+      <p class="text-sm text-[var(--text-secondary)] mt-2">
         This will set <span class="font-mono">{{ target?.email }}</span> to
         <span class="font-medium">{{ pendingStatus }}</span>.
       </p>

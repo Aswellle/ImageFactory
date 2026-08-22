@@ -22,44 +22,44 @@ onMounted(async () => {
 <template>
   <div class="space-y-8">
     <!-- Hero -->
-    <section class="text-center max-w-2xl mx-auto pt-6 animate-fade-in">
-      <h1 class="text-2xl font-semibold tracking-tight text-text">
+    <section class="text-center max-w-2xl mx-auto pt-4 animate-fade-in">
+      <h1 class="text-display">
         {{ t('dashboard.heroTitle') }}
       </h1>
-      <p class="text-text-secondary mt-2 text-sm leading-relaxed">
+      <p class="text-body mt-3">
         {{ t('dashboard.heroSubtitle') }}
       </p>
-      <div class="flex justify-center gap-3 mt-6">
-        <RouterLink to="/create" class="if-btn-primary !px-5 !py-2.5">
+      <div class="flex justify-center gap-3 mt-7">
+        <RouterLink to="/create" class="btn btn-primary">
           {{ t('dashboard.startGenerating') }}
           <span class="ml-0.5">→</span>
         </RouterLink>
-        <RouterLink to="/assets" class="if-btn-ghost !px-5 !py-2.5">
+        <RouterLink to="/assets" class="btn btn-ghost">
           {{ t('dashboard.viewGallery') }}
         </RouterLink>
       </div>
     </section>
 
     <!-- Stats -->
-    <section class="grid grid-cols-3 gap-4 animate-stagger">
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide font-medium">{{ t('dashboard.totalImages') }}</div>
-        <div class="text-2xl font-semibold mt-2 tabular-nums">{{ assetStore.total || 0 }}</div>
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger">
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">{{ t('dashboard.totalImages') }}</div>
+        <div class="metric-value mt-2">{{ assetStore.total || 0 }}</div>
       </div>
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide font-medium">{{ t('dashboard.projects') }}</div>
-        <div class="text-2xl font-semibold mt-2 tabular-nums">{{ projectStore.projects.length || 0 }}</div>
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">{{ t('dashboard.projects') }}</div>
+        <div class="metric-value mt-2">{{ projectStore.projects.length || 0 }}</div>
       </div>
-      <div class="if-card p-5">
-        <div class="text-xs text-text-secondary uppercase tracking-wide font-medium">{{ t('dashboard.storage') }}</div>
-        <div class="text-2xl font-semibold mt-2 tabular-nums">0 B</div>
+      <div class="bento-tile">
+        <div class="text-caption uppercase tracking-wide">{{ t('dashboard.storage') }}</div>
+        <div class="metric-value mt-2">0 B</div>
       </div>
     </section>
 
     <!-- Recent images -->
     <section v-if="assetStore.assets.length > 0">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-base font-medium">{{ t('dashboard.recent') }}</h2>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-subheading">{{ t('dashboard.recent') }}</h2>
         <RouterLink to="/assets" class="text-sm text-accent hover:underline-offset-4 hover:underline transition-all">{{ t('dashboard.viewAll') }} →</RouterLink>
       </div>
       <div class="columns-2 md:columns-4 gap-4 space-y-4">
@@ -69,7 +69,7 @@ onMounted(async () => {
           class="break-inside-avoid mb-4 group"
           @click="$router.push(`/assets/${asset.id}`)"
         >
-          <div class="if-card if-card-interactive overflow-hidden">
+          <div class="card card-interactive overflow-hidden">
             <div class="relative aspect-auto min-h-[80px] bg-surface-2 overflow-hidden">
               <img
                 v-if="asset.thumbnail_key || asset.storage_key"
@@ -85,10 +85,12 @@ onMounted(async () => {
     </section>
 
     <!-- Empty state -->
-    <section v-else-if="ready" class="if-card animate-fade-in">
-      <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">{{ t('dashboard.emptyPrimary') }}</div>
-        <div class="text-xs text-text-muted">{{ t('dashboard.emptySecondary') }}</div>
+    <section v-else-if="ready">
+      <div class="card animate-fade-in">
+        <div class="py-20 text-center">
+          <div class="text-body mb-1">{{ t('dashboard.emptyPrimary') }}</div>
+          <div class="text-caption">{{ t('dashboard.emptySecondary') }}</div>
+        </div>
       </div>
     </section>
 

@@ -21,16 +21,8 @@ module.exports = {
     extend: {
       colors,
       fontFamily: {
-        sans: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'SF Pro Text',
-          'Segoe UI',
-          'Helvetica Neue',
-          'Arial',
-          'sans-serif',
-        ],
-        mono: ['SF Mono', 'JetBrains Mono', 'Menlo', 'monospace'],
+        sans: ['Geist', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Segoe UI', 'Arial', 'sans-serif'],
+        mono: ['Geist Mono', 'SF Mono', 'JetBrains Mono', 'Menlo', 'monospace'],
       },
       fontSize: {
         xs: ['0.75rem', { lineHeight: '1.125rem', letterSpacing: '0' }],
@@ -60,10 +52,25 @@ module.exports = {
           '0%': { opacity: '0', transform: 'scale(0.97)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
+        },
       },
       animation: {
-        'fade-in': 'fade-in 0.18s ease-out',
-        'scale-in': 'scale-in 0.15s ease-out',
+        'fade-in': 'fade-in 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
+        'scale-in': 'scale-in 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+        shimmer: 'shimmer 2s linear infinite',
+        'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+        float: 'float 3s ease-in-out infinite',
       },
       zIndex: {
         dropdown: 50,

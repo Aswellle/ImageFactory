@@ -89,7 +89,7 @@ onMounted(load)
   <TablePageLayout>
     <template #title>
       <h1 class="text-xl font-semibold tracking-tight">Jobs</h1>
-      <p class="text-sm text-text-secondary mt-1">Monitor image generation and edit jobs across all users.</p>
+      <p class="text-sm text-[var(--text-secondary)] mt-1">Monitor image generation and edit jobs across all users.</p>
     </template>
 
     <template #filters>
@@ -99,11 +99,11 @@ onMounted(load)
             v-model="search"
             type="text"
             placeholder="Search by prompt, model, or ID…"
-            class="if-input pl-9"
+            class="input pl-9"
           />
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-xs">⌕</span>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] text-xs">⌕</span>
         </div>
-        <select v-model="statusFilter" class="if-input !w-auto">
+        <select v-model="statusFilter" class="input !w-auto">
           <option value="">All statuses</option>
           <option value="pending">Pending</option>
           <option value="processing">Processing</option>
@@ -111,7 +111,7 @@ onMounted(load)
           <option value="failed">Failed</option>
           <option value="cancelled">Cancelled</option>
         </select>
-        <select v-model="typeFilter" class="if-input !w-auto">
+        <select v-model="typeFilter" class="input !w-auto">
           <option value="">All types</option>
           <option value="generation">Generation</option>
           <option value="edit">Edit</option>
@@ -134,10 +134,10 @@ onMounted(load)
           <span class="font-mono text-xs">{{ value }}</span>
         </template>
         <template #cell-username="{ value }">
-          <span class="text-xs text-text-secondary">{{ value || '—' }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ value || '—' }}</span>
         </template>
         <template #cell-type="{ value }">
-          <span class="text-xs px-2 py-0.5 rounded-full bg-surface-2">{{ value }}</span>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--surface-2)]">{{ value }}</span>
         </template>
         <template #cell-status="{ value }">
           <span
@@ -166,11 +166,11 @@ onMounted(load)
           <span class="text-xs tabular-nums">{{ value ?? 0 }}</span>
         </template>
         <template #cell-created_at="{ value }">
-          <span class="text-xs text-text-secondary">{{ fmt(value) }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
         <template #cell-actions="{ row }">
           <button
-            class="if-btn-ghost !px-2 !py-1 text-xs"
+            class="btn btn-ghost !px-2 !py-1 text-xs"
             :disabled="row.status !== 'failed'"
             title="Retry failed job"
             @click.stop="onRetry(row)"

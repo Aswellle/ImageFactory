@@ -73,7 +73,7 @@ onMounted(load)
   <TablePageLayout>
     <template #title>
       <h1 class="text-xl font-semibold tracking-tight">API Keys</h1>
-      <p class="text-sm text-text-secondary mt-1">Manage programmatic access keys across all users.</p>
+      <p class="text-sm text-[var(--text-secondary)] mt-1">Manage programmatic access keys across all users.</p>
     </template>
 
     <template #filters>
@@ -83,11 +83,11 @@ onMounted(load)
             v-model="search"
             type="text"
             placeholder="Search by name, prefix, or user…"
-            class="if-input pl-9"
+            class="input pl-9"
           />
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-xs">⌕</span>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] text-xs">⌕</span>
         </div>
-        <select v-model="statusFilter" class="if-input !w-auto">
+        <select v-model="statusFilter" class="input !w-auto">
           <option value="">All statuses</option>
           <option value="active">Active</option>
           <option value="revoked">Revoked</option>
@@ -105,7 +105,7 @@ onMounted(load)
         empty-text="No API keys found"
       >
         <template #cell-username="{ value }">
-          <span class="text-xs font-mono text-text-secondary">{{ value || '—' }}</span>
+          <span class="text-xs font-mono text-[var(--text-secondary)]">{{ value || '—' }}</span>
         </template>
         <template #cell-key_prefix="{ value }">
           <span class="font-mono text-xs">{{ value }}…</span>
@@ -123,14 +123,14 @@ onMounted(load)
           </span>
         </template>
         <template #cell-last_used_at="{ value }">
-          <span class="text-xs text-text-secondary">{{ fmt(value) }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
         <template #cell-created_at="{ value }">
-          <span class="text-xs text-text-secondary">{{ fmt(value) }}</span>
+          <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
         <template #cell-actions="{ row }">
           <button
-            class="if-btn-ghost !px-2 !py-1 text-xs text-danger hover:text-danger"
+            class="btn btn-ghost !px-2 !py-1 text-xs text-danger hover:text-danger"
             :disabled="row.status === 'revoked'"
             @click.stop="askRevoke(row)"
           >
@@ -152,15 +152,15 @@ onMounted(load)
 
   <!-- Revoke confirmation -->
   <div v-if="showRevoke" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 animate-fade-in">
-    <div class="if-card p-6 w-full max-w-sm animate-scale-in">
+    <div class="surface rounded-2xl p-6 w-full max-w-sm animate-scale-in">
       <h3 class="text-base font-semibold">Revoke API key?</h3>
-      <p class="text-sm text-text-secondary mt-2">
+      <p class="text-sm text-[var(--text-secondary)] mt-2">
         This will immediately revoke the key <span class="font-mono">{{ target?.key_prefix }}…</span>
         belonging to {{ target?.username ?? 'unknown' }}. This cannot be undone.
       </p>
       <div class="flex justify-end gap-2 mt-5">
         <button class="if-btn-ghost" @click="showRevoke = false">Cancel</button>
-        <button class="if-btn-primary !bg-red-500 hover:!bg-red-600" @click="confirmRevoke">Revoke</button>
+        <button class="btn btn-primary !bg-red-500 hover:!bg-red-600" @click="confirmRevoke">Revoke</button>
       </div>
     </div>
   </div>

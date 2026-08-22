@@ -12,19 +12,20 @@ onMounted(() => {
 
 <template>
   <div class="space-y-6">
+    <!-- Header -->
     <div>
-      <h1 class="text-xl font-semibold tracking-tight">Favorites</h1>
-      <p class="text-sm text-text-secondary mt-1">{{ store.favorites.length }} favorite images</p>
+      <h1 class="text-heading">Favorites</h1>
+      <p class="text-body mt-1">{{ store.favorites.length }} favorite images</p>
     </div>
 
     <!-- Loading -->
-    <div v-if="store.loading" class="text-center py-20 text-text-secondary text-sm">Loading…</div>
+    <div v-if="store.loading" class="text-center py-20 text-body">Loading…</div>
 
     <!-- Empty state -->
-    <div v-else-if="store.favorites.length === 0" class="if-card">
+    <div v-else-if="store.favorites.length === 0" class="card animate-fade-in">
       <div class="py-20 text-center">
-        <div class="text-text-secondary text-sm mb-1">No favorites yet</div>
-        <div class="text-xs text-text-secondary">Click the heart icon on any image to save it here</div>
+        <div class="text-body mb-1">No favorites yet</div>
+        <div class="text-caption">Click the heart icon on any image to save it here</div>
       </div>
     </div>
 
@@ -36,7 +37,7 @@ onMounted(() => {
         class="break-inside-avoid mb-4 cursor-pointer group relative"
         @click="$router.push(`/assets/${fav.asset_id}`)"
       >
-        <div class="if-card overflow-hidden">
+        <div class="card overflow-hidden">
           <div class="relative">
             <div class="aspect-auto min-h-[120px] bg-surface-2 flex items-center justify-center">
               <img
@@ -50,7 +51,7 @@ onMounted(() => {
             </div>
           </div>
           <div class="p-3">
-            <p class="text-xs text-text-secondary">Asset #{{ fav.asset_id }}</p>
+            <p class="text-caption">Asset #{{ fav.asset_id }}</p>
           </div>
         </div>
       </div>

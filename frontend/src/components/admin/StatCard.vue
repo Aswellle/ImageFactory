@@ -7,22 +7,22 @@ defineProps<{
 }>()
 
 const ring: Record<string, string> = {
-  default: 'text-text-secondary',
-  success: 'text-green-500',
-  danger: 'text-red-500',
-  accent: 'text-accent',
+  default: 'text-[var(--text-secondary)]',
+  success: 'text-[var(--success)]',
+  danger: 'text-[var(--danger)]',
+  accent: 'text-[var(--accent)]',
 }
 </script>
 
 <template>
-  <div class="if-card p-5">
-    <div class="text-xs text-text-secondary uppercase tracking-wide">{{ label }}</div>
+  <div class="bento-tile">
+    <div class="text-caption uppercase tracking-wide">{{ label }}</div>
     <div
-      class="text-2xl font-semibold mt-1.5 tabular-nums"
-      :class="tone ? ring[tone] : 'text-text'"
+      class="metric-value mt-2"
+      :class="tone ? ring[tone] : 'text-[var(--text)]'"
     >
       {{ value }}
     </div>
-    <div v-if="hint" class="text-xs text-text-secondary mt-1">{{ hint }}</div>
+    <div v-if="hint" class="text-caption mt-1.5">{{ hint }}</div>
   </div>
 </template>
