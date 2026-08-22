@@ -81,14 +81,19 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	authMW := middleware.NewAuth(jwt)
 
 	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
-	genService := service.NewGenerationService(db, batchSvc, store, queue)
+
+	projectSvc := service.NewProjectService(db)
+	assetSvc := service.NewAssetService(db, store)
+	projectHandler := handler.NewProjectHandler(projectSvc)
+	assetHandler := handler.NewAssetHandler(assetSvc)
+
+	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc)
 	genHandler := handler.NewGenerationHandler(genService)
 	imageGW := handler.NewOpenAIImagesHandler(handler.NewOpenAIImagesService())
 
-	projectSvc := service.NewProjectService(db)
-	assetSvc := service.NewAssetService(db)
-	projectHandler := handler.NewProjectHandler(projectSvc)
-	assetHandler := handler.NewAssetHandler(assetSvc)
+	editSvc := service.NewImageEditService(db, batchSvc, store, queue)
+	editHandler := handler.NewImageEditHandler(editSvc)
+
 
 	apiKeySvc := service.NewAPIKeyService(db)
 	apiKeyHandler := handler.NewAPIKeyHandler(apiKeySvc)
@@ -116,10 +121,10 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 		v1.GET("/models", imageGW.Models)
 
+
 		// OpenAI-compatible image endpoints (public for SDK access).
 		v1.POST("/images/generations", imageGW.Generations)
-		v1.POST("/images/edits", imageGW.Edits)
- 	}
+	}
 
 	// --- Protected routes ---
 	authorized := v1.Group("")
@@ -127,8 +132,10 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	{
 		// Image generation.
 		authorized.POST("/images/generations", genHandler.Create)
+		authorized.POST("/images/edits", editHandler.Edit)
 		authorized.GET("/images/jobs", genHandler.List)
 		authorized.GET("/images/jobs/:id", genHandler.Get)
+
 
 		// Projects.
 		authorized.POST("/projects", projectHandler.Create)
@@ -139,7 +146,11 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		authorized.GET("/assets", assetHandler.List)
 		authorized.GET("/assets/:id", assetHandler.Get)
 		authorized.DELETE("/assets/:id", assetHandler.Delete)
+
+		// Asset versioning + content serving.
 		authorized.GET("/assets/:id/content", assetHandler.Content)
+		authorized.GET("/assets/:id/versions", assetHandler.Versions)
+		authorized.GET("/assets/:id/versions/:vid", assetHandler.GetVersion)
 
 	// API Keys.
 	authorized.POST("/api-keys", apiKeyHandler.Create)

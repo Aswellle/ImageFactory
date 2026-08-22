@@ -21,11 +21,12 @@ type GenerationService struct {
 	batch   *batchimage.PublicService
 	store   storage.Storage
 	queue   job.Queue
+	assets  *AssetService
 }
 
 // NewGenerationService builds a GenerationService.
-func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue) *GenerationService {
-	return &GenerationService{db: db, batch: batch, store: store, queue: queue}
+func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService) *GenerationService {
+	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets}
 }
 
 // SubmitRequest is the provider-independent generation request from a user.
@@ -191,14 +192,52 @@ func (s *GenerationService) pollUntilDone(ctx context.Context, externalID, batch
 	}
 }
 
-// handleCompleted marks the job completed and creates an asset record.
+// handleCompleted marks the job completed and creates an asset record from the
+// batch output. Storage keys are derived from the batch job's ProviderOutputRef
+// (the stub equivalent of an object-storage key).
 func (s *GenerationService) handleCompleted(ctx context.Context, externalID string, bj *batchimage.BatchImageJob) error {
-	_, err := s.db.GenerationJob.Update().
+	job, err := s.db.GenerationJob.Query().
+		Where(generationjob.ExternalID(externalID)).
+		Only(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return errors.New(errors.ErrNotFound, "job not found")
+		}
+		return errors.Wrap(errors.ErrInternal, "failed to fetch job", err)
+	}
+
+	keys := storageKeysFromBatch(bj)
+
+	if keys.Original != "" {
+		var projectID *int64
+		if job.ProjectID != 0 {
+			projectID = &job.ProjectID
+		}
+		if _, err := s.assets.CreateFromGeneration(ctx, externalID, job.UserID, projectID, job.Prompt, job.Model, keys); err != nil {
+			return errors.Wrap(errors.ErrInternal, "failed to create asset from generation", err)
+		}
+	}
+
+	_, err = s.db.GenerationJob.Update().
 		Where(generationjob.ExternalID(externalID)).
 		SetStatus(generationjob.StatusCompleted).
 		SetCompletedAt(time.Now()).
 		Save(ctx)
 	return err
+}
+
+// storageKeysFromBatch derives storage keys from a completed batch-image job.
+// In the full port the download pipeline uploads bytes to object storage and
+// returns real keys; here the ProviderOutputRef stands in for the original.
+func storageKeysFromBatch(bj *batchimage.BatchImageJob) StorageKeys {
+	if bj == nil {
+		return StorageKeys{}
+	}
+	var keys StorageKeys
+	if bj.ProviderOutputRef != nil {
+		keys.Original = *bj.ProviderOutputRef
+	}
+	return keys
 }
 
 // Get returns a job by external ID, enforcing user ownership.
