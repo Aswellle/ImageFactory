@@ -17,6 +17,7 @@ import (
 	"github.com/imageforge/imageforge/internal/server/routes"
 	"github.com/imageforge/imageforge/internal/service"
 	"github.com/imageforge/imageforge/internal/storage"
+	"github.com/imageforge/imageforge/internal/pkg/response"
 	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -57,7 +58,8 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	queue := job.NewMemoryQueue(256, log)
 	processor := job.NewProcessor(queue, 4)
 	if err := processor.Start(context.Background()); err != nil {
-		log.Warn("failed to start job processor", zap.Error(err))
+		db.Close()
+		return nil, fmt.Errorf("start job processor: %w", err)
 	}
 
 	// --- Redis (optional) ---
@@ -69,7 +71,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 			DB:       cfg.Redis.DB,
 		})
 		if err := rdb.Ping(context.Background()).Err(); err != nil {
-			log.Warn("redis unavailable, falling back to in-memory task store", zap.Error(err))
+			log.Error("redis unavailable, falling back to in-memory task store — tasks will be lost on process restart", zap.Error(err))
 			rdb = nil
 		}
 	}
@@ -114,7 +116,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 	// --- Admin ---
 	adminSvc := service.NewAdminService(db)
-	adminAuth := middleware.NewAdminAuth(authMW, cfg.Auth.AdminPanelKey)
+	adminAuth := middleware.NewAdminAuth(authMW)
 	adminHandlers := &routes.AdminHandlers{
 		Dashboard: admin.NewDashboardHandler(adminSvc),
 		User:      admin.NewUserHandler(adminSvc),
@@ -126,9 +128,8 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	v1 := engine.Group("/v1")
 	{
 		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(200, gin.H{"status": "ok"})
+			response.OK(c, gin.H{"status": "ok"})
 		})
-
 		auth := v1.Group("/auth")
 		{
 			auth.POST("/register", authHandler.Register)
@@ -179,7 +180,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		authorized.GET("/usage/history", usageHandler.History)
 
 		// API-key-authed generation endpoint (for programmatic access).
-		authorized.POST("/images/generate", apiKeyMW, genHandler.Create)
 
 		// Prompt templates.
 		authorized.POST("/prompt-templates", promptTemplateHandler.Create)
@@ -192,6 +192,14 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		// Async image tasks (submit-then-poll).
 		authorized.POST("/images/tasks", asyncImageHandler.Submit)
 		authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
+	}
+
+	// --- API-key-authed routes (no JWT required) ---
+	apiKeyOnly := v1.Group("")
+	apiKeyOnly.Use(apiKeyMW)
+	{
+		// API-key-authed generation endpoint (for programmatic access).
+		apiKeyOnly.POST("/images/generate", genHandler.Create)
 	}
 
 	// --- Admin routes (adminAuth enforced at group level) ---

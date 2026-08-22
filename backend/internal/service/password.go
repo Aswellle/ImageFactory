@@ -18,6 +18,9 @@ func NewPassword(cfg config.AuthConfig) *Password {
 	if cost < bcrypt.MinCost {
 		cost = bcrypt.DefaultCost
 	}
+	if cost > 20 {
+		cost = 20
+	}
 	return &Password{cost: cost}
 }
 
