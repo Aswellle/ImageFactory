@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .vue,.ts,.tsx"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "axios": "^1.7.9",
     "pinia": "^2.3.1",
     "vue": "^3.5.13",
@@ -23,9 +24,9 @@
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.7.3",
-    "vite": "^6.0.7",
+    "vite": "^5.4.21",
     "vue-tsc": "^2.2.0"
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"

@@ -11,14 +11,14 @@
           ImageForge
         </a>
         <div class="flex items-center gap-6">
-          <a href="#features" class="text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text)]">{{ t('nav.features') }}</a>
-          <a href="#workflow" class="text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text)]">{{ t('nav.workflow') }}</a>
+          <a href="#features" class="text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text)]">{{ t('landing.nav.features') }}</a>
+          <a href="#workflow" class="text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text)]">{{ t('landing.nav.workflow') }}</a>
           <button @click="openDesktop" class="inline-flex h-8 items-center gap-1.5 rounded-full bg-[var(--text)] px-4 text-xs font-medium text-[var(--bg)] transition hover:opacity-80">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="3" width="20" height="14" rx="2" />
               <path d="M8 21h8M12 17v4" />
             </svg>
-            {{ t('nav.openApp') }}
+            {{ t('landing.nav.openApp') }}
           </button>
         </div>
       </nav>
@@ -27,23 +27,23 @@
     <!-- Hero -->
     <section class="flex min-h-[100dvh] items-center justify-center px-6 pt-12">
       <div class="mx-auto max-w-[880px] text-center">
-        <p class="mb-4 text-sm font-medium tracking-wide text-[var(--text-secondary)]">{{ t('hero.tagline') }}</p>
+        <p class="mb-4 text-sm font-medium tracking-wide text-[var(--text-secondary)]">{{ t('landing.hero.tagline') }}</p>
         <h1 class="text-display mb-6 text-[var(--text)]">
-          {{ t('hero.title.line1') }}<br />
-          <span class="text-[var(--text-secondary)]">{{ t('hero.title.line2') }}</span>
+          {{ t('landing.hero.title.line1') }}<br />
+          <span class="text-[var(--text-secondary)]">{{ t('landing.hero.title.line2') }}</span>
         </h1>
         <p class="mx-auto mb-10 max-w-[560px] text-lg leading-relaxed text-[var(--text-secondary)]">
-          {{ t('hero.description') }}
+          {{ t('landing.hero.description') }}
         </p>
         <div class="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button @click="openDesktop" class="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--accent)] px-8 text-sm font-medium text-white transition hover:opacity-90 active:scale-[0.98]">
-            {{ t('hero.cta.primary') }}
+            {{ t('landing.hero.cta.primary') }}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M7 17L17 7M17 7H8M17 7v9" />
             </svg>
           </button>
           <a href="#features" class="inline-flex h-12 items-center gap-2 rounded-full border border-[var(--border)] px-8 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--surface-2)]">
-            {{ t('hero.cta.secondary') }}
+            {{ t('landing.hero.cta.secondary') }}
           </a>
         </div>
       </div>
@@ -52,8 +52,8 @@
     <!-- Features -->
     <section id="features" class="px-6 py-24">
       <div class="mx-auto max-w-[1024px]">
-        <p class="mb-2 text-sm font-medium text-[var(--text-secondary)]">{{ t('features.tagline') }}</p>
-        <h2 class="text-heading mb-16 max-w-[480px] text-[var(--text)]">{{ t('features.title') }}</h2>
+        <p class="mb-2 text-sm font-medium text-[var(--text-secondary)]">{{ t('landing.features.tagline') }}</p>
+        <h2 class="text-heading mb-16 max-w-[480px] text-[var(--text)]">{{ t('landing.features.title') }}</h2>
 
         <!-- Feature grid: asymmetric -->
         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -65,8 +65,8 @@
                 <path d="M21 15l-5-5L5 21" />
               </svg>
             </div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('features.gen.title') }}</h3>
-            <p class="text-body max-w-[420px]">{{ t('features.gen.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.features.gen.title') }}</h3>
+            <p class="text-body max-w-[420px]">{{ t('landing.features.gen.desc') }}</p>
           </div>
 
           <div class="bento-tile">
@@ -77,8 +77,8 @@
                 <path d="M2 12l10 5 10-5" />
               </svg>
             </div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('features.versions.title') }}</h3>
-            <p class="text-body">{{ t('features.versions.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.features.versions.title') }}</h3>
+            <p class="text-body">{{ t('landing.features.versions.desc') }}</p>
           </div>
 
           <div class="bento-tile">
@@ -87,8 +87,8 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('features.organize.title') }}</h3>
-            <p class="text-body">{{ t('features.organize.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.features.organize.title') }}</h3>
+            <p class="text-body">{{ t('landing.features.organize.desc') }}</p>
           </div>
 
           <div class="bento-tile md:col-span-2">
@@ -97,8 +97,8 @@
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
             </div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('features.api.title') }}</h3>
-            <p class="text-body max-w-[420px]">{{ t('features.api.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.features.api.title') }}</h3>
+            <p class="text-body max-w-[420px]">{{ t('landing.features.api.desc') }}</p>
           </div>
         </div>
       </div>
@@ -107,24 +107,24 @@
     <!-- Workflow -->
     <section id="workflow" class="px-6 py-24">
       <div class="mx-auto max-w-[1024px]">
-        <p class="mb-2 text-sm font-medium text-[var(--text-secondary)]">{{ t('workflow.tagline') }}</p>
-        <h2 class="text-heading mb-16 text-[var(--text)]">{{ t('workflow.title') }}</h2>
+        <p class="mb-2 text-sm font-medium text-[var(--text-secondary)]">{{ t('landing.workflow.tagline') }}</p>
+        <h2 class="text-heading mb-16 text-[var(--text)]">{{ t('landing.workflow.title') }}</h2>
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
             <div class="metric-value mb-3 text-[var(--text)]">01</div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('workflow.step1.title') }}</h3>
-            <p class="text-body">{{ t('workflow.step1.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.workflow.step1.title') }}</h3>
+            <p class="text-body">{{ t('landing.workflow.step1.desc') }}</p>
           </div>
           <div>
             <div class="metric-value mb-3 text-[var(--text)]">02</div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('workflow.step2.title') }}</h3>
-            <p class="text-body">{{ t('workflow.step2.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.workflow.step2.title') }}</h3>
+            <p class="text-body">{{ t('landing.workflow.step2.desc') }}</p>
           </div>
           <div>
             <div class="metric-value mb-3 text-[var(--text)]">03</div>
-            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('workflow.step3.title') }}</h3>
-            <p class="text-body">{{ t('workflow.step3.desc') }}</p>
+            <h3 class="mb-2 text-subheading text-[var(--text)]">{{ t('landing.workflow.step3.title') }}</h3>
+            <p class="text-body">{{ t('landing.workflow.step3.desc') }}</p>
           </div>
         </div>
       </div>
@@ -133,10 +133,10 @@
     <!-- CTA -->
     <section class="px-6 py-24">
       <div class="mx-auto max-w-[640px] text-center">
-        <h2 class="text-heading mb-4 text-[var(--text)]">{{ t('cta.title') }}</h2>
-        <p class="mb-8 text-body">{{ t('cta.desc') }}</p>
+        <h2 class="text-heading mb-4 text-[var(--text)]">{{ t('landing.cta.title') }}</h2>
+        <p class="mb-8 text-body">{{ t('landing.cta.desc') }}</p>
         <button @click="openDesktop" class="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--text)] px-8 text-sm font-medium text-[var(--bg)] transition hover:opacity-80 active:scale-[0.98]">
-          {{ t('cta.button') }}
+          {{ t('landing.cta.button') }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 17L17 7M17 7H8M17 7v9" />
           </svg>
