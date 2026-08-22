@@ -115,3 +115,23 @@ export interface GenerationJob {
   completed_at?: string
   created_at: string
 }
+
+// ---- Usage ----
+
+export interface UsageStat {
+  date: string
+  requests: number
+  images: number
+  tokens: number
+  cost: number
+}
+
+export interface UsageSummary {
+  total_requests: number
+  total_images: number
+  total_tokens: number
+  total_cost: number
+  period_start: string
+  period_end: string
+  daily: UsageStat[]
+}

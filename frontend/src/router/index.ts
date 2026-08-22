@@ -23,7 +23,9 @@ const routes: RouteRecordRaw[] = [
       { path: 'collections', name: 'collections', component: () => import('@/views/CollectionsView.vue') },
       { path: 'collections/:id', name: 'collection-detail', component: () => import('@/views/CollectionDetailView.vue') },
       { path: 'tags', name: 'tags', component: () => import('@/views/TagsView.vue') },
+      { path: 'templates', name: 'templates', component: () => import('@/views/PromptTemplatesView.vue') },
       { path: 'favorites', name: 'favorites', component: () => import('@/views/FavoritesView.vue') },
+      { path: 'usage', name: 'usage', component: () => import('@/views/UsageView.vue') },
     ],
   },
   // Admin panel. Lazy-loaded; access enforced by requiresAdmin meta + the

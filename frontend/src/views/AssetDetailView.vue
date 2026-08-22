@@ -3,12 +3,14 @@ import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAssetStore } from '@/stores/asset'
 import { useTagStore } from '@/stores/tag'
+import { useI18n } from 'vue-i18n'
 import type { Asset } from '@/api/asset'
 import type { Tag } from '@/api/tag'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 import TagBadge from '@/components/TagBadge.vue'
 import CollectionPicker from '@/components/CollectionPicker.vue'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const assetStore = useAssetStore()
@@ -94,12 +96,19 @@ async function applyExistingTag(tag: Tag) {
 </script>
 
 <template>
-  <div v-if="loading" class="text-center py-20 text-text-secondary text-sm">Loading…</div>
-  <div v-else-if="asset" class="space-y-6">
+  <div v-if="loading" class="space-y-6 animate-fade-in">
+    <div class="skeleton h-6 w-32"></div>
+    <div class="skeleton aspect-[16/10] rounded-lg"></div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="skeleton h-40 rounded-lg"></div>
+      <div class="skeleton h-40 rounded-lg"></div>
+    </div>
+  </div>
+  <div v-else-if="asset" class="space-y-6 animate-fade-in">
     <header class="flex items-start justify-between">
       <div>
-        <button class="text-sm text-text-secondary hover:text-text mb-3" @click="$router.back()">← Back</button>
-        <h1 class="text-xl font-semibold tracking-tight">{{ asset.title || 'Untitled' }}</h1>
+        <button class="text-sm text-text-secondary hover:text-text mb-3 transition-colors" @click="$router.back()">{{ t('common.back') }}</button>
+        <h1 class="text-xl font-semibold tracking-tight">{{ asset.title || t('common.untitled') }}</h1>
       </div>
       <FavoriteButton :asset-id="asset.id" size="lg" />
     </header>
@@ -107,16 +116,21 @@ async function applyExistingTag(tag: Tag) {
     <!-- Image preview -->
     <section class="if-card overflow-hidden">
       <div class="bg-surface-2 flex items-center justify-center min-h-[300px]">
-        <img v-if="asset.storage_key" :src="`/v1/assets/${asset.id}/content`" class="max-w-full max-h-[70vh] object-contain" />
+        <img
+          v-if="asset.storage_key"
+          :src="`/v1/assets/${asset.id}/content`"
+          class="max-w-full max-h-[70vh] object-contain img-loading"
+          @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
+        />
         <div v-else class="text-text-secondary text-sm p-8 text-center">
-          {{ asset.prompt?.slice(0, 200) || 'No preview available' }}
+          {{ asset.prompt?.slice(0, 200) || t('asset.noPreviewAvailable') }}
         </div>
       </div>
     </section>
 
     <!-- Tags & Collections -->
     <section class="if-card p-5 space-y-4">
-      <h3 class="text-sm font-medium">Tags</h3>
+      <h3 class="text-sm font-medium">{{ t('asset.tags') }}</h3>
       <div class="flex flex-wrap gap-2">
         <TagBadge
           v-for="tag in assetTags"
@@ -126,20 +140,20 @@ async function applyExistingTag(tag: Tag) {
         />
         <button
           type="button"
-          class="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs text-text-secondary transition-colors hover:border-text-muted hover:text-text"
+          class="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs text-text-secondary transition-all duration-150 hover:border-text-muted hover:text-text hover:bg-surface-hover"
           @click="showTagForm = !showTagForm"
         >
-          + Add Tag
+          {{ t('asset.addTag') }}
         </button>
       </div>
 
       <!-- Tag form -->
-      <div v-if="showTagForm" class="space-y-3 rounded-lg border border-border p-3">
+      <div v-if="showTagForm" class="space-y-3 rounded-lg border border-border p-3 animate-scale-in">
         <div class="flex gap-2">
           <input
             v-model="tagInput"
             class="if-input flex-1"
-            placeholder="Tag name…"
+            :placeholder="t('asset.tagNamePlaceholder')"
             @keyup.enter="addTag"
           />
           <input
@@ -149,19 +163,19 @@ async function applyExistingTag(tag: Tag) {
           />
           <button
             type="button"
-            class="rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary/90"
+            class="if-btn-primary"
             @click="addTag"
           >
-            Add
+            {{ t('common.add') }}
           </button>
         </div>
 
         <!-- Quick-pick existing tags -->
         <div v-if="tagStore.tags.length > 0" class="space-y-2">
-          <p class="text-xs text-text-secondary">Quick add existing tag:</p>
+          <p class="text-xs text-text-secondary">{{ t('asset.quickAddExisting') }}</p>
           <div class="flex flex-wrap gap-1.5">
             <button
-              v-for="tag in tagStore.tags.filter((t) => !assetTags.some((at) => at.id === t.id))"
+              v-for="tag in tagStore.tags.filter((t) => !assetTags.some((at: Tag) => at.id === t.id))"
               :key="tag.id"
               type="button"
               @click="applyExistingTag(tag)"
@@ -181,54 +195,59 @@ async function applyExistingTag(tag: Tag) {
     <!-- Details -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="if-card p-5 space-y-4">
-        <h3 class="text-sm font-medium">Details</h3>
+        <h3 class="text-sm font-medium">{{ t('asset.details') }}</h3>
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Model</dt>
+            <dt class="text-text-secondary">{{ t('asset.model') }}</dt>
             <dd>{{ asset.model || '-' }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Provider</dt>
+            <dt class="text-text-secondary">{{ t('asset.provider') }}</dt>
             <dd>{{ asset.model_provider || '-' }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Size</dt>
+            <dt class="text-text-secondary">{{ t('asset.size') }}</dt>
             <dd>{{ asset.width && asset.height ? `${asset.width}×${asset.height}` : '-' }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Aspect Ratio</dt>
+            <dt class="text-text-secondary">{{ t('asset.aspectRatio') }}</dt>
             <dd>{{ asset.aspect_ratio || '-' }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Format</dt>
+            <dt class="text-text-secondary">{{ t('asset.format') }}</dt>
             <dd>{{ asset.mime_type || '-' }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">File Size</dt>
+            <dt class="text-text-secondary">{{ t('asset.fileSize') }}</dt>
             <dd>{{ formatSize(asset.file_size) }}</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-text-secondary">Created</dt>
+            <dt class="text-text-secondary">{{ t('asset.created') }}</dt>
             <dd>{{ asset.created_at }}</dd>
           </div>
         </dl>
       </div>
 
       <div class="if-card p-5 space-y-4">
-        <h3 class="text-sm font-medium">Prompt</h3>
+        <h3 class="text-sm font-medium">{{ t('asset.prompt') }}</h3>
         <p class="text-sm text-text-secondary whitespace-pre-wrap">{{ asset.prompt || '-' }}</p>
       </div>
     </section>
 
     <!-- Versions -->
     <section v-if="versions.length > 0" class="if-card p-5 space-y-4">
-      <h3 class="text-sm font-medium">Version History</h3>
+      <h3 class="text-sm font-medium">{{ t('asset.versionHistory') }}</h3>
       <div class="flex gap-3">
-        <div v-for="v in versions" :key="v.current_version" class="w-24">
-          <div class="aspect-square bg-surface-2 rounded overflow-hidden">
-            <img v-if="v.thumbnail_key" :src="`/v1/assets/${v.id}/content`" class="w-full h-full object-cover" />
+        <div v-for="v in versions" :key="v.current_version" class="w-24 group">
+          <div class="aspect-square bg-surface-2 rounded-md overflow-hidden transition-transform duration-150 group-hover:scale-[1.03]">
+            <img
+              v-if="v.thumbnail_key"
+              :src="`/v1/assets/${v.id}/content`"
+              class="w-full h-full object-cover img-loading"
+              @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
+            />
           </div>
-          <div class="text-xs text-text-secondary mt-1 text-center">v{{ v.current_version }}</div>
+          <div class="text-xs text-text-muted mt-1 text-center">v{{ v.current_version }}</div>
         </div>
       </div>
     </section>

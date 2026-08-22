@@ -89,7 +89,8 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	projectHandler := handler.NewProjectHandler(projectSvc)
 	assetHandler := handler.NewAssetHandler(assetSvc)
 
-	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc)
+	usageSvc := service.NewUsageService(db)
+	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc, usageSvc)
 	genHandler := handler.NewGenerationHandler(genService)
 	imageGW := handler.NewOpenAIImagesHandler(handler.NewOpenAIImagesService())
 
@@ -99,10 +100,14 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 	apiKeySvc := service.NewAPIKeyService(db)
 	apiKeyHandler := handler.NewAPIKeyHandler(apiKeySvc)
-	usageHandler := handler.NewUsageHandler(apiKeySvc)
+ 	usageHandler := handler.NewUsageHandler(usageSvc)
+
+
+	promptTemplateSvc := service.NewPromptTemplateService(db)
+	promptTemplateHandler := handler.NewPromptTemplateHandler(promptTemplateSvc)
 	apiKeyMW := middleware.APIKeyAuth(apiKeySvc)
 
-	// --- Async image tasks (Redis-backed, optional) ---
+
 	asyncImageHandler := handler.NewAsyncImageHandler(
 		service.NewImageTaskService(repository.NewRedisImageTaskStore(rdb)),
 	)
@@ -164,26 +169,35 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		authorized.GET("/assets/:id/versions", assetHandler.Versions)
 		authorized.GET("/assets/:id/versions/:vid", assetHandler.GetVersion)
 
-	// API Keys.
-	authorized.POST("/api-keys", apiKeyHandler.Create)
-	authorized.GET("/api-keys", apiKeyHandler.List)
-	authorized.DELETE("/api-keys/:id", apiKeyHandler.Revoke)
+		// API Keys.
+		authorized.POST("/api-keys", apiKeyHandler.Create)
+		authorized.GET("/api-keys", apiKeyHandler.List)
+		authorized.DELETE("/api-keys/:id", apiKeyHandler.Revoke)
 
-	// Usage.
-	authorized.GET("/usage", usageHandler.Get)
+		// Usage.
+		authorized.GET("/usage", usageHandler.Get)
+		authorized.GET("/usage/history", usageHandler.History)
 
-	// API-key-authed generation endpoint (for programmatic access).
-	authorized.POST("/images/generate", apiKeyMW, genHandler.Create)
+		// API-key-authed generation endpoint (for programmatic access).
+		authorized.POST("/images/generate", apiKeyMW, genHandler.Create)
 
-	// Async image tasks (submit-then-poll).
-	authorized.POST("/images/tasks", asyncImageHandler.Submit)
-	authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
-}
+		// Prompt templates.
+		authorized.POST("/prompt-templates", promptTemplateHandler.Create)
+		authorized.GET("/prompt-templates", promptTemplateHandler.List)
+		authorized.GET("/prompt-templates/:id", promptTemplateHandler.Get)
+		authorized.PUT("/prompt-templates/:id", promptTemplateHandler.Update)
+		authorized.DELETE("/prompt-templates/:id", promptTemplateHandler.Delete)
+		authorized.POST("/prompt-templates/:id/apply", promptTemplateHandler.Apply)
 
-// --- Admin routes (adminAuth enforced at group level) ---
-routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
+		// Async image tasks (submit-then-poll).
+		authorized.POST("/images/tasks", asyncImageHandler.Submit)
+		authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
+	}
 
-return &Router{Engine: engine}, nil
+	// --- Admin routes (adminAuth enforced at group level) ---
+	routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
+
+	return &Router{Engine: engine}, nil
 }
 
 // requestLogger logs method, path, status, duration, and request ID. It never

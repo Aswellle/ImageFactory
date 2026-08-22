@@ -7,6 +7,8 @@ import (
 
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/ent/generationjob"
+	"github.com/imageforge/imageforge/ent/usagerecord"
+
 	"github.com/imageforge/imageforge/internal/batchimage"
 	"github.com/imageforge/imageforge/internal/job"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
@@ -22,11 +24,12 @@ type GenerationService struct {
 	store   storage.Storage
 	queue   job.Queue
 	assets  *AssetService
+	usage   *UsageService
 }
 
 // NewGenerationService builds a GenerationService.
-func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService) *GenerationService {
-	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets}
+func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService, usage *UsageService) *GenerationService {
+	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage}
 }
 
 // SubmitRequest is the provider-independent generation request from a user.
@@ -218,6 +221,15 @@ func (s *GenerationService) handleCompleted(ctx context.Context, externalID stri
 		}
 	}
 
+	usageType := string(job.Type)
+	if usageType == "" {
+		usageType = string(usagerecord.TypeGeneration)
+	}
+	if s.usage != nil {
+		// Best-effort accounting; a failed record must not fail the request.
+		_ = s.usage.RecordUsage(ctx, job.UserID, usageType, job.ImageCount)
+	}
+
 	_, err = s.db.GenerationJob.Update().
 		Where(generationjob.ExternalID(externalID)).
 		SetStatus(generationjob.StatusCompleted).
@@ -225,6 +237,7 @@ func (s *GenerationService) handleCompleted(ctx context.Context, externalID stri
 		Save(ctx)
 	return err
 }
+
 
 // storageKeysFromBatch derives storage keys from a completed batch-image job.
 // In the full port the download pipeline uploads bytes to object storage and
@@ -239,6 +252,7 @@ func storageKeysFromBatch(bj *batchimage.BatchImageJob) StorageKeys {
 	}
 	return keys
 }
+
 
 // Get returns a job by external ID, enforcing user ownership.
 func (s *GenerationService) Get(ctx context.Context, externalID string, userID int64) (*ent.GenerationJob, error) {

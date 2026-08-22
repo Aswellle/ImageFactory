@@ -14,6 +14,7 @@ const emit = defineEmits<{
 const store = useFavoriteStore()
 const isFav = ref(false)
 const loading = ref(false)
+const popping = ref(false)
 
 onMounted(async () => {
   isFav.value = await store.checkFavorite(props.assetId)
@@ -30,6 +31,8 @@ async function toggle() {
     } else {
       await store.addFavorite(props.assetId)
       isFav.value = true
+      popping.value = true
+      setTimeout(() => { popping.value = false }, 400)
       emit('toggled', true)
     }
   } finally {
@@ -48,12 +51,16 @@ const sizeClass = {
   <button
     type="button"
     :disabled="loading"
-    class="inline-flex items-center justify-center rounded-md transition-colors hover:bg-surface-hover disabled:opacity-50"
+    class="inline-flex items-center justify-center rounded-md transition-all duration-150 hover:bg-surface-hover active:scale-90 disabled:opacity-50"
     :aria-label="isFav ? 'Remove from favorites' : 'Add to favorites'"
     @click.prevent="toggle"
   >
     <svg
-      :class="[sizeClass, isFav ? 'text-red-500' : 'text-text-muted']"
+      :class="[
+        sizeClass,
+        isFav ? 'text-red-500 dark:text-red-400' : 'text-text-muted',
+        popping ? 'animate-heart-pop' : ''
+      ]"
       :fill="isFav ? 'currentColor' : 'none'"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -67,3 +74,18 @@ const sizeClass = {
     </svg>
   </button>
 </template>
+
+<style scoped>
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.animate-heart-pop {
+  animation: heartPop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-heart-pop { animation: none; }
+}
+</style>

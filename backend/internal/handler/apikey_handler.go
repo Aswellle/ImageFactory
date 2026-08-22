@@ -96,27 +96,3 @@ func (h *APIKeyHandler) Revoke(c *gin.Context) {
 	response.NoContent(c)
 }
 
-// UsageHandler handles usage statistics.
-type UsageHandler struct {
-	apiKeys *service.APIKeyService
-}
-
-// NewUsageHandler builds a UsageHandler.
-func NewUsageHandler(apiKeys *service.APIKeyService) *UsageHandler {
-	return &UsageHandler{apiKeys: apiKeys}
-}
-
-// Get handles GET /v1/usage.
-func (h *UsageHandler) Get(c *gin.Context) {
-	uid, ok := userID(c)
-	if !ok {
-		response.Error(c, http.StatusUnauthorized, string(errors.ErrorCodeUnauthorized), "authentication required", requestID(c))
-		return
-	}
-	stats, err := h.apiKeys.GetUsage(c.Request.Context(), uid)
-	if err != nil {
-		writeError(c, err)
-		return
-	}
-	response.OK(c, stats)
-}

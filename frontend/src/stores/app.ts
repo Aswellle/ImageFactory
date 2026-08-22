@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { getLocale, setLocale, availableLocales } from '@/i18n'
+
+type LocaleCode = 'en' | 'zh'
 
 // App store holds lightweight UI state (sidebar, theme). It does NOT hold
 // secrets; per the security rules API keys/tokens never live in component
@@ -20,11 +23,13 @@ export const useAppStore = defineStore('app', () => {
     document.documentElement.classList.toggle('dark', next === 'dark')
   }
 
+  const locale = computed<LocaleCode>(() => getLocale())
+
   function initTheme() {
     const saved = (localStorage.getItem('imageforge_theme') as 'light' | 'dark') || null
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     setTheme(saved ?? (prefersDark ? 'dark' : 'light'))
   }
 
-  return { sidebarCollapsed, theme, toggleSidebar, setTheme, initTheme }
+  return { sidebarCollapsed, theme, toggleSidebar, setTheme, initTheme, locale, setLocale, availableLocales }
 })
