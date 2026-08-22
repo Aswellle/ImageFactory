@@ -1,0 +1,29 @@
+# Binaries
+build/
+dist/
+*.exe
+
+# Dependencies
+node_modules/
+vendor/
+
+# Local storage (filesystem provider dev mode)
+backend/data/
+
+# Environment / secrets — never commit
+.env
+.env.local
+*.local.yaml
+*.local.json
+
+# Generated Ent code is committed; do NOT gitignore backend/ent/
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
