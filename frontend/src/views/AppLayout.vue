@@ -18,10 +18,10 @@ function logout() {
 </script>
 
 <template>
-  <div class="min-h-screen flex bg-bg">
+  <div class="min-h-screen flex bg-[var(--bg)]">
     <!-- Sidebar -->
     <aside
-      class="hidden md:flex flex-col w-56 border-r border-border bg-surface px-4 py-5 shrink-0"
+      class="hidden md:flex flex-col w-56 border-r border-[var(--border)] bg-surface px-4 py-5 shrink-0"
     >
       <div class="flex items-center gap-2 px-2 mb-8">
         <div class="w-7 h-7 rounded-md bg-accent"></div>
@@ -31,49 +31,49 @@ function logout() {
       <nav class="flex-1 space-y-1">
         <RouterLink
           to="/"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.workspace') }}
         </RouterLink>
         <RouterLink
           to="/create"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.create') }}
         </RouterLink>
         <RouterLink
           to="/assets"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.gallery') }}
         </RouterLink>
         <RouterLink
           to="/projects"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.projects') }}
         </RouterLink>
         <RouterLink
           to="/templates"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.templates') }}
         </RouterLink>
         <RouterLink
           to="/api-keys"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
-          active-class="!bg-surface-hover !text-text"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
+          active-class="!bg-[var(--surface-2)] !text-text"
         >
           {{ t('nav.api') }}
         </RouterLink>
       </nav>
 
-      <div class="border-t border-border pt-3 mt-4 space-y-1">
+      <div class="border-t border-[var(--border)] pt-3 mt-4 space-y-1">
         <!-- Language switcher -->
         <div class="flex items-center gap-1 px-2 py-1.5">
           <button
@@ -81,14 +81,14 @@ function logout() {
             :key="loc.code"
             type="button"
             class="flex-1 text-center text-xs px-2 py-1 rounded transition-colors"
-            :class="app.locale === loc.code ? 'bg-surface-2 text-text font-medium' : 'text-text-secondary hover:text-text'"
+            :class="app.locale === loc.code ? 'bg-[var(--surface-2)] text-text font-medium' : 'text-[var(--text-secondary)] hover:text-text'"
             @click="app.setLocale(loc.code)"
           >
             {{ loc.flag }} {{ loc.code.toUpperCase() }}
           </button>
         </div>
         <button
-          class="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-text-secondary hover:bg-surface-hover hover:text-text transition-all duration-150"
+          class="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-text transition-all duration-150"
           @click="app.setTheme(app.theme === 'dark' ? 'light' : 'dark')"
         >
           {{ app.theme === 'dark' ? t('common.lightMode') : t('common.darkMode') }}
@@ -98,7 +98,7 @@ function logout() {
 
     <!-- Main -->
     <div class="flex-1 flex flex-col min-w-0">
-      <header class="h-14 border-b border-border bg-surface px-6 flex items-center justify-between shrink-0">
+      <header class="h-14 border-b border-[var(--border)] bg-surface px-6 flex items-center justify-between shrink-0">
         <div class="md:hidden text-base font-semibold tracking-tight">{{ t('common.appName') }}</div>
         <div class="flex items-center gap-3 ml-auto">
           <!-- Mobile language switcher -->
@@ -108,13 +108,13 @@ function logout() {
               :key="loc.code"
               type="button"
               class="text-xs px-1.5 py-0.5 rounded transition-colors"
-              :class="app.locale === loc.code ? 'bg-surface-2 text-text font-medium' : 'text-text-secondary'"
+              :class="app.locale === loc.code ? 'bg-[var(--surface-2)] text-text font-medium' : 'text-[var(--text-secondary)]'"
               @click="app.setLocale(loc.code)"
             >
               {{ loc.code.toUpperCase() }}
             </button>
           </div>
-          <span class="text-sm text-text-secondary hidden sm:inline">{{ auth.user?.email }}</span>
+          <span class="text-sm text-[var(--text-secondary)] hidden sm:inline">{{ auth.user?.email }}</span>
           <button class="if-btn-ghost text-sm" @click="logout">{{ t('common.signOut') }}</button>
         </div>
       </header>
