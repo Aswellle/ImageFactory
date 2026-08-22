@@ -42,6 +42,7 @@ type AuthConfig struct {
 	JWTSecret          string `mapstructure:"jwt_secret"` // secret, never logged
 	AccessTokenMinutes int    `mapstructure:"access_token_minutes"`
 	BcryptCost         int    `mapstructure:"bcrypt_cost"`
+	AdminPanelKey      string `mapstructure:"admin_panel_key"` // optional service-to-service admin panel key
 }
 
 type StorageConfig struct {

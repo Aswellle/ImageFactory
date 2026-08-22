@@ -14,8 +14,10 @@ import (
 	"github.com/imageforge/imageforge/internal/batchimage"
 	"github.com/imageforge/imageforge/internal/repository"
 	"github.com/imageforge/imageforge/internal/server/middleware"
+	"github.com/imageforge/imageforge/internal/server/routes"
 	"github.com/imageforge/imageforge/internal/service"
 	"github.com/imageforge/imageforge/internal/storage"
+	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
@@ -105,6 +107,16 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		service.NewImageTaskService(repository.NewRedisImageTaskStore(rdb)),
 	)
 
+	// --- Admin ---
+	adminSvc := service.NewAdminService(db)
+	adminAuth := middleware.NewAdminAuth(authMW, cfg.Auth.AdminPanelKey)
+	adminHandlers := &routes.AdminHandlers{
+		Dashboard: admin.NewDashboardHandler(adminSvc),
+		User:      admin.NewUserHandler(adminSvc),
+		Job:       admin.NewJobHandler(adminSvc),
+		APIKey:    admin.NewAPIKeyHandler(adminSvc),
+	}
+
 	// --- Public routes ---
 	v1 := engine.Group("/v1")
 	{
@@ -167,6 +179,9 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	authorized.POST("/images/tasks", asyncImageHandler.Submit)
 	authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
 }
+
+// --- Admin routes (adminAuth enforced at group level) ---
+routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
 
 return &Router{Engine: engine}, nil
 }

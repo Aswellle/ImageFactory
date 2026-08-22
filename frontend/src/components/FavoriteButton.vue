@@ -1,0 +1,69 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useFavoriteStore } from '@/stores/favorite'
+
+const props = defineProps<{
+  assetId: number
+  size?: 'sm' | 'md' | 'lg'
+}>()
+
+const emit = defineEmits<{
+  toggled: [isFavorited: boolean]
+}>()
+
+const store = useFavoriteStore()
+const isFav = ref(false)
+const loading = ref(false)
+
+onMounted(async () => {
+  isFav.value = await store.checkFavorite(props.assetId)
+})
+
+async function toggle() {
+  if (loading.value) return
+  loading.value = true
+  try {
+    if (isFav.value) {
+      await store.removeFavorite(props.assetId)
+      isFav.value = false
+      emit('toggled', false)
+    } else {
+      await store.addFavorite(props.assetId)
+      isFav.value = true
+      emit('toggled', true)
+    }
+  } finally {
+    loading.value = false
+  }
+}
+
+const sizeClass = {
+  sm: 'w-4 h-4',
+  md: 'w-5 h-5',
+  lg: 'w-6 h-6',
+}[props.size ?? 'md']
+</script>
+
+<template>
+  <button
+    type="button"
+    :disabled="loading"
+    class="inline-flex items-center justify-center rounded-md transition-colors hover:bg-surface-hover disabled:opacity-50"
+    :aria-label="isFav ? 'Remove from favorites' : 'Add to favorites'"
+    @click.prevent="toggle"
+  >
+    <svg
+      :class="[sizeClass, isFav ? 'text-red-500' : 'text-text-muted']"
+      :fill="isFav ? 'currentColor' : 'none'"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+      />
+    </svg>
+  </button>
+</template>
