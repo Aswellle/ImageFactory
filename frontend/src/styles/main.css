@@ -33,6 +33,12 @@
     --radius-lg: 16px;
     --radius-xl: 20px;
     --radius-2xl: 24px;
+    --z-dropdown: 50;
+    --z-popover: 60;
+    --z-tooltip: 70;
+    --z-modal-backdrop: 80;
+    --z-modal: 90;
+    --z-overlay: 100;
   }
 
   .dark {

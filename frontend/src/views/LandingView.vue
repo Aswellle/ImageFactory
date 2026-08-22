@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-[100dvh] bg-[var(--bg)] text-[var(--text)]">
     <!-- Navigation -->
-    <header class="fixed inset-x-0 top-0 z-50">
+    <header class="fixed inset-x-0 top-0 z-[var(--z-overlay)]">
       <nav class="mx-auto flex h-12 max-w-[1024px] items-center justify-between px-6">
         <a href="/" class="flex items-center gap-2 text-sm font-medium text-[var(--text)]">
           <svg width="20" height="20" viewBox="0 0 32 32" fill="none" class="opacity-90">
@@ -160,60 +160,8 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { useDesktopLauncher } from '@/composables/useDesktopLauncher'
 
 const { t } = useI18n()
-
-function openDesktop() {
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  const webUrl = window.location.origin + '/app'
-
-  // Local/dev: skip protocol, go directly to web app.
-  if (isLocal) {
-    window.location.href = webUrl
-    return
-  }
-
-  // Production: attempt to launch desktop app via custom protocol.
-  // Use a hidden iframe to avoid disrupting the current page navigation.
-  // If the protocol handler exists, the OS launches the app and the page
-  // loses focus. If not, we fall back to the web app after a short delay.
-  const desktopUrl = 'imageforge://open'
-  let hiddenFrame: HTMLIFrameElement | null = null
-  let didHide = false
-
-  const cleanup = () => {
-    document.removeEventListener('visibilitychange', onVisibility)
-    if (hiddenFrame) {
-      hiddenFrame.remove()
-      hiddenFrame = null
-    }
-  }
-
-  const onVisibility = () => {
-    if (document.visibilityState === 'hidden') {
-      didHide = true
-      cleanup()
-    }
-  }
-
-  document.addEventListener('visibilitychange', onVisibility)
-
-  // Attempt protocol launch via hidden iframe.
-  hiddenFrame = document.createElement('iframe')
-  hiddenFrame.style.display = 'none'
-  document.body.appendChild(hiddenFrame)
-  try {
-    hiddenFrame.contentWindow?.location.assign(desktopUrl)
-  } catch {
-    // Protocol not handled — fall through to web.
-  }
-
-  // Fallback: if page is still visible after 2s, redirect to web app.
-  setTimeout(() => {
-    if (!didHide) {
-      cleanup()
-      window.location.href = webUrl
-    }
-  }, 2000)
-}
+const { openDesktop } = useDesktopLauncher()
 </script>

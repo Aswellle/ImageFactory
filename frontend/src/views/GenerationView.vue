@@ -114,7 +114,7 @@ function statusLabel(status: string): string {
       </div>
 
       <!-- Advanced toggle -->
-      <button type="button" class="text-sm text-text-secondary transition-colors hover:text-text" @click="showAdvanced = !showAdvanced">
+      <button type="button" class="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text)]" @click="showAdvanced = !showAdvanced">
         {{ showAdvanced ? t('generation.hideAdvanced') : t('generation.showAdvanced') }} {{ t('generation.advanced') }}
       </button>
       <div v-if="showAdvanced" class="bento-tile space-y-4 animate-scale-in">
@@ -128,7 +128,7 @@ function statusLabel(status: string): string {
       <p v-if="store.error" class="text-sm text-danger animate-fade-in">{{ store.error }}</p>
 
       <!-- Submit -->
-      <button type="submit" class="btn-primary w-full" :disabled="!canSubmit">
+      <button type="submit" class="btn btn-primary w-full" :disabled="!canSubmit">
         <span v-if="store.loading" class="flex items-center justify-center gap-2">
           <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
@@ -158,10 +158,10 @@ function statusLabel(status: string): string {
       <p v-if="store.activeJob.status === 'failed'" class="text-sm text-danger">
         {{ store.activeJob.error_message || t('generation.generationFailed') }}
       </p>
-      <p v-else-if="store.activeJob.status === 'completed'" class="text-sm text-text-secondary">
+      <p v-else-if="store.activeJob.status === 'completed'" class="text-sm text-[var(--text-secondary)]">
         {{ t('generation.imagesSaved') }}
       </p>
-      <p v-else class="flex items-center gap-2 text-sm text-text-secondary">
+      <p v-else class="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
         <span class="relative flex h-2 w-2">
           <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>
           <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>

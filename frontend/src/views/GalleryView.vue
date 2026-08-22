@@ -83,17 +83,17 @@ function formatSize(bytes?: number): string {
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
         </button>
-        <div class="flex border border-border rounded-lg overflow-hidden">
+        <div class="flex border border-[var(--border)] rounded-lg overflow-hidden">
           <button
             class="px-2.5 py-1.5 text-sm transition-colors"
-            :class="viewMode === 'grid' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:bg-surface-2'"
+            :class="viewMode === 'grid' ? 'bg-[var(--surface-2)] text-[var(--text)]' : 'text-[var(--text-secondary)] hover:bg-[var(--surface-2)]'"
             @click="viewMode = 'grid'"
           >
             {{ t('gallery.grid') }}
           </button>
           <button
-            class="px-2.5 py-1.5 text-sm border-l border-border transition-colors"
-            :class="viewMode === 'list' ? 'bg-surface-2 text-text' : 'text-text-secondary hover:bg-surface-2'"
+            class="px-2.5 py-1.5 text-sm border-l border-[var(--border)] transition-colors"
+            :class="viewMode === 'list' ? 'bg-[var(--surface-2)] text-[var(--text)]' : 'text-[var(--text-secondary)] hover:bg-[var(--surface-2)]'"
             @click="viewMode = 'list'"
           >
             {{ t('gallery.list') }}
@@ -158,7 +158,7 @@ function formatSize(bytes?: number): string {
       >
         <div class="card card-interactive overflow-hidden">
           <div class="relative overflow-hidden">
-            <div class="aspect-auto min-h-[120px] bg-surface-2 flex items-center justify-center">
+            <div class="aspect-auto min-h-[120px] bg-[var(--surface-2)] flex items-center justify-center">
               <img
                 v-if="asset.thumbnail_key || asset.storage_key"
                 :src="`/v1/assets/${asset.id}/content`"
@@ -175,7 +175,7 @@ function formatSize(bytes?: number): string {
             </div>
           </div>
           <div class="p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <p class="text-xs text-text-secondary line-clamp-2">{{ asset.prompt || t('common.untitled') }}</p>
+            <p class="text-xs text-[var(--text-secondary)] line-clamp-2">{{ asset.prompt || t('common.untitled') }}</p>
           </div>
         </div>
       </div>
@@ -183,14 +183,14 @@ function formatSize(bytes?: number): string {
 
 
     <!-- List View -->
-    <div v-else class="card divide-y divide-border overflow-hidden">
+    <div v-else class="card divide-y divide-[var(--border-subtle)] overflow-hidden">
       <div
         v-for="asset in filteredAssets"
         :key="asset.id"
-        class="flex items-center gap-4 px-4 py-3 hover:bg-surface-2 cursor-pointer transition-colors duration-150"
+        class="flex items-center gap-4 px-4 py-3 hover:bg-[var(--surface-2)] cursor-pointer transition-colors duration-150"
         @click="openAsset(asset)"
       >
-        <div class="w-16 h-16 bg-surface-2 rounded-md shrink-0 overflow-hidden">
+        <div class="w-16 h-16 bg-[var(--surface-2)] rounded-md shrink-0 overflow-hidden">
           <img
             v-if="asset.thumbnail_key || asset.storage_key"
             :src="`/v1/assets/${asset.id}/content`"
