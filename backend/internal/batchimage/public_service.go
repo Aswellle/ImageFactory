@@ -12,29 +12,29 @@ import (
 // self-contained version of Sub2API's batch_image_public.go, adapted for
 // ImageForge. It uses the BatchImageProvider interface to delegate upstream
 type PublicService struct {
-	registry *BatchImageProviderRegistry
-	mu       sync.RWMutex
-	jobs     map[string]*BatchImageJob
+	registry     *BatchImageProviderRegistry
+	mu           sync.RWMutex
+	jobs         map[string]*BatchImageJob
+	items        map[string][]BatchImageItem
 	geminiAPIKey string
 }
 
-// NewPublicService builds a PublicService with the default provider registry.
 func NewPublicService(geminiAPIKey string) *PublicService {
 	s := &PublicService{
 		registry: NewRegistry(
 			NewGeminiAPIBatchImageProvider(nil),
 		),
 		jobs:         make(map[string]*BatchImageJob),
+		items:        make(map[string][]BatchImageItem),
 		geminiAPIKey: geminiAPIKey,
 	}
 	return s
 }
-
-// NewPublicServiceWithRegistry builds a PublicService with a custom registry.
 func NewPublicServiceWithRegistry(registry *BatchImageProviderRegistry, geminiAPIKey string) *PublicService {
 	return &PublicService{
 		registry:     registry,
 		jobs:         make(map[string]*BatchImageJob),
+		items:        make(map[string][]BatchImageItem),
 		geminiAPIKey: geminiAPIKey,
 	}
 }
@@ -116,6 +116,7 @@ func (s *PublicService) Submit(ctx context.Context, input SubmitInput, account *
 		job.LastErrorMessage = ptr(err.Error())
 		s.mu.Lock()
 		s.jobs[batchID] = job
+		s.items[batchID] = []BatchImageItem{{JobID: batchID, CustomID: "item_0", Status: BatchImageItemStatusFailed, CreatedAt: now}}
 		s.mu.Unlock()
 		return nil, err
 	}
@@ -126,8 +127,8 @@ func (s *PublicService) Submit(ctx context.Context, input SubmitInput, account *
 	job.StartedAt = &now
 	s.mu.Lock()
 	s.jobs[batchID] = job
+	s.items[batchID] = []BatchImageItem{{JobID: batchID, CustomID: "item_0", Status: BatchImageItemStatusPending, CreatedAt: now}}
 	s.mu.Unlock()
-
 
 	return &SubmitResult{
 		BatchID:   batchID,
@@ -166,6 +167,7 @@ func (s *PublicService) Get(ctx context.Context, batchID string, account *Accoun
 		if status.ProviderOutputRef != "" {
 			job.ProviderOutputRef = &status.ProviderOutputRef
 		}
+		s.markItemStatus(batchID, BatchImageItemStatusSuccess)
 	case BatchProviderStateFailed:
 		job.Status = BatchImageJobStatusFailed
 		now := time.Now()
@@ -176,8 +178,10 @@ func (s *PublicService) Get(ctx context.Context, batchID string, account *Accoun
 		if status.ErrorMessage != "" {
 			job.LastErrorMessage = &status.ErrorMessage
 		}
+		s.markItemStatus(batchID, BatchImageItemStatusFailed)
 	case BatchProviderStateCancelled:
 		job.Status = BatchImageJobStatusCancelled
+		s.markItemStatus(batchID, BatchImageItemStatusCancelled)
 	case BatchProviderStateRunning:
 		job.Status = BatchImageJobStatusRunning
 	}
@@ -217,6 +221,81 @@ func (s *PublicService) Cancel(ctx context.Context, batchID string, account *Acc
 		return ErrBatchImageInvalidProvider
 	}
 	return provider.Cancel(ctx, job, account)
+}
+
+// ListModels returns the catalog of models available for batch generation.
+// In this simplified facade the catalog is derived from the provider registry.
+func (s *PublicService) ListModels() *BatchImagePublicModelsResponse {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	modelsByProvider := map[string][]string{
+		BatchImageProviderGeminiAPI: {"gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-pro"},
+		BatchImageProviderVertex:    {"gemini-2.0-flash", "gemini-2.5-flash"},
+	}
+	var out []BatchImagePublicModel
+	providers := []string{BatchImageProviderGeminiAPI, BatchImageProviderVertex}
+	for _, name := range providers {
+		if _, ok := s.registry.Get(name); !ok {
+			continue
+		}
+		for _, model := range modelsByProvider[name] {
+			out = append(out, BatchImagePublicModel{
+				ID:       model,
+				Object:   "image.batch.model",
+				Provider: name,
+			})
+		}
+	}
+	return &BatchImagePublicModelsResponse{Object: "list", Data: out}
+}
+
+// ListItems returns the items tracked for a batch, newest status first.
+func (s *PublicService) ListItems(batchID string, owner BatchImageOwner) (*BatchImagePublicItemsResponse, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	job, ok := s.jobs[batchID]
+	if !ok || job.UserID != owner.UserID {
+		return nil, ErrBatchImageJobNotFound
+	}
+	items := s.items[batchID]
+	data := make([]BatchImagePublicItem, 0, len(items))
+	for i := range items {
+		item := &items[i]
+		data = append(data, BatchImagePublicItem{
+			Object:     "batch.item",
+			CustomID:   item.CustomID,
+			Status:     item.Status,
+			ImageCount: item.ImageCount,
+			ErrorCode:  item.ErrorCode,
+		})
+	}
+	return &BatchImagePublicItemsResponse{Object: "list", Data: data, HasMore: false}, nil
+}
+
+// Delete removes a batch and its items from the local tracking store. In the
+// full port this would mark the record deleted in the repository.
+func (s *PublicService) Delete(batchID string, owner BatchImageOwner) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	job, ok := s.jobs[batchID]
+	if !ok || job.UserID != owner.UserID {
+		return ErrBatchImageJobNotFound
+	}
+	if !IsTerminalBatchImageJobStatus(job.Status) {
+		return ErrBatchImageOutputDeleteNotReady
+	}
+	delete(s.jobs, batchID)
+	delete(s.items, batchID)
+	return nil
+}
+
+// markItemStatus updates the status of every item recorded for a batch.
+func (s *PublicService) markItemStatus(batchID, status string) {
+	items := s.items[batchID]
+	for i := range items {
+		items[i].Status = status
+	}
+	s.items[batchID] = items
 }
 
 

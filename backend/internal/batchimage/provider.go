@@ -56,6 +56,7 @@ var (
 	ErrBatchImageProviderInvalidInput            = newError(http.StatusBadRequest, "BATCH_IMAGE_PROVIDER_INVALID_INPUT", "invalid batch image provider input")
 	ErrBatchImageProviderUnsafeCleanupPath       = newError(http.StatusBadRequest, "VERTEX_UNSAFE_CLEANUP_PATH", "unsafe batch image cleanup path")
 	ErrUnsupportedCleanupTarget                  = newError(http.StatusBadRequest, "BATCH_IMAGE_PROVIDER_UNSUPPORTED_CLEANUP_TARGET", "unsupported batch image cleanup target")
+	ErrBatchImageOutputDeleteNotReady        = newError(http.StatusConflict, "BATCH_IMAGE_OUTPUT_DELETE_NOT_READY", "batch image output is not ready for deletion")
 )
 
 // --- Provider interface (preserved from Sub2API) ---
@@ -238,4 +239,39 @@ func batchImageProviderAPIKey(account *Account) string {
 
 func batchImageProviderInputError(format string, args ...any) error {
 	return ErrBatchImageProviderInvalidInput.withCause(fmt.Errorf(format, args...))
+}
+
+// IsTerminalBatchImageJobStatus reports whether a job status is final (no
+// further worker processing expected).
+func IsTerminalBatchImageJobStatus(status string) bool {
+	switch status {
+	case BatchImageJobStatusCompleted, BatchImageJobStatusFailed, BatchImageJobStatusCancelled, BatchImageJobStatusOutputDeleted:
+		return true
+	default:
+		return false
+	}
+}
+
+// batchImageJobToPublic converts an internal job to its public view.
+func batchImageJobToPublic(job *BatchImageJob) *BatchImagePublicBatch {
+	if job == nil {
+		return nil
+	}
+	pub := &BatchImagePublicBatch{
+		Object:       "batch",
+		BatchID:      job.BatchID,
+		Status:       job.Status,
+		Model:        job.Model,
+		Provider:     job.Provider,
+		TaskName:     job.TaskName,
+		ItemCount:    job.ItemCount,
+		SuccessCount: job.SuccessCount,
+		FailCount:    job.FailCount,
+		CreatedAt:    job.CreatedAt,
+		StartedAt:    job.StartedAt,
+	}
+	if job.Status == BatchImageJobStatusCompleted {
+		pub.CompletedAt = job.FinishedAt
+	}
+	return pub
 }

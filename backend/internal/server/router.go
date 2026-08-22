@@ -16,6 +16,7 @@ import (
 	"github.com/imageforge/imageforge/internal/server/middleware"
 	"github.com/imageforge/imageforge/internal/service"
 	"github.com/imageforge/imageforge/internal/storage"
+	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
@@ -57,6 +58,20 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		log.Warn("failed to start job processor", zap.Error(err))
 	}
 
+	// --- Redis (optional) ---
+	var rdb *redis.Client
+	if cfg.Redis.Host != "" {
+		rdb = redis.NewClient(&redis.Options{
+			Addr:     fmt.Sprintf("%s:%d", cfg.Redis.Host, cfg.Redis.Port),
+			Password: cfg.Redis.Password,
+			DB:       cfg.Redis.DB,
+		})
+		if err := rdb.Ping(context.Background()).Err(); err != nil {
+			log.Warn("redis unavailable, falling back to in-memory task store", zap.Error(err))
+			rdb = nil
+		}
+	}
+
 	// --- Services & handlers ---
 	jwt := service.NewJWTService(cfg.Auth)
 	password := service.NewPassword(cfg.Auth)
@@ -68,6 +83,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
 	genService := service.NewGenerationService(db, batchSvc, store, queue)
 	genHandler := handler.NewGenerationHandler(genService)
+	imageGW := handler.NewOpenAIImagesHandler(handler.NewOpenAIImagesService())
 
 	projectSvc := service.NewProjectService(db)
 	assetSvc := service.NewAssetService(db)
@@ -78,6 +94,11 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	apiKeyHandler := handler.NewAPIKeyHandler(apiKeySvc)
 	usageHandler := handler.NewUsageHandler(apiKeySvc)
 	apiKeyMW := middleware.APIKeyAuth(apiKeySvc)
+
+	// --- Async image tasks (Redis-backed, optional) ---
+	asyncImageHandler := handler.NewAsyncImageHandler(
+		service.NewImageTaskService(repository.NewRedisImageTaskStore(rdb)),
+	)
 
 	// --- Public routes ---
 	v1 := engine.Group("/v1")
@@ -93,10 +114,12 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		}
 		auth.GET("/me", authMW.Require(), authHandler.Me)
 
-		v1.GET("/models", func(c *gin.Context) {
-			c.JSON(200, gin.H{"data": []interface{}{}})
-		})
-	}
+		v1.GET("/models", imageGW.Models)
+
+		// OpenAI-compatible image endpoints (public for SDK access).
+		v1.POST("/images/generations", imageGW.Generations)
+		v1.POST("/images/edits", imageGW.Edits)
+ 	}
 
 	// --- Protected routes ---
 	authorized := v1.Group("")
@@ -118,19 +141,23 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		authorized.DELETE("/assets/:id", assetHandler.Delete)
 		authorized.GET("/assets/:id/content", assetHandler.Content)
 
-		// API Keys.
-		authorized.POST("/api-keys", apiKeyHandler.Create)
-		authorized.GET("/api-keys", apiKeyHandler.List)
-		authorized.DELETE("/api-keys/:id", apiKeyHandler.Revoke)
+	// API Keys.
+	authorized.POST("/api-keys", apiKeyHandler.Create)
+	authorized.GET("/api-keys", apiKeyHandler.List)
+	authorized.DELETE("/api-keys/:id", apiKeyHandler.Revoke)
 
-		// Usage.
-		authorized.GET("/usage", usageHandler.Get)
+	// Usage.
+	authorized.GET("/usage", usageHandler.Get)
 
-		// API-key-authed generation endpoint (for programmatic access).
-		authorized.POST("/images/generate", apiKeyMW, genHandler.Create)
-	}
+	// API-key-authed generation endpoint (for programmatic access).
+	authorized.POST("/images/generate", apiKeyMW, genHandler.Create)
 
-	return &Router{Engine: engine}, nil
+	// Async image tasks (submit-then-poll).
+	authorized.POST("/images/tasks", asyncImageHandler.Submit)
+	authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
+}
+
+return &Router{Engine: engine}, nil
 }
 
 // requestLogger logs method, path, status, duration, and request ID. It never
