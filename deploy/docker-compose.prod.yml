@@ -1,0 +1,253 @@
+# ImageForge 生产环境配置（Caddy 反向代理 + 自动 HTTPS）
+#
+# 与 dev 版的关键区别：
+#   - 仅暴露 80/443（Caddy），其余服务走内部网络
+#   - 无端口映射到宿主机（db/redis/minio 全部内部访问）
+#   - 资源限制 + 重启策略 + 健康检查
+#   - 后端镜像由 Dockerfile 多阶段构建（嵌入前端静态资源）
+#
+# 首次启动：
+#   1. cp ../.env.example ../.env 并填写生产值（尤其是 JWT_SECRET / DB_PASSWORD / IF_CADDY_HOST）
+#   2. docker compose -f deploy/docker-compose.prod.yml up -d
+#   3. 配置 DNS 将域名指向本机，Caddy 会自动申请 Let's Encrypt 证书
+
+name: imageforge-prod
+
+services:
+  # ===========================================================================
+  # Caddy 反向代理 + 自动 HTTPS
+  # ===========================================================================
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      # Caddy 需要写证书到磁盘，同时监听 443/udp 用于 HTTP/3
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - caddy_logs:/var/log/caddy
+    environment:
+      # 通知 Caddy 对外域名，用于证书申请与日志
+      IF_CADDY_HOST: ${IF_CADDY_HOST:-}
+    networks:
+      - frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # ===========================================================================
+  # ImageForge 后端（API + 嵌入的前端静态资源）
+  # ===========================================================================
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        GOLANG_IMAGE: ${GOLANG_IMAGE:-golang:1.22-alpine}
+        ALPINE_IMAGE: ${ALPINE_IMAGE:-alpine:3.21}
+    image: imageforge-backend:latest
+    restart: unless-stopped
+    # 生产不暴露端口，仅 Caddy 内部访问
+    expose:
+      - "8080"
+    environment:
+      IF_SERVER_HOST: 0.0.0.0
+      IF_SERVER_PORT: 8080
+      IF_SERVER_MODE: ${IF_SERVER_MODE:-release}
+
+      IF_DATABASE_HOST: db
+      IF_DATABASE_PORT: 5432
+      IF_DATABASE_USER: ${DB_USER:-imageforge}
+      IF_DATABASE_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+      IF_DATABASE_NAME: ${DB_NAME:-imageforge}
+      IF_DATABASE_SSLMODE: ${DB_SSLMODE:-prefer}
+
+      IF_REDIS_HOST: redis
+      IF_REDIS_PORT: 6379
+      IF_REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      IF_REDIS_DB: 0
+
+      IF_AUTH_JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      IF_AUTH_ACCESS_TOKEN_MINUTES: ${ACCESS_TOKEN_MINUTES:-1440}
+      IF_AUTH_BCRYPT_COST: ${BCRYPT_COST:-12}
+
+      # 生产存储：Cloudflare R2（生产）或 MinIO（自托管）
+      IF_STORAGE_PROVIDER: ${STORAGE_PROVIDER:-r2}
+      IF_STORAGE_BUCKET: ${STORAGE_BUCKET:-imageforge}
+      IF_STORAGE_REGION: ${STORAGE_REGION:-auto}
+      IF_STORAGE_ENDPOINT: ${STORAGE_ENDPOINT:-}
+      IF_STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY:-}
+      IF_STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY:?STORAGE_SECRET_KEY is required}
+      IF_STORAGE_PUBLIC_HOST: ${STORAGE_PUBLIC_HOST:-}
+
+      IF_SUB2API_BASE_URL: ${SUB2API_BASE_URL:-}
+      IF_SUB2API_ADMIN_API_KEY: ${SUB2API_ADMIN_API_KEY:-}
+      IF_SUB2API_ACCOUNT_ID: ${SUB2API_ACCOUNT_ID:-}
+      IF_SUB2API_GEMINI_API_KEY: ${SUB2API_GEMINI_API_KEY:-}
+      IF_SUB2API_TIMEOUT_SECONDS: ${SUB2API_TIMEOUT_SECONDS:-120}
+
+      # HTTPS 感知：当 Caddy 终结 TLS 后端据此生成 https URL
+      IF_FORCE_HTTPS: ${IF_FORCE_HTTPS:-true}
+      IF_CADDY_HOST: ${IF_CADDY_HOST:-}
+    networks:
+      - frontend
+      - backend_net
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-q",
+          "-T",
+          "5",
+          "-O",
+          "/dev/null",
+          "http://localhost:8080/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  # ===========================================================================
+  # PostgreSQL
+  # ===========================================================================
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_USER: ${DB_USER:-imageforge}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+      POSTGRES_DB: ${DB_NAME:-imageforge}
+      TZ: ${TZ:-UTC}
+    command: >
+      postgres
+      -c max_connections=${POSTGRES_MAX_CONNECTIONS:-100}
+      -c shared_buffers=${POSTGRES_SHARED_BUFFERS:-128MB}
+      -c effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-4GB}
+      -c maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-64MB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend_net
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-imageforge} -d ${DB_NAME:-imageforge}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1G
+    # 不暴露端口到宿主机，仅内部网络访问
+
+  # ===========================================================================
+  # Redis
+  # ===========================================================================
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    command: >
+      sh -c '
+        redis-server
+        --save 60 1
+        --appendonly yes
+        --appendfsync everysec
+        ${REDIS_PASSWORD:+--requirepass "$REDIS_PASSWORD"}'
+    environment:
+      TZ: ${TZ:-UTC}
+      REDISCLI_AUTH: ${REDIS_PASSWORD:-}
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ===========================================================================
+  # MinIO（仅当 STORAGE_PROVIDER=minio 时使用）
+  # 生产用 R2 时可注释掉此服务
+  # ===========================================================================
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - minio_data:/data
+    networks:
+      - backend_net
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mc",
+          "ready",
+          "local",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    # 不暴露端口到宿主机；若需外部调试，临时添加：
+    # ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
+
+# =============================================================================
+# 网络：frontend（Caddy <-> backend） + backend_net（backend <-> db/redis/minio）
+# =============================================================================
+networks:
+  frontend:
+    driver: bridge
+  backend_net:
+    driver: bridge
+    internal: true # 无出站，提升安全性
+
+# =============================================================================
+# 持久化卷
+# =============================================================================
+volumes:
+  db_data:
+  redis_data:
+  minio_data:
+  caddy_data:
+  caddy_config:
+  caddy_logs:

@@ -1,0 +1,142 @@
+# ImageForge Caddy 反向代理配置
+#
+# 部署说明：
+#   1. 将 imageforge.example.com 替换为你的域名。
+#   2. 域名 DNS 已指向本机后，Caddy 会自动申请 Let's Encrypt 证书（自动 HTTPS）。
+#      HTTP (80) 会自动重定向到 HTTPS (443)。
+#   3. 将本文件挂载到 Caddy 容器：./Caddyfile:/etc/caddy/Caddyfile:ro
+#
+# 后端说明：
+#   ImageForge 二进制通过 go:embed 把前端静态资源嵌入自身，因此同一后端
+#   同时提供 /v1 API 与前端 SPA 的静态文件。Caddy 直接反代全部流量即可。
+
+{
+	# 全局服务器调优
+	servers {
+		max_header_size 64KB
+		timeouts {
+			read_header 10s
+			idle 2m
+		}
+	}
+
+	# 可选：仅保留 TLS 1.2/1.3（更安全，按需取消注释）
+	# auto_https disable_redirects
+}
+
+# ---- 生产域名（替换为你的域名）----
+imageforge.example.com {
+	# TLS：Caddy 自动申请并续期 Let's Encrypt 证书。
+	# 如需自定义证书，替换为：
+	#   tls /path/to/cert.pem /path/to/key.pem
+
+	tls {
+		protocols tls1.2 tls1.3
+	}
+
+	# =========================================================================
+	# 安全响应头
+	# =========================================================================
+	header {
+		# 防止 MIME 类型嗅探
+		X-Content-Type-Options nosniff
+		# 禁止被嵌入 iframe（防点击劫持）
+		X-Frame-Options DENY
+		# XSS 过滤器（旧浏览器）
+		X-XSS-Protection "1; mode=block"
+		# Referrer 策略
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# HSTS（生产启用；首次部署先用小 max-age 验证）
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		# 移除 Server 标识
+		-Server
+	}
+
+	# =========================================================================
+	reverse_proxy backend:8080 {
+	# =========================================================================
+		# -------------------------------------------------------------------------
+		# SSE 安全：关闭缓冲，立即flush
+		#   flush_interval -1 使 Caddy 不会缓冲 event-stream 响应，
+		#   对 image generation 等 SSE 流式接口至关重要。
+		# -------------------------------------------------------------------------
+		transport http {
+			keepalive 120s
+			keepalive_idle_conns 256
+			read_buffer 16KB
+			write_buffer 16KB
+			compression off
+			flush_interval -1
+		}
+
+		# 仅从真实 TCP 对端生成转发头，避免透传客户端伪造值
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+
+		# 健康检查
+		health_uri /health
+		health_interval 30s
+		health_timeout 10s
+		health_status 200
+
+		# 故障判定
+		fail_duration 30s
+		max_fails 3
+		unhealthy_status 500 502 503 504
+	}
+
+	# =========================================================================
+	# 压缩：zstd + gzip（SSE 文本流不压缩）
+	# =========================================================================
+	encode {
+		zstd
+		gzip 6
+		minimum_length 256
+		match {
+			header Content-Type text/css*
+			header Content-Type text/csv*
+			header Content-Type text/html*
+			header Content-Type text/javascript*
+			header Content-Type text/markdown*
+			header Content-Type text/plain*
+			header Content-Type text/xml*
+			header Content-Type application/json*
+			header Content-Type application/javascript*
+			header Content-Type application/xml*
+			header Content-Type application/rss+xml*
+			header Content-Type image/svg+xml*
+		}
+	}
+
+	# =========================================================================
+	# 请求体大小限制（图片上传，含 base64）
+	# =========================================================================
+	request_body {
+		max_size 256MB
+	}
+
+	# =========================================================================
+	# 日志
+	# =========================================================================
+	log {
+		output file /var/log/caddy/imageforge.log {
+			roll_size 50mb
+			roll_keep 10
+			roll_keep_for 720h
+		}
+		format json
+		level INFO
+	}
+
+	# 错误兜底
+	handle_errors {
+		respond "{err.status_code} {err.status_text}"
+	}
+}
+
+# ---- 兜底：直接访问 IP 或非标准域名时也可服务 ----
+:80 {
+	redir https://imageforge.example.com{uri} permanent
+}
