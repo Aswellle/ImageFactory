@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useFavoriteStore } from '@/stores/favorite'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 
+const router = useRouter()
 const store = useFavoriteStore()
-
 onMounted(() => {
   store.fetchFavorites()
 })
@@ -44,8 +45,7 @@ onMounted(() => {
       <div
         v-for="fav in store.favorites"
         :key="fav.id"
-        class="break-inside-avoid mb-4 cursor-pointer group relative"
-        @click="$router.push(`/assets/${fav.asset_id}`)"
+        @click="router.push(`/assets/${fav.asset_id}`)"
       >
         <div class="card overflow-hidden break-inside-avoid">
           <div class="relative">

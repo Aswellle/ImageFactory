@@ -2,6 +2,7 @@ package batchimage
 
 import (
 	"context"
+	"sync"
 	"time"
 )
 
@@ -23,6 +24,7 @@ func (a *Account) GetCredential(key string) string {
 // BatchImageJob is a minimal stub of Sub2API's service.BatchImageJob.
 // In the full port, this mirrors ent.BatchImageJob fields.
 type BatchImageJob struct {
+	mu              sync.RWMutex
 	ID              int64
 	BatchID         string
 	UserID          int64
@@ -68,6 +70,18 @@ type BatchImageJob struct {
 	InputDeletedAt  *time.Time
 	OutputDeletedAt *time.Time
 }
+
+// Lock acquires the write lock for external mutation safety.
+func (j *BatchImageJob) Lock() { j.mu.Lock() }
+
+// Unlock releases the write lock.
+func (j *BatchImageJob) Unlock() { j.mu.Unlock() }
+
+// RLocker read-locks for status reads.
+func (j *BatchImageJob) RLock() { j.mu.RLock() }
+
+// RUnlock releases the read lock.
+func (j *BatchImageJob) RUnlock() { j.mu.RUnlock() }
 // ---------------------------------------------------------------------------
 // Additional fields used by the settlement/worker/download/cleanup pipeline.
 // The existing BatchImageJob is extended (not replaced) to stay compatible

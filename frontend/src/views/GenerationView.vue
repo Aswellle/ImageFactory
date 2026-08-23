@@ -119,7 +119,7 @@ function statusLabel(status: string): string {
 
       <!-- Advanced toggle -->
       <button type="button" class="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text)]" @click="showAdvanced = !showAdvanced">
-        {{ showAdvanced ? t('generation.hideAdvanced') : t('generation.showAdvanced') }} {{ t('generation.advanced') }}
+        {{ showAdvanced ? t('generation.hideAdvanced') : t('generation.showAdvanced') }}
       </button>
       <div v-if="showAdvanced" class="bento-tile space-y-4 animate-scale-in">
         <div>

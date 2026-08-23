@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useTagStore } from '@/stores/tag'
+import { useI18n } from 'vue-i18n'
 import SkeletonCard from '@/components/SkeletonCard.vue'
+const { t } = useI18n()
 const store = useTagStore()
 const showForm = ref(false)
 const newName = ref('')
@@ -22,7 +24,7 @@ async function createTag() {
 }
 
 async function deleteTag(id: number) {
-  if (confirm('Delete this tag? It will be removed from all assets.')) {
+  if (confirm(t('tags.confirmDelete'))) {
     await store.deleteTag(id)
   }
 }

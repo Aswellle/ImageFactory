@@ -58,7 +58,7 @@ async function copyKey() {
 </script>
 
 <template>
-  <div class="page-container space-y-8">
+  <div class="space-y-8">
     <!-- Header -->
     <div class="flex items-end justify-between">
       <div>

@@ -37,13 +37,15 @@ func (w *Worker) PollOnce(ctx context.Context, jobs []*BatchImageJob) []error {
 
 func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 	// Only poll active jobs
+	job.RLock()
 	switch job.Status {
 	case BatchImageJobStatusSubmitted, BatchImageJobStatusRunning:
 		// Active
 	default:
+		job.RUnlock()
 		return nil
 	}
-
+	job.RUnlock()
 	provider, ok := w.registry.Get(job.Provider)
 	if !ok {
 		log.Printf("batchimage: unknown provider %s for job %s", job.Provider, job.BatchID)
@@ -57,6 +59,7 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 	}
 
 	// Map provider state to job status
+	job.Lock()
 	switch status.InternalState {
 	case BatchProviderStateSucceeded:
 		job.Status = BatchImageJobStatusCompleted
@@ -73,6 +76,7 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 	case BatchProviderStateRunning:
 		job.Status = BatchImageJobStatusRunning
 	default:
+		job.Unlock()
 		return nil // Pending or unknown, no change
 	}
 
@@ -81,11 +85,7 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 	if job.Status == BatchImageJobStatusCompleted || job.Status == BatchImageJobStatusFailed {
 		job.FinishedAt = &now
 	}
-
-	// Settle completed/failed jobs
-	if CanSettle(job) {
-		_ = w.settle.Settle(ctx, job)
-	}
+	job.Unlock()
 
 	return nil
 }

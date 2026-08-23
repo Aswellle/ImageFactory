@@ -13,6 +13,7 @@ import (
 	"github.com/imageforge/imageforge/internal/job"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 	"github.com/imageforge/imageforge/internal/storage"
+	"go.uber.org/zap"
 )
 
 // GenerationService orchestrates image generation. It creates a job record,
@@ -25,11 +26,12 @@ type GenerationService struct {
 	queue   job.Queue
 	assets  *AssetService
 	usage   *UsageService
+	log     *zap.Logger
 }
 
 // NewGenerationService builds a GenerationService.
 func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService, usage *UsageService) *GenerationService {
-	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage}
+	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage, log: zap.NewNop()}
 }
 
 // SubmitRequest is the provider-independent generation request from a user.
@@ -142,7 +144,13 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 			},
 		}
 		if err := s.queue.Submit(ctx, queueTask); err != nil {
-			_ = err
+			s.log.Error("failed to enqueue poll task", zap.String("external_id", externalID), zap.Error(err))
+			_, _ = s.db.GenerationJob.Update().
+				Where(generationjob.ExternalID(externalID)).
+				SetStatus(generationjob.StatusFailed).
+				SetErrorCode("QUEUE_FULL").
+				SetErrorMessage("internal error: failed to enqueue generation task").
+			Save(ctx)
 		}
 	}
 

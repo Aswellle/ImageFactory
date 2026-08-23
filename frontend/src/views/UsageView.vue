@@ -36,7 +36,7 @@ function formatNumber(n: number) {
 </script>
 
 <template>
-  <div class="page-container space-y-8">
+  <div class="space-y-8">
     <!-- Header -->
     <header class="flex flex-wrap items-end justify-between gap-4">
       <div>

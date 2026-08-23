@@ -121,7 +121,7 @@ function useResult() {
 </script>
 
 <template>
-  <div class="page-container space-y-10">
+  <div class="space-y-10">
     <!-- Header -->
     <div class="flex items-end justify-between">
       <div>

@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -28,7 +29,11 @@ func NewJWTService(cfg config.AuthConfig) *JWTService {
 	if ttl <= 0 {
 		ttl = 24 * time.Hour
 	}
-	return &JWTService{secret: []byte(cfg.JWTSecret), ttl: ttl}
+	secret := cfg.JWTSecret
+	if secret == "" {
+		secret = "imageforge-dev-secret-change-in-production-" + strconv.FormatInt(time.Now().UnixNano(), 36)
+	}
+	return &JWTService{secret: []byte(secret), ttl: ttl}
 }
 
 // Generate signs a token for the given user.
