@@ -82,10 +82,15 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 
 	now := time.Now()
 	job.UpdatedAt = now
-	if job.Status == BatchImageJobStatusCompleted || job.Status == BatchImageJobStatusFailed {
-		job.FinishedAt = &now
-	}
-	job.Unlock()
+if job.Status == BatchImageJobStatusCompleted || job.Status == BatchImageJobStatusFailed {
+    job.FinishedAt = &now
+}
+job.Unlock()
 
-	return nil
+// Settle completed/failed jobs
+if CanSettle(job) {
+    _ = w.settle.Settle(ctx, job)
+}
+
+return nil
 }
