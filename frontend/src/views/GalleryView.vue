@@ -139,18 +139,45 @@ function formatSize(bytes?: number): string {
     </div>
 
     <!-- Empty state -->
-    <div v-else-if="filteredAssets.length === 0">
-      <div class="card animate-fade-in">
-        <div class="py-20 text-center">
-          <div class="text-body mb-1">
-            {{ searchQuery || onlyFavorites ? t('gallery.noMatchingImages') : t('gallery.noImagesYet') }}
-          </div>
-          <div class="text-caption">
-            {{ searchQuery || onlyFavorites ? t('gallery.tryDifferentFilter') : t('gallery.generateFirstImage') }}
-          </div>
-        </div>
-      </div>
+<!-- Empty state: No images yet -->
+<div v-else-if="filteredAssets.length === 0" class="animate-fade-in">
+  <div class="surface rounded-2xl p-12 text-center border border-[var(--border-subtle)]">
+    <!-- Icon -->
+    <div class="mx-auto w-16 h-16 rounded-2xl bg-[var(--surface-2)] flex items-center justify-center mb-5">
+      <svg class="h-8 w-8 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
     </div>
+    <!-- Title -->
+    <h3 class="text-subheading text-[var(--text)] mb-2">
+      {{ searchQuery || onlyFavorites ? t('gallery.noMatchingTitle') : t('gallery.emptyTitle') }}
+    </h3>
+    <!-- Description -->
+    <p class="text-body max-w-sm mx-auto mb-6">
+      {{ searchQuery || onlyFavorites ? t('gallery.noMatchingDesc') : t('gallery.emptyDesc') }}
+    </p>
+    <!-- CTA Button -->
+    <button
+      v-if="!searchQuery && !onlyFavorites"
+      class="btn btn-primary"
+      @click="router.push('/app/create')"
+    >
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      {{ t('gallery.createFirstImage') }}
+    </button>
+    <button
+      v-else
+      class="btn btn-ghost"
+      @click="searchQuery = ''; onlyFavorites = false; selectedTagId = null"
+    >
+      {{ t('gallery.clearFilters') }}
+    </button>
+  </div>
+</div>
     <!-- Masonry Grid -->
     <div v-else-if="viewMode === 'grid'" class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
       <div

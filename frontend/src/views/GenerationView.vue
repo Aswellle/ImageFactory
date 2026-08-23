@@ -116,17 +116,34 @@ function statusLabel(status: string): string {
           </button>
         </div>
       </div>
-
-      <!-- Advanced toggle -->
-      <button type="button" class="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text)]" @click="showAdvanced = !showAdvanced">
-        {{ showAdvanced ? t('generation.hideAdvanced') : t('generation.showAdvanced') }}
-      </button>
-      <div v-if="showAdvanced" class="bento-tile space-y-4 animate-scale-in">
-        <div>
-        <label class="mb-2 block text-sm font-medium text-[var(--text)]" for="negative">{{ t('generation.negativePromptLabel') }}</label>
-          <input id="negative" v-model="negativePrompt" class="input" :placeholder="t('generation.negativePromptPlaceholder')" />
-        </div>
-      </div>
+<!-- Advanced toggle -->
+<div class="pt-1">
+  <button
+    type="button"
+    class="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text)]"
+    @click="showAdvanced = !showAdvanced"
+  >
+    <svg
+      class="h-4 w-4 transition-transform duration-200"
+      :class="showAdvanced ? 'rotate-180' : ''"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+    {{ showAdvanced ? t('generation.hideAdvanced') : t('generation.showAdvanced') }}
+  </button>
+</div>
+<div v-if="showAdvanced" class="bento-tile space-y-4 animate-scale-in">
+  <div>
+    <label class="mb-2 block text-sm font-medium text-[var(--text)]" for="negative">{{ t('generation.negativePromptLabel') }}</label>
+    <input id="negative" v-model="negativePrompt" class="input" :placeholder="t('generation.negativePromptPlaceholder')" />
+  </div>
+</div>
 
       <!-- Error -->
       <p v-if="store.error" class="text-sm text-danger animate-fade-in">{{ store.error }}</p>
