@@ -29,7 +29,7 @@ export default {
     nameLabel: 'Name',
     namePlaceholder: 'Your name',
     emailLabel: 'Email',
-    emailPlaceholder: 'you@company.com',
+    emailPlaceholder: 'you[at]company.com',
     passwordLabel: 'Password',
     passwordPlaceholder: '••••••••',
     signIn: 'Sign In',

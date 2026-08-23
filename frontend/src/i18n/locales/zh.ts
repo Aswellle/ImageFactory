@@ -29,7 +29,7 @@ export default {
     nameLabel: '名称',
     namePlaceholder: '您的姓名',
     emailLabel: '邮箱',
-    emailPlaceholder: 'you@company.com',
+    emailPlaceholder: 'you[at]company.com',
     passwordLabel: '密码',
     passwordPlaceholder: '••••••••',
     signIn: '登录',

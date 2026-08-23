@@ -59,7 +59,7 @@ function statusLabel(status: string): string {
   <div class="mx-auto max-w-3xl space-y-8">
     <!-- Header -->
     <header class="animate-fade-in">
-      <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ t('generation.title') }}</h1>
+    <h1 class="text-heading text-[var(--text)]">{{ t('generation.title') }}</h1>
       <p class="mt-2 text-body max-w-lg">{{ t('generation.subtitle') }}</p>
     </header>
 
@@ -68,7 +68,7 @@ function statusLabel(status: string): string {
       <!-- Prompt -->
       <div>
         <div class="mb-2 flex items-center justify-between">
-          <label class="text-sm font-medium text-[#1d1d1f] dark:text-white" for="prompt">{{ t('generation.promptLabel') }}</label>
+        <label class="text-sm font-medium text-[var(--text)]" for="prompt">{{ t('generation.promptLabel') }}</label>
           <span class="text-caption tabular-nums">{{ charCount }}</span>
         </div>
         <textarea
@@ -83,13 +83,13 @@ function statusLabel(status: string): string {
       <!-- Model & Size -->
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="mb-2 block text-sm font-medium text-[#1d1d1f] dark:text-white" for="model">{{ t('generation.modelLabel') }}</label>
+        <label class="mb-2 block text-sm font-medium text-[var(--text)]" for="model">{{ t('generation.modelLabel') }}</label>
           <select id="model" v-model="model" class="input">
             <option v-for="m in models" :key="m.value" :value="m.value">{{ m.label }}</option>
           </select>
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-[#1d1d1f] dark:text-white" for="size">{{ t('generation.sizeLabel') }}</label>
+        <label class="mb-2 block text-sm font-medium text-[var(--text)]" for="size">{{ t('generation.sizeLabel') }}</label>
           <select id="size" v-model="size" class="input">
             <option v-for="s in sizes" :key="s.value" :value="s.value">{{ s.label }}</option>
           </select>
@@ -98,7 +98,7 @@ function statusLabel(status: string): string {
 
       <!-- Image count -->
       <div>
-        <label class="mb-2 block text-sm font-medium text-[#1d1d1f] dark:text-white">{{ t('generation.numberOfImages') }}</label>
+      <label class="mb-2 block text-sm font-medium text-[var(--text)]">{{ t('generation.numberOfImages') }}</label>
         <div class="flex gap-2">
           <button
             v-for="n in [1, 2, 4]"
@@ -119,7 +119,7 @@ function statusLabel(status: string): string {
       </button>
       <div v-if="showAdvanced" class="bento-tile space-y-4 animate-scale-in">
         <div>
-          <label class="mb-2 block text-sm font-medium text-[#1d1d1f] dark:text-white" for="negative">{{ t('generation.negativePromptLabel') }}</label>
+        <label class="mb-2 block text-sm font-medium text-[var(--text)]" for="negative">{{ t('generation.negativePromptLabel') }}</label>
           <input id="negative" v-model="negativePrompt" class="input" :placeholder="t('generation.negativePromptPlaceholder')" />
         </div>
       </div>
@@ -148,8 +148,8 @@ function statusLabel(status: string): string {
           class="badge"
           :class="{
             'badge-accent': store.activeJob.status === 'processing' || store.activeJob.status === 'pending',
-            'bg-[#007d26]/10 text-[#007d26] border-transparent dark:bg-[#30d158]/15 dark:text-[#30d158]': store.activeJob.status === 'completed',
-            'bg-[#d70015]/10 text-[#d70015] border-transparent dark:bg-[#ff453a]/15 dark:text-[#ff453a]': store.activeJob.status === 'failed',
+            'badge-success': store.activeJob.status === 'completed',
+            'badge-danger': store.activeJob.status === 'failed',
           }"
         >
           {{ statusLabel(store.activeJob.status) }}

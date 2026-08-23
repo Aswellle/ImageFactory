@@ -112,7 +112,7 @@ async function applyExistingTag(tag: Tag) {
     <header class="flex items-start justify-between">
       <div>
         <button class="mb-3 text-sm text-text-secondary transition-colors hover:text-text" @click="$router.back()">{{ t('common.back') }}</button>
-        <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ asset.title || t('common.untitled') }}</h1>
+        <h1 class="text-heading text-[var(--text)]">{{ asset.title || t('common.untitled') }}</h1>
       </div>
       <FavoriteButton :asset-id="asset.id" size="lg" />
     </header>

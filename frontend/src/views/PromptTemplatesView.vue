@@ -22,6 +22,8 @@ const applyInputs = ref<Record<string, string>>({})
 const applyResult = ref<string | null>(null)
 const applyLoading = ref(false)
 
+
+
 onMounted(() => {
   store.fetchTemplates()
   store.fetchBuiltIn()
@@ -123,7 +125,7 @@ function useResult() {
     <!-- Header -->
     <div class="flex items-end justify-between">
       <div>
-        <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ t('promptTemplates.title') }}</h1>
+        <h1 class="text-heading text-[var(--text)]">{{ t('promptTemplates.title') }}</h1>
         <p class="text-body mt-1">{{ t('promptTemplates.subtitle') }}</p>
       </div>
       <button class="btn btn-primary" @click="openCreate">{{ t('promptTemplates.newTemplate') }}</button>
@@ -142,7 +144,7 @@ function useResult() {
           @click="openApply(b)"
         >
           <div class="flex items-start justify-between gap-2">
-            <h3 class="text-subheading text-[#1d1d1f] dark:text-white">{{ b.name }}</h3>
+            <h3 class="text-subheading text-[var(--text)]">{{ b.name }}</h3>
             <span class="badge badge-accent">{{ b.category }}</span>
           </div>
           <p class="text-body">{{ b.description }}</p>
@@ -151,9 +153,8 @@ function useResult() {
               v-for="v in b.variables"
               :key="v"
               class="text-[11px] px-2 py-0.5 rounded-md bg-[var(--surface-2)] text-[var(--text-secondary)] text-mono"
-            >
-              {{ `{{${v}}}` }}
-            </span>
+              v-text="'{{' + v + '}}'"
+            ></span>
           </div>
         </div>
       </div>
@@ -226,7 +227,7 @@ function useResult() {
         <div class="surface w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-6 space-y-5 animate-scale-in">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <h2 class="text-lg font-semibold tracking-tight text-[#1d1d1f] dark:text-white">{{ applyTarget.name }}</h2>
+              <h2 class="text-lg font-semibold tracking-tight text-[var(--text)]">{{ applyTarget.name }}</h2>
               <p v-if="applyTarget.description" class="text-body mt-1">
                 {{ applyTarget.description }}
               </p>
@@ -244,7 +245,7 @@ function useResult() {
 
           <div v-if="variableList.length" class="space-y-4">
             <div v-for="v in variableList" :key="v">
-              <label class="text-xs font-medium text-[var(--text-secondary)] mb-1.5 block">{{ `{{${v}}}` }}</label>
+              <label class="text-xs font-medium text-[var(--text-secondary)] mb-1.5 block" v-text="'{{' + v + '}}'"></label>
               <input
                 v-model="applyInputs[v]"
                 class="input"

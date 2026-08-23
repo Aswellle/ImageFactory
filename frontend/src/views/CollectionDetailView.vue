@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCollectionStore } from '@/stores/collection'
+import { useFavoriteStore } from '@/stores/favorite'
 import type { Asset } from '@/api/asset'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 
@@ -17,6 +18,7 @@ onMounted(async () => {
     const id = Number(route.params.id)
     collection.value = await store.getCollection(id)
     assets.value = (await store.listAssets(id)) as Asset[]
+    await useFavoriteStore().syncFavorites()
   } catch {
     router.push('/collections')
   } finally {
@@ -61,11 +63,8 @@ onMounted(async () => {
               />
             </div>
             <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" @click.stop>
-              <FavoriteButton :asset-id="asset.id" size="sm" />
+              <FavoriteButton :asset-id="asset.id" size="sm" :initial-favorited="useFavoriteStore().isFavorited(asset.id)" />
             </div>
-          </div>
-          <div class="p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <p class="text-caption line-clamp-2">{{ asset.prompt || 'Untitled' }}</p>
           </div>
         </div>
       </div>

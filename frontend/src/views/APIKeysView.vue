@@ -61,7 +61,7 @@ async function copyKey() {
     <!-- Header -->
     <div class="flex items-end justify-between">
       <div>
-        <h1 class="text-heading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.title') }}</h1>
+        <h1 class="text-heading text-[var(--text)]">{{ t('apiKeys.title') }}</h1>
         <p class="text-body mt-1">{{ t('apiKeys.subtitle') }}</p>
       </div>
       <button class="btn btn-primary" @click="showCreate = true">{{ t('apiKeys.createKey') }}</button>
@@ -87,7 +87,7 @@ async function copyKey() {
 
     <!-- Create form -->
     <div v-if="showCreate" class="bento-tile space-y-4">
-      <h3 class="text-subheading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.createApiKey') }}</h3>
+      <h3 class="text-subheading text-[var(--text)]">{{ t('apiKeys.createApiKey') }}</h3>
       <div>
         <input v-model="newName" class="input" :placeholder="t('apiKeys.keyNamePlaceholder')" @keyup.enter="createKey" />
       </div>
@@ -112,7 +112,7 @@ async function copyKey() {
     <div v-else class="surface rounded-2xl overflow-hidden">
       <div v-for="(k, idx) in keys" :key="k.id" class="flex items-center justify-between px-6 py-4" :class="idx > 0 ? 'border-t border-[var(--border-subtle)]' : ''">
         <div>
-          <div class="text-sm font-medium text-[#1d1d1f] dark:text-white">{{ k.name || t('common.untitled') }}</div>
+          <div class="text-sm font-medium text-[var(--text)]">{{ k.name || t('common.untitled') }}</div>
           <div class="text-caption mt-0.5 text-mono">{{ k.prefix }}…</div>
         </div>
         <div class="flex items-center gap-5">
@@ -125,19 +125,19 @@ async function copyKey() {
 
     <!-- Usage stats -->
     <div class="bento-tile space-y-5">
-      <h3 class="text-subheading text-[#1d1d1f] dark:text-white">{{ t('apiKeys.usageLast30Days') }}</h3>
+      <h3 class="text-subheading text-[var(--text)]">{{ t('apiKeys.usageLast30Days') }}</h3>
       <div class="grid grid-cols-3 gap-6">
         <div>
           <div class="text-caption mb-1">{{ t('apiKeys.requests') }}</div>
-          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+          <div class="metric-value text-[var(--text)]">0</div>
         </div>
         <div>
           <div class="text-caption mb-1">{{ t('apiKeys.images') }}</div>
-          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+          <div class="metric-value text-[var(--text)]">0</div>
         </div>
         <div>
           <div class="text-caption mb-1">{{ t('apiKeys.tokens') }}</div>
-          <div class="metric-value text-[#1d1d1f] dark:text-white">0</div>
+          <div class="metric-value text-[var(--text)]">0</div>
         </div>
       </div>
     </div>

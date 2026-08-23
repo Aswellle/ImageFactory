@@ -30,42 +30,42 @@ function logout() {
 
       <nav class="flex-1 space-y-1">
         <RouterLink
-          to="/"
+          to="/app"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >
           {{ t('nav.workspace') }}
         </RouterLink>
         <RouterLink
-          to="/create"
+          to="/app/create"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >
           {{ t('nav.create') }}
         </RouterLink>
         <RouterLink
-          to="/assets"
+          to="/app/assets"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >
           {{ t('nav.gallery') }}
         </RouterLink>
         <RouterLink
-          to="/projects"
+          to="/app/projects"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >
           {{ t('nav.projects') }}
         </RouterLink>
         <RouterLink
-          to="/templates"
+          to="/app/templates"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >
           {{ t('nav.templates') }}
         </RouterLink>
         <RouterLink
-          to="/api-keys"
+          to="/app/api-keys"
           class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] transition-all duration-150"
           active-class="!bg-[var(--surface-2)] !text-[var(--text)]"
         >

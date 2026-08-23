@@ -86,5 +86,6 @@ async function deleteCollection(id: number) {
           </svg>
         </button>
       </div>
+    </div>
   </div>
 </template>

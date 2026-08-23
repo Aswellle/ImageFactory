@@ -5,6 +5,8 @@ import { useFavoriteStore } from '@/stores/favorite'
 const props = defineProps<{
   assetId: number
   size?: 'sm' | 'md' | 'lg'
+  /** Initial favorited state from parent (avoids per-button API call). */
+  initialFavorited?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -12,12 +14,14 @@ const emit = defineEmits<{
 }>()
 
 const store = useFavoriteStore()
-const isFav = ref(false)
+const isFav = ref(props.initialFavorited ?? false)
 const loading = ref(false)
 const popping = ref(false)
 
-onMounted(async () => {
-  isFav.value = await store.checkFavorite(props.assetId)
+// Only check individually if parent didn't provide initial state.
+onMounted(() => {
+  if (props.initialFavorited !== undefined) return
+  isFav.value = store.isFavorited(props.assetId)
 })
 
 async function toggle() {

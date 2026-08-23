@@ -170,7 +170,7 @@ function submit() {
                   : 'bg-surface-2 text-text-secondary hover:bg-surface-2/80'"
                 @click="toggleVariable(v)"
               >
-                {{ `{{${v}}}` }}
+                v-text="'{{' + v + '}}'"
               </button>
             </div>
           </div>

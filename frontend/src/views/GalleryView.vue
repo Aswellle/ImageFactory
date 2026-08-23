@@ -22,7 +22,7 @@ const selectedTagId = ref<number | null>(null)
 
 onMounted(async () => {
   assetStore.fetchAssets()
-  if (favoriteStore.favorites.length === 0) favoriteStore.fetchFavorites()
+  await favoriteStore.syncFavorites()
   if (tagStore.tags.length === 0) tagStore.fetchTags()
 })
 
@@ -61,6 +61,8 @@ function formatSize(bytes?: number): string {
 </script>
 
 <template>
+  <div class="space-y-6">
+
     <!-- Header -->
     <div class="flex items-center justify-between gap-4">
       <div>
@@ -171,7 +173,7 @@ function formatSize(bytes?: number): string {
               </div>
             </div>
             <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" @click.stop>
-              <FavoriteButton :asset-id="asset.id" size="sm" />
+              <FavoriteButton :asset-id="asset.id" size="sm" :initial-favorited="favoriteStore.isFavorited(asset.id)" />
             </div>
           </div>
           <div class="p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -202,9 +204,10 @@ function formatSize(bytes?: number): string {
           <p class="text-sm truncate">{{ asset.prompt || t('common.untitled') }}</p>
           <p class="text-caption mt-0.5">{{ asset.model }} · {{ formatSize(asset.file_size) }}</p>
         </div>
-        <FavoriteButton :asset-id="asset.id" size="sm" @click.stop />
+        <FavoriteButton :asset-id="asset.id" size="sm" :initial-favorited="favoriteStore.isFavorited(asset.id)" @click.stop />
         <span class="text-caption">{{ asset.created_at }}</span>
       </div>
     </div>
+
   </div>
 </template>

@@ -63,9 +63,8 @@ const variableList = computed(() => {
         v-for="v in variableList"
         :key="v"
         class="text-[11px] px-2 py-0.5 rounded-md bg-accent/10 text-accent font-mono"
-      >
-        {{ `{{${v}}}` }}
-      </span>
+        v-text="'{{' + v + '}}'"
+      ></span>
     </div>
 
     <div class="flex items-center gap-2 pt-1">

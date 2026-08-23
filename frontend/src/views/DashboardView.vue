@@ -30,11 +30,11 @@ onMounted(async () => {
         {{ t('dashboard.heroSubtitle') }}
       </p>
       <div class="flex justify-center gap-3 mt-7">
-        <RouterLink to="/create" class="btn btn-primary">
+        <RouterLink to="/app/create" class="btn btn-primary">
           {{ t('dashboard.startGenerating') }}
           <span class="ml-0.5">→</span>
         </RouterLink>
-        <RouterLink to="/assets" class="btn btn-ghost">
+        <RouterLink to="/app/assets" class="btn btn-ghost">
           {{ t('dashboard.viewGallery') }}
         </RouterLink>
       </div>
@@ -60,7 +60,7 @@ onMounted(async () => {
     <section v-if="assetStore.assets.length > 0">
       <div class="flex items-center justify-between mb-5">
         <h2 class="text-subheading">{{ t('dashboard.recent') }}</h2>
-        <RouterLink to="/assets" class="text-sm text-accent hover:underline-offset-4 hover:underline transition-all">{{ t('dashboard.viewAll') }} →</RouterLink>
+        <RouterLink to="/app/assets" class="text-sm text-accent hover:underline-offset-4 hover:underline transition-all">{{ t('dashboard.viewAll') }} →</RouterLink>
       </div>
       <div class="columns-2 md:columns-4 gap-4 space-y-4">
         <div

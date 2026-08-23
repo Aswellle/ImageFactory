@@ -49,7 +49,8 @@ class TestGalleryView:
         authenticate_page(page)
         page.goto(f"{DEV_SERVER_URL}/app/assets")
         page.wait_for_load_state("networkidle")
-        expect(page.locator("input[placeholder*='Search']")).to_be_visible()
+        # Search input placeholder may be en/zh depending on locale.
+        expect(page.locator("input[placeholder*='Search']").or_(page.locator("input[placeholder*='搜索']"))).to_be_visible()
 
     def test_gallery_view_mode_toggle(self, page: Page):
         """Can toggle between grid and list view."""
@@ -58,8 +59,9 @@ class TestGalleryView:
         page.goto(f"{DEV_SERVER_URL}/app/assets")
         page.wait_for_load_state("networkidle")
 
-        grid_btn = page.locator("text=Grid")
-        list_btn = page.locator("text=List")
+        # View mode buttons: Grid/List or 网格/列表
+        grid_btn = page.locator("text=Grid").or_(page.locator("text=网格"))
+        list_btn = page.locator("text=List").or_(page.locator("text=列表"))
         expect(grid_btn).to_be_visible()
         expect(list_btn).to_be_visible()
 
@@ -102,9 +104,9 @@ class TestGenerationView:
         page.goto(f"{DEV_SERVER_URL}/app/create")
         page.wait_for_load_state("networkidle")
 
-        expect(page.locator("text=1")).to_be_visible()
-        expect(page.locator("text=2")).to_be_visible()
-        expect(page.locator("text=4")).to_be_visible()
+        expect(page.locator(".btn", has_text="1")).to_be_visible()
+        expect(page.locator(".btn", has_text="2")).to_be_visible()
+        expect(page.locator(".btn", has_text="4")).to_be_visible()
 
 
 class TestNavigation:
@@ -117,10 +119,12 @@ class TestNavigation:
         page.goto(f"{DEV_SERVER_URL}/app")
         page.wait_for_load_state("networkidle")
 
-        expect(page.locator("text=Create")).to_be_visible()
-        expect(page.locator("text=Gallery")).to_be_visible()
-        expect(page.locator("text=Projects")).to_be_visible()
-        expect(page.locator("text=Templates")).to_be_visible()
+        # Use nav scope to avoid matching headings with same text.
+        nav = page.locator("nav")
+        expect(nav.locator("text=Create")).to_be_visible()
+        expect(nav.locator("text=Gallery")).to_be_visible()
+        expect(nav.locator("text=Projects")).to_be_visible()
+        expect(nav.locator("text=Templates")).to_be_visible()
 
     def test_navigate_to_gallery(self, page: Page):
         """Clicking Gallery nav navigates to /app/assets."""
@@ -129,7 +133,7 @@ class TestNavigation:
         page.goto(f"{DEV_SERVER_URL}/app")
         page.wait_for_load_state("networkidle")
 
-        page.click("text=Gallery")
+        page.locator("nav").get_by_text("Gallery").click()
         page.wait_for_url("**/app/assets")
 
     def test_navigate_to_create(self, page: Page):
@@ -139,7 +143,7 @@ class TestNavigation:
         page.goto(f"{DEV_SERVER_URL}/app")
         page.wait_for_load_state("networkidle")
 
-        page.click("text=Create")
+        page.locator("nav").get_by_text("Create").click()
         page.wait_for_url("**/app/create")
 
 
@@ -152,7 +156,8 @@ class TestI18n:
         authenticate_page(page)
         page.goto(f"{DEV_SERVER_URL}/app")
         page.wait_for_load_state("networkidle")
-        expect(page.locator("text=EN")).to_be_visible()
+        # Language switcher shows "EN" in the sidebar footer.
+        expect(page.locator("aside button", has_text="EN")).to_be_visible()
 
     def test_language_switch_to_chinese(self, page: Page):
         """Switching to Chinese updates UI text."""
@@ -161,6 +166,6 @@ class TestI18n:
         page.goto(f"{DEV_SERVER_URL}/app")
         page.wait_for_load_state("networkidle")
 
-        page.click("text=ZH")
+        page.locator("aside button", has_text="ZH").click()
         page.wait_for_timeout(500)
         expect(page.locator("text=工作台")).to_be_visible()

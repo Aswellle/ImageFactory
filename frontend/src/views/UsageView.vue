@@ -40,7 +40,7 @@ function formatNumber(n: number) {
     <!-- Header -->
     <header class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h1 class="text-heading text-[#1d1d1f] dark:text-white">Usage</h1>
+        <h1 class="text-heading text-[var(--text)]">Usage</h1>
         <span v-if="summary" class="text-caption">
           {{ summary.period_start }} — {{ summary.period_end }}
         </span>
@@ -65,25 +65,25 @@ function formatNumber(n: number) {
     <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
       <div class="bento-tile">
         <div class="text-caption uppercase tracking-wide">Requests</div>
-        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
+        <div class="metric-value mt-2 text-[var(--text)]">
           {{ summary ? formatNumber(summary.total_requests) : '—' }}
         </div>
       </div>
       <div class="bento-tile">
         <div class="text-caption uppercase tracking-wide">Images</div>
-        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
+        <div class="metric-value mt-2 text-[var(--text)]">
           {{ summary ? formatNumber(summary.total_images) : '—' }}
         </div>
       </div>
       <div class="bento-tile">
         <div class="text-caption uppercase tracking-wide">Tokens</div>
-        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
+        <div class="metric-value mt-2 text-[var(--text)]">
           {{ summary ? formatNumber(summary.total_tokens) : '—' }}
         </div>
       </div>
       <div class="bento-tile">
         <div class="text-caption uppercase tracking-wide">Cost</div>
-        <div class="metric-value mt-2 text-[#1d1d1f] dark:text-white">
+        <div class="metric-value mt-2 text-[var(--text)]">
           {{ summary ? formatCost(summary.total_cost) : '—' }}
         </div>
       </div>
@@ -92,7 +92,7 @@ function formatNumber(n: number) {
     <!-- Daily activity chart -->
     <section class="bento-tile">
       <div class="flex items-center justify-between mb-5">
-        <h2 class="text-subheading text-[#1d1d1f] dark:text-white">Daily requests</h2>
+        <h2 class="text-subheading text-[var(--text)]">Daily requests</h2>
         <span v-if="loading" class="text-caption">Loading…</span>
       </div>
 
