@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { assetApi, type Asset, type AssetListParams } from '@/api/asset'
 import { parseApiError } from '@/api/client'
+import { useToastStore } from '@/stores/toast'
+import { useI18n } from 'vue-i18n'
 
 export const useAssetStore = defineStore('asset', () => {
   const assets = ref<Asset[]>([])
@@ -43,11 +45,15 @@ export const useAssetStore = defineStore('asset', () => {
   }
 
   async function deleteAsset(id: number) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await assetApi.delete(String(id))
       assets.value = assets.value.filter((a) => a.id !== id)
+      toast.success(t('toast.assetDeleted'))
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.assetDeleteFailed'), error.value)
       throw e
     }
   }

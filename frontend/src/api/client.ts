@@ -31,6 +31,35 @@ export const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(authHeader)
 
+// Response interceptor: surface auth failures and network errors as toasts.
+// This runs outside of any component, so we lazy-import the toast store to
+// avoid a Pinia circular-dependency at module-load time.
+api.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    if (!axios.isAxiosError(error)) return Promise.reject(error)
+
+    const status = error.response?.status
+    const data = error.response?.data as ApiError | undefined
+
+    // Lazy import avoids Pinia initialization order issues.
+    void import('@/stores/toast').then(({ useToastStore }) => {
+      const toast = useToastStore()
+
+      if (status === 401) {
+        setToken(null)
+        toast.warning('Session expired. Please sign in again.', undefined, 5000)
+      } else if (status === 403) {
+        toast.error(data?.error?.message || 'Access denied')
+      } else if (!error.response) {
+        toast.error('Network error. Please try again.', undefined, 6000)
+      }
+    })
+
+    return Promise.reject(error)
+  },
+)
+
 // parseApiError extracts a stable ImageForge error from any upstream failure.
 export function parseApiError(err: unknown): { code: string; message: string; requestID?: string } {
   const axiosErr = err as AxiosError | undefined

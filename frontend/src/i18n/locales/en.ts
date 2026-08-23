@@ -39,10 +39,65 @@ export default {
     alreadyHaveAccount: 'Already have an account?',
     pleaseWait: 'Please wait…',
     invalidCredentials: 'Invalid email or password.',
+    welcomeTitle: 'Welcome, {name}!',
+    welcomeBack: 'Welcome back, {name}!',
+    loginFailed: 'Login failed',
+    registerFailed: 'Registration failed',
+    logoutSuccess: 'You have been signed out.',
+  },
+  toast: {
+    // Asset operations
+    assetDeleted: 'Image deleted',
+    assetDeleteFailed: 'Failed to delete image',
+    assetVersionCreated: 'New version saved',
+    // Generation
+    generationStarted: 'Generation started',
+    generationFailed: 'Generation failed',
+    generationComplete: 'Image ready',
+    // Favorites
+    favoriteAdded: 'Added to favorites',
+    favoriteRemoved: 'Removed from favorites',
+    favoriteFailed: 'Failed to update favorites',
+    // Collections
+    collectionCreated: 'Collection created',
+    collectionUpdated: 'Collection updated',
+    collectionDeleted: 'Collection deleted',
+    collectionCreateFailed: 'Failed to create collection',
+    assetAddedToCollection: 'Added to collection',
+    assetRemovedFromCollection: 'Removed from collection',
+    // Tags
+    tagCreated: 'Tag created',
+    tagUpdated: 'Tag updated',
+    tagDeleted: 'Tag deleted',
+    tagCreateFailed: 'Failed to create tag',
+    tagApplied: 'Tag applied',
+    tagRemoved: 'Tag removed',
+    // API Keys
+    apiKeyCreated: 'API key created',
+    apiKeyRevoked: 'API key revoked',
+    apiKeyCreateFailed: 'Failed to create key',
+    apiKeyRevokeFailed: 'Failed to revoke key',
+    apiKeyCopied: 'Key copied to clipboard',
+    // Templates
+    templateCreated: 'Template created',
+    templateUpdated: 'Template updated',
+    templateDeleted: 'Template deleted',
+    templateCreateFailed: 'Failed to create template',
+    templateApplied: 'Template applied',
+    // Projects
+    projectCreated: 'Project created',
+    projectCreateFailed: 'Failed to create project',
+    // Admin
+    userStatusUpdated: 'User status updated',
+    jobRetried: 'Job queued for retry',
+    // Common
+    copied: 'Copied to clipboard',
+    networkError: 'Network error. Please try again.',
+    sessionExpired: 'Session expired. Please sign in again.',
+    somethingWrong: 'Something went wrong',
   },
   dashboard: {
     heroTitle: 'Create your next image',
-    heroSubtitle: 'Describe the image you want, or edit an existing one.',
     startGenerating: 'Start generating →',
     viewGallery: 'View Gallery',
     totalImages: 'Total images',

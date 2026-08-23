@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { apikeyApi, type APIKey, type CreateAPIKeyResponse } from '@/api/apikey'
 import SkeletonCard from '@/components/SkeletonCard.vue'
+import { useToastStore } from '@/stores/toast'
 
 const { t } = useI18n()
 const keys = ref<APIKey[]>([])
@@ -51,8 +52,9 @@ async function revokeKey(id: number) {
 async function copyKey() {
   if (createdKey.value) {
     await navigator.clipboard.writeText(createdKey.value.key)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
+    const toast = useToastStore()
+    const { t } = useI18n()
+    toast.success(t('toast.apiKeyCopied'), undefined, 2000)
   }
 }
 </script>

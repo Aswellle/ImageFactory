@@ -3,6 +3,8 @@ import { computed, ref } from 'vue'
 import { promptTemplateApi, type BuiltInTemplate } from '@/api/promptTemplate'
 import type { PromptTemplate } from '@/types'
 import { parseApiError } from '@/api/client'
+import { useToastStore } from '@/stores/toast'
+import { useI18n } from 'vue-i18n'
 
 export const usePromptTemplateStore = defineStore('promptTemplate', () => {
   const templates = ref<PromptTemplate[]>([])
@@ -14,8 +16,9 @@ export const usePromptTemplateStore = defineStore('promptTemplate', () => {
   const byCategory = computed(() => {
     const groups: Record<string, PromptTemplate[]> = {}
     for (const t of templates.value) {
-      const key = t.category || 'custom'
-      ;(groups[key] ??= []).push(t)
+      const cat = t.category || 'Uncategorized'
+      if (!groups[cat]) groups[cat] = []
+      groups[cat].push(t)
     }
     return groups
   })
@@ -49,12 +52,16 @@ export const usePromptTemplateStore = defineStore('promptTemplate', () => {
     variables?: string[]
     category?: string
   }) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
-      const t = await promptTemplateApi.create(input)
-      templates.value.unshift(t)
-      return t
+      const tmpl = await promptTemplateApi.create(input)
+      templates.value.unshift(tmpl)
+      toast.success(t('toast.templateCreated'))
+      return tmpl
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.templateCreateFailed'), error.value)
       throw e
     }
   }
@@ -70,29 +77,36 @@ export const usePromptTemplateStore = defineStore('promptTemplate', () => {
       clear_variables?: boolean
     },
   ) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
-      const t = await promptTemplateApi.update(id, input)
+      const tmpl = await promptTemplateApi.update(id, input)
       const idx = templates.value.findIndex((x) => x.id === id)
-      if (idx >= 0) templates.value[idx] = t
-      return t
+      if (idx >= 0) templates.value[idx] = tmpl
+      toast.success(t('toast.templateUpdated'))
+      return tmpl
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.templateUpdated'), error.value)
       throw e
     }
   }
 
   async function deleteTemplate(id: number) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await promptTemplateApi.delete(id)
-      templates.value = templates.value.filter((t) => t.id !== id)
+      templates.value = templates.value.filter((x) => x.id !== id)
+      toast.success(t('toast.templateDeleted'))
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.templateDeleted'), error.value)
     }
   }
 
-
   // Apply variables client-side (used for built-in templates not stored in the DB).
-  function applyVariables(content: string, variables: Record<string,string>): string {
+  function applyVariables(content: string, variables: Record<string, string>): string {
     let out = content
     for (const [k, v] of Object.entries(variables)) {
       out = out.split(`{{${k}}}`).join(v)
@@ -100,14 +114,17 @@ export const usePromptTemplateStore = defineStore('promptTemplate', () => {
     return out
   }
 
-
   // Apply a template's variables and return the rendered prompt.
   async function applyTemplate(id: number, variables: Record<string, string>) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       const res = await promptTemplateApi.apply(id, variables)
+      toast.success(t('toast.templateApplied'), undefined, 2000)
       return res.prompt
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.templateApplied'), error.value)
       throw e
     }
   }
@@ -122,19 +139,10 @@ export const usePromptTemplateStore = defineStore('promptTemplate', () => {
   }
 
   return {
-    templates,
-    builtIn,
-    loading,
-    error,
-    byCategory,
-    categories,
-    fetchTemplates,
-    fetchBuiltIn,
-    createTemplate,
-    updateTemplate,
-    deleteTemplate,
-    applyTemplate,
-    applyVariables,
-    parseVariables,
+    templates, builtIn, loading, error,
+    byCategory, categories,
+    fetchTemplates, fetchBuiltIn,
+    createTemplate, updateTemplate, deleteTemplate,
+    applyVariables, applyTemplate, parseVariables,
   }
 })

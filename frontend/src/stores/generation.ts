@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { generationApi, type GenerateRequest } from '@/api/generation'
 import { parseApiError } from '@/api/client'
+import { useToastStore } from '@/stores/toast'
+import { useI18n } from 'vue-i18n'
 import type { GenerationJob } from '@/types'
-
 // Generation store manages the user's image-generation jobs: submitting new
 // requests, polling status, and surfacing results. The actual work happens
 // server-side (ImageForge → Sub2API); this store only tracks job state.
@@ -21,22 +22,26 @@ export const useGenerationStore = defineStore('generation', () => {
     activeJob.value?.status === 'processing' || activeJob.value?.status === 'pending',
   )
 
-  async function generate(req: GenerateRequest) {
-    loading.value = true
-    error.value = null
-    try {
-      const res = await generationApi.create(req)
-      activeJobId.value = res.job_id
-      await fetchActive(res.job_id)
-      await refreshList()
-      return res.job_id
-    } catch (e) {
-      error.value = parseApiError(e).message
-      throw e
-    } finally {
-      loading.value = false
-    }
+async function generate(req: GenerateRequest) {
+  loading.value = true
+  error.value = null
+  const toast = useToastStore()
+  const { t } = useI18n()
+  try {
+    const res = await generationApi.create(req)
+    activeJobId.value = res.job_id
+    await fetchActive(res.job_id)
+    await refreshList()
+    toast.success(t('toast.generationStarted'))
+    return res.job_id
+  } catch (e) {
+    error.value = parseApiError(e).message
+    toast.error(t('toast.generationFailed'), error.value)
+    throw e
+  } finally {
+    loading.value = false
   }
+}
 
   async function fetchActive(jobId: string) {
     try {

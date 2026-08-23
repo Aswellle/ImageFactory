@@ -39,10 +39,65 @@ export default {
     alreadyHaveAccount: '已有账户？',
     pleaseWait: '请稍候…',
     invalidCredentials: '邮箱或密码无效。',
+    welcomeTitle: '欢迎，{name}！',
+    welcomeBack: '欢迎回来，{name}！',
+    loginFailed: '登录失败',
+    registerFailed: '注册失败',
+    logoutSuccess: '您已注销。',
+  },
+  toast: {
+    // Asset operations
+    assetDeleted: '图片已删除',
+    assetDeleteFailed: '删除图片失败',
+    assetVersionCreated: '新版本已保存',
+    // Generation
+    generationStarted: '生成已开始',
+    generationFailed: '生成失败',
+    generationComplete: '图片已就绪',
+    // Favorites
+    favoriteAdded: '已添加到收藏',
+    favoriteRemoved: '已从收藏移除',
+    favoriteFailed: '更新收藏失败',
+    // Collections
+    collectionCreated: '合集已创建',
+    collectionUpdated: '合集已更新',
+    collectionDeleted: '合集已删除',
+    collectionCreateFailed: '创建合集失败',
+    assetAddedToCollection: '已添加到合集',
+    assetRemovedFromCollection: '已从合集移除',
+    // Tags
+    tagCreated: '标签已创建',
+    tagUpdated: '标签已更新',
+    tagDeleted: '标签已删除',
+    tagCreateFailed: '创建标签失败',
+    tagApplied: '标签已应用',
+    tagRemoved: '标签已移除',
+    // API Keys
+    apiKeyCreated: 'API 密钥已创建',
+    apiKeyRevoked: 'API 密钥已撤销',
+    apiKeyCreateFailed: '创建密钥失败',
+    apiKeyRevokeFailed: '撤销密钥失败',
+    apiKeyCopied: '密钥已复制到剪贴板',
+    // Templates
+    templateCreated: '模板已创建',
+    templateUpdated: '模板已更新',
+    templateDeleted: '模板已删除',
+    templateCreateFailed: '创建模板失败',
+    templateApplied: '模板已应用',
+    // Projects
+    projectCreated: '项目已创建',
+    projectCreateFailed: '创建项目失败',
+    // Admin
+    userStatusUpdated: '用户状态已更新',
+    jobRetried: '作业已排队重试',
+    // Common
+    copied: '已复制到剪贴板',
+    networkError: '网络错误，请重试。',
+    sessionExpired: '会话已过期，请重新登录。',
+    somethingWrong: '发生错误',
   },
   dashboard: {
     heroTitle: '创建您的下一张图片',
-    heroSubtitle: '描述您想要的图片，或编辑已有图片。',
     startGenerating: '开始生成 →',
     viewGallery: '查看图库',
     totalImages: '图片总数',

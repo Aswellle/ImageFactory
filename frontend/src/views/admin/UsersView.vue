@@ -90,7 +90,7 @@ function toggleSelect(row: AdminUser) {
 
 function toggleSelectAll() {
   if (selected.value.length === users.value.length) selected.value = []
-  else selected.value = users.value.map((u) => u.id)
+  else selected.value = users.value.map((u: AdminUser) => u.id)
 }
 
 function askToggleSuspend(u: AdminUser) {

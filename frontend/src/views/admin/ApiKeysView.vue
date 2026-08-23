@@ -97,13 +97,13 @@ onMounted(load)
     </template>
 
     <template #table>
-      <DataTable
-        :columns="columns"
-        :rows="apiKeys"
-        row-key="id"
-        :loading="apiKeysLoading"
-        empty-text="No API keys found"
-      >
+<DataTable
+  :columns="columns"
+  :rows="apiKeys"
+  row-key="id"
+  :loading="apiKeysLoading"
+  empty-text="No API keys found"
+>
         <template #cell-username="{ value }">
           <span class="text-xs font-mono text-[var(--text-secondary)]">{{ value || '—' }}</span>
         </template>
@@ -128,15 +128,15 @@ onMounted(load)
         <template #cell-created_at="{ value }">
           <span class="text-xs text-[var(--text-secondary)]">{{ fmt(value) }}</span>
         </template>
-        <template #cell-actions="{ row }">
-          <button
-            class="btn btn-ghost !px-2 !py-1 text-xs text-danger hover:text-danger"
-            :disabled="row.status === 'revoked'"
-            @click.stop="askRevoke(row)"
-          >
-            {{ row.status === 'revoked' ? 'Revoked' : 'Revoke' }}
-          </button>
-        </template>
+<template #cell-actions="{ row: r }">
+  <button
+    class="btn btn-ghost !px-2 !py-1 text-xs text-danger hover:text-danger"
+    :disabled="(r as AdminApiKey).status === 'revoked'"
+    @click.stop="askRevoke(r as AdminApiKey)"
+  >
+    {{ (r as AdminApiKey).status === 'revoked' ? 'Revoked' : 'Revoke' }}
+  </button>
+</template>
       </DataTable>
     </template>
 

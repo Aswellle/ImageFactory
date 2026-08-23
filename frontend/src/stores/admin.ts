@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { adminApi } from '@/api/admin'
 import { parseApiError } from '@/api/client'
+import { useToastStore } from '@/stores/toast'
+import { useI18n } from 'vue-i18n'
 import type {
   ActivityEvent,
   AdminApiKey,
@@ -98,12 +100,16 @@ export const useAdminStore = defineStore('admin', () => {
   }
 
   async function setUserStatus(id: number, status: 'active' | 'suspended') {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await adminApi.setUserStatus(id, status)
       const idx = users.value.findIndex((u) => u.id === id)
       if (idx >= 0) users.value[idx] = { ...users.value[idx], status }
+      toast.success(t('toast.userStatusUpdated'))
     } catch (e) {
-      throw new Error(fail(e))
+      toast.error(t('toast.userStatusUpdated'), fail(e))
+      throw e
     }
   }
 
@@ -136,10 +142,14 @@ export const useAdminStore = defineStore('admin', () => {
   }
 
   async function retryJob(id: string) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await adminApi.retryJob(id)
+      toast.success(t('toast.jobRetried'))
     } catch (e) {
-      throw new Error(fail(e))
+      toast.error(t('toast.jobRetried'), fail(e))
+      throw e
     }
   }
 
@@ -170,12 +180,16 @@ export const useAdminStore = defineStore('admin', () => {
   }
 
   async function revokeApiKey(id: number) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await adminApi.revokeApiKey(id)
       apiKeys.value = apiKeys.value.filter((k) => k.id !== id)
       apiKeysTotal.value = Math.max(0, apiKeysTotal.value - 1)
+      toast.success(t('toast.apiKeyRevoked'))
     } catch (e) {
-      throw new Error(fail(e))
+      toast.error(t('toast.apiKeyRevokeFailed'), fail(e))
+      throw e
     }
   }
 
@@ -185,37 +199,18 @@ export const useAdminStore = defineStore('admin', () => {
 
   return {
     // dashboard
-    stats,
-    activity,
-    health,
-    dashboardLoading,
+    stats, activity, health, dashboardLoading,
     loadDashboard,
     // users
-    users,
-    usersTotal,
-    usersPage,
-    usersPageSize,
-    usersLoading,
-    loadUsers,
-    setUserStatus,
+    users, usersTotal, usersPage, usersPageSize, usersLoading,
+    loadUsers, setUserStatus,
     // jobs
-    jobs,
-    jobsTotal,
-    jobsPage,
-    jobsPageSize,
-    jobsLoading,
-    loadJobs,
-    retryJob,
+    jobs, jobsTotal, jobsPage, jobsPageSize, jobsLoading,
+    loadJobs, retryJob,
     // api keys
-    apiKeys,
-    apiKeysTotal,
-    apiKeysPage,
-    apiKeysPageSize,
-    apiKeysLoading,
-    loadApiKeys,
-    revokeApiKey,
+    apiKeys, apiKeysTotal, apiKeysPage, apiKeysPageSize, apiKeysLoading,
+    loadApiKeys, revokeApiKey,
     // shared
-    error,
-    reset,
+    error, reset,
   }
 })

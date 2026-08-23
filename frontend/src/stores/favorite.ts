@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { favoriteApi, type Favorite } from '@/api/favorite'
 import { parseApiError } from '@/api/client'
+import { useToastStore } from '@/stores/toast'
+import { useI18n } from 'vue-i18n'
 
 export const useFavoriteStore = defineStore('favorite', () => {
   const favorites = ref<Favorite[]>([])
@@ -33,23 +35,31 @@ export const useFavoriteStore = defineStore('favorite', () => {
   }
 
   async function addFavorite(assetId: number) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       const fav = await favoriteApi.add(assetId)
       favorites.value.unshift(fav)
       favoritedIds.value.add(assetId)
+      toast.success(t('toast.favoriteAdded'), undefined, 2500)
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.favoriteFailed'), error.value)
       throw e
     }
   }
 
   async function removeFavorite(assetId: number) {
+    const toast = useToastStore()
+    const { t } = useI18n()
     try {
       await favoriteApi.remove(assetId)
       favorites.value = favorites.value.filter((f) => f.asset_id !== assetId)
       favoritedIds.value.delete(assetId)
+      toast.success(t('toast.favoriteRemoved'), undefined, 2500)
     } catch (e) {
       error.value = parseApiError(e).message
+      toast.error(t('toast.favoriteFailed'), error.value)
       throw e
     }
   }
