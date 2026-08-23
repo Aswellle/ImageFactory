@@ -74,6 +74,7 @@ function formatSize(bytes?: number): string {
           v-model="searchQuery"
           class="input w-56"
           :placeholder="t('gallery.searchPlaceholder')"
+          data-search-input
         />
         <button
           type="button"

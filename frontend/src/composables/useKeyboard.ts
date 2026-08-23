@@ -25,7 +25,7 @@ export function useKeyboard(router: Router) {
     // '/' focuses search when not in an input.
     if (e.key === '/' && !isInput) {
       e.preventDefault()
-      const searchInput = document.querySelector<HTMLInputElement>('input[placeholder*="Search"]')
+      const searchInput = document.querySelector<HTMLInputElement>('input[data-search-input]')
       searchInput?.focus()
       return
     }
@@ -56,5 +56,8 @@ export function useKeyboard(router: Router) {
   }
 
   onMounted(() => window.addEventListener('keydown', handleKeydown))
-  onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
+  onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeydown)
+    if (seqTimer) clearTimeout(seqTimer)
+  })
 }

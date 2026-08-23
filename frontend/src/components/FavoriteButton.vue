@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useFavoriteStore } from '@/stores/favorite'
 
 const props = defineProps<{
@@ -15,13 +15,18 @@ const emit = defineEmits<{
 
 const store = useFavoriteStore()
 const isFav = ref(props.initialFavorited ?? false)
-const loading = ref(false)
 const popping = ref(false)
+let popTimer: ReturnType<typeof setTimeout> | null = null
+const loading = ref(false)
 
 // Only check individually if parent didn't provide initial state.
 onMounted(() => {
   if (props.initialFavorited !== undefined) return
   isFav.value = store.isFavorited(props.assetId)
+})
+
+onUnmounted(() => {
+  if (popTimer) clearTimeout(popTimer)
 })
 
 async function toggle() {
@@ -36,7 +41,7 @@ async function toggle() {
       await store.addFavorite(props.assetId)
       isFav.value = true
       popping.value = true
-      setTimeout(() => { popping.value = false }, 400)
+      popTimer = setTimeout(() => { popping.value = false }, 400)
       emit('toggled', true)
     }
   } finally {
@@ -62,7 +67,7 @@ const sizeClass = {
     <svg
       :class="[
         sizeClass,
-        isFav ? 'text-red-500 dark:text-red-400' : 'text-text-muted',
+        isFav ? 'text-[var(--danger)]' : 'text-text-muted',
         popping ? 'animate-heart-pop' : ''
       ]"
       :fill="isFav ? 'currentColor' : 'none'"
