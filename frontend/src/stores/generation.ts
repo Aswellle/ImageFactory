@@ -64,16 +64,20 @@ export const useGenerationStore = defineStore('generation', () => {
 
   async function pollUntilDone(jobId: string, maxAttempts = 60) {
     cancelled.value = false
-    for (let i = 0; i < maxAttempts; i++) {
-      if (cancelled.value) return null
-      const job = await generationApi.get(jobId)
-      upsert(job)
-      if (job.status === 'completed' || job.status === 'failed') {
-        return job
+    try {
+      for (let i = 0; i < maxAttempts; i++) {
+        if (cancelled.value) return null
+        const job = await generationApi.get(jobId)
+        upsert(job)
+        if (job.status === 'completed' || job.status === 'failed') {
+          return job
+        }
+        await new Promise((r) => setTimeout(r, 3000))
       }
-      await new Promise((r) => setTimeout(r, 3000))
+      return generationApi.get(jobId).then(upsert)
+    } finally {
+      cancelled.value = false
     }
-    return generationApi.get(jobId).then(upsert)
   }
 
   function cancelPolling() {

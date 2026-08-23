@@ -232,6 +232,17 @@ select.input {
   100% { background-position: -200% 0; }
 }
 
+/* Prevent skeleton flash on fast loads: minimum 400ms display time.
+   Usage: add .skeleton-min-delay to a wrapper around skeleton elements. */
+.skeleton-min-delay {
+  animation: skeleton-min-display 0.4s linear;
+}
+
+@keyframes skeleton-min-display {
+  0%, 99% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
 /* ---- Admin prefixed aliases ---- */
 .if-btn-ghost {
   display: inline-flex;

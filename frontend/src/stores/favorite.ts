@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { favoriteApi, type Favorite } from '@/api/favorite'
 import { parseApiError } from '@/api/client'
 
@@ -11,7 +11,9 @@ export const useFavoriteStore = defineStore('favorite', () => {
   // O(1) lookup set for favorited asset IDs.
   const favoritedIds = ref<Set<number>>(new Set())
 
-  const favoritedIdsSet = computed(() => favoritedIds.value)
+  // Track whether we've attempted to sync, to avoid redundant fetches
+  // while still allowing retries after errors.
+  const synced = ref(false)
 
   async function fetchFavorites() {
     loading.value = true
@@ -19,8 +21,12 @@ export const useFavoriteStore = defineStore('favorite', () => {
     try {
       favorites.value = await favoriteApi.list()
       favoritedIds.value = new Set(favorites.value.map((f) => f.asset_id))
+      synced.value = true
     } catch (e) {
       error.value = parseApiError(e).message
+      // Reset synced so retry can happen
+      synced.value = false
+      throw e
     } finally {
       loading.value = false
     }
@@ -48,10 +54,10 @@ export const useFavoriteStore = defineStore('favorite', () => {
     }
   }
 
-  // Batch check: sync favoritedIds for the given asset IDs.
   // Batch sync: ensure favorites are loaded so isFavorited() works for lists.
+  // Uses synced flag to avoid redundant fetches; resets on error for retry.
   async function syncFavorites() {
-    if (favorites.value.length > 0) return
+    if (synced.value && favorites.value.length > 0) return
     await fetchFavorites()
   }
 
@@ -59,5 +65,5 @@ export const useFavoriteStore = defineStore('favorite', () => {
     return favoritedIds.value.has(assetId)
   }
 
-  return { favorites, loading, error, favoritedIdsSet, fetchFavorites, addFavorite, removeFavorite, syncFavorites, isFavorited }
+  return { favorites, loading, error, favoritedIds, fetchFavorites, addFavorite, removeFavorite, syncFavorites, isFavorited }
 })
