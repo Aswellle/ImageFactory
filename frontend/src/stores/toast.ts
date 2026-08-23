@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+
 export type ToastType = 'success' | 'error' | 'warning' | 'info'
 
 export interface Toast {
@@ -16,11 +17,11 @@ export interface Toast {
 }
 
 const DEFAULT_DURATION = 4000
-let nextId = 1
 const timers = new Map<number, ReturnType<typeof setTimeout>>()
 
 export const useToastStore = defineStore('toast', () => {
   const toasts = ref<Toast[]>([])
+  let nextId = 1
 
   function clearTimer(id: number) {
     const t = timers.get(id)
@@ -37,31 +38,40 @@ export const useToastStore = defineStore('toast', () => {
     const t = setTimeout(() => dismiss(toast.id), toast.remaining)
     timers.set(toast.id, t)
   }
+function show(options: {
+  type: ToastType
+  title: string
+  message?: string
+  duration?: number
+  action?: { label: string; onClick: () => void }
+}): number {
+  const id = nextId++
+  const duration = options.duration ?? DEFAULT_DURATION
 
-  function show(options: {
-    type: ToastType
-    title: string
-    message?: string
-    duration?: number
-    action?: { label: string; onClick: () => void }
-  }): number {
-    const id = nextId++
-    const duration = options.duration ?? DEFAULT_DURATION
-    const toast: Toast = {
-      id,
-      type: options.type,
-      title: options.title,
-      message: options.message,
-      duration,
-      action: options.action,
-      createdAt: Date.now(),
-      paused: false,
-      remaining: duration,
-    }
-    toasts.value.push(toast)
-    scheduleDismiss(toast)
-    return id
+  // Suppress duplicate toasts with the same title within 1 second
+  const now = Date.now()
+  const recentDuplicate = toasts.value.find(
+    (t) => t.title === options.title && now - t.createdAt < 1000,
+  )
+  if (recentDuplicate) {
+    return recentDuplicate.id
   }
+
+  const toast: Toast = {
+    id,
+    type: options.type,
+    title: options.title,
+    message: options.message,
+    duration,
+    action: options.action,
+    createdAt: now,
+    paused: false,
+    remaining: duration,
+  }
+  toasts.value.push(toast)
+  scheduleDismiss(toast)
+  return id
+}
 
   function dismiss(id: number) {
     clearTimer(id)
@@ -74,16 +84,17 @@ export const useToastStore = defineStore('toast', () => {
     toast.paused = true
     toast.pausedAt = Date.now()
     clearTimer(id)
-    toast.remaining = Math.max(0, toast.remaining - (Date.now() - toast.createdAt - (toast.duration - toast.remaining)))
   }
 
   function resume(id: number) {
     const toast = toasts.value.find((t) => t.id === id)
     if (!toast || !toast.paused || toast.duration <= 0) return
+    if (toast.pausedAt) {
+      toast.remaining = Math.max(0, toast.remaining - (Date.now() - toast.pausedAt))
+    }
     toast.paused = false
     toast.pausedAt = undefined
     toast.createdAt = Date.now()
-    toast.remaining = Math.max(toast.remaining, 100)
     scheduleDismiss(toast)
   }
 

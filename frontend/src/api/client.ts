@@ -42,19 +42,20 @@ api.interceptors.response.use(
     const status = error.response?.status
     const data = error.response?.data as ApiError | undefined
 
-    // Lazy import avoids Pinia initialization order issues.
-    void import('@/stores/toast').then(({ useToastStore }) => {
-      const toast = useToastStore()
+// Lazy import avoids Pinia initialization order issues.
+void Promise.all([import('@/stores/toast'), import('@/i18n/index')]).then(([{ useToastStore }, i18nMod]) => {
+  const toast = useToastStore()
+  const t = i18nMod?.i18n?.global?.t ?? ((k: string) => k)
 
-      if (status === 401) {
-        setToken(null)
-        toast.warning('Session expired. Please sign in again.', undefined, 5000)
-      } else if (status === 403) {
-        toast.error(data?.error?.message || 'Access denied')
-      } else if (!error.response) {
-        toast.error('Network error. Please try again.', undefined, 6000)
-      }
-    })
+  if (status === 401) {
+    setToken(null)
+    toast.warning(t('toast.sessionExpired') as string, undefined, 5000)
+  } else if (status === 403) {
+    toast.error((data?.error?.message || t('toast.somethingWrong')) as string)
+  } else if (!error.response) {
+    toast.error(t('toast.networkError') as string, undefined, 6000)
+  }
+})
 
     return Promise.reject(error)
   },
