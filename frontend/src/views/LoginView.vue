@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -64,7 +65,11 @@ async function submit() {
         <p v-if="auth.error" id="auth-error" role="alert" class="text-sm text-[var(--danger)]">{{ auth.error }}</p>
 
         <button type="submit" class="btn btn-primary w-full" :disabled="auth.loading">
-          {{ auth.loading ? t('auth.pleaseWait') : mode === 'login' ? t('auth.signIn') : t('auth.createAccount') }}
+          <span v-if="auth.loading" class="flex items-center justify-center gap-2">
+            <LoadingSpinner size="sm" />
+            {{ t('auth.pleaseWait') }}
+          </span>
+          <span v-else>{{ mode === 'login' ? t('auth.signIn') : t('auth.createAccount') }}</span>
         </button>
       </form>
 

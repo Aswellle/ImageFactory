@@ -19,7 +19,17 @@ onMounted(() => {
     </div>
 
     <!-- Loading -->
-    <div v-if="store.loading" class="text-center py-20 text-body">Loading…</div>
+    <div v-if="store.loading" class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+      <div v-for="n in 8" :key="n" class="break-inside-avoid mb-4">
+        <div class="card overflow-hidden">
+          <div class="skeleton aspect-[4/3]" />
+          <div class="p-3 space-y-2">
+            <div class="skeleton h-3 w-3/4" />
+            <div class="skeleton h-3 w-1/2" />
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Empty state -->
     <div v-else-if="store.favorites.length === 0" class="card animate-fade-in">

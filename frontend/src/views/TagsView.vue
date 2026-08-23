@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useTagStore } from '@/stores/tag'
-
+import SkeletonCard from '@/components/SkeletonCard.vue'
 const store = useTagStore()
 const showForm = ref(false)
 const newName = ref('')
@@ -71,7 +71,9 @@ async function deleteTag(id: number) {
     </div>
 
     <!-- Loading -->
-    <div v-if="store.loading" class="text-center py-20 text-body">Loading…</div>
+    <div v-if="store.loading" class="space-y-3">
+      <SkeletonCard v-for="i in 3" :key="i" type="list" />
+    </div>
 
     <!-- Empty state -->
     <div v-else-if="store.tags.length === 0" class="card animate-fade-in">

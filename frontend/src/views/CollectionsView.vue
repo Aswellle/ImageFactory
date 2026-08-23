@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useCollectionStore } from '@/stores/collection'
 import { useRouter } from 'vue-router'
+import SkeletonCard from '@/components/SkeletonCard.vue'
 
 const router = useRouter()
 const store = useCollectionStore()
@@ -53,7 +54,9 @@ async function deleteCollection(id: number) {
     </div>
 
     <!-- Loading -->
-    <div v-if="store.loading" class="text-center py-20 text-body">Loading…</div>
+    <div v-if="store.loading" class="space-y-3">
+      <SkeletonCard v-for="i in 3" :key="i" type="list" />
+    </div>
 
     <!-- Empty state -->
     <div v-else-if="store.collections.length === 0" class="card animate-fade-in">

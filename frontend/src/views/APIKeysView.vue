@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { apikeyApi, type APIKey, type CreateAPIKeyResponse } from '@/api/apikey'
+import SkeletonCard from '@/components/SkeletonCard.vue'
 
 const { t } = useI18n()
 const keys = ref<APIKey[]>([])
@@ -99,7 +100,7 @@ async function copyKey() {
 
     <!-- Loading -->
     <div v-if="loading" class="space-y-3">
-      <div v-for="i in 3" :key="i" class="skeleton h-16 rounded-xl" />
+      <SkeletonCard v-for="i in 3" :key="i" type="list" />
     </div>
 
     <!-- Empty -->
