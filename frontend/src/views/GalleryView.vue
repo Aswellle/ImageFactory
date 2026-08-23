@@ -40,10 +40,10 @@ const filteredAssets = computed(() => {
     list = list.filter((a) => favoriteStore.isFavorited(a.id))
   }
 
-  if (selectedTagId.value !== null) {
-    // Client-side filtering for tag is not possible without tag data on asset.
-    // This placeholder is for future backend support.
-  }
+	if (selectedTagId.value !== null) {
+		// TODO: Backend does not yet support tag-based filtering.
+		// This placeholder will filter assets by tag when the API supports it.
+	}
 
   return list
 })

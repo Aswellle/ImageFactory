@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
-	"strconv"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/ent/generationjob"
 	"github.com/imageforge/imageforge/ent/usagerecord"
@@ -74,7 +74,7 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 	}
 
 	aspect := parseAspect(req.Size)
-	externalID := "job_" + strconv.FormatInt(time.Now().UnixNano(), 10)
+	externalID := "job_" + uuid.New().String()
 
 	// 1. Create the job record (pending).
 	created, err := s.db.GenerationJob.Create().

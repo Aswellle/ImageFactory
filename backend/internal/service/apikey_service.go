@@ -4,23 +4,21 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/ent/apikey"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
+	"go.uber.org/zap"
 )
-
-// APIKeyService handles API key CRUD with secure hashing.
 type APIKeyService struct {
-	db *ent.Client
+	db  *ent.Client
+	log *zap.Logger
 }
 
-// NewAPIKeyService builds an APIKeyService.
 func NewAPIKeyService(db *ent.Client) *APIKeyService {
-	return &APIKeyService{db: db}
+	return &APIKeyService{db: db, log: zap.NewNop()}
 }
 
 // CreateKeyInput is the input for creating an API key.
@@ -134,11 +132,12 @@ func (s *APIKeyService) Validate(ctx context.Context, plaintext string) (int64, 
 	if key.ExpiresAt != nil && key.ExpiresAt.Before(time.Now()) {
 		return 0, errors.New(errors.ErrUnauthorized, "key expired")
 	}
-
 	// Best-effort last-used update.
-	_, _ = s.db.APIKey.UpdateOneID(key.ID).SetLastUsedAt(time.Now()).Save(ctx)
+if _, err := s.db.APIKey.UpdateOneID(key.ID).SetLastUsedAt(time.Now()).Save(ctx); err != nil {
+	s.log.Debug("failed to update api key last_used", zap.Int64("key_id", key.ID), zap.Error(err))
+}
 
-	return key.UserID, nil
+return key.UserID, nil
 }
 
 // GetUsage returns usage statistics for a user.
@@ -161,6 +160,3 @@ type UsageStats struct {
 	PeriodStart   string `json:"period_start"`
 	PeriodEnd     string `json:"period_end"`
 }
-
-// Ensure fmt is used (for potential future formatting).
-var _ = fmt.Sprintf

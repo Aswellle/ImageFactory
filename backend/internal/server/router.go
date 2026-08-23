@@ -144,11 +144,15 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		v1.POST("/images/generations", imageGW.Generations)
 	}
 
-	// --- Protected routes ---
+	// --- Protected routes (JWT required) ---
 	authorized := v1.Group("")
 	authorized.Use(authMW.Require())
 	{
-		// Image generation.
+		// Image generation. NOTE: POST /images/generations is intentionally
+		// duplicated here AND in the public group above. Gin uses first-match
+		// routing, so the public OpenAI-compatible endpoint (line ~144) wins.
+		// This JWT-protected copy exists as documentation of the intended
+		// auth model; it is unreachable but kept for clarity.
 		authorized.POST("/images/generations", genHandler.Create)
 		authorized.POST("/images/edits", editHandler.Edit)
 		authorized.GET("/images/jobs", genHandler.List)
@@ -177,33 +181,33 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 		// Usage.
 		authorized.GET("/usage", usageHandler.Get)
-		authorized.GET("/usage/history", usageHandler.History)
+	authorized.GET("/usage/history", usageHandler.History)
 
-		// API-key-authed generation endpoint (for programmatic access).
+	// Async image tasks (submit-then-poll).
+	authorized.POST("/images/tasks", asyncImageHandler.Submit)
+	authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
 
-		// Prompt templates.
-		authorized.POST("/prompt-templates", promptTemplateHandler.Create)
-		authorized.GET("/prompt-templates", promptTemplateHandler.List)
-		authorized.GET("/prompt-templates/:id", promptTemplateHandler.Get)
-		authorized.PUT("/prompt-templates/:id", promptTemplateHandler.Update)
-		authorized.DELETE("/prompt-templates/:id", promptTemplateHandler.Delete)
-		authorized.POST("/prompt-templates/:id/apply", promptTemplateHandler.Apply)
+	// Prompt templates.
+	authorized.POST("/prompt-templates", promptTemplateHandler.Create)
+	authorized.GET("/prompt-templates", promptTemplateHandler.List)
+	authorized.GET("/prompt-templates/:id", promptTemplateHandler.Get)
+	authorized.PUT("/prompt-templates/:id", promptTemplateHandler.Update)
+	authorized.DELETE("/prompt-templates/:id", promptTemplateHandler.Delete)
+	authorized.POST("/prompt-templates/:id/apply", promptTemplateHandler.Apply)
+}
 
-		// Async image tasks (submit-then-poll).
-		authorized.POST("/images/tasks", asyncImageHandler.Submit)
-		authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
-	}
+// --- API-key-authed routes (no JWT required) ---
+apiKeyOnly := v1.Group("")
+apiKeyOnly.Use(apiKeyMW)
+{
+	// API-key-authed generation endpoint for programmatic access.
+	// Uses /images/generate (not /images/generations) to avoid conflict
+	// with the public OpenAI-compatible endpoint.
+	apiKeyOnly.POST("/images/generate", genHandler.Create)
+}
 
-	// --- API-key-authed routes (no JWT required) ---
-	apiKeyOnly := v1.Group("")
-	apiKeyOnly.Use(apiKeyMW)
-	{
-		// API-key-authed generation endpoint (for programmatic access).
-		apiKeyOnly.POST("/images/generate", genHandler.Create)
-	}
-
-	// --- Admin routes (adminAuth enforced at group level) ---
-	routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
+// --- Admin routes (adminAuth enforced at group level) ---
+routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
 
 	return &Router{Engine: engine}, nil
 }

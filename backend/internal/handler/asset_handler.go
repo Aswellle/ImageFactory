@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 	"github.com/imageforge/imageforge/internal/pkg/response"
 	"github.com/imageforge/imageforge/internal/service"
@@ -174,6 +173,3 @@ func (h *AssetHandler) GetVersion(c *gin.Context) {
 	}
 	response.OK(c, ver)
 }
-
-// suppress unused import warnings for ent (kept for symmetry with other handlers).
-var _ = ent.Asset{}
