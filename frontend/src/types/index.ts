@@ -33,23 +33,8 @@ export interface Paginated<T> {
 }
 
 // ---- Generation ----
-
 export type JobType = 'generation' | 'edit'
 export type JobStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled'
-
-export interface GenerationJob {
-  id: string
-  type: JobType
-  status: JobStatus
-  provider?: string
-  model?: string
-  prompt?: string
-  error_code?: string
-  error_message?: string
-  created_at: string
-  completed_at?: string
-}
-
 export type AssetSource = 'generated' | 'uploaded' | 'edited'
 
 export interface Asset {
@@ -100,7 +85,6 @@ export interface ModelConfig {
   enabled: boolean
 }
 
-// ---- Generation (frontend) ----
 
 export interface GenerationJob {
   job_id: string

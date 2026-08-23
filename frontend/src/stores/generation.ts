@@ -59,8 +59,13 @@ export const useGenerationStore = defineStore('generation', () => {
 
   // Poll the active job until it reaches a terminal state. Returns when the
   // job completes, fails, or the max attempts are exhausted.
+  // Check cancelled.value to stop polling early (e.g., when user navigates away).
+  const cancelled = ref(false)
+
   async function pollUntilDone(jobId: string, maxAttempts = 60) {
+    cancelled.value = false
     for (let i = 0; i < maxAttempts; i++) {
+      if (cancelled.value) return null
       const job = await generationApi.get(jobId)
       upsert(job)
       if (job.status === 'completed' || job.status === 'failed') {
@@ -69,6 +74,10 @@ export const useGenerationStore = defineStore('generation', () => {
       await new Promise((r) => setTimeout(r, 3000))
     }
     return generationApi.get(jobId).then(upsert)
+  }
+
+  function cancelPolling() {
+    cancelled.value = true
   }
 
   function upsert(job: GenerationJob) {
@@ -92,6 +101,7 @@ export const useGenerationStore = defineStore('generation', () => {
     fetchActive,
     refreshList,
     pollUntilDone,
+    cancelPolling,
     reset,
   }
 })

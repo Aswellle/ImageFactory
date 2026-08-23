@@ -45,8 +45,8 @@ function deleteAsset(id: number) {
 
     <div v-else class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
       <div v-for="asset in assetStore.assets" :key="asset.id" class="break-inside-avoid mb-4">
-        <div class="card card-interactive overflow-hidden group relative" @click="$router.push(`/assets/${asset.id}`)">
-          <div class="aspect-auto min-h-[100px] bg-surface-2">
+        <div class="card card-interactive overflow-hidden group relative break-inside-avoid" @click="$router.push(`/assets/${asset.id}`)">
+          <div class="aspect-[4/3] bg-surface-2 overflow-hidden">
             <img v-if="asset.thumbnail_key || asset.storage_key" :src="`/v1/assets/${asset.id}/content`" class="w-full h-auto object-cover" loading="lazy" />
           </div>
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-end opacity-0 group-hover:opacity-100">

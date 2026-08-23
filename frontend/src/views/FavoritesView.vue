@@ -37,9 +37,9 @@ onMounted(() => {
         class="break-inside-avoid mb-4 cursor-pointer group relative"
         @click="$router.push(`/assets/${fav.asset_id}`)"
       >
-        <div class="card overflow-hidden">
+        <div class="card overflow-hidden break-inside-avoid">
           <div class="relative">
-            <div class="aspect-auto min-h-[120px] bg-surface-2 flex items-center justify-center">
+            <div class="aspect-[4/3] bg-surface-2 flex items-center justify-center overflow-hidden">
               <img
                 :src="`/v1/assets/${fav.asset_id}/content`"
                 class="w-full h-auto object-cover"

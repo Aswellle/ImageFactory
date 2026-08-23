@@ -69,8 +69,8 @@ onMounted(async () => {
           class="break-inside-avoid mb-4 group"
           @click="$router.push(`/assets/${asset.id}`)"
         >
-          <div class="card card-interactive overflow-hidden">
-            <div class="relative aspect-auto min-h-[80px] bg-surface-2 overflow-hidden">
+          <div class="card card-interactive overflow-hidden break-inside-avoid">
+            <div class="relative aspect-[4/3] bg-surface-2 overflow-hidden">
               <img
                 v-if="asset.thumbnail_key || asset.storage_key"
                 :src="`/v1/assets/${asset.id}/content`"

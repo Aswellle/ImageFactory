@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { useGenerationStore } from '@/stores/generation'
 import { useI18n } from 'vue-i18n'
 
@@ -44,6 +44,9 @@ async function submit() {
   }
 }
 
+onUnmounted(() => {
+  store.cancelPolling()
+})
 function statusLabel(status: string): string {
   switch (status) {
     case 'pending': return t('generation.statusQueued')

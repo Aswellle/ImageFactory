@@ -8,6 +8,8 @@ import type { Router } from 'vue-router'
 //   g g     -> go to gallery
 //   g p     -> go to projects
 //   g a     -> go to api keys
+const SEQUENCE_TIMEOUT_MS = 600
+
 export function useKeyboard(router: Router) {
   const sequence = ref<string | null>(null)
   let seqTimer: ReturnType<typeof setTimeout> | null = null
@@ -35,7 +37,7 @@ export function useKeyboard(router: Router) {
       seqTimer = setTimeout(() => {
         sequence.value = null
         seqTimer = null
-      }, 600)
+      }, SEQUENCE_TIMEOUT_MS)
       return
     }
 
@@ -44,10 +46,10 @@ export function useKeyboard(router: Router) {
       seqTimer = null
       sequence.value = null
       switch (e.key) {
-        case 'n': router.push('/create'); break
-        case 'g': router.push('/assets'); break
-        case 'p': router.push('/projects'); break
-        case 'a': router.push('/api-keys'); break
+        case 'n': router.push('/app/create'); break
+        case 'g': router.push('/app/assets'); break
+        case 'p': router.push('/app/projects'); break
+        case 'a': router.push('/app/api-keys'); break
       }
       e.preventDefault()
     }

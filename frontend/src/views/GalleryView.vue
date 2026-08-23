@@ -158,9 +158,9 @@ function formatSize(bytes?: number): string {
         class="break-inside-avoid mb-4 group"
         @click="openAsset(asset)"
       >
-        <div class="card card-interactive overflow-hidden">
+        <div class="card card-interactive overflow-hidden break-inside-avoid">
           <div class="relative overflow-hidden">
-            <div class="aspect-auto min-h-[120px] bg-[var(--surface-2)] flex items-center justify-center">
+            <div class="aspect-[4/3] bg-[var(--surface-2)] flex items-center justify-center overflow-hidden">
               <img
                 v-if="asset.thumbnail_key || asset.storage_key"
                 :src="`/v1/assets/${asset.id}/content`"
