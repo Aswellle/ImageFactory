@@ -33,7 +33,7 @@
 |:---:|:---:|:---:|
 | ![Dashboard](docs/screenshots/dashboard.png) | ![Gallery](docs/screenshots/gallery.png) | ![Generation](docs/screenshots/generation.png) |
 
-> 注：将界面截图保存至 `docs/screenshots/` 目录即可自动展示。
+> 注：将界面截图保存至 `docs/screenshots/`。
 
 ---
 
