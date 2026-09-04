@@ -47,6 +47,58 @@ var (
 			},
 		},
 	}
+	// AccountsColumns holds the columns for the "accounts" table.
+	AccountsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true},
+		{Name: "name", Type: field.TypeString, Size: 100},
+		{Name: "platform", Type: field.TypeString, Size: 50},
+		{Name: "type", Type: field.TypeString, Size: 20},
+		{Name: "credentials", Type: field.TypeJSON, SchemaType: map[string]string{"postgres": "jsonb"}},
+		{Name: "priority", Type: field.TypeInt, Default: 50},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"active", "error", "disabled"}, Default: "active"},
+		{Name: "error_message", Type: field.TypeString, Nullable: true, SchemaType: map[string]string{"postgres": "text"}},
+		{Name: "last_used_at", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "expires_at", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "schedulable", Type: field.TypeBool, Default: true},
+		{Name: "rate_limited_at", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "rate_limit_reset_at", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "overload_until", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "created_at", Type: field.TypeTime, SchemaType: map[string]string{"postgres": "timestamptz"}},
+		{Name: "updated_at", Type: field.TypeTime, SchemaType: map[string]string{"postgres": "timestamptz"}},
+	}
+	// AccountsTable holds the schema information for the "accounts" table.
+	AccountsTable = &schema.Table{
+		Name:       "accounts",
+		Columns:    AccountsColumns,
+		PrimaryKey: []*schema.Column{AccountsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "account_platform",
+				Unique:  false,
+				Columns: []*schema.Column{AccountsColumns[2]},
+			},
+			{
+				Name:    "account_status",
+				Unique:  false,
+				Columns: []*schema.Column{AccountsColumns[6]},
+			},
+			{
+				Name:    "account_schedulable",
+				Unique:  false,
+				Columns: []*schema.Column{AccountsColumns[10]},
+			},
+			{
+				Name:    "account_priority",
+				Unique:  false,
+				Columns: []*schema.Column{AccountsColumns[5]},
+			},
+			{
+				Name:    "account_platform_schedulable_status",
+				Unique:  false,
+				Columns: []*schema.Column{AccountsColumns[2], AccountsColumns[10], AccountsColumns[6]},
+			},
+		},
+	}
 	// AssetsColumns holds the columns for the "assets" table.
 	AssetsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
@@ -474,12 +526,21 @@ var (
 		{Name: "cost", Type: field.TypeFloat64, Default: 0},
 		{Name: "request_id", Type: field.TypeString, Unique: true, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
+		{Name: "account_usage_logs", Type: field.TypeInt64, Nullable: true},
 	}
 	// UsageRecordsTable holds the schema information for the "usage_records" table.
 	UsageRecordsTable = &schema.Table{
 		Name:       "usage_records",
 		Columns:    UsageRecordsColumns,
 		PrimaryKey: []*schema.Column{UsageRecordsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "usage_records_accounts_usage_logs",
+				Columns:    []*schema.Column{UsageRecordsColumns[10]},
+				RefColumns: []*schema.Column{AccountsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "usagerecord_user_id_created_at",
@@ -532,6 +593,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		APIKeysTable,
+		AccountsTable,
 		AssetsTable,
 		AssetTagsTable,
 		AssetVersionsTable,
@@ -564,4 +626,5 @@ func init() {
 	ProjectsTable.ForeignKeys[0].RefTable = UsersTable
 	PromptTemplatesTable.ForeignKeys[0].RefTable = UsersTable
 	TagsTable.ForeignKeys[0].RefTable = UsersTable
+	UsageRecordsTable.ForeignKeys[0].RefTable = AccountsTable
 }

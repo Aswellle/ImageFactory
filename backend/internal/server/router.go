@@ -132,6 +132,11 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	resetSvc := service.NewPasswordResetService(users, resetCodes, emailSvc, password, rateLimiter)
 	resetHandler := handler.NewPasswordResetHandler(resetSvc)
 
+	// --- Account management (Sub2API integration) ---
+	accountRepo := repository.NewAccountRepository(db)
+	accountSvc := service.NewAccountService(accountRepo)
+	accountResolver := service.NewAccountResolver(accountSvc)
+
 	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
 
 	projectSvc := service.NewProjectService(db)
@@ -140,11 +145,11 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	assetHandler := handler.NewAssetHandler(assetSvc)
 
 	usageSvc := service.NewUsageService(db)
-	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc, usageSvc)
+	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc, usageSvc, accountResolver)
 	genHandler := handler.NewGenerationHandler(genService)
 	imageGW := handler.NewOpenAIImagesHandler(handler.NewOpenAIImagesService())
 
-	editSvc := service.NewImageEditService(db, batchSvc, store, queue)
+	editSvc := service.NewImageEditService(db, batchSvc, store, queue, accountResolver)
 	editHandler := handler.NewImageEditHandler(editSvc)
 
 
@@ -170,6 +175,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		User:      admin.NewUserHandler(adminSvc),
 		Job:       admin.NewJobHandler(adminSvc),
 		APIKey:    admin.NewAPIKeyHandler(adminSvc),
+		Account:   admin.NewAccountHandler(accountSvc),
 	}
 
 	// --- Public routes ---

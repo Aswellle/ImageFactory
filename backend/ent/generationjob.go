@@ -140,7 +140,7 @@ func (*GenerationJob) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the GenerationJob fields.
-func (_m *GenerationJob) assignValues(columns []string, values []any) error {
+func (gj *GenerationJob) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -151,131 +151,131 @@ func (_m *GenerationJob) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			gj.ID = int64(value.Int64)
 		case generationjob.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.UserID = value.Int64
+				gj.UserID = value.Int64
 			}
 		case generationjob.FieldExternalID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field external_id", values[i])
 			} else if value.Valid {
-				_m.ExternalID = value.String
+				gj.ExternalID = value.String
 			}
 		case generationjob.FieldProjectID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field project_id", values[i])
 			} else if value.Valid {
-				_m.ProjectID = value.Int64
+				gj.ProjectID = value.Int64
 			}
 		case generationjob.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				_m.Type = generationjob.Type(value.String)
+				gj.Type = generationjob.Type(value.String)
 			}
 		case generationjob.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.Status = generationjob.Status(value.String)
+				gj.Status = generationjob.Status(value.String)
 			}
 		case generationjob.FieldProvider:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field provider", values[i])
 			} else if value.Valid {
-				_m.Provider = value.String
+				gj.Provider = value.String
 			}
 		case generationjob.FieldModel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field model", values[i])
 			} else if value.Valid {
-				_m.Model = value.String
+				gj.Model = value.String
 			}
 		case generationjob.FieldSub2apiTaskID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field sub2api_task_id", values[i])
 			} else if value.Valid {
-				_m.Sub2apiTaskID = value.String
+				gj.Sub2apiTaskID = value.String
 			}
 		case generationjob.FieldPrompt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field prompt", values[i])
 			} else if value.Valid {
-				_m.Prompt = value.String
+				gj.Prompt = value.String
 			}
 		case generationjob.FieldNegativePrompt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field negative_prompt", values[i])
 			} else if value.Valid {
-				_m.NegativePrompt = value.String
+				gj.NegativePrompt = value.String
 			}
 		case generationjob.FieldAspectRatio:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field aspect_ratio", values[i])
 			} else if value.Valid {
-				_m.AspectRatio = value.String
+				gj.AspectRatio = value.String
 			}
 		case generationjob.FieldImageCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field image_count", values[i])
 			} else if value.Valid {
-				_m.ImageCount = int(value.Int64)
+				gj.ImageCount = int(value.Int64)
 			}
 		case generationjob.FieldOutputFormat:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field output_format", values[i])
 			} else if value.Valid {
-				_m.OutputFormat = value.String
+				gj.OutputFormat = value.String
 			}
 		case generationjob.FieldErrorCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field error_code", values[i])
 			} else if value.Valid {
-				_m.ErrorCode = value.String
+				gj.ErrorCode = value.String
 			}
 		case generationjob.FieldErrorMessage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field error_message", values[i])
 			} else if value.Valid {
-				_m.ErrorMessage = value.String
+				gj.ErrorMessage = value.String
 			}
 		case generationjob.FieldRetryCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field retry_count", values[i])
 			} else if value.Valid {
-				_m.RetryCount = int(value.Int64)
+				gj.RetryCount = int(value.Int64)
 			}
 		case generationjob.FieldStartedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field started_at", values[i])
 			} else if value.Valid {
-				_m.StartedAt = new(time.Time)
-				*_m.StartedAt = value.Time
+				gj.StartedAt = new(time.Time)
+				*gj.StartedAt = value.Time
 			}
 		case generationjob.FieldCompletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field completed_at", values[i])
 			} else if value.Valid {
-				_m.CompletedAt = new(time.Time)
-				*_m.CompletedAt = value.Time
+				gj.CompletedAt = new(time.Time)
+				*gj.CompletedAt = value.Time
 			}
 		case generationjob.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				gj.CreatedAt = value.Time
 			}
 		case generationjob.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				_m.UpdatedAt = value.Time
+				gj.UpdatedAt = value.Time
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			gj.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -283,116 +283,116 @@ func (_m *GenerationJob) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the GenerationJob.
 // This includes values selected through modifiers, order, etc.
-func (_m *GenerationJob) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (gj *GenerationJob) Value(name string) (ent.Value, error) {
+	return gj.selectValues.Get(name)
 }
 
 // QueryUser queries the "user" edge of the GenerationJob entity.
-func (_m *GenerationJob) QueryUser() *UserQuery {
-	return NewGenerationJobClient(_m.config).QueryUser(_m)
+func (gj *GenerationJob) QueryUser() *UserQuery {
+	return NewGenerationJobClient(gj.config).QueryUser(gj)
 }
 
 // QueryProject queries the "project" edge of the GenerationJob entity.
-func (_m *GenerationJob) QueryProject() *ProjectQuery {
-	return NewGenerationJobClient(_m.config).QueryProject(_m)
+func (gj *GenerationJob) QueryProject() *ProjectQuery {
+	return NewGenerationJobClient(gj.config).QueryProject(gj)
 }
 
 // QueryInputs queries the "inputs" edge of the GenerationJob entity.
-func (_m *GenerationJob) QueryInputs() *GenerationInputQuery {
-	return NewGenerationJobClient(_m.config).QueryInputs(_m)
+func (gj *GenerationJob) QueryInputs() *GenerationInputQuery {
+	return NewGenerationJobClient(gj.config).QueryInputs(gj)
 }
 
 // QueryOutputAssets queries the "output_assets" edge of the GenerationJob entity.
-func (_m *GenerationJob) QueryOutputAssets() *AssetQuery {
-	return NewGenerationJobClient(_m.config).QueryOutputAssets(_m)
+func (gj *GenerationJob) QueryOutputAssets() *AssetQuery {
+	return NewGenerationJobClient(gj.config).QueryOutputAssets(gj)
 }
 
 // Update returns a builder for updating this GenerationJob.
 // Note that you need to call GenerationJob.Unwrap() before calling this method if this GenerationJob
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *GenerationJob) Update() *GenerationJobUpdateOne {
-	return NewGenerationJobClient(_m.config).UpdateOne(_m)
+func (gj *GenerationJob) Update() *GenerationJobUpdateOne {
+	return NewGenerationJobClient(gj.config).UpdateOne(gj)
 }
 
 // Unwrap unwraps the GenerationJob entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *GenerationJob) Unwrap() *GenerationJob {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (gj *GenerationJob) Unwrap() *GenerationJob {
+	_tx, ok := gj.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: GenerationJob is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	gj.config.driver = _tx.drv
+	return gj
 }
 
 // String implements the fmt.Stringer.
-func (_m *GenerationJob) String() string {
+func (gj *GenerationJob) String() string {
 	var builder strings.Builder
 	builder.WriteString("GenerationJob(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", gj.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
+	builder.WriteString(fmt.Sprintf("%v", gj.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("external_id=")
-	builder.WriteString(_m.ExternalID)
+	builder.WriteString(gj.ExternalID)
 	builder.WriteString(", ")
 	builder.WriteString("project_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.ProjectID))
+	builder.WriteString(fmt.Sprintf("%v", gj.ProjectID))
 	builder.WriteString(", ")
 	builder.WriteString("type=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Type))
+	builder.WriteString(fmt.Sprintf("%v", gj.Type))
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Status))
+	builder.WriteString(fmt.Sprintf("%v", gj.Status))
 	builder.WriteString(", ")
 	builder.WriteString("provider=")
-	builder.WriteString(_m.Provider)
+	builder.WriteString(gj.Provider)
 	builder.WriteString(", ")
 	builder.WriteString("model=")
-	builder.WriteString(_m.Model)
+	builder.WriteString(gj.Model)
 	builder.WriteString(", ")
 	builder.WriteString("sub2api_task_id=")
-	builder.WriteString(_m.Sub2apiTaskID)
+	builder.WriteString(gj.Sub2apiTaskID)
 	builder.WriteString(", ")
 	builder.WriteString("prompt=")
-	builder.WriteString(_m.Prompt)
+	builder.WriteString(gj.Prompt)
 	builder.WriteString(", ")
 	builder.WriteString("negative_prompt=")
-	builder.WriteString(_m.NegativePrompt)
+	builder.WriteString(gj.NegativePrompt)
 	builder.WriteString(", ")
 	builder.WriteString("aspect_ratio=")
-	builder.WriteString(_m.AspectRatio)
+	builder.WriteString(gj.AspectRatio)
 	builder.WriteString(", ")
 	builder.WriteString("image_count=")
-	builder.WriteString(fmt.Sprintf("%v", _m.ImageCount))
+	builder.WriteString(fmt.Sprintf("%v", gj.ImageCount))
 	builder.WriteString(", ")
 	builder.WriteString("output_format=")
-	builder.WriteString(_m.OutputFormat)
+	builder.WriteString(gj.OutputFormat)
 	builder.WriteString(", ")
 	builder.WriteString("error_code=")
-	builder.WriteString(_m.ErrorCode)
+	builder.WriteString(gj.ErrorCode)
 	builder.WriteString(", ")
 	builder.WriteString("error_message=")
-	builder.WriteString(_m.ErrorMessage)
+	builder.WriteString(gj.ErrorMessage)
 	builder.WriteString(", ")
 	builder.WriteString("retry_count=")
-	builder.WriteString(fmt.Sprintf("%v", _m.RetryCount))
+	builder.WriteString(fmt.Sprintf("%v", gj.RetryCount))
 	builder.WriteString(", ")
-	if v := _m.StartedAt; v != nil {
+	if v := gj.StartedAt; v != nil {
 		builder.WriteString("started_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.CompletedAt; v != nil {
+	if v := gj.CompletedAt; v != nil {
 		builder.WriteString("completed_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(gj.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(gj.UpdatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

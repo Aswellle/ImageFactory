@@ -47,7 +47,7 @@ func (*Favorite) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Favorite fields.
-func (_m *Favorite) assignValues(columns []string, values []any) error {
+func (f *Favorite) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -58,34 +58,34 @@ func (_m *Favorite) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			f.ID = int64(value.Int64)
 		case favorite.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.UserID = value.Int64
+				f.UserID = value.Int64
 			}
 		case favorite.FieldAssetID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field asset_id", values[i])
 			} else if value.Valid {
-				_m.AssetID = value.Int64
+				f.AssetID = value.Int64
 			}
 		case favorite.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				f.CreatedAt = value.Time
 			}
 		case favorite.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_favorites", value)
 			} else if value.Valid {
-				_m.user_favorites = new(int64)
-				*_m.user_favorites = int64(value.Int64)
+				f.user_favorites = new(int64)
+				*f.user_favorites = int64(value.Int64)
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			f.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -93,41 +93,41 @@ func (_m *Favorite) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Favorite.
 // This includes values selected through modifiers, order, etc.
-func (_m *Favorite) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (f *Favorite) Value(name string) (ent.Value, error) {
+	return f.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Favorite.
 // Note that you need to call Favorite.Unwrap() before calling this method if this Favorite
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *Favorite) Update() *FavoriteUpdateOne {
-	return NewFavoriteClient(_m.config).UpdateOne(_m)
+func (f *Favorite) Update() *FavoriteUpdateOne {
+	return NewFavoriteClient(f.config).UpdateOne(f)
 }
 
 // Unwrap unwraps the Favorite entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *Favorite) Unwrap() *Favorite {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (f *Favorite) Unwrap() *Favorite {
+	_tx, ok := f.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Favorite is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	f.config.driver = _tx.drv
+	return f
 }
 
 // String implements the fmt.Stringer.
-func (_m *Favorite) String() string {
+func (f *Favorite) String() string {
 	var builder strings.Builder
 	builder.WriteString("Favorite(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", f.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
+	builder.WriteString(fmt.Sprintf("%v", f.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("asset_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.AssetID))
+	builder.WriteString(fmt.Sprintf("%v", f.AssetID))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(f.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

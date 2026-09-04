@@ -8,6 +8,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/imageforge/imageforge/ent"
+	"github.com/imageforge/imageforge/ent/account"
 	"github.com/imageforge/imageforge/ent/apikey"
 	"github.com/imageforge/imageforge/ent/asset"
 	"github.com/imageforge/imageforge/ent/assettag"
@@ -105,6 +106,33 @@ func (f TraverseAPIKey) Traverse(ctx context.Context, q ent.Query) error {
 		return f(ctx, q)
 	}
 	return fmt.Errorf("unexpected query type %T. expect *ent.APIKeyQuery", q)
+}
+
+// The AccountFunc type is an adapter to allow the use of ordinary function as a Querier.
+type AccountFunc func(context.Context, *ent.AccountQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f AccountFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.AccountQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.AccountQuery", q)
+}
+
+// The TraverseAccount type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseAccount func(context.Context, *ent.AccountQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseAccount) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseAccount) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.AccountQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.AccountQuery", q)
 }
 
 // The AssetFunc type is an adapter to allow the use of ordinary function as a Querier.
@@ -436,6 +464,8 @@ func NewQuery(q ent.Query) (Query, error) {
 	switch q := q.(type) {
 	case *ent.APIKeyQuery:
 		return &query[*ent.APIKeyQuery, predicate.APIKey, apikey.OrderOption]{typ: ent.TypeAPIKey, tq: q}, nil
+	case *ent.AccountQuery:
+		return &query[*ent.AccountQuery, predicate.Account, account.OrderOption]{typ: ent.TypeAccount, tq: q}, nil
 	case *ent.AssetQuery:
 		return &query[*ent.AssetQuery, predicate.Asset, asset.OrderOption]{typ: ent.TypeAsset, tq: q}, nil
 	case *ent.AssetTagQuery:

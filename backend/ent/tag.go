@@ -94,7 +94,7 @@ func (*Tag) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Tag fields.
-func (_m *Tag) assignValues(columns []string, values []any) error {
+func (t *Tag) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -105,33 +105,33 @@ func (_m *Tag) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			t.ID = int64(value.Int64)
 		case tag.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.UserID = value.Int64
+				t.UserID = value.Int64
 			}
 		case tag.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				_m.Name = value.String
+				t.Name = value.String
 			}
 		case tag.FieldColor:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field color", values[i])
 			} else if value.Valid {
-				_m.Color = value.String
+				t.Color = value.String
 			}
 		case tag.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				t.CreatedAt = value.Time
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			t.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -139,59 +139,59 @@ func (_m *Tag) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Tag.
 // This includes values selected through modifiers, order, etc.
-func (_m *Tag) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (t *Tag) Value(name string) (ent.Value, error) {
+	return t.selectValues.Get(name)
 }
 
 // QueryUser queries the "user" edge of the Tag entity.
-func (_m *Tag) QueryUser() *UserQuery {
-	return NewTagClient(_m.config).QueryUser(_m)
+func (t *Tag) QueryUser() *UserQuery {
+	return NewTagClient(t.config).QueryUser(t)
 }
 
 // QueryAssets queries the "assets" edge of the Tag entity.
-func (_m *Tag) QueryAssets() *AssetQuery {
-	return NewTagClient(_m.config).QueryAssets(_m)
+func (t *Tag) QueryAssets() *AssetQuery {
+	return NewTagClient(t.config).QueryAssets(t)
 }
 
 // QueryAssetTags queries the "asset_tags" edge of the Tag entity.
-func (_m *Tag) QueryAssetTags() *AssetTagQuery {
-	return NewTagClient(_m.config).QueryAssetTags(_m)
+func (t *Tag) QueryAssetTags() *AssetTagQuery {
+	return NewTagClient(t.config).QueryAssetTags(t)
 }
 
 // Update returns a builder for updating this Tag.
 // Note that you need to call Tag.Unwrap() before calling this method if this Tag
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *Tag) Update() *TagUpdateOne {
-	return NewTagClient(_m.config).UpdateOne(_m)
+func (t *Tag) Update() *TagUpdateOne {
+	return NewTagClient(t.config).UpdateOne(t)
 }
 
 // Unwrap unwraps the Tag entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *Tag) Unwrap() *Tag {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (t *Tag) Unwrap() *Tag {
+	_tx, ok := t.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Tag is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	t.config.driver = _tx.drv
+	return t
 }
 
 // String implements the fmt.Stringer.
-func (_m *Tag) String() string {
+func (t *Tag) String() string {
 	var builder strings.Builder
 	builder.WriteString("Tag(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", t.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
+	builder.WriteString(fmt.Sprintf("%v", t.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(_m.Name)
+	builder.WriteString(t.Name)
 	builder.WriteString(", ")
 	builder.WriteString("color=")
-	builder.WriteString(_m.Color)
+	builder.WriteString(t.Color)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(t.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

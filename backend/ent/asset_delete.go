@@ -20,56 +20,56 @@ type AssetDelete struct {
 }
 
 // Where appends a list predicates to the AssetDelete builder.
-func (_d *AssetDelete) Where(ps ...predicate.Asset) *AssetDelete {
-	_d.mutation.Where(ps...)
-	return _d
+func (ad *AssetDelete) Where(ps ...predicate.Asset) *AssetDelete {
+	ad.mutation.Where(ps...)
+	return ad
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (_d *AssetDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
+func (ad *AssetDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, ad.sqlExec, ad.mutation, ad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *AssetDelete) ExecX(ctx context.Context) int {
-	n, err := _d.Exec(ctx)
+func (ad *AssetDelete) ExecX(ctx context.Context) int {
+	n, err := ad.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (_d *AssetDelete) sqlExec(ctx context.Context) (int, error) {
+func (ad *AssetDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(asset.Table, sqlgraph.NewFieldSpec(asset.FieldID, field.TypeInt64))
-	if ps := _d.mutation.predicates; len(ps) > 0 {
+	if ps := ad.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, ad.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	_d.mutation.done = true
+	ad.mutation.done = true
 	return affected, err
 }
 
 // AssetDeleteOne is the builder for deleting a single Asset entity.
 type AssetDeleteOne struct {
-	_d *AssetDelete
+	ad *AssetDelete
 }
 
 // Where appends a list predicates to the AssetDelete builder.
-func (_d *AssetDeleteOne) Where(ps ...predicate.Asset) *AssetDeleteOne {
-	_d._d.mutation.Where(ps...)
-	return _d
+func (ado *AssetDeleteOne) Where(ps ...predicate.Asset) *AssetDeleteOne {
+	ado.ad.mutation.Where(ps...)
+	return ado
 }
 
 // Exec executes the deletion query.
-func (_d *AssetDeleteOne) Exec(ctx context.Context) error {
-	n, err := _d._d.Exec(ctx)
+func (ado *AssetDeleteOne) Exec(ctx context.Context) error {
+	n, err := ado.ad.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (_d *AssetDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *AssetDeleteOne) ExecX(ctx context.Context) {
-	if err := _d.Exec(ctx); err != nil {
+func (ado *AssetDeleteOne) ExecX(ctx context.Context) {
+	if err := ado.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

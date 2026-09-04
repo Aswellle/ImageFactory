@@ -27,323 +27,323 @@ type GenerationJobCreate struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (_c *GenerationJobCreate) SetUserID(v int64) *GenerationJobCreate {
-	_c.mutation.SetUserID(v)
-	return _c
+func (gjc *GenerationJobCreate) SetUserID(i int64) *GenerationJobCreate {
+	gjc.mutation.SetUserID(i)
+	return gjc
 }
 
 // SetExternalID sets the "external_id" field.
-func (_c *GenerationJobCreate) SetExternalID(v string) *GenerationJobCreate {
-	_c.mutation.SetExternalID(v)
-	return _c
+func (gjc *GenerationJobCreate) SetExternalID(s string) *GenerationJobCreate {
+	gjc.mutation.SetExternalID(s)
+	return gjc
 }
 
 // SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableExternalID(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetExternalID(*v)
+func (gjc *GenerationJobCreate) SetNillableExternalID(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetExternalID(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetProjectID sets the "project_id" field.
-func (_c *GenerationJobCreate) SetProjectID(v int64) *GenerationJobCreate {
-	_c.mutation.SetProjectID(v)
-	return _c
+func (gjc *GenerationJobCreate) SetProjectID(i int64) *GenerationJobCreate {
+	gjc.mutation.SetProjectID(i)
+	return gjc
 }
 
 // SetNillableProjectID sets the "project_id" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableProjectID(v *int64) *GenerationJobCreate {
-	if v != nil {
-		_c.SetProjectID(*v)
+func (gjc *GenerationJobCreate) SetNillableProjectID(i *int64) *GenerationJobCreate {
+	if i != nil {
+		gjc.SetProjectID(*i)
 	}
-	return _c
+	return gjc
 }
 
 // SetType sets the "type" field.
-func (_c *GenerationJobCreate) SetType(v generationjob.Type) *GenerationJobCreate {
-	_c.mutation.SetType(v)
-	return _c
+func (gjc *GenerationJobCreate) SetType(ge generationjob.Type) *GenerationJobCreate {
+	gjc.mutation.SetType(ge)
+	return gjc
 }
 
 // SetStatus sets the "status" field.
-func (_c *GenerationJobCreate) SetStatus(v generationjob.Status) *GenerationJobCreate {
-	_c.mutation.SetStatus(v)
-	return _c
+func (gjc *GenerationJobCreate) SetStatus(ge generationjob.Status) *GenerationJobCreate {
+	gjc.mutation.SetStatus(ge)
+	return gjc
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableStatus(v *generationjob.Status) *GenerationJobCreate {
-	if v != nil {
-		_c.SetStatus(*v)
+func (gjc *GenerationJobCreate) SetNillableStatus(ge *generationjob.Status) *GenerationJobCreate {
+	if ge != nil {
+		gjc.SetStatus(*ge)
 	}
-	return _c
+	return gjc
 }
 
 // SetProvider sets the "provider" field.
-func (_c *GenerationJobCreate) SetProvider(v string) *GenerationJobCreate {
-	_c.mutation.SetProvider(v)
-	return _c
+func (gjc *GenerationJobCreate) SetProvider(s string) *GenerationJobCreate {
+	gjc.mutation.SetProvider(s)
+	return gjc
 }
 
 // SetNillableProvider sets the "provider" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableProvider(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetProvider(*v)
+func (gjc *GenerationJobCreate) SetNillableProvider(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetProvider(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetModel sets the "model" field.
-func (_c *GenerationJobCreate) SetModel(v string) *GenerationJobCreate {
-	_c.mutation.SetModel(v)
-	return _c
+func (gjc *GenerationJobCreate) SetModel(s string) *GenerationJobCreate {
+	gjc.mutation.SetModel(s)
+	return gjc
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableModel(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetModel(*v)
+func (gjc *GenerationJobCreate) SetNillableModel(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetModel(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetSub2apiTaskID sets the "sub2api_task_id" field.
-func (_c *GenerationJobCreate) SetSub2apiTaskID(v string) *GenerationJobCreate {
-	_c.mutation.SetSub2apiTaskID(v)
-	return _c
+func (gjc *GenerationJobCreate) SetSub2apiTaskID(s string) *GenerationJobCreate {
+	gjc.mutation.SetSub2apiTaskID(s)
+	return gjc
 }
 
 // SetNillableSub2apiTaskID sets the "sub2api_task_id" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableSub2apiTaskID(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetSub2apiTaskID(*v)
+func (gjc *GenerationJobCreate) SetNillableSub2apiTaskID(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetSub2apiTaskID(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetPrompt sets the "prompt" field.
-func (_c *GenerationJobCreate) SetPrompt(v string) *GenerationJobCreate {
-	_c.mutation.SetPrompt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetPrompt(s string) *GenerationJobCreate {
+	gjc.mutation.SetPrompt(s)
+	return gjc
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillablePrompt(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetPrompt(*v)
+func (gjc *GenerationJobCreate) SetNillablePrompt(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetPrompt(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (_c *GenerationJobCreate) SetNegativePrompt(v string) *GenerationJobCreate {
-	_c.mutation.SetNegativePrompt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetNegativePrompt(s string) *GenerationJobCreate {
+	gjc.mutation.SetNegativePrompt(s)
+	return gjc
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableNegativePrompt(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetNegativePrompt(*v)
+func (gjc *GenerationJobCreate) SetNillableNegativePrompt(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetNegativePrompt(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetAspectRatio sets the "aspect_ratio" field.
-func (_c *GenerationJobCreate) SetAspectRatio(v string) *GenerationJobCreate {
-	_c.mutation.SetAspectRatio(v)
-	return _c
+func (gjc *GenerationJobCreate) SetAspectRatio(s string) *GenerationJobCreate {
+	gjc.mutation.SetAspectRatio(s)
+	return gjc
 }
 
 // SetNillableAspectRatio sets the "aspect_ratio" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableAspectRatio(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetAspectRatio(*v)
+func (gjc *GenerationJobCreate) SetNillableAspectRatio(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetAspectRatio(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetImageCount sets the "image_count" field.
-func (_c *GenerationJobCreate) SetImageCount(v int) *GenerationJobCreate {
-	_c.mutation.SetImageCount(v)
-	return _c
+func (gjc *GenerationJobCreate) SetImageCount(i int) *GenerationJobCreate {
+	gjc.mutation.SetImageCount(i)
+	return gjc
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableImageCount(v *int) *GenerationJobCreate {
-	if v != nil {
-		_c.SetImageCount(*v)
+func (gjc *GenerationJobCreate) SetNillableImageCount(i *int) *GenerationJobCreate {
+	if i != nil {
+		gjc.SetImageCount(*i)
 	}
-	return _c
+	return gjc
 }
 
 // SetOutputFormat sets the "output_format" field.
-func (_c *GenerationJobCreate) SetOutputFormat(v string) *GenerationJobCreate {
-	_c.mutation.SetOutputFormat(v)
-	return _c
+func (gjc *GenerationJobCreate) SetOutputFormat(s string) *GenerationJobCreate {
+	gjc.mutation.SetOutputFormat(s)
+	return gjc
 }
 
 // SetNillableOutputFormat sets the "output_format" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableOutputFormat(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetOutputFormat(*v)
+func (gjc *GenerationJobCreate) SetNillableOutputFormat(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetOutputFormat(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetErrorCode sets the "error_code" field.
-func (_c *GenerationJobCreate) SetErrorCode(v string) *GenerationJobCreate {
-	_c.mutation.SetErrorCode(v)
-	return _c
+func (gjc *GenerationJobCreate) SetErrorCode(s string) *GenerationJobCreate {
+	gjc.mutation.SetErrorCode(s)
+	return gjc
 }
 
 // SetNillableErrorCode sets the "error_code" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableErrorCode(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetErrorCode(*v)
+func (gjc *GenerationJobCreate) SetNillableErrorCode(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetErrorCode(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (_c *GenerationJobCreate) SetErrorMessage(v string) *GenerationJobCreate {
-	_c.mutation.SetErrorMessage(v)
-	return _c
+func (gjc *GenerationJobCreate) SetErrorMessage(s string) *GenerationJobCreate {
+	gjc.mutation.SetErrorMessage(s)
+	return gjc
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableErrorMessage(v *string) *GenerationJobCreate {
-	if v != nil {
-		_c.SetErrorMessage(*v)
+func (gjc *GenerationJobCreate) SetNillableErrorMessage(s *string) *GenerationJobCreate {
+	if s != nil {
+		gjc.SetErrorMessage(*s)
 	}
-	return _c
+	return gjc
 }
 
 // SetRetryCount sets the "retry_count" field.
-func (_c *GenerationJobCreate) SetRetryCount(v int) *GenerationJobCreate {
-	_c.mutation.SetRetryCount(v)
-	return _c
+func (gjc *GenerationJobCreate) SetRetryCount(i int) *GenerationJobCreate {
+	gjc.mutation.SetRetryCount(i)
+	return gjc
 }
 
 // SetNillableRetryCount sets the "retry_count" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableRetryCount(v *int) *GenerationJobCreate {
-	if v != nil {
-		_c.SetRetryCount(*v)
+func (gjc *GenerationJobCreate) SetNillableRetryCount(i *int) *GenerationJobCreate {
+	if i != nil {
+		gjc.SetRetryCount(*i)
 	}
-	return _c
+	return gjc
 }
 
 // SetStartedAt sets the "started_at" field.
-func (_c *GenerationJobCreate) SetStartedAt(v time.Time) *GenerationJobCreate {
-	_c.mutation.SetStartedAt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetStartedAt(t time.Time) *GenerationJobCreate {
+	gjc.mutation.SetStartedAt(t)
+	return gjc
 }
 
 // SetNillableStartedAt sets the "started_at" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableStartedAt(v *time.Time) *GenerationJobCreate {
-	if v != nil {
-		_c.SetStartedAt(*v)
+func (gjc *GenerationJobCreate) SetNillableStartedAt(t *time.Time) *GenerationJobCreate {
+	if t != nil {
+		gjc.SetStartedAt(*t)
 	}
-	return _c
+	return gjc
 }
 
 // SetCompletedAt sets the "completed_at" field.
-func (_c *GenerationJobCreate) SetCompletedAt(v time.Time) *GenerationJobCreate {
-	_c.mutation.SetCompletedAt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetCompletedAt(t time.Time) *GenerationJobCreate {
+	gjc.mutation.SetCompletedAt(t)
+	return gjc
 }
 
 // SetNillableCompletedAt sets the "completed_at" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableCompletedAt(v *time.Time) *GenerationJobCreate {
-	if v != nil {
-		_c.SetCompletedAt(*v)
+func (gjc *GenerationJobCreate) SetNillableCompletedAt(t *time.Time) *GenerationJobCreate {
+	if t != nil {
+		gjc.SetCompletedAt(*t)
 	}
-	return _c
+	return gjc
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (_c *GenerationJobCreate) SetCreatedAt(v time.Time) *GenerationJobCreate {
-	_c.mutation.SetCreatedAt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetCreatedAt(t time.Time) *GenerationJobCreate {
+	gjc.mutation.SetCreatedAt(t)
+	return gjc
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableCreatedAt(v *time.Time) *GenerationJobCreate {
-	if v != nil {
-		_c.SetCreatedAt(*v)
+func (gjc *GenerationJobCreate) SetNillableCreatedAt(t *time.Time) *GenerationJobCreate {
+	if t != nil {
+		gjc.SetCreatedAt(*t)
 	}
-	return _c
+	return gjc
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (_c *GenerationJobCreate) SetUpdatedAt(v time.Time) *GenerationJobCreate {
-	_c.mutation.SetUpdatedAt(v)
-	return _c
+func (gjc *GenerationJobCreate) SetUpdatedAt(t time.Time) *GenerationJobCreate {
+	gjc.mutation.SetUpdatedAt(t)
+	return gjc
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *GenerationJobCreate) SetNillableUpdatedAt(v *time.Time) *GenerationJobCreate {
-	if v != nil {
-		_c.SetUpdatedAt(*v)
+func (gjc *GenerationJobCreate) SetNillableUpdatedAt(t *time.Time) *GenerationJobCreate {
+	if t != nil {
+		gjc.SetUpdatedAt(*t)
 	}
-	return _c
+	return gjc
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (_c *GenerationJobCreate) SetUser(v *User) *GenerationJobCreate {
-	return _c.SetUserID(v.ID)
+func (gjc *GenerationJobCreate) SetUser(u *User) *GenerationJobCreate {
+	return gjc.SetUserID(u.ID)
 }
 
 // SetProject sets the "project" edge to the Project entity.
-func (_c *GenerationJobCreate) SetProject(v *Project) *GenerationJobCreate {
-	return _c.SetProjectID(v.ID)
+func (gjc *GenerationJobCreate) SetProject(p *Project) *GenerationJobCreate {
+	return gjc.SetProjectID(p.ID)
 }
 
 // AddInputIDs adds the "inputs" edge to the GenerationInput entity by IDs.
-func (_c *GenerationJobCreate) AddInputIDs(ids ...int64) *GenerationJobCreate {
-	_c.mutation.AddInputIDs(ids...)
-	return _c
+func (gjc *GenerationJobCreate) AddInputIDs(ids ...int64) *GenerationJobCreate {
+	gjc.mutation.AddInputIDs(ids...)
+	return gjc
 }
 
 // AddInputs adds the "inputs" edges to the GenerationInput entity.
-func (_c *GenerationJobCreate) AddInputs(v ...*GenerationInput) *GenerationJobCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
+func (gjc *GenerationJobCreate) AddInputs(g ...*GenerationInput) *GenerationJobCreate {
+	ids := make([]int64, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
 	}
-	return _c.AddInputIDs(ids...)
+	return gjc.AddInputIDs(ids...)
 }
 
 // AddOutputAssetIDs adds the "output_assets" edge to the Asset entity by IDs.
-func (_c *GenerationJobCreate) AddOutputAssetIDs(ids ...int64) *GenerationJobCreate {
-	_c.mutation.AddOutputAssetIDs(ids...)
-	return _c
+func (gjc *GenerationJobCreate) AddOutputAssetIDs(ids ...int64) *GenerationJobCreate {
+	gjc.mutation.AddOutputAssetIDs(ids...)
+	return gjc
 }
 
 // AddOutputAssets adds the "output_assets" edges to the Asset entity.
-func (_c *GenerationJobCreate) AddOutputAssets(v ...*Asset) *GenerationJobCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
+func (gjc *GenerationJobCreate) AddOutputAssets(a ...*Asset) *GenerationJobCreate {
+	ids := make([]int64, len(a))
+	for i := range a {
+		ids[i] = a[i].ID
 	}
-	return _c.AddOutputAssetIDs(ids...)
+	return gjc.AddOutputAssetIDs(ids...)
 }
 
 // Mutation returns the GenerationJobMutation object of the builder.
-func (_c *GenerationJobCreate) Mutation() *GenerationJobMutation {
-	return _c.mutation
+func (gjc *GenerationJobCreate) Mutation() *GenerationJobMutation {
+	return gjc.mutation
 }
 
 // Save creates the GenerationJob in the database.
-func (_c *GenerationJobCreate) Save(ctx context.Context) (*GenerationJob, error) {
-	_c.defaults()
-	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
+func (gjc *GenerationJobCreate) Save(ctx context.Context) (*GenerationJob, error) {
+	gjc.defaults()
+	return withHooks(ctx, gjc.sqlSave, gjc.mutation, gjc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (_c *GenerationJobCreate) SaveX(ctx context.Context) *GenerationJob {
-	v, err := _c.Save(ctx)
+func (gjc *GenerationJobCreate) SaveX(ctx context.Context) *GenerationJob {
+	v, err := gjc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -351,87 +351,87 @@ func (_c *GenerationJobCreate) SaveX(ctx context.Context) *GenerationJob {
 }
 
 // Exec executes the query.
-func (_c *GenerationJobCreate) Exec(ctx context.Context) error {
-	_, err := _c.Save(ctx)
+func (gjc *GenerationJobCreate) Exec(ctx context.Context) error {
+	_, err := gjc.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_c *GenerationJobCreate) ExecX(ctx context.Context) {
-	if err := _c.Exec(ctx); err != nil {
+func (gjc *GenerationJobCreate) ExecX(ctx context.Context) {
+	if err := gjc.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (_c *GenerationJobCreate) defaults() {
-	if _, ok := _c.mutation.Status(); !ok {
+func (gjc *GenerationJobCreate) defaults() {
+	if _, ok := gjc.mutation.Status(); !ok {
 		v := generationjob.DefaultStatus
-		_c.mutation.SetStatus(v)
+		gjc.mutation.SetStatus(v)
 	}
-	if _, ok := _c.mutation.ImageCount(); !ok {
+	if _, ok := gjc.mutation.ImageCount(); !ok {
 		v := generationjob.DefaultImageCount
-		_c.mutation.SetImageCount(v)
+		gjc.mutation.SetImageCount(v)
 	}
-	if _, ok := _c.mutation.RetryCount(); !ok {
+	if _, ok := gjc.mutation.RetryCount(); !ok {
 		v := generationjob.DefaultRetryCount
-		_c.mutation.SetRetryCount(v)
+		gjc.mutation.SetRetryCount(v)
 	}
-	if _, ok := _c.mutation.CreatedAt(); !ok {
+	if _, ok := gjc.mutation.CreatedAt(); !ok {
 		v := generationjob.DefaultCreatedAt()
-		_c.mutation.SetCreatedAt(v)
+		gjc.mutation.SetCreatedAt(v)
 	}
-	if _, ok := _c.mutation.UpdatedAt(); !ok {
+	if _, ok := gjc.mutation.UpdatedAt(); !ok {
 		v := generationjob.DefaultUpdatedAt()
-		_c.mutation.SetUpdatedAt(v)
+		gjc.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_c *GenerationJobCreate) check() error {
-	if _, ok := _c.mutation.UserID(); !ok {
+func (gjc *GenerationJobCreate) check() error {
+	if _, ok := gjc.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "GenerationJob.user_id"`)}
 	}
-	if _, ok := _c.mutation.GetType(); !ok {
+	if _, ok := gjc.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "GenerationJob.type"`)}
 	}
-	if v, ok := _c.mutation.GetType(); ok {
+	if v, ok := gjc.mutation.GetType(); ok {
 		if err := generationjob.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "GenerationJob.type": %w`, err)}
 		}
 	}
-	if _, ok := _c.mutation.Status(); !ok {
+	if _, ok := gjc.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "GenerationJob.status"`)}
 	}
-	if v, ok := _c.mutation.Status(); ok {
+	if v, ok := gjc.mutation.Status(); ok {
 		if err := generationjob.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "GenerationJob.status": %w`, err)}
 		}
 	}
-	if _, ok := _c.mutation.ImageCount(); !ok {
+	if _, ok := gjc.mutation.ImageCount(); !ok {
 		return &ValidationError{Name: "image_count", err: errors.New(`ent: missing required field "GenerationJob.image_count"`)}
 	}
-	if _, ok := _c.mutation.RetryCount(); !ok {
+	if _, ok := gjc.mutation.RetryCount(); !ok {
 		return &ValidationError{Name: "retry_count", err: errors.New(`ent: missing required field "GenerationJob.retry_count"`)}
 	}
-	if _, ok := _c.mutation.CreatedAt(); !ok {
+	if _, ok := gjc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "GenerationJob.created_at"`)}
 	}
-	if _, ok := _c.mutation.UpdatedAt(); !ok {
+	if _, ok := gjc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "GenerationJob.updated_at"`)}
 	}
-	if len(_c.mutation.UserIDs()) == 0 {
+	if len(gjc.mutation.UserIDs()) == 0 {
 		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "GenerationJob.user"`)}
 	}
 	return nil
 }
 
-func (_c *GenerationJobCreate) sqlSave(ctx context.Context) (*GenerationJob, error) {
-	if err := _c.check(); err != nil {
+func (gjc *GenerationJobCreate) sqlSave(ctx context.Context) (*GenerationJob, error) {
+	if err := gjc.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := _c.createSpec()
-	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
+	_node, _spec := gjc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, gjc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -439,90 +439,90 @@ func (_c *GenerationJobCreate) sqlSave(ctx context.Context) (*GenerationJob, err
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	_c.mutation.id = &_node.ID
-	_c.mutation.done = true
+	gjc.mutation.id = &_node.ID
+	gjc.mutation.done = true
 	return _node, nil
 }
 
-func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpec) {
+func (gjc *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpec) {
 	var (
-		_node = &GenerationJob{config: _c.config}
+		_node = &GenerationJob{config: gjc.config}
 		_spec = sqlgraph.NewCreateSpec(generationjob.Table, sqlgraph.NewFieldSpec(generationjob.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = _c.conflict
-	if value, ok := _c.mutation.ExternalID(); ok {
+	_spec.OnConflict = gjc.conflict
+	if value, ok := gjc.mutation.ExternalID(); ok {
 		_spec.SetField(generationjob.FieldExternalID, field.TypeString, value)
 		_node.ExternalID = value
 	}
-	if value, ok := _c.mutation.GetType(); ok {
+	if value, ok := gjc.mutation.GetType(); ok {
 		_spec.SetField(generationjob.FieldType, field.TypeEnum, value)
 		_node.Type = value
 	}
-	if value, ok := _c.mutation.Status(); ok {
+	if value, ok := gjc.mutation.Status(); ok {
 		_spec.SetField(generationjob.FieldStatus, field.TypeEnum, value)
 		_node.Status = value
 	}
-	if value, ok := _c.mutation.Provider(); ok {
+	if value, ok := gjc.mutation.Provider(); ok {
 		_spec.SetField(generationjob.FieldProvider, field.TypeString, value)
 		_node.Provider = value
 	}
-	if value, ok := _c.mutation.Model(); ok {
+	if value, ok := gjc.mutation.Model(); ok {
 		_spec.SetField(generationjob.FieldModel, field.TypeString, value)
 		_node.Model = value
 	}
-	if value, ok := _c.mutation.Sub2apiTaskID(); ok {
+	if value, ok := gjc.mutation.Sub2apiTaskID(); ok {
 		_spec.SetField(generationjob.FieldSub2apiTaskID, field.TypeString, value)
 		_node.Sub2apiTaskID = value
 	}
-	if value, ok := _c.mutation.Prompt(); ok {
+	if value, ok := gjc.mutation.Prompt(); ok {
 		_spec.SetField(generationjob.FieldPrompt, field.TypeString, value)
 		_node.Prompt = value
 	}
-	if value, ok := _c.mutation.NegativePrompt(); ok {
+	if value, ok := gjc.mutation.NegativePrompt(); ok {
 		_spec.SetField(generationjob.FieldNegativePrompt, field.TypeString, value)
 		_node.NegativePrompt = value
 	}
-	if value, ok := _c.mutation.AspectRatio(); ok {
+	if value, ok := gjc.mutation.AspectRatio(); ok {
 		_spec.SetField(generationjob.FieldAspectRatio, field.TypeString, value)
 		_node.AspectRatio = value
 	}
-	if value, ok := _c.mutation.ImageCount(); ok {
+	if value, ok := gjc.mutation.ImageCount(); ok {
 		_spec.SetField(generationjob.FieldImageCount, field.TypeInt, value)
 		_node.ImageCount = value
 	}
-	if value, ok := _c.mutation.OutputFormat(); ok {
+	if value, ok := gjc.mutation.OutputFormat(); ok {
 		_spec.SetField(generationjob.FieldOutputFormat, field.TypeString, value)
 		_node.OutputFormat = value
 	}
-	if value, ok := _c.mutation.ErrorCode(); ok {
+	if value, ok := gjc.mutation.ErrorCode(); ok {
 		_spec.SetField(generationjob.FieldErrorCode, field.TypeString, value)
 		_node.ErrorCode = value
 	}
-	if value, ok := _c.mutation.ErrorMessage(); ok {
+	if value, ok := gjc.mutation.ErrorMessage(); ok {
 		_spec.SetField(generationjob.FieldErrorMessage, field.TypeString, value)
 		_node.ErrorMessage = value
 	}
-	if value, ok := _c.mutation.RetryCount(); ok {
+	if value, ok := gjc.mutation.RetryCount(); ok {
 		_spec.SetField(generationjob.FieldRetryCount, field.TypeInt, value)
 		_node.RetryCount = value
 	}
-	if value, ok := _c.mutation.StartedAt(); ok {
+	if value, ok := gjc.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)
 		_node.StartedAt = &value
 	}
-	if value, ok := _c.mutation.CompletedAt(); ok {
+	if value, ok := gjc.mutation.CompletedAt(); ok {
 		_spec.SetField(generationjob.FieldCompletedAt, field.TypeTime, value)
 		_node.CompletedAt = &value
 	}
-	if value, ok := _c.mutation.CreatedAt(); ok {
+	if value, ok := gjc.mutation.CreatedAt(); ok {
 		_spec.SetField(generationjob.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := _c.mutation.UpdatedAt(); ok {
+	if value, ok := gjc.mutation.UpdatedAt(); ok {
 		_spec.SetField(generationjob.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if nodes := _c.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := gjc.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -539,7 +539,7 @@ func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpe
 		_node.UserID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := _c.mutation.ProjectIDs(); len(nodes) > 0 {
+	if nodes := gjc.mutation.ProjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -556,7 +556,7 @@ func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpe
 		_node.ProjectID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := _c.mutation.InputsIDs(); len(nodes) > 0 {
+	if nodes := gjc.mutation.InputsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -572,7 +572,7 @@ func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpe
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := _c.mutation.OutputAssetsIDs(); len(nodes) > 0 {
+	if nodes := gjc.mutation.OutputAssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -607,10 +607,10 @@ func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpe
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (_c *GenerationJobCreate) OnConflict(opts ...sql.ConflictOption) *GenerationJobUpsertOne {
-	_c.conflict = opts
+func (gjc *GenerationJobCreate) OnConflict(opts ...sql.ConflictOption) *GenerationJobUpsertOne {
+	gjc.conflict = opts
 	return &GenerationJobUpsertOne{
-		create: _c,
+		create: gjc,
 	}
 }
 
@@ -620,10 +620,10 @@ func (_c *GenerationJobCreate) OnConflict(opts ...sql.ConflictOption) *Generatio
 //	client.GenerationJob.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (_c *GenerationJobCreate) OnConflictColumns(columns ...string) *GenerationJobUpsertOne {
-	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
+func (gjc *GenerationJobCreate) OnConflictColumns(columns ...string) *GenerationJobUpsertOne {
+	gjc.conflict = append(gjc.conflict, sql.ConflictColumns(columns...))
 	return &GenerationJobUpsertOne{
-		create: _c,
+		create: gjc,
 	}
 }
 
@@ -1393,16 +1393,16 @@ type GenerationJobCreateBulk struct {
 }
 
 // Save creates the GenerationJob entities in the database.
-func (_c *GenerationJobCreateBulk) Save(ctx context.Context) ([]*GenerationJob, error) {
-	if _c.err != nil {
-		return nil, _c.err
+func (gjcb *GenerationJobCreateBulk) Save(ctx context.Context) ([]*GenerationJob, error) {
+	if gjcb.err != nil {
+		return nil, gjcb.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
-	nodes := make([]*GenerationJob, len(_c.builders))
-	mutators := make([]Mutator, len(_c.builders))
-	for i := range _c.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(gjcb.builders))
+	nodes := make([]*GenerationJob, len(gjcb.builders))
+	mutators := make([]Mutator, len(gjcb.builders))
+	for i := range gjcb.builders {
 		func(i int, root context.Context) {
-			builder := _c.builders[i]
+			builder := gjcb.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*GenerationJobMutation)
@@ -1416,12 +1416,12 @@ func (_c *GenerationJobCreateBulk) Save(ctx context.Context) ([]*GenerationJob, 
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, gjcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = _c.conflict
+					spec.OnConflict = gjcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, gjcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1445,7 +1445,7 @@ func (_c *GenerationJobCreateBulk) Save(ctx context.Context) ([]*GenerationJob, 
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, gjcb.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1453,8 +1453,8 @@ func (_c *GenerationJobCreateBulk) Save(ctx context.Context) ([]*GenerationJob, 
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_c *GenerationJobCreateBulk) SaveX(ctx context.Context) []*GenerationJob {
-	v, err := _c.Save(ctx)
+func (gjcb *GenerationJobCreateBulk) SaveX(ctx context.Context) []*GenerationJob {
+	v, err := gjcb.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1462,14 +1462,14 @@ func (_c *GenerationJobCreateBulk) SaveX(ctx context.Context) []*GenerationJob {
 }
 
 // Exec executes the query.
-func (_c *GenerationJobCreateBulk) Exec(ctx context.Context) error {
-	_, err := _c.Save(ctx)
+func (gjcb *GenerationJobCreateBulk) Exec(ctx context.Context) error {
+	_, err := gjcb.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_c *GenerationJobCreateBulk) ExecX(ctx context.Context) {
-	if err := _c.Exec(ctx); err != nil {
+func (gjcb *GenerationJobCreateBulk) ExecX(ctx context.Context) {
+	if err := gjcb.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1489,10 +1489,10 @@ func (_c *GenerationJobCreateBulk) ExecX(ctx context.Context) {
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (_c *GenerationJobCreateBulk) OnConflict(opts ...sql.ConflictOption) *GenerationJobUpsertBulk {
-	_c.conflict = opts
+func (gjcb *GenerationJobCreateBulk) OnConflict(opts ...sql.ConflictOption) *GenerationJobUpsertBulk {
+	gjcb.conflict = opts
 	return &GenerationJobUpsertBulk{
-		create: _c,
+		create: gjcb,
 	}
 }
 
@@ -1502,10 +1502,10 @@ func (_c *GenerationJobCreateBulk) OnConflict(opts ...sql.ConflictOption) *Gener
 //	client.GenerationJob.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (_c *GenerationJobCreateBulk) OnConflictColumns(columns ...string) *GenerationJobUpsertBulk {
-	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
+func (gjcb *GenerationJobCreateBulk) OnConflictColumns(columns ...string) *GenerationJobUpsertBulk {
+	gjcb.conflict = append(gjcb.conflict, sql.ConflictColumns(columns...))
 	return &GenerationJobUpsertBulk{
-		create: _c,
+		create: gjcb,
 	}
 }
 

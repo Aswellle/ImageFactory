@@ -77,7 +77,7 @@ func (*AssetTag) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the AssetTag fields.
-func (_m *AssetTag) assignValues(columns []string, values []any) error {
+func (at *AssetTag) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -88,21 +88,21 @@ func (_m *AssetTag) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			at.ID = int64(value.Int64)
 		case assettag.FieldAssetID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field asset_id", values[i])
 			} else if value.Valid {
-				_m.AssetID = value.Int64
+				at.AssetID = value.Int64
 			}
 		case assettag.FieldTagID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tag_id", values[i])
 			} else if value.Valid {
-				_m.TagID = value.Int64
+				at.TagID = value.Int64
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			at.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -110,48 +110,48 @@ func (_m *AssetTag) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the AssetTag.
 // This includes values selected through modifiers, order, etc.
-func (_m *AssetTag) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (at *AssetTag) Value(name string) (ent.Value, error) {
+	return at.selectValues.Get(name)
 }
 
 // QueryAsset queries the "asset" edge of the AssetTag entity.
-func (_m *AssetTag) QueryAsset() *AssetQuery {
-	return NewAssetTagClient(_m.config).QueryAsset(_m)
+func (at *AssetTag) QueryAsset() *AssetQuery {
+	return NewAssetTagClient(at.config).QueryAsset(at)
 }
 
 // QueryTag queries the "tag" edge of the AssetTag entity.
-func (_m *AssetTag) QueryTag() *TagQuery {
-	return NewAssetTagClient(_m.config).QueryTag(_m)
+func (at *AssetTag) QueryTag() *TagQuery {
+	return NewAssetTagClient(at.config).QueryTag(at)
 }
 
 // Update returns a builder for updating this AssetTag.
 // Note that you need to call AssetTag.Unwrap() before calling this method if this AssetTag
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *AssetTag) Update() *AssetTagUpdateOne {
-	return NewAssetTagClient(_m.config).UpdateOne(_m)
+func (at *AssetTag) Update() *AssetTagUpdateOne {
+	return NewAssetTagClient(at.config).UpdateOne(at)
 }
 
 // Unwrap unwraps the AssetTag entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *AssetTag) Unwrap() *AssetTag {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (at *AssetTag) Unwrap() *AssetTag {
+	_tx, ok := at.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: AssetTag is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	at.config.driver = _tx.drv
+	return at
 }
 
 // String implements the fmt.Stringer.
-func (_m *AssetTag) String() string {
+func (at *AssetTag) String() string {
 	var builder strings.Builder
 	builder.WriteString("AssetTag(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", at.ID))
 	builder.WriteString("asset_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.AssetID))
+	builder.WriteString(fmt.Sprintf("%v", at.AssetID))
 	builder.WriteString(", ")
 	builder.WriteString("tag_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.TagID))
+	builder.WriteString(fmt.Sprintf("%v", at.TagID))
 	builder.WriteByte(')')
 	return builder.String()
 }

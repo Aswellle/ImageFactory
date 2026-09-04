@@ -20,56 +20,56 @@ type AssetTagDelete struct {
 }
 
 // Where appends a list predicates to the AssetTagDelete builder.
-func (_d *AssetTagDelete) Where(ps ...predicate.AssetTag) *AssetTagDelete {
-	_d.mutation.Where(ps...)
-	return _d
+func (atd *AssetTagDelete) Where(ps ...predicate.AssetTag) *AssetTagDelete {
+	atd.mutation.Where(ps...)
+	return atd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (_d *AssetTagDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
+func (atd *AssetTagDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, atd.sqlExec, atd.mutation, atd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *AssetTagDelete) ExecX(ctx context.Context) int {
-	n, err := _d.Exec(ctx)
+func (atd *AssetTagDelete) ExecX(ctx context.Context) int {
+	n, err := atd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (_d *AssetTagDelete) sqlExec(ctx context.Context) (int, error) {
+func (atd *AssetTagDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(assettag.Table, sqlgraph.NewFieldSpec(assettag.FieldID, field.TypeInt64))
-	if ps := _d.mutation.predicates; len(ps) > 0 {
+	if ps := atd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, atd.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	_d.mutation.done = true
+	atd.mutation.done = true
 	return affected, err
 }
 
 // AssetTagDeleteOne is the builder for deleting a single AssetTag entity.
 type AssetTagDeleteOne struct {
-	_d *AssetTagDelete
+	atd *AssetTagDelete
 }
 
 // Where appends a list predicates to the AssetTagDelete builder.
-func (_d *AssetTagDeleteOne) Where(ps ...predicate.AssetTag) *AssetTagDeleteOne {
-	_d._d.mutation.Where(ps...)
-	return _d
+func (atdo *AssetTagDeleteOne) Where(ps ...predicate.AssetTag) *AssetTagDeleteOne {
+	atdo.atd.mutation.Where(ps...)
+	return atdo
 }
 
 // Exec executes the deletion query.
-func (_d *AssetTagDeleteOne) Exec(ctx context.Context) error {
-	n, err := _d._d.Exec(ctx)
+func (atdo *AssetTagDeleteOne) Exec(ctx context.Context) error {
+	n, err := atdo.atd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (_d *AssetTagDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *AssetTagDeleteOne) ExecX(ctx context.Context) {
-	if err := _d.Exec(ctx); err != nil {
+func (atdo *AssetTagDeleteOne) ExecX(ctx context.Context) {
+	if err := atdo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

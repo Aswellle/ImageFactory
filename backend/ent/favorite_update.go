@@ -22,66 +22,66 @@ type FavoriteUpdate struct {
 }
 
 // Where appends a list predicates to the FavoriteUpdate builder.
-func (_u *FavoriteUpdate) Where(ps ...predicate.Favorite) *FavoriteUpdate {
-	_u.mutation.Where(ps...)
-	return _u
+func (fu *FavoriteUpdate) Where(ps ...predicate.Favorite) *FavoriteUpdate {
+	fu.mutation.Where(ps...)
+	return fu
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *FavoriteUpdate) SetUserID(v int64) *FavoriteUpdate {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
-	return _u
+func (fu *FavoriteUpdate) SetUserID(i int64) *FavoriteUpdate {
+	fu.mutation.ResetUserID()
+	fu.mutation.SetUserID(i)
+	return fu
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *FavoriteUpdate) SetNillableUserID(v *int64) *FavoriteUpdate {
-	if v != nil {
-		_u.SetUserID(*v)
+func (fu *FavoriteUpdate) SetNillableUserID(i *int64) *FavoriteUpdate {
+	if i != nil {
+		fu.SetUserID(*i)
 	}
-	return _u
+	return fu
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *FavoriteUpdate) AddUserID(v int64) *FavoriteUpdate {
-	_u.mutation.AddUserID(v)
-	return _u
+// AddUserID adds i to the "user_id" field.
+func (fu *FavoriteUpdate) AddUserID(i int64) *FavoriteUpdate {
+	fu.mutation.AddUserID(i)
+	return fu
 }
 
 // SetAssetID sets the "asset_id" field.
-func (_u *FavoriteUpdate) SetAssetID(v int64) *FavoriteUpdate {
-	_u.mutation.ResetAssetID()
-	_u.mutation.SetAssetID(v)
-	return _u
+func (fu *FavoriteUpdate) SetAssetID(i int64) *FavoriteUpdate {
+	fu.mutation.ResetAssetID()
+	fu.mutation.SetAssetID(i)
+	return fu
 }
 
 // SetNillableAssetID sets the "asset_id" field if the given value is not nil.
-func (_u *FavoriteUpdate) SetNillableAssetID(v *int64) *FavoriteUpdate {
-	if v != nil {
-		_u.SetAssetID(*v)
+func (fu *FavoriteUpdate) SetNillableAssetID(i *int64) *FavoriteUpdate {
+	if i != nil {
+		fu.SetAssetID(*i)
 	}
-	return _u
+	return fu
 }
 
-// AddAssetID adds value to the "asset_id" field.
-func (_u *FavoriteUpdate) AddAssetID(v int64) *FavoriteUpdate {
-	_u.mutation.AddAssetID(v)
-	return _u
+// AddAssetID adds i to the "asset_id" field.
+func (fu *FavoriteUpdate) AddAssetID(i int64) *FavoriteUpdate {
+	fu.mutation.AddAssetID(i)
+	return fu
 }
 
 // Mutation returns the FavoriteMutation object of the builder.
-func (_u *FavoriteUpdate) Mutation() *FavoriteMutation {
-	return _u.mutation
+func (fu *FavoriteUpdate) Mutation() *FavoriteMutation {
+	return fu.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (_u *FavoriteUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (fu *FavoriteUpdate) Save(ctx context.Context) (int, error) {
+	return withHooks(ctx, fu.sqlSave, fu.mutation, fu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *FavoriteUpdate) SaveX(ctx context.Context) int {
-	affected, err := _u.Save(ctx)
+func (fu *FavoriteUpdate) SaveX(ctx context.Context) int {
+	affected, err := fu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -89,40 +89,40 @@ func (_u *FavoriteUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (_u *FavoriteUpdate) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (fu *FavoriteUpdate) Exec(ctx context.Context) error {
+	_, err := fu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *FavoriteUpdate) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (fu *FavoriteUpdate) ExecX(ctx context.Context) {
+	if err := fu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (_u *FavoriteUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+func (fu *FavoriteUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(favorite.Table, favorite.Columns, sqlgraph.NewFieldSpec(favorite.FieldID, field.TypeInt64))
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := fu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.UserID(); ok {
+	if value, ok := fu.mutation.UserID(); ok {
 		_spec.SetField(favorite.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
+	if value, ok := fu.mutation.AddedUserID(); ok {
 		_spec.AddField(favorite.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AssetID(); ok {
+	if value, ok := fu.mutation.AssetID(); ok {
 		_spec.SetField(favorite.FieldAssetID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedAssetID(); ok {
+	if value, ok := fu.mutation.AddedAssetID(); ok {
 		_spec.AddField(favorite.FieldAssetID, field.TypeInt64, value)
 	}
-	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, fu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{favorite.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -130,8 +130,8 @@ func (_u *FavoriteUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		}
 		return 0, err
 	}
-	_u.mutation.done = true
-	return _node, nil
+	fu.mutation.done = true
+	return n, nil
 }
 
 // FavoriteUpdateOne is the builder for updating a single Favorite entity.
@@ -143,73 +143,73 @@ type FavoriteUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *FavoriteUpdateOne) SetUserID(v int64) *FavoriteUpdateOne {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
-	return _u
+func (fuo *FavoriteUpdateOne) SetUserID(i int64) *FavoriteUpdateOne {
+	fuo.mutation.ResetUserID()
+	fuo.mutation.SetUserID(i)
+	return fuo
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *FavoriteUpdateOne) SetNillableUserID(v *int64) *FavoriteUpdateOne {
-	if v != nil {
-		_u.SetUserID(*v)
+func (fuo *FavoriteUpdateOne) SetNillableUserID(i *int64) *FavoriteUpdateOne {
+	if i != nil {
+		fuo.SetUserID(*i)
 	}
-	return _u
+	return fuo
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *FavoriteUpdateOne) AddUserID(v int64) *FavoriteUpdateOne {
-	_u.mutation.AddUserID(v)
-	return _u
+// AddUserID adds i to the "user_id" field.
+func (fuo *FavoriteUpdateOne) AddUserID(i int64) *FavoriteUpdateOne {
+	fuo.mutation.AddUserID(i)
+	return fuo
 }
 
 // SetAssetID sets the "asset_id" field.
-func (_u *FavoriteUpdateOne) SetAssetID(v int64) *FavoriteUpdateOne {
-	_u.mutation.ResetAssetID()
-	_u.mutation.SetAssetID(v)
-	return _u
+func (fuo *FavoriteUpdateOne) SetAssetID(i int64) *FavoriteUpdateOne {
+	fuo.mutation.ResetAssetID()
+	fuo.mutation.SetAssetID(i)
+	return fuo
 }
 
 // SetNillableAssetID sets the "asset_id" field if the given value is not nil.
-func (_u *FavoriteUpdateOne) SetNillableAssetID(v *int64) *FavoriteUpdateOne {
-	if v != nil {
-		_u.SetAssetID(*v)
+func (fuo *FavoriteUpdateOne) SetNillableAssetID(i *int64) *FavoriteUpdateOne {
+	if i != nil {
+		fuo.SetAssetID(*i)
 	}
-	return _u
+	return fuo
 }
 
-// AddAssetID adds value to the "asset_id" field.
-func (_u *FavoriteUpdateOne) AddAssetID(v int64) *FavoriteUpdateOne {
-	_u.mutation.AddAssetID(v)
-	return _u
+// AddAssetID adds i to the "asset_id" field.
+func (fuo *FavoriteUpdateOne) AddAssetID(i int64) *FavoriteUpdateOne {
+	fuo.mutation.AddAssetID(i)
+	return fuo
 }
 
 // Mutation returns the FavoriteMutation object of the builder.
-func (_u *FavoriteUpdateOne) Mutation() *FavoriteMutation {
-	return _u.mutation
+func (fuo *FavoriteUpdateOne) Mutation() *FavoriteMutation {
+	return fuo.mutation
 }
 
 // Where appends a list predicates to the FavoriteUpdate builder.
-func (_u *FavoriteUpdateOne) Where(ps ...predicate.Favorite) *FavoriteUpdateOne {
-	_u.mutation.Where(ps...)
-	return _u
+func (fuo *FavoriteUpdateOne) Where(ps ...predicate.Favorite) *FavoriteUpdateOne {
+	fuo.mutation.Where(ps...)
+	return fuo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (_u *FavoriteUpdateOne) Select(field string, fields ...string) *FavoriteUpdateOne {
-	_u.fields = append([]string{field}, fields...)
-	return _u
+func (fuo *FavoriteUpdateOne) Select(field string, fields ...string) *FavoriteUpdateOne {
+	fuo.fields = append([]string{field}, fields...)
+	return fuo
 }
 
 // Save executes the query and returns the updated Favorite entity.
-func (_u *FavoriteUpdateOne) Save(ctx context.Context) (*Favorite, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (fuo *FavoriteUpdateOne) Save(ctx context.Context) (*Favorite, error) {
+	return withHooks(ctx, fuo.sqlSave, fuo.mutation, fuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *FavoriteUpdateOne) SaveX(ctx context.Context) *Favorite {
-	node, err := _u.Save(ctx)
+func (fuo *FavoriteUpdateOne) SaveX(ctx context.Context) *Favorite {
+	node, err := fuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -217,26 +217,26 @@ func (_u *FavoriteUpdateOne) SaveX(ctx context.Context) *Favorite {
 }
 
 // Exec executes the query on the entity.
-func (_u *FavoriteUpdateOne) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (fuo *FavoriteUpdateOne) Exec(ctx context.Context) error {
+	_, err := fuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *FavoriteUpdateOne) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (fuo *FavoriteUpdateOne) ExecX(ctx context.Context) {
+	if err := fuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (_u *FavoriteUpdateOne) sqlSave(ctx context.Context) (_node *Favorite, err error) {
+func (fuo *FavoriteUpdateOne) sqlSave(ctx context.Context) (_node *Favorite, err error) {
 	_spec := sqlgraph.NewUpdateSpec(favorite.Table, favorite.Columns, sqlgraph.NewFieldSpec(favorite.FieldID, field.TypeInt64))
-	id, ok := _u.mutation.ID()
+	id, ok := fuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Favorite.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := _u.fields; len(fields) > 0 {
+	if fields := fuo.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, favorite.FieldID)
 		for _, f := range fields {
@@ -248,29 +248,29 @@ func (_u *FavoriteUpdateOne) sqlSave(ctx context.Context) (_node *Favorite, err 
 			}
 		}
 	}
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := fuo.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.UserID(); ok {
+	if value, ok := fuo.mutation.UserID(); ok {
 		_spec.SetField(favorite.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
+	if value, ok := fuo.mutation.AddedUserID(); ok {
 		_spec.AddField(favorite.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AssetID(); ok {
+	if value, ok := fuo.mutation.AssetID(); ok {
 		_spec.SetField(favorite.FieldAssetID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedAssetID(); ok {
+	if value, ok := fuo.mutation.AddedAssetID(); ok {
 		_spec.AddField(favorite.FieldAssetID, field.TypeInt64, value)
 	}
-	_node = &Favorite{config: _u.config}
+	_node = &Favorite{config: fuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, fuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{favorite.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -278,6 +278,6 @@ func (_u *FavoriteUpdateOne) sqlSave(ctx context.Context) (_node *Favorite, err 
 		}
 		return nil, err
 	}
-	_u.mutation.done = true
+	fuo.mutation.done = true
 	return _node, nil
 }

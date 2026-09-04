@@ -34,8 +34,9 @@ type UsageRecord struct {
 	// RequestID holds the value of the "request_id" field.
 	RequestID string `json:"request_id,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
-	CreatedAt    time.Time `json:"created_at,omitempty"`
-	selectValues sql.SelectValues
+	CreatedAt          time.Time `json:"created_at,omitempty"`
+	account_usage_logs *int64
+	selectValues       sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -51,6 +52,8 @@ func (*UsageRecord) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullString)
 		case usagerecord.FieldCreatedAt:
 			values[i] = new(sql.NullTime)
+		case usagerecord.ForeignKeys[0]: // account_usage_logs
+			values[i] = new(sql.NullInt64)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -60,7 +63,7 @@ func (*UsageRecord) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the UsageRecord fields.
-func (_m *UsageRecord) assignValues(columns []string, values []any) error {
+func (ur *UsageRecord) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -71,63 +74,70 @@ func (_m *UsageRecord) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			ur.ID = int64(value.Int64)
 		case usagerecord.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.UserID = value.Int64
+				ur.UserID = value.Int64
 			}
 		case usagerecord.FieldAPIKeyID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field api_key_id", values[i])
 			} else if value.Valid {
-				_m.APIKeyID = value.Int64
+				ur.APIKeyID = value.Int64
 			}
 		case usagerecord.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				_m.Type = usagerecord.Type(value.String)
+				ur.Type = usagerecord.Type(value.String)
 			}
 		case usagerecord.FieldModel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field model", values[i])
 			} else if value.Valid {
-				_m.Model = value.String
+				ur.Model = value.String
 			}
 		case usagerecord.FieldImageCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field image_count", values[i])
 			} else if value.Valid {
-				_m.ImageCount = int(value.Int64)
+				ur.ImageCount = int(value.Int64)
 			}
 		case usagerecord.FieldTokens:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tokens", values[i])
 			} else if value.Valid {
-				_m.Tokens = int(value.Int64)
+				ur.Tokens = int(value.Int64)
 			}
 		case usagerecord.FieldCost:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
 				return fmt.Errorf("unexpected type %T for field cost", values[i])
 			} else if value.Valid {
-				_m.Cost = value.Float64
+				ur.Cost = value.Float64
 			}
 		case usagerecord.FieldRequestID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field request_id", values[i])
 			} else if value.Valid {
-				_m.RequestID = value.String
+				ur.RequestID = value.String
 			}
 		case usagerecord.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				ur.CreatedAt = value.Time
+			}
+		case usagerecord.ForeignKeys[0]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field account_usage_logs", value)
+			} else if value.Valid {
+				ur.account_usage_logs = new(int64)
+				*ur.account_usage_logs = int64(value.Int64)
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			ur.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -135,59 +145,59 @@ func (_m *UsageRecord) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the UsageRecord.
 // This includes values selected through modifiers, order, etc.
-func (_m *UsageRecord) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (ur *UsageRecord) Value(name string) (ent.Value, error) {
+	return ur.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this UsageRecord.
 // Note that you need to call UsageRecord.Unwrap() before calling this method if this UsageRecord
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *UsageRecord) Update() *UsageRecordUpdateOne {
-	return NewUsageRecordClient(_m.config).UpdateOne(_m)
+func (ur *UsageRecord) Update() *UsageRecordUpdateOne {
+	return NewUsageRecordClient(ur.config).UpdateOne(ur)
 }
 
 // Unwrap unwraps the UsageRecord entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *UsageRecord) Unwrap() *UsageRecord {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (ur *UsageRecord) Unwrap() *UsageRecord {
+	_tx, ok := ur.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: UsageRecord is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	ur.config.driver = _tx.drv
+	return ur
 }
 
 // String implements the fmt.Stringer.
-func (_m *UsageRecord) String() string {
+func (ur *UsageRecord) String() string {
 	var builder strings.Builder
 	builder.WriteString("UsageRecord(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", ur.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
+	builder.WriteString(fmt.Sprintf("%v", ur.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("api_key_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.APIKeyID))
+	builder.WriteString(fmt.Sprintf("%v", ur.APIKeyID))
 	builder.WriteString(", ")
 	builder.WriteString("type=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Type))
+	builder.WriteString(fmt.Sprintf("%v", ur.Type))
 	builder.WriteString(", ")
 	builder.WriteString("model=")
-	builder.WriteString(_m.Model)
+	builder.WriteString(ur.Model)
 	builder.WriteString(", ")
 	builder.WriteString("image_count=")
-	builder.WriteString(fmt.Sprintf("%v", _m.ImageCount))
+	builder.WriteString(fmt.Sprintf("%v", ur.ImageCount))
 	builder.WriteString(", ")
 	builder.WriteString("tokens=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Tokens))
+	builder.WriteString(fmt.Sprintf("%v", ur.Tokens))
 	builder.WriteString(", ")
 	builder.WriteString("cost=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Cost))
+	builder.WriteString(fmt.Sprintf("%v", ur.Cost))
 	builder.WriteString(", ")
 	builder.WriteString("request_id=")
-	builder.WriteString(_m.RequestID)
+	builder.WriteString(ur.RequestID)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(ur.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

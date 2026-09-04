@@ -13,6 +13,7 @@ type AdminHandlers struct {
 	User      *admin.UserHandler
 	Job       *admin.JobHandler
 	APIKey    *admin.APIKeyHandler
+	Account   *admin.AccountHandler
 }
 
 // RegisterAdminRoutes mounts all admin routes under /v1/admin with the
@@ -29,6 +30,7 @@ func RegisterAdminRoutes(
 		registerUserRoutes(adminGroup, h)
 		registerJobRoutes(adminGroup, h)
 		registerAPIKeyRoutes(adminGroup, h)
+		registerAccountRoutes(adminGroup, h)
 	}
 }
 
@@ -62,3 +64,17 @@ func registerAPIKeyRoutes(admin *gin.RouterGroup, h *AdminHandlers) {
 		k.POST("/:id/revoke", h.APIKey.Revoke)
 	}
 }
+
+func registerAccountRoutes(admin *gin.RouterGroup, h *AdminHandlers) {
+	a := admin.Group("/accounts")
+	{
+		a.GET("", h.Account.List)
+		a.GET("/:id", h.Account.Get)
+		a.POST("", h.Account.Create)
+		a.PUT("/:id", h.Account.Update)
+		a.DELETE("/:id", h.Account.Delete)
+		a.POST("/:id/status", h.Account.SetStatus)
+		a.POST("/:id/schedulable", h.Account.SetSchedulable)
+	}
+}
+

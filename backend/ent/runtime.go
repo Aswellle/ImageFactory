@@ -5,6 +5,7 @@ package ent
 import (
 	"time"
 
+	"github.com/imageforge/imageforge/ent/account"
 	"github.com/imageforge/imageforge/ent/apikey"
 	"github.com/imageforge/imageforge/ent/asset"
 	"github.com/imageforge/imageforge/ent/assetversion"
@@ -42,6 +43,84 @@ func init() {
 	apikeyDescCreatedAt := apikeyFields[8].Descriptor()
 	// apikey.DefaultCreatedAt holds the default value on creation for the created_at field.
 	apikey.DefaultCreatedAt = apikeyDescCreatedAt.Default.(func() time.Time)
+	accountFields := schema.Account{}.Fields()
+	_ = accountFields
+	// accountDescName is the schema descriptor for name field.
+	accountDescName := accountFields[0].Descriptor()
+	// account.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	account.NameValidator = func() func(string) error {
+		validators := accountDescName.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(name string) error {
+			for _, fn := range fns {
+				if err := fn(name); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// accountDescPlatform is the schema descriptor for platform field.
+	accountDescPlatform := accountFields[1].Descriptor()
+	// account.PlatformValidator is a validator for the "platform" field. It is called by the builders before save.
+	account.PlatformValidator = func() func(string) error {
+		validators := accountDescPlatform.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(platform string) error {
+			for _, fn := range fns {
+				if err := fn(platform); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// accountDescType is the schema descriptor for type field.
+	accountDescType := accountFields[2].Descriptor()
+	// account.TypeValidator is a validator for the "type" field. It is called by the builders before save.
+	account.TypeValidator = func() func(string) error {
+		validators := accountDescType.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_type string) error {
+			for _, fn := range fns {
+				if err := fn(_type); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// accountDescCredentials is the schema descriptor for credentials field.
+	accountDescCredentials := accountFields[3].Descriptor()
+	// account.DefaultCredentials holds the default value on creation for the credentials field.
+	account.DefaultCredentials = accountDescCredentials.Default.(func() map[string]interface{})
+	// accountDescPriority is the schema descriptor for priority field.
+	accountDescPriority := accountFields[4].Descriptor()
+	// account.DefaultPriority holds the default value on creation for the priority field.
+	account.DefaultPriority = accountDescPriority.Default.(int)
+	// accountDescSchedulable is the schema descriptor for schedulable field.
+	accountDescSchedulable := accountFields[9].Descriptor()
+	// account.DefaultSchedulable holds the default value on creation for the schedulable field.
+	account.DefaultSchedulable = accountDescSchedulable.Default.(bool)
+	// accountDescCreatedAt is the schema descriptor for created_at field.
+	accountDescCreatedAt := accountFields[13].Descriptor()
+	// account.DefaultCreatedAt holds the default value on creation for the created_at field.
+	account.DefaultCreatedAt = accountDescCreatedAt.Default.(func() time.Time)
+	// accountDescUpdatedAt is the schema descriptor for updated_at field.
+	accountDescUpdatedAt := accountFields[14].Descriptor()
+	// account.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	account.DefaultUpdatedAt = accountDescUpdatedAt.Default.(func() time.Time)
+	// account.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	account.UpdateDefaultUpdatedAt = accountDescUpdatedAt.UpdateDefault.(func() time.Time)
 	assetFields := schema.Asset{}.Fields()
 	_ = assetFields
 	// assetDescStorageKey is the schema descriptor for storage_key field.

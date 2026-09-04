@@ -82,7 +82,7 @@ func (*APIKey) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the APIKey fields.
-func (_m *APIKey) assignValues(columns []string, values []any) error {
+func (ak *APIKey) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -93,65 +93,65 @@ func (_m *APIKey) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			ak.ID = int64(value.Int64)
 		case apikey.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				_m.UserID = value.Int64
+				ak.UserID = value.Int64
 			}
 		case apikey.FieldKeyHash:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field key_hash", values[i])
 			} else if value.Valid {
-				_m.KeyHash = value.String
+				ak.KeyHash = value.String
 			}
 		case apikey.FieldKeyPrefix:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field key_prefix", values[i])
 			} else if value.Valid {
-				_m.KeyPrefix = value.String
+				ak.KeyPrefix = value.String
 			}
 		case apikey.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				_m.Name = value.String
+				ak.Name = value.String
 			}
 		case apikey.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.Status = apikey.Status(value.String)
+				ak.Status = apikey.Status(value.String)
 			}
 		case apikey.FieldPermissions:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field permissions", values[i])
 			} else if value.Valid {
-				_m.Permissions = int(value.Int64)
+				ak.Permissions = int(value.Int64)
 			}
 		case apikey.FieldLastUsedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_used_at", values[i])
 			} else if value.Valid {
-				_m.LastUsedAt = new(time.Time)
-				*_m.LastUsedAt = value.Time
+				ak.LastUsedAt = new(time.Time)
+				*ak.LastUsedAt = value.Time
 			}
 		case apikey.FieldExpiresAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field expires_at", values[i])
 			} else if value.Valid {
-				_m.ExpiresAt = new(time.Time)
-				*_m.ExpiresAt = value.Time
+				ak.ExpiresAt = new(time.Time)
+				*ak.ExpiresAt = value.Time
 			}
 		case apikey.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				ak.CreatedAt = value.Time
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			ak.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -159,68 +159,68 @@ func (_m *APIKey) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the APIKey.
 // This includes values selected through modifiers, order, etc.
-func (_m *APIKey) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (ak *APIKey) Value(name string) (ent.Value, error) {
+	return ak.selectValues.Get(name)
 }
 
 // QueryUser queries the "user" edge of the APIKey entity.
-func (_m *APIKey) QueryUser() *UserQuery {
-	return NewAPIKeyClient(_m.config).QueryUser(_m)
+func (ak *APIKey) QueryUser() *UserQuery {
+	return NewAPIKeyClient(ak.config).QueryUser(ak)
 }
 
 // Update returns a builder for updating this APIKey.
 // Note that you need to call APIKey.Unwrap() before calling this method if this APIKey
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *APIKey) Update() *APIKeyUpdateOne {
-	return NewAPIKeyClient(_m.config).UpdateOne(_m)
+func (ak *APIKey) Update() *APIKeyUpdateOne {
+	return NewAPIKeyClient(ak.config).UpdateOne(ak)
 }
 
 // Unwrap unwraps the APIKey entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *APIKey) Unwrap() *APIKey {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (ak *APIKey) Unwrap() *APIKey {
+	_tx, ok := ak.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: APIKey is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	ak.config.driver = _tx.drv
+	return ak
 }
 
 // String implements the fmt.Stringer.
-func (_m *APIKey) String() string {
+func (ak *APIKey) String() string {
 	var builder strings.Builder
 	builder.WriteString("APIKey(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", ak.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
+	builder.WriteString(fmt.Sprintf("%v", ak.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("key_hash=")
-	builder.WriteString(_m.KeyHash)
+	builder.WriteString(ak.KeyHash)
 	builder.WriteString(", ")
 	builder.WriteString("key_prefix=")
-	builder.WriteString(_m.KeyPrefix)
+	builder.WriteString(ak.KeyPrefix)
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(_m.Name)
+	builder.WriteString(ak.Name)
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Status))
+	builder.WriteString(fmt.Sprintf("%v", ak.Status))
 	builder.WriteString(", ")
 	builder.WriteString("permissions=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Permissions))
+	builder.WriteString(fmt.Sprintf("%v", ak.Permissions))
 	builder.WriteString(", ")
-	if v := _m.LastUsedAt; v != nil {
+	if v := ak.LastUsedAt; v != nil {
 		builder.WriteString("last_used_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := _m.ExpiresAt; v != nil {
+	if v := ak.ExpiresAt; v != nil {
 		builder.WriteString("expires_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(ak.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

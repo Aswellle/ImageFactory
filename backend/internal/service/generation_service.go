@@ -20,21 +20,21 @@ import (
 // delegates to the batch-image pipeline (ported from Sub2API), and tracks
 // completion. The actual upstream calls go through batchimage providers.
 type GenerationService struct {
-	db      *ent.Client
-	batch   *batchimage.PublicService
-	store   storage.Storage
-	queue   job.Queue
-	assets  *AssetService
-	usage   *UsageService
-	log     *zap.Logger
+	db               *ent.Client
+	batch            *batchimage.PublicService
+	store            storage.Storage
+	queue            job.Queue
+	assets           *AssetService
+	usage            *UsageService
+	accountResolver  AccountResolverInterface
+	log              *zap.Logger
 }
 
 // NewGenerationService builds a GenerationService.
-func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService, usage *UsageService) *GenerationService {
-	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage, log: zap.NewNop()}
+func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService, usage *UsageService, accountResolver AccountResolverInterface) *GenerationService {
+	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage, accountResolver: accountResolver, log: zap.NewNop()}
 }
 
-// SubmitRequest is the provider-independent generation request from a user.
 type SubmitRequest struct {
 	UserID         int64
 	ProjectID      *int64
@@ -98,10 +98,18 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 	_ = created
 
 	// 2. Submit to the batch-image pipeline.
-	account := &batchimage.Account{
-		ID:       1, // Placeholder; full port links to ent.Account
-		Platform: "gemini",
-		Credentials: map[string]string{"api_key": ""},
+
+	// 2. Resolve a real account from the account pool.
+	// The resolver selects an available account based on priority and rotation.
+	account, err := s.accountResolver.ResolveAccount(ctx, "gemini")
+	if err != nil {
+		_, _ = s.db.GenerationJob.Update().
+			Where(generationjob.ExternalID(externalID)).
+			SetStatus(generationjob.StatusFailed).
+			SetErrorCode("NO_ACCOUNT").
+			SetErrorMessage("no available AI account: "+err.Error()).
+			Save(ctx)
+		return nil, errors.Wrap(errors.ErrImageGeneration, "failed to resolve account", err)
 	}
 
 	result, err := s.batch.Submit(ctx, batchimage.SubmitInput{
@@ -123,7 +131,6 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 		return nil, errors.Wrap(errors.ErrImageGeneration, "failed to submit generation", err)
 	}
 
-	// 3. Update job with processing status.
 	_, err = s.db.GenerationJob.Update().
 		Where(generationjob.ExternalID(externalID)).
 		SetStatus(generationjob.StatusProcessing).

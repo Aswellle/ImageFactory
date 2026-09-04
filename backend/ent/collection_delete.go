@@ -20,56 +20,56 @@ type CollectionDelete struct {
 }
 
 // Where appends a list predicates to the CollectionDelete builder.
-func (_d *CollectionDelete) Where(ps ...predicate.Collection) *CollectionDelete {
-	_d.mutation.Where(ps...)
-	return _d
+func (cd *CollectionDelete) Where(ps ...predicate.Collection) *CollectionDelete {
+	cd.mutation.Where(ps...)
+	return cd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (_d *CollectionDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
+func (cd *CollectionDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, cd.sqlExec, cd.mutation, cd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *CollectionDelete) ExecX(ctx context.Context) int {
-	n, err := _d.Exec(ctx)
+func (cd *CollectionDelete) ExecX(ctx context.Context) int {
+	n, err := cd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (_d *CollectionDelete) sqlExec(ctx context.Context) (int, error) {
+func (cd *CollectionDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(collection.Table, sqlgraph.NewFieldSpec(collection.FieldID, field.TypeInt64))
-	if ps := _d.mutation.predicates; len(ps) > 0 {
+	if ps := cd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, cd.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	_d.mutation.done = true
+	cd.mutation.done = true
 	return affected, err
 }
 
 // CollectionDeleteOne is the builder for deleting a single Collection entity.
 type CollectionDeleteOne struct {
-	_d *CollectionDelete
+	cd *CollectionDelete
 }
 
 // Where appends a list predicates to the CollectionDelete builder.
-func (_d *CollectionDeleteOne) Where(ps ...predicate.Collection) *CollectionDeleteOne {
-	_d._d.mutation.Where(ps...)
-	return _d
+func (cdo *CollectionDeleteOne) Where(ps ...predicate.Collection) *CollectionDeleteOne {
+	cdo.cd.mutation.Where(ps...)
+	return cdo
 }
 
 // Exec executes the deletion query.
-func (_d *CollectionDeleteOne) Exec(ctx context.Context) error {
-	n, err := _d._d.Exec(ctx)
+func (cdo *CollectionDeleteOne) Exec(ctx context.Context) error {
+	n, err := cdo.cd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (_d *CollectionDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *CollectionDeleteOne) ExecX(ctx context.Context) {
-	if err := _d.Exec(ctx); err != nil {
+func (cdo *CollectionDeleteOne) ExecX(ctx context.Context) {
+	if err := cdo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

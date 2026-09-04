@@ -32,44 +32,44 @@ type GenerationInputQuery struct {
 }
 
 // Where adds a new predicate for the GenerationInputQuery builder.
-func (_q *GenerationInputQuery) Where(ps ...predicate.GenerationInput) *GenerationInputQuery {
-	_q.predicates = append(_q.predicates, ps...)
-	return _q
+func (giq *GenerationInputQuery) Where(ps ...predicate.GenerationInput) *GenerationInputQuery {
+	giq.predicates = append(giq.predicates, ps...)
+	return giq
 }
 
 // Limit the number of records to be returned by this query.
-func (_q *GenerationInputQuery) Limit(limit int) *GenerationInputQuery {
-	_q.ctx.Limit = &limit
-	return _q
+func (giq *GenerationInputQuery) Limit(limit int) *GenerationInputQuery {
+	giq.ctx.Limit = &limit
+	return giq
 }
 
 // Offset to start from.
-func (_q *GenerationInputQuery) Offset(offset int) *GenerationInputQuery {
-	_q.ctx.Offset = &offset
-	return _q
+func (giq *GenerationInputQuery) Offset(offset int) *GenerationInputQuery {
+	giq.ctx.Offset = &offset
+	return giq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (_q *GenerationInputQuery) Unique(unique bool) *GenerationInputQuery {
-	_q.ctx.Unique = &unique
-	return _q
+func (giq *GenerationInputQuery) Unique(unique bool) *GenerationInputQuery {
+	giq.ctx.Unique = &unique
+	return giq
 }
 
 // Order specifies how the records should be ordered.
-func (_q *GenerationInputQuery) Order(o ...generationinput.OrderOption) *GenerationInputQuery {
-	_q.order = append(_q.order, o...)
-	return _q
+func (giq *GenerationInputQuery) Order(o ...generationinput.OrderOption) *GenerationInputQuery {
+	giq.order = append(giq.order, o...)
+	return giq
 }
 
 // QueryJob chains the current query on the "job" edge.
-func (_q *GenerationInputQuery) QueryJob() *GenerationJobQuery {
-	query := (&GenerationJobClient{config: _q.config}).Query()
+func (giq *GenerationInputQuery) QueryJob() *GenerationJobQuery {
+	query := (&GenerationJobClient{config: giq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := giq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := giq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -78,7 +78,7 @@ func (_q *GenerationInputQuery) QueryJob() *GenerationJobQuery {
 			sqlgraph.To(generationjob.Table, generationjob.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, generationinput.JobTable, generationinput.JobColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(giq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -86,8 +86,8 @@ func (_q *GenerationInputQuery) QueryJob() *GenerationJobQuery {
 
 // First returns the first GenerationInput entity from the query.
 // Returns a *NotFoundError when no GenerationInput was found.
-func (_q *GenerationInputQuery) First(ctx context.Context) (*GenerationInput, error) {
-	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
+func (giq *GenerationInputQuery) First(ctx context.Context) (*GenerationInput, error) {
+	nodes, err := giq.Limit(1).All(setContextOp(ctx, giq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +98,8 @@ func (_q *GenerationInputQuery) First(ctx context.Context) (*GenerationInput, er
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (_q *GenerationInputQuery) FirstX(ctx context.Context) *GenerationInput {
-	node, err := _q.First(ctx)
+func (giq *GenerationInputQuery) FirstX(ctx context.Context) *GenerationInput {
+	node, err := giq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,9 +108,9 @@ func (_q *GenerationInputQuery) FirstX(ctx context.Context) *GenerationInput {
 
 // FirstID returns the first GenerationInput ID from the query.
 // Returns a *NotFoundError when no GenerationInput ID was found.
-func (_q *GenerationInputQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (giq *GenerationInputQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = giq.Limit(1).IDs(setContextOp(ctx, giq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -121,8 +121,8 @@ func (_q *GenerationInputQuery) FirstID(ctx context.Context) (id int64, err erro
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *GenerationInputQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := _q.FirstID(ctx)
+func (giq *GenerationInputQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := giq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,8 +132,8 @@ func (_q *GenerationInputQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single GenerationInput entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one GenerationInput entity is found.
 // Returns a *NotFoundError when no GenerationInput entities are found.
-func (_q *GenerationInputQuery) Only(ctx context.Context) (*GenerationInput, error) {
-	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
+func (giq *GenerationInputQuery) Only(ctx context.Context) (*GenerationInput, error) {
+	nodes, err := giq.Limit(2).All(setContextOp(ctx, giq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ func (_q *GenerationInputQuery) Only(ctx context.Context) (*GenerationInput, err
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (_q *GenerationInputQuery) OnlyX(ctx context.Context) *GenerationInput {
-	node, err := _q.Only(ctx)
+func (giq *GenerationInputQuery) OnlyX(ctx context.Context) *GenerationInput {
+	node, err := giq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -159,9 +159,9 @@ func (_q *GenerationInputQuery) OnlyX(ctx context.Context) *GenerationInput {
 // OnlyID is like Only, but returns the only GenerationInput ID in the query.
 // Returns a *NotSingularError when more than one GenerationInput ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *GenerationInputQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (giq *GenerationInputQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = giq.Limit(2).IDs(setContextOp(ctx, giq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -176,8 +176,8 @@ func (_q *GenerationInputQuery) OnlyID(ctx context.Context) (id int64, err error
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *GenerationInputQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := _q.OnlyID(ctx)
+func (giq *GenerationInputQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := giq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -185,18 +185,18 @@ func (_q *GenerationInputQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of GenerationInputs.
-func (_q *GenerationInputQuery) All(ctx context.Context) ([]*GenerationInput, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
-	if err := _q.prepareQuery(ctx); err != nil {
+func (giq *GenerationInputQuery) All(ctx context.Context) ([]*GenerationInput, error) {
+	ctx = setContextOp(ctx, giq.ctx, ent.OpQueryAll)
+	if err := giq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*GenerationInput, *GenerationInputQuery]()
-	return withInterceptors[[]*GenerationInput](ctx, _q, qr, _q.inters)
+	return withInterceptors[[]*GenerationInput](ctx, giq, qr, giq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (_q *GenerationInputQuery) AllX(ctx context.Context) []*GenerationInput {
-	nodes, err := _q.All(ctx)
+func (giq *GenerationInputQuery) AllX(ctx context.Context) []*GenerationInput {
+	nodes, err := giq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,20 +204,20 @@ func (_q *GenerationInputQuery) AllX(ctx context.Context) []*GenerationInput {
 }
 
 // IDs executes the query and returns a list of GenerationInput IDs.
-func (_q *GenerationInputQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if _q.ctx.Unique == nil && _q.path != nil {
-		_q.Unique(true)
+func (giq *GenerationInputQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if giq.ctx.Unique == nil && giq.path != nil {
+		giq.Unique(true)
 	}
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
-	if err = _q.Select(generationinput.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, giq.ctx, ent.OpQueryIDs)
+	if err = giq.Select(generationinput.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *GenerationInputQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := _q.IDs(ctx)
+func (giq *GenerationInputQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := giq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -225,17 +225,17 @@ func (_q *GenerationInputQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (_q *GenerationInputQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
-	if err := _q.prepareQuery(ctx); err != nil {
+func (giq *GenerationInputQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, giq.ctx, ent.OpQueryCount)
+	if err := giq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, _q, querierCount[*GenerationInputQuery](), _q.inters)
+	return withInterceptors[int](ctx, giq, querierCount[*GenerationInputQuery](), giq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (_q *GenerationInputQuery) CountX(ctx context.Context) int {
-	count, err := _q.Count(ctx)
+func (giq *GenerationInputQuery) CountX(ctx context.Context) int {
+	count, err := giq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -243,9 +243,9 @@ func (_q *GenerationInputQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (_q *GenerationInputQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
-	switch _, err := _q.FirstID(ctx); {
+func (giq *GenerationInputQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, giq.ctx, ent.OpQueryExist)
+	switch _, err := giq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -256,8 +256,8 @@ func (_q *GenerationInputQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (_q *GenerationInputQuery) ExistX(ctx context.Context) bool {
-	exist, err := _q.Exist(ctx)
+func (giq *GenerationInputQuery) ExistX(ctx context.Context) bool {
+	exist, err := giq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -266,32 +266,32 @@ func (_q *GenerationInputQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the GenerationInputQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (_q *GenerationInputQuery) Clone() *GenerationInputQuery {
-	if _q == nil {
+func (giq *GenerationInputQuery) Clone() *GenerationInputQuery {
+	if giq == nil {
 		return nil
 	}
 	return &GenerationInputQuery{
-		config:     _q.config,
-		ctx:        _q.ctx.Clone(),
-		order:      append([]generationinput.OrderOption{}, _q.order...),
-		inters:     append([]Interceptor{}, _q.inters...),
-		predicates: append([]predicate.GenerationInput{}, _q.predicates...),
-		withJob:    _q.withJob.Clone(),
+		config:     giq.config,
+		ctx:        giq.ctx.Clone(),
+		order:      append([]generationinput.OrderOption{}, giq.order...),
+		inters:     append([]Interceptor{}, giq.inters...),
+		predicates: append([]predicate.GenerationInput{}, giq.predicates...),
+		withJob:    giq.withJob.Clone(),
 		// clone intermediate query.
-		sql:  _q.sql.Clone(),
-		path: _q.path,
+		sql:  giq.sql.Clone(),
+		path: giq.path,
 	}
 }
 
 // WithJob tells the query-builder to eager-load the nodes that are connected to
 // the "job" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *GenerationInputQuery) WithJob(opts ...func(*GenerationJobQuery)) *GenerationInputQuery {
-	query := (&GenerationJobClient{config: _q.config}).Query()
+func (giq *GenerationInputQuery) WithJob(opts ...func(*GenerationJobQuery)) *GenerationInputQuery {
+	query := (&GenerationJobClient{config: giq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withJob = query
-	return _q
+	giq.withJob = query
+	return giq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -308,10 +308,10 @@ func (_q *GenerationInputQuery) WithJob(opts ...func(*GenerationJobQuery)) *Gene
 //		GroupBy(generationinput.FieldJobID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (_q *GenerationInputQuery) GroupBy(field string, fields ...string) *GenerationInputGroupBy {
-	_q.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &GenerationInputGroupBy{build: _q}
-	grbuild.flds = &_q.ctx.Fields
+func (giq *GenerationInputQuery) GroupBy(field string, fields ...string) *GenerationInputGroupBy {
+	giq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &GenerationInputGroupBy{build: giq}
+	grbuild.flds = &giq.ctx.Fields
 	grbuild.label = generationinput.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -329,76 +329,76 @@ func (_q *GenerationInputQuery) GroupBy(field string, fields ...string) *Generat
 //	client.GenerationInput.Query().
 //		Select(generationinput.FieldJobID).
 //		Scan(ctx, &v)
-func (_q *GenerationInputQuery) Select(fields ...string) *GenerationInputSelect {
-	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
-	sbuild := &GenerationInputSelect{GenerationInputQuery: _q}
+func (giq *GenerationInputQuery) Select(fields ...string) *GenerationInputSelect {
+	giq.ctx.Fields = append(giq.ctx.Fields, fields...)
+	sbuild := &GenerationInputSelect{GenerationInputQuery: giq}
 	sbuild.label = generationinput.Label
-	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &giq.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a GenerationInputSelect configured with the given aggregations.
-func (_q *GenerationInputQuery) Aggregate(fns ...AggregateFunc) *GenerationInputSelect {
-	return _q.Select().Aggregate(fns...)
+func (giq *GenerationInputQuery) Aggregate(fns ...AggregateFunc) *GenerationInputSelect {
+	return giq.Select().Aggregate(fns...)
 }
 
-func (_q *GenerationInputQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range _q.inters {
+func (giq *GenerationInputQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range giq.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, _q); err != nil {
+			if err := trv.Traverse(ctx, giq); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range _q.ctx.Fields {
+	for _, f := range giq.ctx.Fields {
 		if !generationinput.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if _q.path != nil {
-		prev, err := _q.path(ctx)
+	if giq.path != nil {
+		prev, err := giq.path(ctx)
 		if err != nil {
 			return err
 		}
-		_q.sql = prev
+		giq.sql = prev
 	}
 	return nil
 }
 
-func (_q *GenerationInputQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*GenerationInput, error) {
+func (giq *GenerationInputQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*GenerationInput, error) {
 	var (
 		nodes       = []*GenerationInput{}
-		_spec       = _q.querySpec()
+		_spec       = giq.querySpec()
 		loadedTypes = [1]bool{
-			_q.withJob != nil,
+			giq.withJob != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*GenerationInput).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &GenerationInput{config: _q.config}
+		node := &GenerationInput{config: giq.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(_q.modifiers) > 0 {
-		_spec.Modifiers = _q.modifiers
+	if len(giq.modifiers) > 0 {
+		_spec.Modifiers = giq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, giq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := _q.withJob; query != nil {
-		if err := _q.loadJob(ctx, query, nodes, nil,
+	if query := giq.withJob; query != nil {
+		if err := giq.loadJob(ctx, query, nodes, nil,
 			func(n *GenerationInput, e *GenerationJob) { n.Edges.Job = e }); err != nil {
 			return nil, err
 		}
@@ -406,7 +406,7 @@ func (_q *GenerationInputQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 	return nodes, nil
 }
 
-func (_q *GenerationInputQuery) loadJob(ctx context.Context, query *GenerationJobQuery, nodes []*GenerationInput, init func(*GenerationInput), assign func(*GenerationInput, *GenerationJob)) error {
+func (giq *GenerationInputQuery) loadJob(ctx context.Context, query *GenerationJobQuery, nodes []*GenerationInput, init func(*GenerationInput), assign func(*GenerationInput, *GenerationJob)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*GenerationInput)
 	for i := range nodes {
@@ -436,27 +436,27 @@ func (_q *GenerationInputQuery) loadJob(ctx context.Context, query *GenerationJo
 	return nil
 }
 
-func (_q *GenerationInputQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := _q.querySpec()
-	if len(_q.modifiers) > 0 {
-		_spec.Modifiers = _q.modifiers
+func (giq *GenerationInputQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := giq.querySpec()
+	if len(giq.modifiers) > 0 {
+		_spec.Modifiers = giq.modifiers
 	}
-	_spec.Node.Columns = _q.ctx.Fields
-	if len(_q.ctx.Fields) > 0 {
-		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
+	_spec.Node.Columns = giq.ctx.Fields
+	if len(giq.ctx.Fields) > 0 {
+		_spec.Unique = giq.ctx.Unique != nil && *giq.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
+	return sqlgraph.CountNodes(ctx, giq.driver, _spec)
 }
 
-func (_q *GenerationInputQuery) querySpec() *sqlgraph.QuerySpec {
+func (giq *GenerationInputQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(generationinput.Table, generationinput.Columns, sqlgraph.NewFieldSpec(generationinput.FieldID, field.TypeInt64))
-	_spec.From = _q.sql
-	if unique := _q.ctx.Unique; unique != nil {
+	_spec.From = giq.sql
+	if unique := giq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if _q.path != nil {
+	} else if giq.path != nil {
 		_spec.Unique = true
 	}
-	if fields := _q.ctx.Fields; len(fields) > 0 {
+	if fields := giq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, generationinput.FieldID)
 		for i := range fields {
@@ -464,24 +464,24 @@ func (_q *GenerationInputQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if _q.withJob != nil {
+		if giq.withJob != nil {
 			_spec.Node.AddColumnOnce(generationinput.FieldJobID)
 		}
 	}
-	if ps := _q.predicates; len(ps) > 0 {
+	if ps := giq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := _q.ctx.Limit; limit != nil {
+	if limit := giq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := _q.ctx.Offset; offset != nil {
+	if offset := giq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := _q.order; len(ps) > 0 {
+	if ps := giq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -491,36 +491,36 @@ func (_q *GenerationInputQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (_q *GenerationInputQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(_q.driver.Dialect())
+func (giq *GenerationInputQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(giq.driver.Dialect())
 	t1 := builder.Table(generationinput.Table)
-	columns := _q.ctx.Fields
+	columns := giq.ctx.Fields
 	if len(columns) == 0 {
 		columns = generationinput.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if _q.sql != nil {
-		selector = _q.sql
+	if giq.sql != nil {
+		selector = giq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if _q.ctx.Unique != nil && *_q.ctx.Unique {
+	if giq.ctx.Unique != nil && *giq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range _q.modifiers {
+	for _, m := range giq.modifiers {
 		m(selector)
 	}
-	for _, p := range _q.predicates {
+	for _, p := range giq.predicates {
 		p(selector)
 	}
-	for _, p := range _q.order {
+	for _, p := range giq.order {
 		p(selector)
 	}
-	if offset := _q.ctx.Offset; offset != nil {
+	if offset := giq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := _q.ctx.Limit; limit != nil {
+	if limit := giq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -529,27 +529,27 @@ func (_q *GenerationInputQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (_q *GenerationInputQuery) ForUpdate(opts ...sql.LockOption) *GenerationInputQuery {
-	if _q.driver.Dialect() == dialect.Postgres {
-		_q.Unique(false)
+func (giq *GenerationInputQuery) ForUpdate(opts ...sql.LockOption) *GenerationInputQuery {
+	if giq.driver.Dialect() == dialect.Postgres {
+		giq.Unique(false)
 	}
-	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
+	giq.modifiers = append(giq.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return _q
+	return giq
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (_q *GenerationInputQuery) ForShare(opts ...sql.LockOption) *GenerationInputQuery {
-	if _q.driver.Dialect() == dialect.Postgres {
-		_q.Unique(false)
+func (giq *GenerationInputQuery) ForShare(opts ...sql.LockOption) *GenerationInputQuery {
+	if giq.driver.Dialect() == dialect.Postgres {
+		giq.Unique(false)
 	}
-	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
+	giq.modifiers = append(giq.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return _q
+	return giq
 }
 
 // GenerationInputGroupBy is the group-by builder for GenerationInput entities.
@@ -559,41 +559,41 @@ type GenerationInputGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (_g *GenerationInputGroupBy) Aggregate(fns ...AggregateFunc) *GenerationInputGroupBy {
-	_g.fns = append(_g.fns, fns...)
-	return _g
+func (gigb *GenerationInputGroupBy) Aggregate(fns ...AggregateFunc) *GenerationInputGroupBy {
+	gigb.fns = append(gigb.fns, fns...)
+	return gigb
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_g *GenerationInputGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
-	if err := _g.build.prepareQuery(ctx); err != nil {
+func (gigb *GenerationInputGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, gigb.build.ctx, ent.OpQueryGroupBy)
+	if err := gigb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*GenerationInputQuery, *GenerationInputGroupBy](ctx, _g.build, _g, _g.build.inters, v)
+	return scanWithInterceptors[*GenerationInputQuery, *GenerationInputGroupBy](ctx, gigb.build, gigb, gigb.build.inters, v)
 }
 
-func (_g *GenerationInputGroupBy) sqlScan(ctx context.Context, root *GenerationInputQuery, v any) error {
+func (gigb *GenerationInputGroupBy) sqlScan(ctx context.Context, root *GenerationInputQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(_g.fns))
-	for _, fn := range _g.fns {
+	aggregation := make([]string, 0, len(gigb.fns))
+	for _, fn := range gigb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
-		for _, f := range *_g.flds {
+		columns := make([]string, 0, len(*gigb.flds)+len(gigb.fns))
+		for _, f := range *gigb.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*_g.flds...)...)
+	selector.GroupBy(selector.Columns(*gigb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := gigb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -607,27 +607,27 @@ type GenerationInputSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (_s *GenerationInputSelect) Aggregate(fns ...AggregateFunc) *GenerationInputSelect {
-	_s.fns = append(_s.fns, fns...)
-	return _s
+func (gis *GenerationInputSelect) Aggregate(fns ...AggregateFunc) *GenerationInputSelect {
+	gis.fns = append(gis.fns, fns...)
+	return gis
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_s *GenerationInputSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
-	if err := _s.prepareQuery(ctx); err != nil {
+func (gis *GenerationInputSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, gis.ctx, ent.OpQuerySelect)
+	if err := gis.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*GenerationInputQuery, *GenerationInputSelect](ctx, _s.GenerationInputQuery, _s, _s.inters, v)
+	return scanWithInterceptors[*GenerationInputQuery, *GenerationInputSelect](ctx, gis.GenerationInputQuery, gis, gis.inters, v)
 }
 
-func (_s *GenerationInputSelect) sqlScan(ctx context.Context, root *GenerationInputQuery, v any) error {
+func (gis *GenerationInputSelect) sqlScan(ctx context.Context, root *GenerationInputQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(_s.fns))
-	for _, fn := range _s.fns {
+	aggregation := make([]string, 0, len(gis.fns))
+	for _, fn := range gis.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*_s.selector.flds); {
+	switch n := len(*gis.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -635,7 +635,7 @@ func (_s *GenerationInputSelect) sqlScan(ctx context.Context, root *GenerationIn
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
+	if err := gis.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

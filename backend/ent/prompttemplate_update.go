@@ -24,138 +24,138 @@ type PromptTemplateUpdate struct {
 }
 
 // Where appends a list predicates to the PromptTemplateUpdate builder.
-func (_u *PromptTemplateUpdate) Where(ps ...predicate.PromptTemplate) *PromptTemplateUpdate {
-	_u.mutation.Where(ps...)
-	return _u
+func (ptu *PromptTemplateUpdate) Where(ps ...predicate.PromptTemplate) *PromptTemplateUpdate {
+	ptu.mutation.Where(ps...)
+	return ptu
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *PromptTemplateUpdate) SetUserID(v int64) *PromptTemplateUpdate {
-	_u.mutation.SetUserID(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetUserID(i int64) *PromptTemplateUpdate {
+	ptu.mutation.SetUserID(i)
+	return ptu
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableUserID(v *int64) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetUserID(*v)
+func (ptu *PromptTemplateUpdate) SetNillableUserID(i *int64) *PromptTemplateUpdate {
+	if i != nil {
+		ptu.SetUserID(*i)
 	}
-	return _u
+	return ptu
 }
 
 // SetName sets the "name" field.
-func (_u *PromptTemplateUpdate) SetName(v string) *PromptTemplateUpdate {
-	_u.mutation.SetName(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetName(s string) *PromptTemplateUpdate {
+	ptu.mutation.SetName(s)
+	return ptu
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableName(v *string) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetName(*v)
+func (ptu *PromptTemplateUpdate) SetNillableName(s *string) *PromptTemplateUpdate {
+	if s != nil {
+		ptu.SetName(*s)
 	}
-	return _u
+	return ptu
 }
 
 // SetDescription sets the "description" field.
-func (_u *PromptTemplateUpdate) SetDescription(v string) *PromptTemplateUpdate {
-	_u.mutation.SetDescription(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetDescription(s string) *PromptTemplateUpdate {
+	ptu.mutation.SetDescription(s)
+	return ptu
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableDescription(v *string) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetDescription(*v)
+func (ptu *PromptTemplateUpdate) SetNillableDescription(s *string) *PromptTemplateUpdate {
+	if s != nil {
+		ptu.SetDescription(*s)
 	}
-	return _u
+	return ptu
 }
 
 // ClearDescription clears the value of the "description" field.
-func (_u *PromptTemplateUpdate) ClearDescription() *PromptTemplateUpdate {
-	_u.mutation.ClearDescription()
-	return _u
+func (ptu *PromptTemplateUpdate) ClearDescription() *PromptTemplateUpdate {
+	ptu.mutation.ClearDescription()
+	return ptu
 }
 
 // SetContent sets the "content" field.
-func (_u *PromptTemplateUpdate) SetContent(v string) *PromptTemplateUpdate {
-	_u.mutation.SetContent(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetContent(s string) *PromptTemplateUpdate {
+	ptu.mutation.SetContent(s)
+	return ptu
 }
 
 // SetNillableContent sets the "content" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableContent(v *string) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetContent(*v)
+func (ptu *PromptTemplateUpdate) SetNillableContent(s *string) *PromptTemplateUpdate {
+	if s != nil {
+		ptu.SetContent(*s)
 	}
-	return _u
+	return ptu
 }
 
 // SetVariables sets the "variables" field.
-func (_u *PromptTemplateUpdate) SetVariables(v string) *PromptTemplateUpdate {
-	_u.mutation.SetVariables(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetVariables(s string) *PromptTemplateUpdate {
+	ptu.mutation.SetVariables(s)
+	return ptu
 }
 
 // SetNillableVariables sets the "variables" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableVariables(v *string) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetVariables(*v)
+func (ptu *PromptTemplateUpdate) SetNillableVariables(s *string) *PromptTemplateUpdate {
+	if s != nil {
+		ptu.SetVariables(*s)
 	}
-	return _u
+	return ptu
 }
 
 // ClearVariables clears the value of the "variables" field.
-func (_u *PromptTemplateUpdate) ClearVariables() *PromptTemplateUpdate {
-	_u.mutation.ClearVariables()
-	return _u
+func (ptu *PromptTemplateUpdate) ClearVariables() *PromptTemplateUpdate {
+	ptu.mutation.ClearVariables()
+	return ptu
 }
 
 // SetCategory sets the "category" field.
-func (_u *PromptTemplateUpdate) SetCategory(v prompttemplate.Category) *PromptTemplateUpdate {
-	_u.mutation.SetCategory(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetCategory(pr prompttemplate.Category) *PromptTemplateUpdate {
+	ptu.mutation.SetCategory(pr)
+	return ptu
 }
 
 // SetNillableCategory sets the "category" field if the given value is not nil.
-func (_u *PromptTemplateUpdate) SetNillableCategory(v *prompttemplate.Category) *PromptTemplateUpdate {
-	if v != nil {
-		_u.SetCategory(*v)
+func (ptu *PromptTemplateUpdate) SetNillableCategory(pr *prompttemplate.Category) *PromptTemplateUpdate {
+	if pr != nil {
+		ptu.SetCategory(*pr)
 	}
-	return _u
+	return ptu
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (_u *PromptTemplateUpdate) SetUpdatedAt(v time.Time) *PromptTemplateUpdate {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
+func (ptu *PromptTemplateUpdate) SetUpdatedAt(t time.Time) *PromptTemplateUpdate {
+	ptu.mutation.SetUpdatedAt(t)
+	return ptu
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (_u *PromptTemplateUpdate) SetUser(v *User) *PromptTemplateUpdate {
-	return _u.SetUserID(v.ID)
+func (ptu *PromptTemplateUpdate) SetUser(u *User) *PromptTemplateUpdate {
+	return ptu.SetUserID(u.ID)
 }
 
 // Mutation returns the PromptTemplateMutation object of the builder.
-func (_u *PromptTemplateUpdate) Mutation() *PromptTemplateMutation {
-	return _u.mutation
+func (ptu *PromptTemplateUpdate) Mutation() *PromptTemplateMutation {
+	return ptu.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (_u *PromptTemplateUpdate) ClearUser() *PromptTemplateUpdate {
-	_u.mutation.ClearUser()
-	return _u
+func (ptu *PromptTemplateUpdate) ClearUser() *PromptTemplateUpdate {
+	ptu.mutation.ClearUser()
+	return ptu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (_u *PromptTemplateUpdate) Save(ctx context.Context) (int, error) {
-	_u.defaults()
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (ptu *PromptTemplateUpdate) Save(ctx context.Context) (int, error) {
+	ptu.defaults()
+	return withHooks(ctx, ptu.sqlSave, ptu.mutation, ptu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *PromptTemplateUpdate) SaveX(ctx context.Context) int {
-	affected, err := _u.Save(ctx)
+func (ptu *PromptTemplateUpdate) SaveX(ctx context.Context) int {
+	affected, err := ptu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -163,86 +163,86 @@ func (_u *PromptTemplateUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (_u *PromptTemplateUpdate) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (ptu *PromptTemplateUpdate) Exec(ctx context.Context) error {
+	_, err := ptu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *PromptTemplateUpdate) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (ptu *PromptTemplateUpdate) ExecX(ctx context.Context) {
+	if err := ptu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (_u *PromptTemplateUpdate) defaults() {
-	if _, ok := _u.mutation.UpdatedAt(); !ok {
+func (ptu *PromptTemplateUpdate) defaults() {
+	if _, ok := ptu.mutation.UpdatedAt(); !ok {
 		v := prompttemplate.UpdateDefaultUpdatedAt()
-		_u.mutation.SetUpdatedAt(v)
+		ptu.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *PromptTemplateUpdate) check() error {
-	if v, ok := _u.mutation.Name(); ok {
+func (ptu *PromptTemplateUpdate) check() error {
+	if v, ok := ptu.mutation.Name(); ok {
 		if err := prompttemplate.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Content(); ok {
+	if v, ok := ptu.mutation.Content(); ok {
 		if err := prompttemplate.ContentValidator(v); err != nil {
 			return &ValidationError{Name: "content", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.content": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Category(); ok {
+	if v, ok := ptu.mutation.Category(); ok {
 		if err := prompttemplate.CategoryValidator(v); err != nil {
 			return &ValidationError{Name: "category", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.category": %w`, err)}
 		}
 	}
-	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
+	if ptu.mutation.UserCleared() && len(ptu.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "PromptTemplate.user"`)
 	}
 	return nil
 }
 
-func (_u *PromptTemplateUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
+func (ptu *PromptTemplateUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := ptu.check(); err != nil {
+		return n, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(prompttemplate.Table, prompttemplate.Columns, sqlgraph.NewFieldSpec(prompttemplate.FieldID, field.TypeInt64))
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := ptu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.Name(); ok {
+	if value, ok := ptu.mutation.Name(); ok {
 		_spec.SetField(prompttemplate.FieldName, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.Description(); ok {
+	if value, ok := ptu.mutation.Description(); ok {
 		_spec.SetField(prompttemplate.FieldDescription, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
+	if ptu.mutation.DescriptionCleared() {
 		_spec.ClearField(prompttemplate.FieldDescription, field.TypeString)
 	}
-	if value, ok := _u.mutation.Content(); ok {
+	if value, ok := ptu.mutation.Content(); ok {
 		_spec.SetField(prompttemplate.FieldContent, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.Variables(); ok {
+	if value, ok := ptu.mutation.Variables(); ok {
 		_spec.SetField(prompttemplate.FieldVariables, field.TypeString, value)
 	}
-	if _u.mutation.VariablesCleared() {
+	if ptu.mutation.VariablesCleared() {
 		_spec.ClearField(prompttemplate.FieldVariables, field.TypeString)
 	}
-	if value, ok := _u.mutation.Category(); ok {
+	if value, ok := ptu.mutation.Category(); ok {
 		_spec.SetField(prompttemplate.FieldCategory, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
+	if value, ok := ptu.mutation.UpdatedAt(); ok {
 		_spec.SetField(prompttemplate.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if _u.mutation.UserCleared() {
+	if ptu.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -255,7 +255,7 @@ func (_u *PromptTemplateUpdate) sqlSave(ctx context.Context) (_node int, err err
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := ptu.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -271,7 +271,7 @@ func (_u *PromptTemplateUpdate) sqlSave(ctx context.Context) (_node int, err err
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, ptu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{prompttemplate.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -279,8 +279,8 @@ func (_u *PromptTemplateUpdate) sqlSave(ctx context.Context) (_node int, err err
 		}
 		return 0, err
 	}
-	_u.mutation.done = true
-	return _node, nil
+	ptu.mutation.done = true
+	return n, nil
 }
 
 // PromptTemplateUpdateOne is the builder for updating a single PromptTemplate entity.
@@ -292,145 +292,145 @@ type PromptTemplateUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *PromptTemplateUpdateOne) SetUserID(v int64) *PromptTemplateUpdateOne {
-	_u.mutation.SetUserID(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetUserID(i int64) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetUserID(i)
+	return ptuo
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableUserID(v *int64) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetUserID(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableUserID(i *int64) *PromptTemplateUpdateOne {
+	if i != nil {
+		ptuo.SetUserID(*i)
 	}
-	return _u
+	return ptuo
 }
 
 // SetName sets the "name" field.
-func (_u *PromptTemplateUpdateOne) SetName(v string) *PromptTemplateUpdateOne {
-	_u.mutation.SetName(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetName(s string) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetName(s)
+	return ptuo
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableName(v *string) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetName(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableName(s *string) *PromptTemplateUpdateOne {
+	if s != nil {
+		ptuo.SetName(*s)
 	}
-	return _u
+	return ptuo
 }
 
 // SetDescription sets the "description" field.
-func (_u *PromptTemplateUpdateOne) SetDescription(v string) *PromptTemplateUpdateOne {
-	_u.mutation.SetDescription(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetDescription(s string) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetDescription(s)
+	return ptuo
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableDescription(v *string) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetDescription(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableDescription(s *string) *PromptTemplateUpdateOne {
+	if s != nil {
+		ptuo.SetDescription(*s)
 	}
-	return _u
+	return ptuo
 }
 
 // ClearDescription clears the value of the "description" field.
-func (_u *PromptTemplateUpdateOne) ClearDescription() *PromptTemplateUpdateOne {
-	_u.mutation.ClearDescription()
-	return _u
+func (ptuo *PromptTemplateUpdateOne) ClearDescription() *PromptTemplateUpdateOne {
+	ptuo.mutation.ClearDescription()
+	return ptuo
 }
 
 // SetContent sets the "content" field.
-func (_u *PromptTemplateUpdateOne) SetContent(v string) *PromptTemplateUpdateOne {
-	_u.mutation.SetContent(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetContent(s string) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetContent(s)
+	return ptuo
 }
 
 // SetNillableContent sets the "content" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableContent(v *string) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetContent(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableContent(s *string) *PromptTemplateUpdateOne {
+	if s != nil {
+		ptuo.SetContent(*s)
 	}
-	return _u
+	return ptuo
 }
 
 // SetVariables sets the "variables" field.
-func (_u *PromptTemplateUpdateOne) SetVariables(v string) *PromptTemplateUpdateOne {
-	_u.mutation.SetVariables(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetVariables(s string) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetVariables(s)
+	return ptuo
 }
 
 // SetNillableVariables sets the "variables" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableVariables(v *string) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetVariables(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableVariables(s *string) *PromptTemplateUpdateOne {
+	if s != nil {
+		ptuo.SetVariables(*s)
 	}
-	return _u
+	return ptuo
 }
 
 // ClearVariables clears the value of the "variables" field.
-func (_u *PromptTemplateUpdateOne) ClearVariables() *PromptTemplateUpdateOne {
-	_u.mutation.ClearVariables()
-	return _u
+func (ptuo *PromptTemplateUpdateOne) ClearVariables() *PromptTemplateUpdateOne {
+	ptuo.mutation.ClearVariables()
+	return ptuo
 }
 
 // SetCategory sets the "category" field.
-func (_u *PromptTemplateUpdateOne) SetCategory(v prompttemplate.Category) *PromptTemplateUpdateOne {
-	_u.mutation.SetCategory(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetCategory(pr prompttemplate.Category) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetCategory(pr)
+	return ptuo
 }
 
 // SetNillableCategory sets the "category" field if the given value is not nil.
-func (_u *PromptTemplateUpdateOne) SetNillableCategory(v *prompttemplate.Category) *PromptTemplateUpdateOne {
-	if v != nil {
-		_u.SetCategory(*v)
+func (ptuo *PromptTemplateUpdateOne) SetNillableCategory(pr *prompttemplate.Category) *PromptTemplateUpdateOne {
+	if pr != nil {
+		ptuo.SetCategory(*pr)
 	}
-	return _u
+	return ptuo
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (_u *PromptTemplateUpdateOne) SetUpdatedAt(v time.Time) *PromptTemplateUpdateOne {
-	_u.mutation.SetUpdatedAt(v)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) SetUpdatedAt(t time.Time) *PromptTemplateUpdateOne {
+	ptuo.mutation.SetUpdatedAt(t)
+	return ptuo
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (_u *PromptTemplateUpdateOne) SetUser(v *User) *PromptTemplateUpdateOne {
-	return _u.SetUserID(v.ID)
+func (ptuo *PromptTemplateUpdateOne) SetUser(u *User) *PromptTemplateUpdateOne {
+	return ptuo.SetUserID(u.ID)
 }
 
 // Mutation returns the PromptTemplateMutation object of the builder.
-func (_u *PromptTemplateUpdateOne) Mutation() *PromptTemplateMutation {
-	return _u.mutation
+func (ptuo *PromptTemplateUpdateOne) Mutation() *PromptTemplateMutation {
+	return ptuo.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (_u *PromptTemplateUpdateOne) ClearUser() *PromptTemplateUpdateOne {
-	_u.mutation.ClearUser()
-	return _u
+func (ptuo *PromptTemplateUpdateOne) ClearUser() *PromptTemplateUpdateOne {
+	ptuo.mutation.ClearUser()
+	return ptuo
 }
 
 // Where appends a list predicates to the PromptTemplateUpdate builder.
-func (_u *PromptTemplateUpdateOne) Where(ps ...predicate.PromptTemplate) *PromptTemplateUpdateOne {
-	_u.mutation.Where(ps...)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) Where(ps ...predicate.PromptTemplate) *PromptTemplateUpdateOne {
+	ptuo.mutation.Where(ps...)
+	return ptuo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (_u *PromptTemplateUpdateOne) Select(field string, fields ...string) *PromptTemplateUpdateOne {
-	_u.fields = append([]string{field}, fields...)
-	return _u
+func (ptuo *PromptTemplateUpdateOne) Select(field string, fields ...string) *PromptTemplateUpdateOne {
+	ptuo.fields = append([]string{field}, fields...)
+	return ptuo
 }
 
 // Save executes the query and returns the updated PromptTemplate entity.
-func (_u *PromptTemplateUpdateOne) Save(ctx context.Context) (*PromptTemplate, error) {
-	_u.defaults()
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (ptuo *PromptTemplateUpdateOne) Save(ctx context.Context) (*PromptTemplate, error) {
+	ptuo.defaults()
+	return withHooks(ctx, ptuo.sqlSave, ptuo.mutation, ptuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *PromptTemplateUpdateOne) SaveX(ctx context.Context) *PromptTemplate {
-	node, err := _u.Save(ctx)
+func (ptuo *PromptTemplateUpdateOne) SaveX(ctx context.Context) *PromptTemplate {
+	node, err := ptuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -438,60 +438,60 @@ func (_u *PromptTemplateUpdateOne) SaveX(ctx context.Context) *PromptTemplate {
 }
 
 // Exec executes the query on the entity.
-func (_u *PromptTemplateUpdateOne) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (ptuo *PromptTemplateUpdateOne) Exec(ctx context.Context) error {
+	_, err := ptuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *PromptTemplateUpdateOne) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (ptuo *PromptTemplateUpdateOne) ExecX(ctx context.Context) {
+	if err := ptuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (_u *PromptTemplateUpdateOne) defaults() {
-	if _, ok := _u.mutation.UpdatedAt(); !ok {
+func (ptuo *PromptTemplateUpdateOne) defaults() {
+	if _, ok := ptuo.mutation.UpdatedAt(); !ok {
 		v := prompttemplate.UpdateDefaultUpdatedAt()
-		_u.mutation.SetUpdatedAt(v)
+		ptuo.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *PromptTemplateUpdateOne) check() error {
-	if v, ok := _u.mutation.Name(); ok {
+func (ptuo *PromptTemplateUpdateOne) check() error {
+	if v, ok := ptuo.mutation.Name(); ok {
 		if err := prompttemplate.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Content(); ok {
+	if v, ok := ptuo.mutation.Content(); ok {
 		if err := prompttemplate.ContentValidator(v); err != nil {
 			return &ValidationError{Name: "content", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.content": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Category(); ok {
+	if v, ok := ptuo.mutation.Category(); ok {
 		if err := prompttemplate.CategoryValidator(v); err != nil {
 			return &ValidationError{Name: "category", err: fmt.Errorf(`ent: validator failed for field "PromptTemplate.category": %w`, err)}
 		}
 	}
-	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
+	if ptuo.mutation.UserCleared() && len(ptuo.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "PromptTemplate.user"`)
 	}
 	return nil
 }
 
-func (_u *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTemplate, err error) {
-	if err := _u.check(); err != nil {
+func (ptuo *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTemplate, err error) {
+	if err := ptuo.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(prompttemplate.Table, prompttemplate.Columns, sqlgraph.NewFieldSpec(prompttemplate.FieldID, field.TypeInt64))
-	id, ok := _u.mutation.ID()
+	id, ok := ptuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "PromptTemplate.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := _u.fields; len(fields) > 0 {
+	if fields := ptuo.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, prompttemplate.FieldID)
 		for _, f := range fields {
@@ -503,38 +503,38 @@ func (_u *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTe
 			}
 		}
 	}
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := ptuo.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.Name(); ok {
+	if value, ok := ptuo.mutation.Name(); ok {
 		_spec.SetField(prompttemplate.FieldName, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.Description(); ok {
+	if value, ok := ptuo.mutation.Description(); ok {
 		_spec.SetField(prompttemplate.FieldDescription, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
+	if ptuo.mutation.DescriptionCleared() {
 		_spec.ClearField(prompttemplate.FieldDescription, field.TypeString)
 	}
-	if value, ok := _u.mutation.Content(); ok {
+	if value, ok := ptuo.mutation.Content(); ok {
 		_spec.SetField(prompttemplate.FieldContent, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.Variables(); ok {
+	if value, ok := ptuo.mutation.Variables(); ok {
 		_spec.SetField(prompttemplate.FieldVariables, field.TypeString, value)
 	}
-	if _u.mutation.VariablesCleared() {
+	if ptuo.mutation.VariablesCleared() {
 		_spec.ClearField(prompttemplate.FieldVariables, field.TypeString)
 	}
-	if value, ok := _u.mutation.Category(); ok {
+	if value, ok := ptuo.mutation.Category(); ok {
 		_spec.SetField(prompttemplate.FieldCategory, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.UpdatedAt(); ok {
+	if value, ok := ptuo.mutation.UpdatedAt(); ok {
 		_spec.SetField(prompttemplate.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if _u.mutation.UserCleared() {
+	if ptuo.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -547,7 +547,7 @@ func (_u *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTe
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := ptuo.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -563,10 +563,10 @@ func (_u *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTe
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &PromptTemplate{config: _u.config}
+	_node = &PromptTemplate{config: ptuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, ptuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{prompttemplate.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -574,6 +574,6 @@ func (_u *PromptTemplateUpdateOne) sqlSave(ctx context.Context) (_node *PromptTe
 		}
 		return nil, err
 	}
-	_u.mutation.done = true
+	ptuo.mutation.done = true
 	return _node, nil
 }

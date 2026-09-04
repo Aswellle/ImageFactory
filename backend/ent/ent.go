@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/imageforge/imageforge/ent/account"
 	"github.com/imageforge/imageforge/ent/apikey"
 	"github.com/imageforge/imageforge/ent/asset"
 	"github.com/imageforge/imageforge/ent/assettag"
@@ -82,10 +83,11 @@ var (
 )
 
 // checkColumn checks if the column exists in the given table.
-func checkColumn(t, c string) error {
+func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
 			apikey.Table:          apikey.ValidColumn,
+			account.Table:         account.ValidColumn,
 			asset.Table:           asset.ValidColumn,
 			assettag.Table:        assettag.ValidColumn,
 			assetversion.Table:    assetversion.ValidColumn,
@@ -100,7 +102,7 @@ func checkColumn(t, c string) error {
 			user.Table:            user.ValidColumn,
 		})
 	})
-	return columnCheck(t, c)
+	return columnCheck(table, column)
 }
 
 // Asc applies the given fields in ASC order.

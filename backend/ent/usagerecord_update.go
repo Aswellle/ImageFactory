@@ -22,195 +22,195 @@ type UsageRecordUpdate struct {
 }
 
 // Where appends a list predicates to the UsageRecordUpdate builder.
-func (_u *UsageRecordUpdate) Where(ps ...predicate.UsageRecord) *UsageRecordUpdate {
-	_u.mutation.Where(ps...)
-	return _u
+func (uru *UsageRecordUpdate) Where(ps ...predicate.UsageRecord) *UsageRecordUpdate {
+	uru.mutation.Where(ps...)
+	return uru
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *UsageRecordUpdate) SetUserID(v int64) *UsageRecordUpdate {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
-	return _u
+func (uru *UsageRecordUpdate) SetUserID(i int64) *UsageRecordUpdate {
+	uru.mutation.ResetUserID()
+	uru.mutation.SetUserID(i)
+	return uru
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableUserID(v *int64) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetUserID(*v)
+func (uru *UsageRecordUpdate) SetNillableUserID(i *int64) *UsageRecordUpdate {
+	if i != nil {
+		uru.SetUserID(*i)
 	}
-	return _u
+	return uru
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UsageRecordUpdate) AddUserID(v int64) *UsageRecordUpdate {
-	_u.mutation.AddUserID(v)
-	return _u
+// AddUserID adds i to the "user_id" field.
+func (uru *UsageRecordUpdate) AddUserID(i int64) *UsageRecordUpdate {
+	uru.mutation.AddUserID(i)
+	return uru
 }
 
 // SetAPIKeyID sets the "api_key_id" field.
-func (_u *UsageRecordUpdate) SetAPIKeyID(v int64) *UsageRecordUpdate {
-	_u.mutation.ResetAPIKeyID()
-	_u.mutation.SetAPIKeyID(v)
-	return _u
+func (uru *UsageRecordUpdate) SetAPIKeyID(i int64) *UsageRecordUpdate {
+	uru.mutation.ResetAPIKeyID()
+	uru.mutation.SetAPIKeyID(i)
+	return uru
 }
 
 // SetNillableAPIKeyID sets the "api_key_id" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableAPIKeyID(v *int64) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetAPIKeyID(*v)
+func (uru *UsageRecordUpdate) SetNillableAPIKeyID(i *int64) *UsageRecordUpdate {
+	if i != nil {
+		uru.SetAPIKeyID(*i)
 	}
-	return _u
+	return uru
 }
 
-// AddAPIKeyID adds value to the "api_key_id" field.
-func (_u *UsageRecordUpdate) AddAPIKeyID(v int64) *UsageRecordUpdate {
-	_u.mutation.AddAPIKeyID(v)
-	return _u
+// AddAPIKeyID adds i to the "api_key_id" field.
+func (uru *UsageRecordUpdate) AddAPIKeyID(i int64) *UsageRecordUpdate {
+	uru.mutation.AddAPIKeyID(i)
+	return uru
 }
 
 // ClearAPIKeyID clears the value of the "api_key_id" field.
-func (_u *UsageRecordUpdate) ClearAPIKeyID() *UsageRecordUpdate {
-	_u.mutation.ClearAPIKeyID()
-	return _u
+func (uru *UsageRecordUpdate) ClearAPIKeyID() *UsageRecordUpdate {
+	uru.mutation.ClearAPIKeyID()
+	return uru
 }
 
 // SetType sets the "type" field.
-func (_u *UsageRecordUpdate) SetType(v usagerecord.Type) *UsageRecordUpdate {
-	_u.mutation.SetType(v)
-	return _u
+func (uru *UsageRecordUpdate) SetType(u usagerecord.Type) *UsageRecordUpdate {
+	uru.mutation.SetType(u)
+	return uru
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableType(v *usagerecord.Type) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetType(*v)
+func (uru *UsageRecordUpdate) SetNillableType(u *usagerecord.Type) *UsageRecordUpdate {
+	if u != nil {
+		uru.SetType(*u)
 	}
-	return _u
+	return uru
 }
 
 // SetModel sets the "model" field.
-func (_u *UsageRecordUpdate) SetModel(v string) *UsageRecordUpdate {
-	_u.mutation.SetModel(v)
-	return _u
+func (uru *UsageRecordUpdate) SetModel(s string) *UsageRecordUpdate {
+	uru.mutation.SetModel(s)
+	return uru
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableModel(v *string) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetModel(*v)
+func (uru *UsageRecordUpdate) SetNillableModel(s *string) *UsageRecordUpdate {
+	if s != nil {
+		uru.SetModel(*s)
 	}
-	return _u
+	return uru
 }
 
 // ClearModel clears the value of the "model" field.
-func (_u *UsageRecordUpdate) ClearModel() *UsageRecordUpdate {
-	_u.mutation.ClearModel()
-	return _u
+func (uru *UsageRecordUpdate) ClearModel() *UsageRecordUpdate {
+	uru.mutation.ClearModel()
+	return uru
 }
 
 // SetImageCount sets the "image_count" field.
-func (_u *UsageRecordUpdate) SetImageCount(v int) *UsageRecordUpdate {
-	_u.mutation.ResetImageCount()
-	_u.mutation.SetImageCount(v)
-	return _u
+func (uru *UsageRecordUpdate) SetImageCount(i int) *UsageRecordUpdate {
+	uru.mutation.ResetImageCount()
+	uru.mutation.SetImageCount(i)
+	return uru
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableImageCount(v *int) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetImageCount(*v)
+func (uru *UsageRecordUpdate) SetNillableImageCount(i *int) *UsageRecordUpdate {
+	if i != nil {
+		uru.SetImageCount(*i)
 	}
-	return _u
+	return uru
 }
 
-// AddImageCount adds value to the "image_count" field.
-func (_u *UsageRecordUpdate) AddImageCount(v int) *UsageRecordUpdate {
-	_u.mutation.AddImageCount(v)
-	return _u
+// AddImageCount adds i to the "image_count" field.
+func (uru *UsageRecordUpdate) AddImageCount(i int) *UsageRecordUpdate {
+	uru.mutation.AddImageCount(i)
+	return uru
 }
 
 // SetTokens sets the "tokens" field.
-func (_u *UsageRecordUpdate) SetTokens(v int) *UsageRecordUpdate {
-	_u.mutation.ResetTokens()
-	_u.mutation.SetTokens(v)
-	return _u
+func (uru *UsageRecordUpdate) SetTokens(i int) *UsageRecordUpdate {
+	uru.mutation.ResetTokens()
+	uru.mutation.SetTokens(i)
+	return uru
 }
 
 // SetNillableTokens sets the "tokens" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableTokens(v *int) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetTokens(*v)
+func (uru *UsageRecordUpdate) SetNillableTokens(i *int) *UsageRecordUpdate {
+	if i != nil {
+		uru.SetTokens(*i)
 	}
-	return _u
+	return uru
 }
 
-// AddTokens adds value to the "tokens" field.
-func (_u *UsageRecordUpdate) AddTokens(v int) *UsageRecordUpdate {
-	_u.mutation.AddTokens(v)
-	return _u
+// AddTokens adds i to the "tokens" field.
+func (uru *UsageRecordUpdate) AddTokens(i int) *UsageRecordUpdate {
+	uru.mutation.AddTokens(i)
+	return uru
 }
 
 // ClearTokens clears the value of the "tokens" field.
-func (_u *UsageRecordUpdate) ClearTokens() *UsageRecordUpdate {
-	_u.mutation.ClearTokens()
-	return _u
+func (uru *UsageRecordUpdate) ClearTokens() *UsageRecordUpdate {
+	uru.mutation.ClearTokens()
+	return uru
 }
 
 // SetCost sets the "cost" field.
-func (_u *UsageRecordUpdate) SetCost(v float64) *UsageRecordUpdate {
-	_u.mutation.ResetCost()
-	_u.mutation.SetCost(v)
-	return _u
+func (uru *UsageRecordUpdate) SetCost(f float64) *UsageRecordUpdate {
+	uru.mutation.ResetCost()
+	uru.mutation.SetCost(f)
+	return uru
 }
 
 // SetNillableCost sets the "cost" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableCost(v *float64) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetCost(*v)
+func (uru *UsageRecordUpdate) SetNillableCost(f *float64) *UsageRecordUpdate {
+	if f != nil {
+		uru.SetCost(*f)
 	}
-	return _u
+	return uru
 }
 
-// AddCost adds value to the "cost" field.
-func (_u *UsageRecordUpdate) AddCost(v float64) *UsageRecordUpdate {
-	_u.mutation.AddCost(v)
-	return _u
+// AddCost adds f to the "cost" field.
+func (uru *UsageRecordUpdate) AddCost(f float64) *UsageRecordUpdate {
+	uru.mutation.AddCost(f)
+	return uru
 }
 
 // SetRequestID sets the "request_id" field.
-func (_u *UsageRecordUpdate) SetRequestID(v string) *UsageRecordUpdate {
-	_u.mutation.SetRequestID(v)
-	return _u
+func (uru *UsageRecordUpdate) SetRequestID(s string) *UsageRecordUpdate {
+	uru.mutation.SetRequestID(s)
+	return uru
 }
 
 // SetNillableRequestID sets the "request_id" field if the given value is not nil.
-func (_u *UsageRecordUpdate) SetNillableRequestID(v *string) *UsageRecordUpdate {
-	if v != nil {
-		_u.SetRequestID(*v)
+func (uru *UsageRecordUpdate) SetNillableRequestID(s *string) *UsageRecordUpdate {
+	if s != nil {
+		uru.SetRequestID(*s)
 	}
-	return _u
+	return uru
 }
 
 // ClearRequestID clears the value of the "request_id" field.
-func (_u *UsageRecordUpdate) ClearRequestID() *UsageRecordUpdate {
-	_u.mutation.ClearRequestID()
-	return _u
+func (uru *UsageRecordUpdate) ClearRequestID() *UsageRecordUpdate {
+	uru.mutation.ClearRequestID()
+	return uru
 }
 
 // Mutation returns the UsageRecordMutation object of the builder.
-func (_u *UsageRecordUpdate) Mutation() *UsageRecordMutation {
-	return _u.mutation
+func (uru *UsageRecordUpdate) Mutation() *UsageRecordMutation {
+	return uru.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (_u *UsageRecordUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (uru *UsageRecordUpdate) Save(ctx context.Context) (int, error) {
+	return withHooks(ctx, uru.sqlSave, uru.mutation, uru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *UsageRecordUpdate) SaveX(ctx context.Context) int {
-	affected, err := _u.Save(ctx)
+func (uru *UsageRecordUpdate) SaveX(ctx context.Context) int {
+	affected, err := uru.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -218,21 +218,21 @@ func (_u *UsageRecordUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (_u *UsageRecordUpdate) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (uru *UsageRecordUpdate) Exec(ctx context.Context) error {
+	_, err := uru.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *UsageRecordUpdate) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (uru *UsageRecordUpdate) ExecX(ctx context.Context) {
+	if err := uru.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *UsageRecordUpdate) check() error {
-	if v, ok := _u.mutation.GetType(); ok {
+func (uru *UsageRecordUpdate) check() error {
+	if v, ok := uru.mutation.GetType(); ok {
 		if err := usagerecord.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "UsageRecord.type": %w`, err)}
 		}
@@ -240,70 +240,70 @@ func (_u *UsageRecordUpdate) check() error {
 	return nil
 }
 
-func (_u *UsageRecordUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
+func (uru *UsageRecordUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := uru.check(); err != nil {
+		return n, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(usagerecord.Table, usagerecord.Columns, sqlgraph.NewFieldSpec(usagerecord.FieldID, field.TypeInt64))
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := uru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.UserID(); ok {
+	if value, ok := uru.mutation.UserID(); ok {
 		_spec.SetField(usagerecord.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
+	if value, ok := uru.mutation.AddedUserID(); ok {
 		_spec.AddField(usagerecord.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.APIKeyID(); ok {
+	if value, ok := uru.mutation.APIKeyID(); ok {
 		_spec.SetField(usagerecord.FieldAPIKeyID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedAPIKeyID(); ok {
+	if value, ok := uru.mutation.AddedAPIKeyID(); ok {
 		_spec.AddField(usagerecord.FieldAPIKeyID, field.TypeInt64, value)
 	}
-	if _u.mutation.APIKeyIDCleared() {
+	if uru.mutation.APIKeyIDCleared() {
 		_spec.ClearField(usagerecord.FieldAPIKeyID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.GetType(); ok {
+	if value, ok := uru.mutation.GetType(); ok {
 		_spec.SetField(usagerecord.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Model(); ok {
+	if value, ok := uru.mutation.Model(); ok {
 		_spec.SetField(usagerecord.FieldModel, field.TypeString, value)
 	}
-	if _u.mutation.ModelCleared() {
+	if uru.mutation.ModelCleared() {
 		_spec.ClearField(usagerecord.FieldModel, field.TypeString)
 	}
-	if value, ok := _u.mutation.ImageCount(); ok {
+	if value, ok := uru.mutation.ImageCount(); ok {
 		_spec.SetField(usagerecord.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedImageCount(); ok {
+	if value, ok := uru.mutation.AddedImageCount(); ok {
 		_spec.AddField(usagerecord.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.Tokens(); ok {
+	if value, ok := uru.mutation.Tokens(); ok {
 		_spec.SetField(usagerecord.FieldTokens, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedTokens(); ok {
+	if value, ok := uru.mutation.AddedTokens(); ok {
 		_spec.AddField(usagerecord.FieldTokens, field.TypeInt, value)
 	}
-	if _u.mutation.TokensCleared() {
+	if uru.mutation.TokensCleared() {
 		_spec.ClearField(usagerecord.FieldTokens, field.TypeInt)
 	}
-	if value, ok := _u.mutation.Cost(); ok {
+	if value, ok := uru.mutation.Cost(); ok {
 		_spec.SetField(usagerecord.FieldCost, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.AddedCost(); ok {
+	if value, ok := uru.mutation.AddedCost(); ok {
 		_spec.AddField(usagerecord.FieldCost, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.RequestID(); ok {
+	if value, ok := uru.mutation.RequestID(); ok {
 		_spec.SetField(usagerecord.FieldRequestID, field.TypeString, value)
 	}
-	if _u.mutation.RequestIDCleared() {
+	if uru.mutation.RequestIDCleared() {
 		_spec.ClearField(usagerecord.FieldRequestID, field.TypeString)
 	}
-	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, uru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{usagerecord.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -311,8 +311,8 @@ func (_u *UsageRecordUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		}
 		return 0, err
 	}
-	_u.mutation.done = true
-	return _node, nil
+	uru.mutation.done = true
+	return n, nil
 }
 
 // UsageRecordUpdateOne is the builder for updating a single UsageRecord entity.
@@ -324,202 +324,202 @@ type UsageRecordUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (_u *UsageRecordUpdateOne) SetUserID(v int64) *UsageRecordUpdateOne {
-	_u.mutation.ResetUserID()
-	_u.mutation.SetUserID(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetUserID(i int64) *UsageRecordUpdateOne {
+	uruo.mutation.ResetUserID()
+	uruo.mutation.SetUserID(i)
+	return uruo
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableUserID(v *int64) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetUserID(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableUserID(i *int64) *UsageRecordUpdateOne {
+	if i != nil {
+		uruo.SetUserID(*i)
 	}
-	return _u
+	return uruo
 }
 
-// AddUserID adds value to the "user_id" field.
-func (_u *UsageRecordUpdateOne) AddUserID(v int64) *UsageRecordUpdateOne {
-	_u.mutation.AddUserID(v)
-	return _u
+// AddUserID adds i to the "user_id" field.
+func (uruo *UsageRecordUpdateOne) AddUserID(i int64) *UsageRecordUpdateOne {
+	uruo.mutation.AddUserID(i)
+	return uruo
 }
 
 // SetAPIKeyID sets the "api_key_id" field.
-func (_u *UsageRecordUpdateOne) SetAPIKeyID(v int64) *UsageRecordUpdateOne {
-	_u.mutation.ResetAPIKeyID()
-	_u.mutation.SetAPIKeyID(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetAPIKeyID(i int64) *UsageRecordUpdateOne {
+	uruo.mutation.ResetAPIKeyID()
+	uruo.mutation.SetAPIKeyID(i)
+	return uruo
 }
 
 // SetNillableAPIKeyID sets the "api_key_id" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableAPIKeyID(v *int64) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetAPIKeyID(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableAPIKeyID(i *int64) *UsageRecordUpdateOne {
+	if i != nil {
+		uruo.SetAPIKeyID(*i)
 	}
-	return _u
+	return uruo
 }
 
-// AddAPIKeyID adds value to the "api_key_id" field.
-func (_u *UsageRecordUpdateOne) AddAPIKeyID(v int64) *UsageRecordUpdateOne {
-	_u.mutation.AddAPIKeyID(v)
-	return _u
+// AddAPIKeyID adds i to the "api_key_id" field.
+func (uruo *UsageRecordUpdateOne) AddAPIKeyID(i int64) *UsageRecordUpdateOne {
+	uruo.mutation.AddAPIKeyID(i)
+	return uruo
 }
 
 // ClearAPIKeyID clears the value of the "api_key_id" field.
-func (_u *UsageRecordUpdateOne) ClearAPIKeyID() *UsageRecordUpdateOne {
-	_u.mutation.ClearAPIKeyID()
-	return _u
+func (uruo *UsageRecordUpdateOne) ClearAPIKeyID() *UsageRecordUpdateOne {
+	uruo.mutation.ClearAPIKeyID()
+	return uruo
 }
 
 // SetType sets the "type" field.
-func (_u *UsageRecordUpdateOne) SetType(v usagerecord.Type) *UsageRecordUpdateOne {
-	_u.mutation.SetType(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetType(u usagerecord.Type) *UsageRecordUpdateOne {
+	uruo.mutation.SetType(u)
+	return uruo
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableType(v *usagerecord.Type) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetType(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableType(u *usagerecord.Type) *UsageRecordUpdateOne {
+	if u != nil {
+		uruo.SetType(*u)
 	}
-	return _u
+	return uruo
 }
 
 // SetModel sets the "model" field.
-func (_u *UsageRecordUpdateOne) SetModel(v string) *UsageRecordUpdateOne {
-	_u.mutation.SetModel(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetModel(s string) *UsageRecordUpdateOne {
+	uruo.mutation.SetModel(s)
+	return uruo
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableModel(v *string) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetModel(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableModel(s *string) *UsageRecordUpdateOne {
+	if s != nil {
+		uruo.SetModel(*s)
 	}
-	return _u
+	return uruo
 }
 
 // ClearModel clears the value of the "model" field.
-func (_u *UsageRecordUpdateOne) ClearModel() *UsageRecordUpdateOne {
-	_u.mutation.ClearModel()
-	return _u
+func (uruo *UsageRecordUpdateOne) ClearModel() *UsageRecordUpdateOne {
+	uruo.mutation.ClearModel()
+	return uruo
 }
 
 // SetImageCount sets the "image_count" field.
-func (_u *UsageRecordUpdateOne) SetImageCount(v int) *UsageRecordUpdateOne {
-	_u.mutation.ResetImageCount()
-	_u.mutation.SetImageCount(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetImageCount(i int) *UsageRecordUpdateOne {
+	uruo.mutation.ResetImageCount()
+	uruo.mutation.SetImageCount(i)
+	return uruo
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableImageCount(v *int) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetImageCount(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableImageCount(i *int) *UsageRecordUpdateOne {
+	if i != nil {
+		uruo.SetImageCount(*i)
 	}
-	return _u
+	return uruo
 }
 
-// AddImageCount adds value to the "image_count" field.
-func (_u *UsageRecordUpdateOne) AddImageCount(v int) *UsageRecordUpdateOne {
-	_u.mutation.AddImageCount(v)
-	return _u
+// AddImageCount adds i to the "image_count" field.
+func (uruo *UsageRecordUpdateOne) AddImageCount(i int) *UsageRecordUpdateOne {
+	uruo.mutation.AddImageCount(i)
+	return uruo
 }
 
 // SetTokens sets the "tokens" field.
-func (_u *UsageRecordUpdateOne) SetTokens(v int) *UsageRecordUpdateOne {
-	_u.mutation.ResetTokens()
-	_u.mutation.SetTokens(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetTokens(i int) *UsageRecordUpdateOne {
+	uruo.mutation.ResetTokens()
+	uruo.mutation.SetTokens(i)
+	return uruo
 }
 
 // SetNillableTokens sets the "tokens" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableTokens(v *int) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetTokens(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableTokens(i *int) *UsageRecordUpdateOne {
+	if i != nil {
+		uruo.SetTokens(*i)
 	}
-	return _u
+	return uruo
 }
 
-// AddTokens adds value to the "tokens" field.
-func (_u *UsageRecordUpdateOne) AddTokens(v int) *UsageRecordUpdateOne {
-	_u.mutation.AddTokens(v)
-	return _u
+// AddTokens adds i to the "tokens" field.
+func (uruo *UsageRecordUpdateOne) AddTokens(i int) *UsageRecordUpdateOne {
+	uruo.mutation.AddTokens(i)
+	return uruo
 }
 
 // ClearTokens clears the value of the "tokens" field.
-func (_u *UsageRecordUpdateOne) ClearTokens() *UsageRecordUpdateOne {
-	_u.mutation.ClearTokens()
-	return _u
+func (uruo *UsageRecordUpdateOne) ClearTokens() *UsageRecordUpdateOne {
+	uruo.mutation.ClearTokens()
+	return uruo
 }
 
 // SetCost sets the "cost" field.
-func (_u *UsageRecordUpdateOne) SetCost(v float64) *UsageRecordUpdateOne {
-	_u.mutation.ResetCost()
-	_u.mutation.SetCost(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetCost(f float64) *UsageRecordUpdateOne {
+	uruo.mutation.ResetCost()
+	uruo.mutation.SetCost(f)
+	return uruo
 }
 
 // SetNillableCost sets the "cost" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableCost(v *float64) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetCost(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableCost(f *float64) *UsageRecordUpdateOne {
+	if f != nil {
+		uruo.SetCost(*f)
 	}
-	return _u
+	return uruo
 }
 
-// AddCost adds value to the "cost" field.
-func (_u *UsageRecordUpdateOne) AddCost(v float64) *UsageRecordUpdateOne {
-	_u.mutation.AddCost(v)
-	return _u
+// AddCost adds f to the "cost" field.
+func (uruo *UsageRecordUpdateOne) AddCost(f float64) *UsageRecordUpdateOne {
+	uruo.mutation.AddCost(f)
+	return uruo
 }
 
 // SetRequestID sets the "request_id" field.
-func (_u *UsageRecordUpdateOne) SetRequestID(v string) *UsageRecordUpdateOne {
-	_u.mutation.SetRequestID(v)
-	return _u
+func (uruo *UsageRecordUpdateOne) SetRequestID(s string) *UsageRecordUpdateOne {
+	uruo.mutation.SetRequestID(s)
+	return uruo
 }
 
 // SetNillableRequestID sets the "request_id" field if the given value is not nil.
-func (_u *UsageRecordUpdateOne) SetNillableRequestID(v *string) *UsageRecordUpdateOne {
-	if v != nil {
-		_u.SetRequestID(*v)
+func (uruo *UsageRecordUpdateOne) SetNillableRequestID(s *string) *UsageRecordUpdateOne {
+	if s != nil {
+		uruo.SetRequestID(*s)
 	}
-	return _u
+	return uruo
 }
 
 // ClearRequestID clears the value of the "request_id" field.
-func (_u *UsageRecordUpdateOne) ClearRequestID() *UsageRecordUpdateOne {
-	_u.mutation.ClearRequestID()
-	return _u
+func (uruo *UsageRecordUpdateOne) ClearRequestID() *UsageRecordUpdateOne {
+	uruo.mutation.ClearRequestID()
+	return uruo
 }
 
 // Mutation returns the UsageRecordMutation object of the builder.
-func (_u *UsageRecordUpdateOne) Mutation() *UsageRecordMutation {
-	return _u.mutation
+func (uruo *UsageRecordUpdateOne) Mutation() *UsageRecordMutation {
+	return uruo.mutation
 }
 
 // Where appends a list predicates to the UsageRecordUpdate builder.
-func (_u *UsageRecordUpdateOne) Where(ps ...predicate.UsageRecord) *UsageRecordUpdateOne {
-	_u.mutation.Where(ps...)
-	return _u
+func (uruo *UsageRecordUpdateOne) Where(ps ...predicate.UsageRecord) *UsageRecordUpdateOne {
+	uruo.mutation.Where(ps...)
+	return uruo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (_u *UsageRecordUpdateOne) Select(field string, fields ...string) *UsageRecordUpdateOne {
-	_u.fields = append([]string{field}, fields...)
-	return _u
+func (uruo *UsageRecordUpdateOne) Select(field string, fields ...string) *UsageRecordUpdateOne {
+	uruo.fields = append([]string{field}, fields...)
+	return uruo
 }
 
 // Save executes the query and returns the updated UsageRecord entity.
-func (_u *UsageRecordUpdateOne) Save(ctx context.Context) (*UsageRecord, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (uruo *UsageRecordUpdateOne) Save(ctx context.Context) (*UsageRecord, error) {
+	return withHooks(ctx, uruo.sqlSave, uruo.mutation, uruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *UsageRecordUpdateOne) SaveX(ctx context.Context) *UsageRecord {
-	node, err := _u.Save(ctx)
+func (uruo *UsageRecordUpdateOne) SaveX(ctx context.Context) *UsageRecord {
+	node, err := uruo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -527,21 +527,21 @@ func (_u *UsageRecordUpdateOne) SaveX(ctx context.Context) *UsageRecord {
 }
 
 // Exec executes the query on the entity.
-func (_u *UsageRecordUpdateOne) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (uruo *UsageRecordUpdateOne) Exec(ctx context.Context) error {
+	_, err := uruo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *UsageRecordUpdateOne) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (uruo *UsageRecordUpdateOne) ExecX(ctx context.Context) {
+	if err := uruo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *UsageRecordUpdateOne) check() error {
-	if v, ok := _u.mutation.GetType(); ok {
+func (uruo *UsageRecordUpdateOne) check() error {
+	if v, ok := uruo.mutation.GetType(); ok {
 		if err := usagerecord.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "UsageRecord.type": %w`, err)}
 		}
@@ -549,17 +549,17 @@ func (_u *UsageRecordUpdateOne) check() error {
 	return nil
 }
 
-func (_u *UsageRecordUpdateOne) sqlSave(ctx context.Context) (_node *UsageRecord, err error) {
-	if err := _u.check(); err != nil {
+func (uruo *UsageRecordUpdateOne) sqlSave(ctx context.Context) (_node *UsageRecord, err error) {
+	if err := uruo.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(usagerecord.Table, usagerecord.Columns, sqlgraph.NewFieldSpec(usagerecord.FieldID, field.TypeInt64))
-	id, ok := _u.mutation.ID()
+	id, ok := uruo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UsageRecord.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := _u.fields; len(fields) > 0 {
+	if fields := uruo.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, usagerecord.FieldID)
 		for _, f := range fields {
@@ -571,68 +571,68 @@ func (_u *UsageRecordUpdateOne) sqlSave(ctx context.Context) (_node *UsageRecord
 			}
 		}
 	}
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := uruo.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.UserID(); ok {
+	if value, ok := uruo.mutation.UserID(); ok {
 		_spec.SetField(usagerecord.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedUserID(); ok {
+	if value, ok := uruo.mutation.AddedUserID(); ok {
 		_spec.AddField(usagerecord.FieldUserID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.APIKeyID(); ok {
+	if value, ok := uruo.mutation.APIKeyID(); ok {
 		_spec.SetField(usagerecord.FieldAPIKeyID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedAPIKeyID(); ok {
+	if value, ok := uruo.mutation.AddedAPIKeyID(); ok {
 		_spec.AddField(usagerecord.FieldAPIKeyID, field.TypeInt64, value)
 	}
-	if _u.mutation.APIKeyIDCleared() {
+	if uruo.mutation.APIKeyIDCleared() {
 		_spec.ClearField(usagerecord.FieldAPIKeyID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.GetType(); ok {
+	if value, ok := uruo.mutation.GetType(); ok {
 		_spec.SetField(usagerecord.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := _u.mutation.Model(); ok {
+	if value, ok := uruo.mutation.Model(); ok {
 		_spec.SetField(usagerecord.FieldModel, field.TypeString, value)
 	}
-	if _u.mutation.ModelCleared() {
+	if uruo.mutation.ModelCleared() {
 		_spec.ClearField(usagerecord.FieldModel, field.TypeString)
 	}
-	if value, ok := _u.mutation.ImageCount(); ok {
+	if value, ok := uruo.mutation.ImageCount(); ok {
 		_spec.SetField(usagerecord.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedImageCount(); ok {
+	if value, ok := uruo.mutation.AddedImageCount(); ok {
 		_spec.AddField(usagerecord.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.Tokens(); ok {
+	if value, ok := uruo.mutation.Tokens(); ok {
 		_spec.SetField(usagerecord.FieldTokens, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedTokens(); ok {
+	if value, ok := uruo.mutation.AddedTokens(); ok {
 		_spec.AddField(usagerecord.FieldTokens, field.TypeInt, value)
 	}
-	if _u.mutation.TokensCleared() {
+	if uruo.mutation.TokensCleared() {
 		_spec.ClearField(usagerecord.FieldTokens, field.TypeInt)
 	}
-	if value, ok := _u.mutation.Cost(); ok {
+	if value, ok := uruo.mutation.Cost(); ok {
 		_spec.SetField(usagerecord.FieldCost, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.AddedCost(); ok {
+	if value, ok := uruo.mutation.AddedCost(); ok {
 		_spec.AddField(usagerecord.FieldCost, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.RequestID(); ok {
+	if value, ok := uruo.mutation.RequestID(); ok {
 		_spec.SetField(usagerecord.FieldRequestID, field.TypeString, value)
 	}
-	if _u.mutation.RequestIDCleared() {
+	if uruo.mutation.RequestIDCleared() {
 		_spec.ClearField(usagerecord.FieldRequestID, field.TypeString)
 	}
-	_node = &UsageRecord{config: _u.config}
+	_node = &UsageRecord{config: uruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, uruo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{usagerecord.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -640,6 +640,6 @@ func (_u *UsageRecordUpdateOne) sqlSave(ctx context.Context) (_node *UsageRecord
 		}
 		return nil, err
 	}
-	_u.mutation.done = true
+	uruo.mutation.done = true
 	return _node, nil
 }

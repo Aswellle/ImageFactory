@@ -23,292 +23,292 @@ type AssetVersionUpdate struct {
 }
 
 // Where appends a list predicates to the AssetVersionUpdate builder.
-func (_u *AssetVersionUpdate) Where(ps ...predicate.AssetVersion) *AssetVersionUpdate {
-	_u.mutation.Where(ps...)
-	return _u
+func (avu *AssetVersionUpdate) Where(ps ...predicate.AssetVersion) *AssetVersionUpdate {
+	avu.mutation.Where(ps...)
+	return avu
 }
 
 // SetAssetID sets the "asset_id" field.
-func (_u *AssetVersionUpdate) SetAssetID(v int64) *AssetVersionUpdate {
-	_u.mutation.SetAssetID(v)
-	return _u
+func (avu *AssetVersionUpdate) SetAssetID(i int64) *AssetVersionUpdate {
+	avu.mutation.SetAssetID(i)
+	return avu
 }
 
 // SetNillableAssetID sets the "asset_id" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableAssetID(v *int64) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetAssetID(*v)
+func (avu *AssetVersionUpdate) SetNillableAssetID(i *int64) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetAssetID(*i)
 	}
-	return _u
+	return avu
 }
 
 // SetVersion sets the "version" field.
-func (_u *AssetVersionUpdate) SetVersion(v int) *AssetVersionUpdate {
-	_u.mutation.ResetVersion()
-	_u.mutation.SetVersion(v)
-	return _u
+func (avu *AssetVersionUpdate) SetVersion(i int) *AssetVersionUpdate {
+	avu.mutation.ResetVersion()
+	avu.mutation.SetVersion(i)
+	return avu
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableVersion(v *int) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetVersion(*v)
+func (avu *AssetVersionUpdate) SetNillableVersion(i *int) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetVersion(*i)
 	}
-	return _u
+	return avu
 }
 
-// AddVersion adds value to the "version" field.
-func (_u *AssetVersionUpdate) AddVersion(v int) *AssetVersionUpdate {
-	_u.mutation.AddVersion(v)
-	return _u
+// AddVersion adds i to the "version" field.
+func (avu *AssetVersionUpdate) AddVersion(i int) *AssetVersionUpdate {
+	avu.mutation.AddVersion(i)
+	return avu
 }
 
 // SetEditJobID sets the "edit_job_id" field.
-func (_u *AssetVersionUpdate) SetEditJobID(v int64) *AssetVersionUpdate {
-	_u.mutation.ResetEditJobID()
-	_u.mutation.SetEditJobID(v)
-	return _u
+func (avu *AssetVersionUpdate) SetEditJobID(i int64) *AssetVersionUpdate {
+	avu.mutation.ResetEditJobID()
+	avu.mutation.SetEditJobID(i)
+	return avu
 }
 
 // SetNillableEditJobID sets the "edit_job_id" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableEditJobID(v *int64) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetEditJobID(*v)
+func (avu *AssetVersionUpdate) SetNillableEditJobID(i *int64) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetEditJobID(*i)
 	}
-	return _u
+	return avu
 }
 
-// AddEditJobID adds value to the "edit_job_id" field.
-func (_u *AssetVersionUpdate) AddEditJobID(v int64) *AssetVersionUpdate {
-	_u.mutation.AddEditJobID(v)
-	return _u
+// AddEditJobID adds i to the "edit_job_id" field.
+func (avu *AssetVersionUpdate) AddEditJobID(i int64) *AssetVersionUpdate {
+	avu.mutation.AddEditJobID(i)
+	return avu
 }
 
 // ClearEditJobID clears the value of the "edit_job_id" field.
-func (_u *AssetVersionUpdate) ClearEditJobID() *AssetVersionUpdate {
-	_u.mutation.ClearEditJobID()
-	return _u
+func (avu *AssetVersionUpdate) ClearEditJobID() *AssetVersionUpdate {
+	avu.mutation.ClearEditJobID()
+	return avu
 }
 
 // SetPrompt sets the "prompt" field.
-func (_u *AssetVersionUpdate) SetPrompt(v string) *AssetVersionUpdate {
-	_u.mutation.SetPrompt(v)
-	return _u
+func (avu *AssetVersionUpdate) SetPrompt(s string) *AssetVersionUpdate {
+	avu.mutation.SetPrompt(s)
+	return avu
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillablePrompt(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetPrompt(*v)
+func (avu *AssetVersionUpdate) SetNillablePrompt(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetPrompt(*s)
 	}
-	return _u
+	return avu
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (_u *AssetVersionUpdate) ClearPrompt() *AssetVersionUpdate {
-	_u.mutation.ClearPrompt()
-	return _u
+func (avu *AssetVersionUpdate) ClearPrompt() *AssetVersionUpdate {
+	avu.mutation.ClearPrompt()
+	return avu
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (_u *AssetVersionUpdate) SetNegativePrompt(v string) *AssetVersionUpdate {
-	_u.mutation.SetNegativePrompt(v)
-	return _u
+func (avu *AssetVersionUpdate) SetNegativePrompt(s string) *AssetVersionUpdate {
+	avu.mutation.SetNegativePrompt(s)
+	return avu
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableNegativePrompt(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetNegativePrompt(*v)
+func (avu *AssetVersionUpdate) SetNillableNegativePrompt(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetNegativePrompt(*s)
 	}
-	return _u
+	return avu
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (_u *AssetVersionUpdate) ClearNegativePrompt() *AssetVersionUpdate {
-	_u.mutation.ClearNegativePrompt()
-	return _u
+func (avu *AssetVersionUpdate) ClearNegativePrompt() *AssetVersionUpdate {
+	avu.mutation.ClearNegativePrompt()
+	return avu
 }
 
 // SetModel sets the "model" field.
-func (_u *AssetVersionUpdate) SetModel(v string) *AssetVersionUpdate {
-	_u.mutation.SetModel(v)
-	return _u
+func (avu *AssetVersionUpdate) SetModel(s string) *AssetVersionUpdate {
+	avu.mutation.SetModel(s)
+	return avu
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableModel(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetModel(*v)
+func (avu *AssetVersionUpdate) SetNillableModel(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetModel(*s)
 	}
-	return _u
+	return avu
 }
 
 // ClearModel clears the value of the "model" field.
-func (_u *AssetVersionUpdate) ClearModel() *AssetVersionUpdate {
-	_u.mutation.ClearModel()
-	return _u
+func (avu *AssetVersionUpdate) ClearModel() *AssetVersionUpdate {
+	avu.mutation.ClearModel()
+	return avu
 }
 
 // SetWidth sets the "width" field.
-func (_u *AssetVersionUpdate) SetWidth(v int) *AssetVersionUpdate {
-	_u.mutation.ResetWidth()
-	_u.mutation.SetWidth(v)
-	return _u
+func (avu *AssetVersionUpdate) SetWidth(i int) *AssetVersionUpdate {
+	avu.mutation.ResetWidth()
+	avu.mutation.SetWidth(i)
+	return avu
 }
 
 // SetNillableWidth sets the "width" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableWidth(v *int) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetWidth(*v)
+func (avu *AssetVersionUpdate) SetNillableWidth(i *int) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetWidth(*i)
 	}
-	return _u
+	return avu
 }
 
-// AddWidth adds value to the "width" field.
-func (_u *AssetVersionUpdate) AddWidth(v int) *AssetVersionUpdate {
-	_u.mutation.AddWidth(v)
-	return _u
+// AddWidth adds i to the "width" field.
+func (avu *AssetVersionUpdate) AddWidth(i int) *AssetVersionUpdate {
+	avu.mutation.AddWidth(i)
+	return avu
 }
 
 // ClearWidth clears the value of the "width" field.
-func (_u *AssetVersionUpdate) ClearWidth() *AssetVersionUpdate {
-	_u.mutation.ClearWidth()
-	return _u
+func (avu *AssetVersionUpdate) ClearWidth() *AssetVersionUpdate {
+	avu.mutation.ClearWidth()
+	return avu
 }
 
 // SetHeight sets the "height" field.
-func (_u *AssetVersionUpdate) SetHeight(v int) *AssetVersionUpdate {
-	_u.mutation.ResetHeight()
-	_u.mutation.SetHeight(v)
-	return _u
+func (avu *AssetVersionUpdate) SetHeight(i int) *AssetVersionUpdate {
+	avu.mutation.ResetHeight()
+	avu.mutation.SetHeight(i)
+	return avu
 }
 
 // SetNillableHeight sets the "height" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableHeight(v *int) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetHeight(*v)
+func (avu *AssetVersionUpdate) SetNillableHeight(i *int) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetHeight(*i)
 	}
-	return _u
+	return avu
 }
 
-// AddHeight adds value to the "height" field.
-func (_u *AssetVersionUpdate) AddHeight(v int) *AssetVersionUpdate {
-	_u.mutation.AddHeight(v)
-	return _u
+// AddHeight adds i to the "height" field.
+func (avu *AssetVersionUpdate) AddHeight(i int) *AssetVersionUpdate {
+	avu.mutation.AddHeight(i)
+	return avu
 }
 
 // ClearHeight clears the value of the "height" field.
-func (_u *AssetVersionUpdate) ClearHeight() *AssetVersionUpdate {
-	_u.mutation.ClearHeight()
-	return _u
+func (avu *AssetVersionUpdate) ClearHeight() *AssetVersionUpdate {
+	avu.mutation.ClearHeight()
+	return avu
 }
 
 // SetMimeType sets the "mime_type" field.
-func (_u *AssetVersionUpdate) SetMimeType(v string) *AssetVersionUpdate {
-	_u.mutation.SetMimeType(v)
-	return _u
+func (avu *AssetVersionUpdate) SetMimeType(s string) *AssetVersionUpdate {
+	avu.mutation.SetMimeType(s)
+	return avu
 }
 
 // SetNillableMimeType sets the "mime_type" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableMimeType(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetMimeType(*v)
+func (avu *AssetVersionUpdate) SetNillableMimeType(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetMimeType(*s)
 	}
-	return _u
+	return avu
 }
 
 // ClearMimeType clears the value of the "mime_type" field.
-func (_u *AssetVersionUpdate) ClearMimeType() *AssetVersionUpdate {
-	_u.mutation.ClearMimeType()
-	return _u
+func (avu *AssetVersionUpdate) ClearMimeType() *AssetVersionUpdate {
+	avu.mutation.ClearMimeType()
+	return avu
 }
 
 // SetFileSize sets the "file_size" field.
-func (_u *AssetVersionUpdate) SetFileSize(v int64) *AssetVersionUpdate {
-	_u.mutation.ResetFileSize()
-	_u.mutation.SetFileSize(v)
-	return _u
+func (avu *AssetVersionUpdate) SetFileSize(i int64) *AssetVersionUpdate {
+	avu.mutation.ResetFileSize()
+	avu.mutation.SetFileSize(i)
+	return avu
 }
 
 // SetNillableFileSize sets the "file_size" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableFileSize(v *int64) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetFileSize(*v)
+func (avu *AssetVersionUpdate) SetNillableFileSize(i *int64) *AssetVersionUpdate {
+	if i != nil {
+		avu.SetFileSize(*i)
 	}
-	return _u
+	return avu
 }
 
-// AddFileSize adds value to the "file_size" field.
-func (_u *AssetVersionUpdate) AddFileSize(v int64) *AssetVersionUpdate {
-	_u.mutation.AddFileSize(v)
-	return _u
+// AddFileSize adds i to the "file_size" field.
+func (avu *AssetVersionUpdate) AddFileSize(i int64) *AssetVersionUpdate {
+	avu.mutation.AddFileSize(i)
+	return avu
 }
 
 // ClearFileSize clears the value of the "file_size" field.
-func (_u *AssetVersionUpdate) ClearFileSize() *AssetVersionUpdate {
-	_u.mutation.ClearFileSize()
-	return _u
+func (avu *AssetVersionUpdate) ClearFileSize() *AssetVersionUpdate {
+	avu.mutation.ClearFileSize()
+	return avu
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (_u *AssetVersionUpdate) SetStorageKey(v string) *AssetVersionUpdate {
-	_u.mutation.SetStorageKey(v)
-	return _u
+func (avu *AssetVersionUpdate) SetStorageKey(s string) *AssetVersionUpdate {
+	avu.mutation.SetStorageKey(s)
+	return avu
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableStorageKey(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetStorageKey(*v)
+func (avu *AssetVersionUpdate) SetNillableStorageKey(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetStorageKey(*s)
 	}
-	return _u
+	return avu
 }
 
 // SetThumbnailKey sets the "thumbnail_key" field.
-func (_u *AssetVersionUpdate) SetThumbnailKey(v string) *AssetVersionUpdate {
-	_u.mutation.SetThumbnailKey(v)
-	return _u
+func (avu *AssetVersionUpdate) SetThumbnailKey(s string) *AssetVersionUpdate {
+	avu.mutation.SetThumbnailKey(s)
+	return avu
 }
 
 // SetNillableThumbnailKey sets the "thumbnail_key" field if the given value is not nil.
-func (_u *AssetVersionUpdate) SetNillableThumbnailKey(v *string) *AssetVersionUpdate {
-	if v != nil {
-		_u.SetThumbnailKey(*v)
+func (avu *AssetVersionUpdate) SetNillableThumbnailKey(s *string) *AssetVersionUpdate {
+	if s != nil {
+		avu.SetThumbnailKey(*s)
 	}
-	return _u
+	return avu
 }
 
 // ClearThumbnailKey clears the value of the "thumbnail_key" field.
-func (_u *AssetVersionUpdate) ClearThumbnailKey() *AssetVersionUpdate {
-	_u.mutation.ClearThumbnailKey()
-	return _u
+func (avu *AssetVersionUpdate) ClearThumbnailKey() *AssetVersionUpdate {
+	avu.mutation.ClearThumbnailKey()
+	return avu
 }
 
 // SetAsset sets the "asset" edge to the Asset entity.
-func (_u *AssetVersionUpdate) SetAsset(v *Asset) *AssetVersionUpdate {
-	return _u.SetAssetID(v.ID)
+func (avu *AssetVersionUpdate) SetAsset(a *Asset) *AssetVersionUpdate {
+	return avu.SetAssetID(a.ID)
 }
 
 // Mutation returns the AssetVersionMutation object of the builder.
-func (_u *AssetVersionUpdate) Mutation() *AssetVersionMutation {
-	return _u.mutation
+func (avu *AssetVersionUpdate) Mutation() *AssetVersionMutation {
+	return avu.mutation
 }
 
 // ClearAsset clears the "asset" edge to the Asset entity.
-func (_u *AssetVersionUpdate) ClearAsset() *AssetVersionUpdate {
-	_u.mutation.ClearAsset()
-	return _u
+func (avu *AssetVersionUpdate) ClearAsset() *AssetVersionUpdate {
+	avu.mutation.ClearAsset()
+	return avu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (_u *AssetVersionUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (avu *AssetVersionUpdate) Save(ctx context.Context) (int, error) {
+	return withHooks(ctx, avu.sqlSave, avu.mutation, avu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *AssetVersionUpdate) SaveX(ctx context.Context) int {
-	affected, err := _u.Save(ctx)
+func (avu *AssetVersionUpdate) SaveX(ctx context.Context) int {
+	affected, err := avu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -316,124 +316,124 @@ func (_u *AssetVersionUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (_u *AssetVersionUpdate) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (avu *AssetVersionUpdate) Exec(ctx context.Context) error {
+	_, err := avu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *AssetVersionUpdate) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (avu *AssetVersionUpdate) ExecX(ctx context.Context) {
+	if err := avu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *AssetVersionUpdate) check() error {
-	if v, ok := _u.mutation.Version(); ok {
+func (avu *AssetVersionUpdate) check() error {
+	if v, ok := avu.mutation.Version(); ok {
 		if err := assetversion.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.version": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.StorageKey(); ok {
+	if v, ok := avu.mutation.StorageKey(); ok {
 		if err := assetversion.StorageKeyValidator(v); err != nil {
 			return &ValidationError{Name: "storage_key", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.storage_key": %w`, err)}
 		}
 	}
-	if _u.mutation.AssetCleared() && len(_u.mutation.AssetIDs()) > 0 {
+	if avu.mutation.AssetCleared() && len(avu.mutation.AssetIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "AssetVersion.asset"`)
 	}
 	return nil
 }
 
-func (_u *AssetVersionUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
+func (avu *AssetVersionUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := avu.check(); err != nil {
+		return n, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(assetversion.Table, assetversion.Columns, sqlgraph.NewFieldSpec(assetversion.FieldID, field.TypeInt64))
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := avu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.Version(); ok {
+	if value, ok := avu.mutation.Version(); ok {
 		_spec.SetField(assetversion.FieldVersion, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedVersion(); ok {
+	if value, ok := avu.mutation.AddedVersion(); ok {
 		_spec.AddField(assetversion.FieldVersion, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.EditJobID(); ok {
+	if value, ok := avu.mutation.EditJobID(); ok {
 		_spec.SetField(assetversion.FieldEditJobID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedEditJobID(); ok {
+	if value, ok := avu.mutation.AddedEditJobID(); ok {
 		_spec.AddField(assetversion.FieldEditJobID, field.TypeInt64, value)
 	}
-	if _u.mutation.EditJobIDCleared() {
+	if avu.mutation.EditJobIDCleared() {
 		_spec.ClearField(assetversion.FieldEditJobID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.Prompt(); ok {
+	if value, ok := avu.mutation.Prompt(); ok {
 		_spec.SetField(assetversion.FieldPrompt, field.TypeString, value)
 	}
-	if _u.mutation.PromptCleared() {
+	if avu.mutation.PromptCleared() {
 		_spec.ClearField(assetversion.FieldPrompt, field.TypeString)
 	}
-	if value, ok := _u.mutation.NegativePrompt(); ok {
+	if value, ok := avu.mutation.NegativePrompt(); ok {
 		_spec.SetField(assetversion.FieldNegativePrompt, field.TypeString, value)
 	}
-	if _u.mutation.NegativePromptCleared() {
+	if avu.mutation.NegativePromptCleared() {
 		_spec.ClearField(assetversion.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := _u.mutation.Model(); ok {
+	if value, ok := avu.mutation.Model(); ok {
 		_spec.SetField(assetversion.FieldModel, field.TypeString, value)
 	}
-	if _u.mutation.ModelCleared() {
+	if avu.mutation.ModelCleared() {
 		_spec.ClearField(assetversion.FieldModel, field.TypeString)
 	}
-	if value, ok := _u.mutation.Width(); ok {
+	if value, ok := avu.mutation.Width(); ok {
 		_spec.SetField(assetversion.FieldWidth, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedWidth(); ok {
+	if value, ok := avu.mutation.AddedWidth(); ok {
 		_spec.AddField(assetversion.FieldWidth, field.TypeInt, value)
 	}
-	if _u.mutation.WidthCleared() {
+	if avu.mutation.WidthCleared() {
 		_spec.ClearField(assetversion.FieldWidth, field.TypeInt)
 	}
-	if value, ok := _u.mutation.Height(); ok {
+	if value, ok := avu.mutation.Height(); ok {
 		_spec.SetField(assetversion.FieldHeight, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedHeight(); ok {
+	if value, ok := avu.mutation.AddedHeight(); ok {
 		_spec.AddField(assetversion.FieldHeight, field.TypeInt, value)
 	}
-	if _u.mutation.HeightCleared() {
+	if avu.mutation.HeightCleared() {
 		_spec.ClearField(assetversion.FieldHeight, field.TypeInt)
 	}
-	if value, ok := _u.mutation.MimeType(); ok {
+	if value, ok := avu.mutation.MimeType(); ok {
 		_spec.SetField(assetversion.FieldMimeType, field.TypeString, value)
 	}
-	if _u.mutation.MimeTypeCleared() {
+	if avu.mutation.MimeTypeCleared() {
 		_spec.ClearField(assetversion.FieldMimeType, field.TypeString)
 	}
-	if value, ok := _u.mutation.FileSize(); ok {
+	if value, ok := avu.mutation.FileSize(); ok {
 		_spec.SetField(assetversion.FieldFileSize, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedFileSize(); ok {
+	if value, ok := avu.mutation.AddedFileSize(); ok {
 		_spec.AddField(assetversion.FieldFileSize, field.TypeInt64, value)
 	}
-	if _u.mutation.FileSizeCleared() {
+	if avu.mutation.FileSizeCleared() {
 		_spec.ClearField(assetversion.FieldFileSize, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.StorageKey(); ok {
+	if value, ok := avu.mutation.StorageKey(); ok {
 		_spec.SetField(assetversion.FieldStorageKey, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.ThumbnailKey(); ok {
+	if value, ok := avu.mutation.ThumbnailKey(); ok {
 		_spec.SetField(assetversion.FieldThumbnailKey, field.TypeString, value)
 	}
-	if _u.mutation.ThumbnailKeyCleared() {
+	if avu.mutation.ThumbnailKeyCleared() {
 		_spec.ClearField(assetversion.FieldThumbnailKey, field.TypeString)
 	}
-	if _u.mutation.AssetCleared() {
+	if avu.mutation.AssetCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -446,7 +446,7 @@ func (_u *AssetVersionUpdate) sqlSave(ctx context.Context) (_node int, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.AssetIDs(); len(nodes) > 0 {
+	if nodes := avu.mutation.AssetIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -462,7 +462,7 @@ func (_u *AssetVersionUpdate) sqlSave(ctx context.Context) (_node int, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, avu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{assetversion.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -470,8 +470,8 @@ func (_u *AssetVersionUpdate) sqlSave(ctx context.Context) (_node int, err error
 		}
 		return 0, err
 	}
-	_u.mutation.done = true
-	return _node, nil
+	avu.mutation.done = true
+	return n, nil
 }
 
 // AssetVersionUpdateOne is the builder for updating a single AssetVersion entity.
@@ -483,299 +483,299 @@ type AssetVersionUpdateOne struct {
 }
 
 // SetAssetID sets the "asset_id" field.
-func (_u *AssetVersionUpdateOne) SetAssetID(v int64) *AssetVersionUpdateOne {
-	_u.mutation.SetAssetID(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetAssetID(i int64) *AssetVersionUpdateOne {
+	avuo.mutation.SetAssetID(i)
+	return avuo
 }
 
 // SetNillableAssetID sets the "asset_id" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableAssetID(v *int64) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetAssetID(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableAssetID(i *int64) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetAssetID(*i)
 	}
-	return _u
+	return avuo
 }
 
 // SetVersion sets the "version" field.
-func (_u *AssetVersionUpdateOne) SetVersion(v int) *AssetVersionUpdateOne {
-	_u.mutation.ResetVersion()
-	_u.mutation.SetVersion(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetVersion(i int) *AssetVersionUpdateOne {
+	avuo.mutation.ResetVersion()
+	avuo.mutation.SetVersion(i)
+	return avuo
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableVersion(v *int) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetVersion(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableVersion(i *int) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetVersion(*i)
 	}
-	return _u
+	return avuo
 }
 
-// AddVersion adds value to the "version" field.
-func (_u *AssetVersionUpdateOne) AddVersion(v int) *AssetVersionUpdateOne {
-	_u.mutation.AddVersion(v)
-	return _u
+// AddVersion adds i to the "version" field.
+func (avuo *AssetVersionUpdateOne) AddVersion(i int) *AssetVersionUpdateOne {
+	avuo.mutation.AddVersion(i)
+	return avuo
 }
 
 // SetEditJobID sets the "edit_job_id" field.
-func (_u *AssetVersionUpdateOne) SetEditJobID(v int64) *AssetVersionUpdateOne {
-	_u.mutation.ResetEditJobID()
-	_u.mutation.SetEditJobID(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetEditJobID(i int64) *AssetVersionUpdateOne {
+	avuo.mutation.ResetEditJobID()
+	avuo.mutation.SetEditJobID(i)
+	return avuo
 }
 
 // SetNillableEditJobID sets the "edit_job_id" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableEditJobID(v *int64) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetEditJobID(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableEditJobID(i *int64) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetEditJobID(*i)
 	}
-	return _u
+	return avuo
 }
 
-// AddEditJobID adds value to the "edit_job_id" field.
-func (_u *AssetVersionUpdateOne) AddEditJobID(v int64) *AssetVersionUpdateOne {
-	_u.mutation.AddEditJobID(v)
-	return _u
+// AddEditJobID adds i to the "edit_job_id" field.
+func (avuo *AssetVersionUpdateOne) AddEditJobID(i int64) *AssetVersionUpdateOne {
+	avuo.mutation.AddEditJobID(i)
+	return avuo
 }
 
 // ClearEditJobID clears the value of the "edit_job_id" field.
-func (_u *AssetVersionUpdateOne) ClearEditJobID() *AssetVersionUpdateOne {
-	_u.mutation.ClearEditJobID()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearEditJobID() *AssetVersionUpdateOne {
+	avuo.mutation.ClearEditJobID()
+	return avuo
 }
 
 // SetPrompt sets the "prompt" field.
-func (_u *AssetVersionUpdateOne) SetPrompt(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetPrompt(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetPrompt(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetPrompt(s)
+	return avuo
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillablePrompt(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetPrompt(*v)
+func (avuo *AssetVersionUpdateOne) SetNillablePrompt(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetPrompt(*s)
 	}
-	return _u
+	return avuo
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (_u *AssetVersionUpdateOne) ClearPrompt() *AssetVersionUpdateOne {
-	_u.mutation.ClearPrompt()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearPrompt() *AssetVersionUpdateOne {
+	avuo.mutation.ClearPrompt()
+	return avuo
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (_u *AssetVersionUpdateOne) SetNegativePrompt(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetNegativePrompt(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetNegativePrompt(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetNegativePrompt(s)
+	return avuo
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableNegativePrompt(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetNegativePrompt(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableNegativePrompt(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetNegativePrompt(*s)
 	}
-	return _u
+	return avuo
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (_u *AssetVersionUpdateOne) ClearNegativePrompt() *AssetVersionUpdateOne {
-	_u.mutation.ClearNegativePrompt()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearNegativePrompt() *AssetVersionUpdateOne {
+	avuo.mutation.ClearNegativePrompt()
+	return avuo
 }
 
 // SetModel sets the "model" field.
-func (_u *AssetVersionUpdateOne) SetModel(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetModel(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetModel(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetModel(s)
+	return avuo
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableModel(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetModel(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableModel(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetModel(*s)
 	}
-	return _u
+	return avuo
 }
 
 // ClearModel clears the value of the "model" field.
-func (_u *AssetVersionUpdateOne) ClearModel() *AssetVersionUpdateOne {
-	_u.mutation.ClearModel()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearModel() *AssetVersionUpdateOne {
+	avuo.mutation.ClearModel()
+	return avuo
 }
 
 // SetWidth sets the "width" field.
-func (_u *AssetVersionUpdateOne) SetWidth(v int) *AssetVersionUpdateOne {
-	_u.mutation.ResetWidth()
-	_u.mutation.SetWidth(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetWidth(i int) *AssetVersionUpdateOne {
+	avuo.mutation.ResetWidth()
+	avuo.mutation.SetWidth(i)
+	return avuo
 }
 
 // SetNillableWidth sets the "width" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableWidth(v *int) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetWidth(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableWidth(i *int) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetWidth(*i)
 	}
-	return _u
+	return avuo
 }
 
-// AddWidth adds value to the "width" field.
-func (_u *AssetVersionUpdateOne) AddWidth(v int) *AssetVersionUpdateOne {
-	_u.mutation.AddWidth(v)
-	return _u
+// AddWidth adds i to the "width" field.
+func (avuo *AssetVersionUpdateOne) AddWidth(i int) *AssetVersionUpdateOne {
+	avuo.mutation.AddWidth(i)
+	return avuo
 }
 
 // ClearWidth clears the value of the "width" field.
-func (_u *AssetVersionUpdateOne) ClearWidth() *AssetVersionUpdateOne {
-	_u.mutation.ClearWidth()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearWidth() *AssetVersionUpdateOne {
+	avuo.mutation.ClearWidth()
+	return avuo
 }
 
 // SetHeight sets the "height" field.
-func (_u *AssetVersionUpdateOne) SetHeight(v int) *AssetVersionUpdateOne {
-	_u.mutation.ResetHeight()
-	_u.mutation.SetHeight(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetHeight(i int) *AssetVersionUpdateOne {
+	avuo.mutation.ResetHeight()
+	avuo.mutation.SetHeight(i)
+	return avuo
 }
 
 // SetNillableHeight sets the "height" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableHeight(v *int) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetHeight(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableHeight(i *int) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetHeight(*i)
 	}
-	return _u
+	return avuo
 }
 
-// AddHeight adds value to the "height" field.
-func (_u *AssetVersionUpdateOne) AddHeight(v int) *AssetVersionUpdateOne {
-	_u.mutation.AddHeight(v)
-	return _u
+// AddHeight adds i to the "height" field.
+func (avuo *AssetVersionUpdateOne) AddHeight(i int) *AssetVersionUpdateOne {
+	avuo.mutation.AddHeight(i)
+	return avuo
 }
 
 // ClearHeight clears the value of the "height" field.
-func (_u *AssetVersionUpdateOne) ClearHeight() *AssetVersionUpdateOne {
-	_u.mutation.ClearHeight()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearHeight() *AssetVersionUpdateOne {
+	avuo.mutation.ClearHeight()
+	return avuo
 }
 
 // SetMimeType sets the "mime_type" field.
-func (_u *AssetVersionUpdateOne) SetMimeType(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetMimeType(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetMimeType(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetMimeType(s)
+	return avuo
 }
 
 // SetNillableMimeType sets the "mime_type" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableMimeType(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetMimeType(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableMimeType(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetMimeType(*s)
 	}
-	return _u
+	return avuo
 }
 
 // ClearMimeType clears the value of the "mime_type" field.
-func (_u *AssetVersionUpdateOne) ClearMimeType() *AssetVersionUpdateOne {
-	_u.mutation.ClearMimeType()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearMimeType() *AssetVersionUpdateOne {
+	avuo.mutation.ClearMimeType()
+	return avuo
 }
 
 // SetFileSize sets the "file_size" field.
-func (_u *AssetVersionUpdateOne) SetFileSize(v int64) *AssetVersionUpdateOne {
-	_u.mutation.ResetFileSize()
-	_u.mutation.SetFileSize(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetFileSize(i int64) *AssetVersionUpdateOne {
+	avuo.mutation.ResetFileSize()
+	avuo.mutation.SetFileSize(i)
+	return avuo
 }
 
 // SetNillableFileSize sets the "file_size" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableFileSize(v *int64) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetFileSize(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableFileSize(i *int64) *AssetVersionUpdateOne {
+	if i != nil {
+		avuo.SetFileSize(*i)
 	}
-	return _u
+	return avuo
 }
 
-// AddFileSize adds value to the "file_size" field.
-func (_u *AssetVersionUpdateOne) AddFileSize(v int64) *AssetVersionUpdateOne {
-	_u.mutation.AddFileSize(v)
-	return _u
+// AddFileSize adds i to the "file_size" field.
+func (avuo *AssetVersionUpdateOne) AddFileSize(i int64) *AssetVersionUpdateOne {
+	avuo.mutation.AddFileSize(i)
+	return avuo
 }
 
 // ClearFileSize clears the value of the "file_size" field.
-func (_u *AssetVersionUpdateOne) ClearFileSize() *AssetVersionUpdateOne {
-	_u.mutation.ClearFileSize()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearFileSize() *AssetVersionUpdateOne {
+	avuo.mutation.ClearFileSize()
+	return avuo
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (_u *AssetVersionUpdateOne) SetStorageKey(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetStorageKey(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetStorageKey(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetStorageKey(s)
+	return avuo
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableStorageKey(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetStorageKey(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableStorageKey(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetStorageKey(*s)
 	}
-	return _u
+	return avuo
 }
 
 // SetThumbnailKey sets the "thumbnail_key" field.
-func (_u *AssetVersionUpdateOne) SetThumbnailKey(v string) *AssetVersionUpdateOne {
-	_u.mutation.SetThumbnailKey(v)
-	return _u
+func (avuo *AssetVersionUpdateOne) SetThumbnailKey(s string) *AssetVersionUpdateOne {
+	avuo.mutation.SetThumbnailKey(s)
+	return avuo
 }
 
 // SetNillableThumbnailKey sets the "thumbnail_key" field if the given value is not nil.
-func (_u *AssetVersionUpdateOne) SetNillableThumbnailKey(v *string) *AssetVersionUpdateOne {
-	if v != nil {
-		_u.SetThumbnailKey(*v)
+func (avuo *AssetVersionUpdateOne) SetNillableThumbnailKey(s *string) *AssetVersionUpdateOne {
+	if s != nil {
+		avuo.SetThumbnailKey(*s)
 	}
-	return _u
+	return avuo
 }
 
 // ClearThumbnailKey clears the value of the "thumbnail_key" field.
-func (_u *AssetVersionUpdateOne) ClearThumbnailKey() *AssetVersionUpdateOne {
-	_u.mutation.ClearThumbnailKey()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearThumbnailKey() *AssetVersionUpdateOne {
+	avuo.mutation.ClearThumbnailKey()
+	return avuo
 }
 
 // SetAsset sets the "asset" edge to the Asset entity.
-func (_u *AssetVersionUpdateOne) SetAsset(v *Asset) *AssetVersionUpdateOne {
-	return _u.SetAssetID(v.ID)
+func (avuo *AssetVersionUpdateOne) SetAsset(a *Asset) *AssetVersionUpdateOne {
+	return avuo.SetAssetID(a.ID)
 }
 
 // Mutation returns the AssetVersionMutation object of the builder.
-func (_u *AssetVersionUpdateOne) Mutation() *AssetVersionMutation {
-	return _u.mutation
+func (avuo *AssetVersionUpdateOne) Mutation() *AssetVersionMutation {
+	return avuo.mutation
 }
 
 // ClearAsset clears the "asset" edge to the Asset entity.
-func (_u *AssetVersionUpdateOne) ClearAsset() *AssetVersionUpdateOne {
-	_u.mutation.ClearAsset()
-	return _u
+func (avuo *AssetVersionUpdateOne) ClearAsset() *AssetVersionUpdateOne {
+	avuo.mutation.ClearAsset()
+	return avuo
 }
 
 // Where appends a list predicates to the AssetVersionUpdate builder.
-func (_u *AssetVersionUpdateOne) Where(ps ...predicate.AssetVersion) *AssetVersionUpdateOne {
-	_u.mutation.Where(ps...)
-	return _u
+func (avuo *AssetVersionUpdateOne) Where(ps ...predicate.AssetVersion) *AssetVersionUpdateOne {
+	avuo.mutation.Where(ps...)
+	return avuo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (_u *AssetVersionUpdateOne) Select(field string, fields ...string) *AssetVersionUpdateOne {
-	_u.fields = append([]string{field}, fields...)
-	return _u
+func (avuo *AssetVersionUpdateOne) Select(field string, fields ...string) *AssetVersionUpdateOne {
+	avuo.fields = append([]string{field}, fields...)
+	return avuo
 }
 
 // Save executes the query and returns the updated AssetVersion entity.
-func (_u *AssetVersionUpdateOne) Save(ctx context.Context) (*AssetVersion, error) {
-	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
+func (avuo *AssetVersionUpdateOne) Save(ctx context.Context) (*AssetVersion, error) {
+	return withHooks(ctx, avuo.sqlSave, avuo.mutation, avuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_u *AssetVersionUpdateOne) SaveX(ctx context.Context) *AssetVersion {
-	node, err := _u.Save(ctx)
+func (avuo *AssetVersionUpdateOne) SaveX(ctx context.Context) *AssetVersion {
+	node, err := avuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -783,47 +783,47 @@ func (_u *AssetVersionUpdateOne) SaveX(ctx context.Context) *AssetVersion {
 }
 
 // Exec executes the query on the entity.
-func (_u *AssetVersionUpdateOne) Exec(ctx context.Context) error {
-	_, err := _u.Save(ctx)
+func (avuo *AssetVersionUpdateOne) Exec(ctx context.Context) error {
+	_, err := avuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_u *AssetVersionUpdateOne) ExecX(ctx context.Context) {
-	if err := _u.Exec(ctx); err != nil {
+func (avuo *AssetVersionUpdateOne) ExecX(ctx context.Context) {
+	if err := avuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_u *AssetVersionUpdateOne) check() error {
-	if v, ok := _u.mutation.Version(); ok {
+func (avuo *AssetVersionUpdateOne) check() error {
+	if v, ok := avuo.mutation.Version(); ok {
 		if err := assetversion.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.version": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.StorageKey(); ok {
+	if v, ok := avuo.mutation.StorageKey(); ok {
 		if err := assetversion.StorageKeyValidator(v); err != nil {
 			return &ValidationError{Name: "storage_key", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.storage_key": %w`, err)}
 		}
 	}
-	if _u.mutation.AssetCleared() && len(_u.mutation.AssetIDs()) > 0 {
+	if avuo.mutation.AssetCleared() && len(avuo.mutation.AssetIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "AssetVersion.asset"`)
 	}
 	return nil
 }
 
-func (_u *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersion, err error) {
-	if err := _u.check(); err != nil {
+func (avuo *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersion, err error) {
+	if err := avuo.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(assetversion.Table, assetversion.Columns, sqlgraph.NewFieldSpec(assetversion.FieldID, field.TypeInt64))
-	id, ok := _u.mutation.ID()
+	id, ok := avuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AssetVersion.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := _u.fields; len(fields) > 0 {
+	if fields := avuo.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, assetversion.FieldID)
 		for _, f := range fields {
@@ -835,89 +835,89 @@ func (_u *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersi
 			}
 		}
 	}
-	if ps := _u.mutation.predicates; len(ps) > 0 {
+	if ps := avuo.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := _u.mutation.Version(); ok {
+	if value, ok := avuo.mutation.Version(); ok {
 		_spec.SetField(assetversion.FieldVersion, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedVersion(); ok {
+	if value, ok := avuo.mutation.AddedVersion(); ok {
 		_spec.AddField(assetversion.FieldVersion, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.EditJobID(); ok {
+	if value, ok := avuo.mutation.EditJobID(); ok {
 		_spec.SetField(assetversion.FieldEditJobID, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedEditJobID(); ok {
+	if value, ok := avuo.mutation.AddedEditJobID(); ok {
 		_spec.AddField(assetversion.FieldEditJobID, field.TypeInt64, value)
 	}
-	if _u.mutation.EditJobIDCleared() {
+	if avuo.mutation.EditJobIDCleared() {
 		_spec.ClearField(assetversion.FieldEditJobID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.Prompt(); ok {
+	if value, ok := avuo.mutation.Prompt(); ok {
 		_spec.SetField(assetversion.FieldPrompt, field.TypeString, value)
 	}
-	if _u.mutation.PromptCleared() {
+	if avuo.mutation.PromptCleared() {
 		_spec.ClearField(assetversion.FieldPrompt, field.TypeString)
 	}
-	if value, ok := _u.mutation.NegativePrompt(); ok {
+	if value, ok := avuo.mutation.NegativePrompt(); ok {
 		_spec.SetField(assetversion.FieldNegativePrompt, field.TypeString, value)
 	}
-	if _u.mutation.NegativePromptCleared() {
+	if avuo.mutation.NegativePromptCleared() {
 		_spec.ClearField(assetversion.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := _u.mutation.Model(); ok {
+	if value, ok := avuo.mutation.Model(); ok {
 		_spec.SetField(assetversion.FieldModel, field.TypeString, value)
 	}
-	if _u.mutation.ModelCleared() {
+	if avuo.mutation.ModelCleared() {
 		_spec.ClearField(assetversion.FieldModel, field.TypeString)
 	}
-	if value, ok := _u.mutation.Width(); ok {
+	if value, ok := avuo.mutation.Width(); ok {
 		_spec.SetField(assetversion.FieldWidth, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedWidth(); ok {
+	if value, ok := avuo.mutation.AddedWidth(); ok {
 		_spec.AddField(assetversion.FieldWidth, field.TypeInt, value)
 	}
-	if _u.mutation.WidthCleared() {
+	if avuo.mutation.WidthCleared() {
 		_spec.ClearField(assetversion.FieldWidth, field.TypeInt)
 	}
-	if value, ok := _u.mutation.Height(); ok {
+	if value, ok := avuo.mutation.Height(); ok {
 		_spec.SetField(assetversion.FieldHeight, field.TypeInt, value)
 	}
-	if value, ok := _u.mutation.AddedHeight(); ok {
+	if value, ok := avuo.mutation.AddedHeight(); ok {
 		_spec.AddField(assetversion.FieldHeight, field.TypeInt, value)
 	}
-	if _u.mutation.HeightCleared() {
+	if avuo.mutation.HeightCleared() {
 		_spec.ClearField(assetversion.FieldHeight, field.TypeInt)
 	}
-	if value, ok := _u.mutation.MimeType(); ok {
+	if value, ok := avuo.mutation.MimeType(); ok {
 		_spec.SetField(assetversion.FieldMimeType, field.TypeString, value)
 	}
-	if _u.mutation.MimeTypeCleared() {
+	if avuo.mutation.MimeTypeCleared() {
 		_spec.ClearField(assetversion.FieldMimeType, field.TypeString)
 	}
-	if value, ok := _u.mutation.FileSize(); ok {
+	if value, ok := avuo.mutation.FileSize(); ok {
 		_spec.SetField(assetversion.FieldFileSize, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedFileSize(); ok {
+	if value, ok := avuo.mutation.AddedFileSize(); ok {
 		_spec.AddField(assetversion.FieldFileSize, field.TypeInt64, value)
 	}
-	if _u.mutation.FileSizeCleared() {
+	if avuo.mutation.FileSizeCleared() {
 		_spec.ClearField(assetversion.FieldFileSize, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.StorageKey(); ok {
+	if value, ok := avuo.mutation.StorageKey(); ok {
 		_spec.SetField(assetversion.FieldStorageKey, field.TypeString, value)
 	}
-	if value, ok := _u.mutation.ThumbnailKey(); ok {
+	if value, ok := avuo.mutation.ThumbnailKey(); ok {
 		_spec.SetField(assetversion.FieldThumbnailKey, field.TypeString, value)
 	}
-	if _u.mutation.ThumbnailKeyCleared() {
+	if avuo.mutation.ThumbnailKeyCleared() {
 		_spec.ClearField(assetversion.FieldThumbnailKey, field.TypeString)
 	}
-	if _u.mutation.AssetCleared() {
+	if avuo.mutation.AssetCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -930,7 +930,7 @@ func (_u *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersi
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.AssetIDs(); len(nodes) > 0 {
+	if nodes := avuo.mutation.AssetIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -946,10 +946,10 @@ func (_u *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersi
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &AssetVersion{config: _u.config}
+	_node = &AssetVersion{config: avuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, avuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{assetversion.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -957,6 +957,6 @@ func (_u *AssetVersionUpdateOne) sqlSave(ctx context.Context) (_node *AssetVersi
 		}
 		return nil, err
 	}
-	_u.mutation.done = true
+	avuo.mutation.done = true
 	return _node, nil
 }

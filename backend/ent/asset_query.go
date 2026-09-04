@@ -44,44 +44,44 @@ type AssetQuery struct {
 }
 
 // Where adds a new predicate for the AssetQuery builder.
-func (_q *AssetQuery) Where(ps ...predicate.Asset) *AssetQuery {
-	_q.predicates = append(_q.predicates, ps...)
-	return _q
+func (aq *AssetQuery) Where(ps ...predicate.Asset) *AssetQuery {
+	aq.predicates = append(aq.predicates, ps...)
+	return aq
 }
 
 // Limit the number of records to be returned by this query.
-func (_q *AssetQuery) Limit(limit int) *AssetQuery {
-	_q.ctx.Limit = &limit
-	return _q
+func (aq *AssetQuery) Limit(limit int) *AssetQuery {
+	aq.ctx.Limit = &limit
+	return aq
 }
 
 // Offset to start from.
-func (_q *AssetQuery) Offset(offset int) *AssetQuery {
-	_q.ctx.Offset = &offset
-	return _q
+func (aq *AssetQuery) Offset(offset int) *AssetQuery {
+	aq.ctx.Offset = &offset
+	return aq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (_q *AssetQuery) Unique(unique bool) *AssetQuery {
-	_q.ctx.Unique = &unique
-	return _q
+func (aq *AssetQuery) Unique(unique bool) *AssetQuery {
+	aq.ctx.Unique = &unique
+	return aq
 }
 
 // Order specifies how the records should be ordered.
-func (_q *AssetQuery) Order(o ...asset.OrderOption) *AssetQuery {
-	_q.order = append(_q.order, o...)
-	return _q
+func (aq *AssetQuery) Order(o ...asset.OrderOption) *AssetQuery {
+	aq.order = append(aq.order, o...)
+	return aq
 }
 
 // QueryUser chains the current query on the "user" edge.
-func (_q *AssetQuery) QueryUser() *UserQuery {
-	query := (&UserClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryUser() *UserQuery {
+	query := (&UserClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -90,20 +90,20 @@ func (_q *AssetQuery) QueryUser() *UserQuery {
 			sqlgraph.To(user.Table, user.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, asset.UserTable, asset.UserColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryProject chains the current query on the "project" edge.
-func (_q *AssetQuery) QueryProject() *ProjectQuery {
-	query := (&ProjectClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryProject() *ProjectQuery {
+	query := (&ProjectClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -112,20 +112,20 @@ func (_q *AssetQuery) QueryProject() *ProjectQuery {
 			sqlgraph.To(project.Table, project.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, asset.ProjectTable, asset.ProjectColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryGenerationJob chains the current query on the "generation_job" edge.
-func (_q *AssetQuery) QueryGenerationJob() *GenerationJobQuery {
-	query := (&GenerationJobClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryGenerationJob() *GenerationJobQuery {
+	query := (&GenerationJobClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -134,20 +134,20 @@ func (_q *AssetQuery) QueryGenerationJob() *GenerationJobQuery {
 			sqlgraph.To(generationjob.Table, generationjob.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, asset.GenerationJobTable, asset.GenerationJobColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryVersions chains the current query on the "versions" edge.
-func (_q *AssetQuery) QueryVersions() *AssetVersionQuery {
-	query := (&AssetVersionClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryVersions() *AssetVersionQuery {
+	query := (&AssetVersionClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -156,20 +156,20 @@ func (_q *AssetQuery) QueryVersions() *AssetVersionQuery {
 			sqlgraph.To(assetversion.Table, assetversion.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, asset.VersionsTable, asset.VersionsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryTags chains the current query on the "tags" edge.
-func (_q *AssetQuery) QueryTags() *TagQuery {
-	query := (&TagClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryTags() *TagQuery {
+	query := (&TagClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -178,20 +178,20 @@ func (_q *AssetQuery) QueryTags() *TagQuery {
 			sqlgraph.To(tag.Table, tag.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, false, asset.TagsTable, asset.TagsPrimaryKey...),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryAssetTags chains the current query on the "asset_tags" edge.
-func (_q *AssetQuery) QueryAssetTags() *AssetTagQuery {
-	query := (&AssetTagClient{config: _q.config}).Query()
+func (aq *AssetQuery) QueryAssetTags() *AssetTagQuery {
+	query := (&AssetTagClient{config: aq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
+		if err := aq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := _q.sqlQuery(ctx)
+		selector := aq.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -200,7 +200,7 @@ func (_q *AssetQuery) QueryAssetTags() *AssetTagQuery {
 			sqlgraph.To(assettag.Table, assettag.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, true, asset.AssetTagsTable, asset.AssetTagsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -208,8 +208,8 @@ func (_q *AssetQuery) QueryAssetTags() *AssetTagQuery {
 
 // First returns the first Asset entity from the query.
 // Returns a *NotFoundError when no Asset was found.
-func (_q *AssetQuery) First(ctx context.Context) (*Asset, error) {
-	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
+func (aq *AssetQuery) First(ctx context.Context) (*Asset, error) {
+	nodes, err := aq.Limit(1).All(setContextOp(ctx, aq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -220,8 +220,8 @@ func (_q *AssetQuery) First(ctx context.Context) (*Asset, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (_q *AssetQuery) FirstX(ctx context.Context) *Asset {
-	node, err := _q.First(ctx)
+func (aq *AssetQuery) FirstX(ctx context.Context) *Asset {
+	node, err := aq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -230,9 +230,9 @@ func (_q *AssetQuery) FirstX(ctx context.Context) *Asset {
 
 // FirstID returns the first Asset ID from the query.
 // Returns a *NotFoundError when no Asset ID was found.
-func (_q *AssetQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (aq *AssetQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = aq.Limit(1).IDs(setContextOp(ctx, aq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -243,8 +243,8 @@ func (_q *AssetQuery) FirstID(ctx context.Context) (id int64, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *AssetQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := _q.FirstID(ctx)
+func (aq *AssetQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := aq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -254,8 +254,8 @@ func (_q *AssetQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single Asset entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one Asset entity is found.
 // Returns a *NotFoundError when no Asset entities are found.
-func (_q *AssetQuery) Only(ctx context.Context) (*Asset, error) {
-	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
+func (aq *AssetQuery) Only(ctx context.Context) (*Asset, error) {
+	nodes, err := aq.Limit(2).All(setContextOp(ctx, aq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -270,8 +270,8 @@ func (_q *AssetQuery) Only(ctx context.Context) (*Asset, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (_q *AssetQuery) OnlyX(ctx context.Context) *Asset {
-	node, err := _q.Only(ctx)
+func (aq *AssetQuery) OnlyX(ctx context.Context) *Asset {
+	node, err := aq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -281,9 +281,9 @@ func (_q *AssetQuery) OnlyX(ctx context.Context) *Asset {
 // OnlyID is like Only, but returns the only Asset ID in the query.
 // Returns a *NotSingularError when more than one Asset ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *AssetQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (aq *AssetQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = aq.Limit(2).IDs(setContextOp(ctx, aq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -298,8 +298,8 @@ func (_q *AssetQuery) OnlyID(ctx context.Context) (id int64, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *AssetQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := _q.OnlyID(ctx)
+func (aq *AssetQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := aq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -307,18 +307,18 @@ func (_q *AssetQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of Assets.
-func (_q *AssetQuery) All(ctx context.Context) ([]*Asset, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
-	if err := _q.prepareQuery(ctx); err != nil {
+func (aq *AssetQuery) All(ctx context.Context) ([]*Asset, error) {
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryAll)
+	if err := aq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*Asset, *AssetQuery]()
-	return withInterceptors[[]*Asset](ctx, _q, qr, _q.inters)
+	return withInterceptors[[]*Asset](ctx, aq, qr, aq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (_q *AssetQuery) AllX(ctx context.Context) []*Asset {
-	nodes, err := _q.All(ctx)
+func (aq *AssetQuery) AllX(ctx context.Context) []*Asset {
+	nodes, err := aq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -326,20 +326,20 @@ func (_q *AssetQuery) AllX(ctx context.Context) []*Asset {
 }
 
 // IDs executes the query and returns a list of Asset IDs.
-func (_q *AssetQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if _q.ctx.Unique == nil && _q.path != nil {
-		_q.Unique(true)
+func (aq *AssetQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if aq.ctx.Unique == nil && aq.path != nil {
+		aq.Unique(true)
 	}
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
-	if err = _q.Select(asset.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryIDs)
+	if err = aq.Select(asset.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *AssetQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := _q.IDs(ctx)
+func (aq *AssetQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := aq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -347,17 +347,17 @@ func (_q *AssetQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (_q *AssetQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
-	if err := _q.prepareQuery(ctx); err != nil {
+func (aq *AssetQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryCount)
+	if err := aq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, _q, querierCount[*AssetQuery](), _q.inters)
+	return withInterceptors[int](ctx, aq, querierCount[*AssetQuery](), aq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (_q *AssetQuery) CountX(ctx context.Context) int {
-	count, err := _q.Count(ctx)
+func (aq *AssetQuery) CountX(ctx context.Context) int {
+	count, err := aq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -365,9 +365,9 @@ func (_q *AssetQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (_q *AssetQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
-	switch _, err := _q.FirstID(ctx); {
+func (aq *AssetQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryExist)
+	switch _, err := aq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -378,8 +378,8 @@ func (_q *AssetQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (_q *AssetQuery) ExistX(ctx context.Context) bool {
-	exist, err := _q.Exist(ctx)
+func (aq *AssetQuery) ExistX(ctx context.Context) bool {
+	exist, err := aq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -388,92 +388,92 @@ func (_q *AssetQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the AssetQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (_q *AssetQuery) Clone() *AssetQuery {
-	if _q == nil {
+func (aq *AssetQuery) Clone() *AssetQuery {
+	if aq == nil {
 		return nil
 	}
 	return &AssetQuery{
-		config:            _q.config,
-		ctx:               _q.ctx.Clone(),
-		order:             append([]asset.OrderOption{}, _q.order...),
-		inters:            append([]Interceptor{}, _q.inters...),
-		predicates:        append([]predicate.Asset{}, _q.predicates...),
-		withUser:          _q.withUser.Clone(),
-		withProject:       _q.withProject.Clone(),
-		withGenerationJob: _q.withGenerationJob.Clone(),
-		withVersions:      _q.withVersions.Clone(),
-		withTags:          _q.withTags.Clone(),
-		withAssetTags:     _q.withAssetTags.Clone(),
+		config:            aq.config,
+		ctx:               aq.ctx.Clone(),
+		order:             append([]asset.OrderOption{}, aq.order...),
+		inters:            append([]Interceptor{}, aq.inters...),
+		predicates:        append([]predicate.Asset{}, aq.predicates...),
+		withUser:          aq.withUser.Clone(),
+		withProject:       aq.withProject.Clone(),
+		withGenerationJob: aq.withGenerationJob.Clone(),
+		withVersions:      aq.withVersions.Clone(),
+		withTags:          aq.withTags.Clone(),
+		withAssetTags:     aq.withAssetTags.Clone(),
 		// clone intermediate query.
-		sql:  _q.sql.Clone(),
-		path: _q.path,
+		sql:  aq.sql.Clone(),
+		path: aq.path,
 	}
 }
 
 // WithUser tells the query-builder to eager-load the nodes that are connected to
 // the "user" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithUser(opts ...func(*UserQuery)) *AssetQuery {
-	query := (&UserClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithUser(opts ...func(*UserQuery)) *AssetQuery {
+	query := (&UserClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withUser = query
-	return _q
+	aq.withUser = query
+	return aq
 }
 
 // WithProject tells the query-builder to eager-load the nodes that are connected to
 // the "project" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithProject(opts ...func(*ProjectQuery)) *AssetQuery {
-	query := (&ProjectClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithProject(opts ...func(*ProjectQuery)) *AssetQuery {
+	query := (&ProjectClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withProject = query
-	return _q
+	aq.withProject = query
+	return aq
 }
 
 // WithGenerationJob tells the query-builder to eager-load the nodes that are connected to
 // the "generation_job" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithGenerationJob(opts ...func(*GenerationJobQuery)) *AssetQuery {
-	query := (&GenerationJobClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithGenerationJob(opts ...func(*GenerationJobQuery)) *AssetQuery {
+	query := (&GenerationJobClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withGenerationJob = query
-	return _q
+	aq.withGenerationJob = query
+	return aq
 }
 
 // WithVersions tells the query-builder to eager-load the nodes that are connected to
 // the "versions" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithVersions(opts ...func(*AssetVersionQuery)) *AssetQuery {
-	query := (&AssetVersionClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithVersions(opts ...func(*AssetVersionQuery)) *AssetQuery {
+	query := (&AssetVersionClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withVersions = query
-	return _q
+	aq.withVersions = query
+	return aq
 }
 
 // WithTags tells the query-builder to eager-load the nodes that are connected to
 // the "tags" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithTags(opts ...func(*TagQuery)) *AssetQuery {
-	query := (&TagClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithTags(opts ...func(*TagQuery)) *AssetQuery {
+	query := (&TagClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withTags = query
-	return _q
+	aq.withTags = query
+	return aq
 }
 
 // WithAssetTags tells the query-builder to eager-load the nodes that are connected to
 // the "asset_tags" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *AssetQuery) WithAssetTags(opts ...func(*AssetTagQuery)) *AssetQuery {
-	query := (&AssetTagClient{config: _q.config}).Query()
+func (aq *AssetQuery) WithAssetTags(opts ...func(*AssetTagQuery)) *AssetQuery {
+	query := (&AssetTagClient{config: aq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	_q.withAssetTags = query
-	return _q
+	aq.withAssetTags = query
+	return aq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -490,10 +490,10 @@ func (_q *AssetQuery) WithAssetTags(opts ...func(*AssetTagQuery)) *AssetQuery {
 //		GroupBy(asset.FieldUserID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (_q *AssetQuery) GroupBy(field string, fields ...string) *AssetGroupBy {
-	_q.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &AssetGroupBy{build: _q}
-	grbuild.flds = &_q.ctx.Fields
+func (aq *AssetQuery) GroupBy(field string, fields ...string) *AssetGroupBy {
+	aq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &AssetGroupBy{build: aq}
+	grbuild.flds = &aq.ctx.Fields
 	grbuild.label = asset.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -511,57 +511,57 @@ func (_q *AssetQuery) GroupBy(field string, fields ...string) *AssetGroupBy {
 //	client.Asset.Query().
 //		Select(asset.FieldUserID).
 //		Scan(ctx, &v)
-func (_q *AssetQuery) Select(fields ...string) *AssetSelect {
-	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
-	sbuild := &AssetSelect{AssetQuery: _q}
+func (aq *AssetQuery) Select(fields ...string) *AssetSelect {
+	aq.ctx.Fields = append(aq.ctx.Fields, fields...)
+	sbuild := &AssetSelect{AssetQuery: aq}
 	sbuild.label = asset.Label
-	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &aq.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a AssetSelect configured with the given aggregations.
-func (_q *AssetQuery) Aggregate(fns ...AggregateFunc) *AssetSelect {
-	return _q.Select().Aggregate(fns...)
+func (aq *AssetQuery) Aggregate(fns ...AggregateFunc) *AssetSelect {
+	return aq.Select().Aggregate(fns...)
 }
 
-func (_q *AssetQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range _q.inters {
+func (aq *AssetQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range aq.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, _q); err != nil {
+			if err := trv.Traverse(ctx, aq); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range _q.ctx.Fields {
+	for _, f := range aq.ctx.Fields {
 		if !asset.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if _q.path != nil {
-		prev, err := _q.path(ctx)
+	if aq.path != nil {
+		prev, err := aq.path(ctx)
 		if err != nil {
 			return err
 		}
-		_q.sql = prev
+		aq.sql = prev
 	}
 	return nil
 }
 
-func (_q *AssetQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Asset, error) {
+func (aq *AssetQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Asset, error) {
 	var (
 		nodes       = []*Asset{}
-		withFKs     = _q.withFKs
-		_spec       = _q.querySpec()
+		withFKs     = aq.withFKs
+		_spec       = aq.querySpec()
 		loadedTypes = [6]bool{
-			_q.withUser != nil,
-			_q.withProject != nil,
-			_q.withGenerationJob != nil,
-			_q.withVersions != nil,
-			_q.withTags != nil,
-			_q.withAssetTags != nil,
+			aq.withUser != nil,
+			aq.withProject != nil,
+			aq.withGenerationJob != nil,
+			aq.withVersions != nil,
+			aq.withTags != nil,
+			aq.withAssetTags != nil,
 		}
 	)
 	if withFKs {
@@ -571,57 +571,57 @@ func (_q *AssetQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Asset,
 		return (*Asset).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &Asset{config: _q.config}
+		node := &Asset{config: aq.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(_q.modifiers) > 0 {
-		_spec.Modifiers = _q.modifiers
+	if len(aq.modifiers) > 0 {
+		_spec.Modifiers = aq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, aq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := _q.withUser; query != nil {
-		if err := _q.loadUser(ctx, query, nodes, nil,
+	if query := aq.withUser; query != nil {
+		if err := aq.loadUser(ctx, query, nodes, nil,
 			func(n *Asset, e *User) { n.Edges.User = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := _q.withProject; query != nil {
-		if err := _q.loadProject(ctx, query, nodes, nil,
+	if query := aq.withProject; query != nil {
+		if err := aq.loadProject(ctx, query, nodes, nil,
 			func(n *Asset, e *Project) { n.Edges.Project = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := _q.withGenerationJob; query != nil {
-		if err := _q.loadGenerationJob(ctx, query, nodes, nil,
+	if query := aq.withGenerationJob; query != nil {
+		if err := aq.loadGenerationJob(ctx, query, nodes, nil,
 			func(n *Asset, e *GenerationJob) { n.Edges.GenerationJob = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := _q.withVersions; query != nil {
-		if err := _q.loadVersions(ctx, query, nodes,
+	if query := aq.withVersions; query != nil {
+		if err := aq.loadVersions(ctx, query, nodes,
 			func(n *Asset) { n.Edges.Versions = []*AssetVersion{} },
 			func(n *Asset, e *AssetVersion) { n.Edges.Versions = append(n.Edges.Versions, e) }); err != nil {
 			return nil, err
 		}
 	}
-	if query := _q.withTags; query != nil {
-		if err := _q.loadTags(ctx, query, nodes,
+	if query := aq.withTags; query != nil {
+		if err := aq.loadTags(ctx, query, nodes,
 			func(n *Asset) { n.Edges.Tags = []*Tag{} },
 			func(n *Asset, e *Tag) { n.Edges.Tags = append(n.Edges.Tags, e) }); err != nil {
 			return nil, err
 		}
 	}
-	if query := _q.withAssetTags; query != nil {
-		if err := _q.loadAssetTags(ctx, query, nodes,
+	if query := aq.withAssetTags; query != nil {
+		if err := aq.loadAssetTags(ctx, query, nodes,
 			func(n *Asset) { n.Edges.AssetTags = []*AssetTag{} },
 			func(n *Asset, e *AssetTag) { n.Edges.AssetTags = append(n.Edges.AssetTags, e) }); err != nil {
 			return nil, err
@@ -630,7 +630,7 @@ func (_q *AssetQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Asset,
 	return nodes, nil
 }
 
-func (_q *AssetQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *User)) error {
+func (aq *AssetQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *User)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*Asset)
 	for i := range nodes {
@@ -659,7 +659,7 @@ func (_q *AssetQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*A
 	}
 	return nil
 }
-func (_q *AssetQuery) loadProject(ctx context.Context, query *ProjectQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *Project)) error {
+func (aq *AssetQuery) loadProject(ctx context.Context, query *ProjectQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *Project)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*Asset)
 	for i := range nodes {
@@ -688,7 +688,7 @@ func (_q *AssetQuery) loadProject(ctx context.Context, query *ProjectQuery, node
 	}
 	return nil
 }
-func (_q *AssetQuery) loadGenerationJob(ctx context.Context, query *GenerationJobQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *GenerationJob)) error {
+func (aq *AssetQuery) loadGenerationJob(ctx context.Context, query *GenerationJobQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *GenerationJob)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*Asset)
 	for i := range nodes {
@@ -717,7 +717,7 @@ func (_q *AssetQuery) loadGenerationJob(ctx context.Context, query *GenerationJo
 	}
 	return nil
 }
-func (_q *AssetQuery) loadVersions(ctx context.Context, query *AssetVersionQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *AssetVersion)) error {
+func (aq *AssetQuery) loadVersions(ctx context.Context, query *AssetVersionQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *AssetVersion)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[int64]*Asset)
 	for i := range nodes {
@@ -747,7 +747,7 @@ func (_q *AssetQuery) loadVersions(ctx context.Context, query *AssetVersionQuery
 	}
 	return nil
 }
-func (_q *AssetQuery) loadTags(ctx context.Context, query *TagQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *Tag)) error {
+func (aq *AssetQuery) loadTags(ctx context.Context, query *TagQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *Tag)) error {
 	edgeIDs := make([]driver.Value, len(nodes))
 	byID := make(map[int64]*Asset)
 	nids := make(map[int64]map[*Asset]struct{})
@@ -808,7 +808,7 @@ func (_q *AssetQuery) loadTags(ctx context.Context, query *TagQuery, nodes []*As
 	}
 	return nil
 }
-func (_q *AssetQuery) loadAssetTags(ctx context.Context, query *AssetTagQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *AssetTag)) error {
+func (aq *AssetQuery) loadAssetTags(ctx context.Context, query *AssetTagQuery, nodes []*Asset, init func(*Asset), assign func(*Asset, *AssetTag)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[int64]*Asset)
 	for i := range nodes {
@@ -839,27 +839,27 @@ func (_q *AssetQuery) loadAssetTags(ctx context.Context, query *AssetTagQuery, n
 	return nil
 }
 
-func (_q *AssetQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := _q.querySpec()
-	if len(_q.modifiers) > 0 {
-		_spec.Modifiers = _q.modifiers
+func (aq *AssetQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := aq.querySpec()
+	if len(aq.modifiers) > 0 {
+		_spec.Modifiers = aq.modifiers
 	}
-	_spec.Node.Columns = _q.ctx.Fields
-	if len(_q.ctx.Fields) > 0 {
-		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
+	_spec.Node.Columns = aq.ctx.Fields
+	if len(aq.ctx.Fields) > 0 {
+		_spec.Unique = aq.ctx.Unique != nil && *aq.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
+	return sqlgraph.CountNodes(ctx, aq.driver, _spec)
 }
 
-func (_q *AssetQuery) querySpec() *sqlgraph.QuerySpec {
+func (aq *AssetQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(asset.Table, asset.Columns, sqlgraph.NewFieldSpec(asset.FieldID, field.TypeInt64))
-	_spec.From = _q.sql
-	if unique := _q.ctx.Unique; unique != nil {
+	_spec.From = aq.sql
+	if unique := aq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if _q.path != nil {
+	} else if aq.path != nil {
 		_spec.Unique = true
 	}
-	if fields := _q.ctx.Fields; len(fields) > 0 {
+	if fields := aq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, asset.FieldID)
 		for i := range fields {
@@ -867,30 +867,30 @@ func (_q *AssetQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if _q.withUser != nil {
+		if aq.withUser != nil {
 			_spec.Node.AddColumnOnce(asset.FieldUserID)
 		}
-		if _q.withProject != nil {
+		if aq.withProject != nil {
 			_spec.Node.AddColumnOnce(asset.FieldProjectID)
 		}
-		if _q.withGenerationJob != nil {
+		if aq.withGenerationJob != nil {
 			_spec.Node.AddColumnOnce(asset.FieldGenerationJobID)
 		}
 	}
-	if ps := _q.predicates; len(ps) > 0 {
+	if ps := aq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := _q.ctx.Limit; limit != nil {
+	if limit := aq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := _q.ctx.Offset; offset != nil {
+	if offset := aq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := _q.order; len(ps) > 0 {
+	if ps := aq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -900,36 +900,36 @@ func (_q *AssetQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (_q *AssetQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(_q.driver.Dialect())
+func (aq *AssetQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(aq.driver.Dialect())
 	t1 := builder.Table(asset.Table)
-	columns := _q.ctx.Fields
+	columns := aq.ctx.Fields
 	if len(columns) == 0 {
 		columns = asset.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if _q.sql != nil {
-		selector = _q.sql
+	if aq.sql != nil {
+		selector = aq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if _q.ctx.Unique != nil && *_q.ctx.Unique {
+	if aq.ctx.Unique != nil && *aq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range _q.modifiers {
+	for _, m := range aq.modifiers {
 		m(selector)
 	}
-	for _, p := range _q.predicates {
+	for _, p := range aq.predicates {
 		p(selector)
 	}
-	for _, p := range _q.order {
+	for _, p := range aq.order {
 		p(selector)
 	}
-	if offset := _q.ctx.Offset; offset != nil {
+	if offset := aq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := _q.ctx.Limit; limit != nil {
+	if limit := aq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -938,27 +938,27 @@ func (_q *AssetQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (_q *AssetQuery) ForUpdate(opts ...sql.LockOption) *AssetQuery {
-	if _q.driver.Dialect() == dialect.Postgres {
-		_q.Unique(false)
+func (aq *AssetQuery) ForUpdate(opts ...sql.LockOption) *AssetQuery {
+	if aq.driver.Dialect() == dialect.Postgres {
+		aq.Unique(false)
 	}
-	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
+	aq.modifiers = append(aq.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return _q
+	return aq
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (_q *AssetQuery) ForShare(opts ...sql.LockOption) *AssetQuery {
-	if _q.driver.Dialect() == dialect.Postgres {
-		_q.Unique(false)
+func (aq *AssetQuery) ForShare(opts ...sql.LockOption) *AssetQuery {
+	if aq.driver.Dialect() == dialect.Postgres {
+		aq.Unique(false)
 	}
-	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
+	aq.modifiers = append(aq.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return _q
+	return aq
 }
 
 // AssetGroupBy is the group-by builder for Asset entities.
@@ -968,41 +968,41 @@ type AssetGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (_g *AssetGroupBy) Aggregate(fns ...AggregateFunc) *AssetGroupBy {
-	_g.fns = append(_g.fns, fns...)
-	return _g
+func (agb *AssetGroupBy) Aggregate(fns ...AggregateFunc) *AssetGroupBy {
+	agb.fns = append(agb.fns, fns...)
+	return agb
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_g *AssetGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
-	if err := _g.build.prepareQuery(ctx); err != nil {
+func (agb *AssetGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, agb.build.ctx, ent.OpQueryGroupBy)
+	if err := agb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetQuery, *AssetGroupBy](ctx, _g.build, _g, _g.build.inters, v)
+	return scanWithInterceptors[*AssetQuery, *AssetGroupBy](ctx, agb.build, agb, agb.build.inters, v)
 }
 
-func (_g *AssetGroupBy) sqlScan(ctx context.Context, root *AssetQuery, v any) error {
+func (agb *AssetGroupBy) sqlScan(ctx context.Context, root *AssetQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(_g.fns))
-	for _, fn := range _g.fns {
+	aggregation := make([]string, 0, len(agb.fns))
+	for _, fn := range agb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
-		for _, f := range *_g.flds {
+		columns := make([]string, 0, len(*agb.flds)+len(agb.fns))
+		for _, f := range *agb.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*_g.flds...)...)
+	selector.GroupBy(selector.Columns(*agb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := agb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -1016,27 +1016,27 @@ type AssetSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (_s *AssetSelect) Aggregate(fns ...AggregateFunc) *AssetSelect {
-	_s.fns = append(_s.fns, fns...)
-	return _s
+func (as *AssetSelect) Aggregate(fns ...AggregateFunc) *AssetSelect {
+	as.fns = append(as.fns, fns...)
+	return as
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_s *AssetSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
-	if err := _s.prepareQuery(ctx); err != nil {
+func (as *AssetSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, as.ctx, ent.OpQuerySelect)
+	if err := as.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetQuery, *AssetSelect](ctx, _s.AssetQuery, _s, _s.inters, v)
+	return scanWithInterceptors[*AssetQuery, *AssetSelect](ctx, as.AssetQuery, as, as.inters, v)
 }
 
-func (_s *AssetSelect) sqlScan(ctx context.Context, root *AssetQuery, v any) error {
+func (as *AssetSelect) sqlScan(ctx context.Context, root *AssetQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(_s.fns))
-	for _, fn := range _s.fns {
+	aggregation := make([]string, 0, len(as.fns))
+	for _, fn := range as.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*_s.selector.flds); {
+	switch n := len(*as.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -1044,7 +1044,7 @@ func (_s *AssetSelect) sqlScan(ctx context.Context, root *AssetQuery, v any) err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
+	if err := as.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

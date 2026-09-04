@@ -20,56 +20,56 @@ type FavoriteDelete struct {
 }
 
 // Where appends a list predicates to the FavoriteDelete builder.
-func (_d *FavoriteDelete) Where(ps ...predicate.Favorite) *FavoriteDelete {
-	_d.mutation.Where(ps...)
-	return _d
+func (fd *FavoriteDelete) Where(ps ...predicate.Favorite) *FavoriteDelete {
+	fd.mutation.Where(ps...)
+	return fd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (_d *FavoriteDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
+func (fd *FavoriteDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, fd.sqlExec, fd.mutation, fd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *FavoriteDelete) ExecX(ctx context.Context) int {
-	n, err := _d.Exec(ctx)
+func (fd *FavoriteDelete) ExecX(ctx context.Context) int {
+	n, err := fd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (_d *FavoriteDelete) sqlExec(ctx context.Context) (int, error) {
+func (fd *FavoriteDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(favorite.Table, sqlgraph.NewFieldSpec(favorite.FieldID, field.TypeInt64))
-	if ps := _d.mutation.predicates; len(ps) > 0 {
+	if ps := fd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, fd.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	_d.mutation.done = true
+	fd.mutation.done = true
 	return affected, err
 }
 
 // FavoriteDeleteOne is the builder for deleting a single Favorite entity.
 type FavoriteDeleteOne struct {
-	_d *FavoriteDelete
+	fd *FavoriteDelete
 }
 
 // Where appends a list predicates to the FavoriteDelete builder.
-func (_d *FavoriteDeleteOne) Where(ps ...predicate.Favorite) *FavoriteDeleteOne {
-	_d._d.mutation.Where(ps...)
-	return _d
+func (fdo *FavoriteDeleteOne) Where(ps ...predicate.Favorite) *FavoriteDeleteOne {
+	fdo.fd.mutation.Where(ps...)
+	return fdo
 }
 
 // Exec executes the deletion query.
-func (_d *FavoriteDeleteOne) Exec(ctx context.Context) error {
-	n, err := _d._d.Exec(ctx)
+func (fdo *FavoriteDeleteOne) Exec(ctx context.Context) error {
+	n, err := fdo.fd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (_d *FavoriteDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *FavoriteDeleteOne) ExecX(ctx context.Context) {
-	if err := _d.Exec(ctx); err != nil {
+func (fdo *FavoriteDeleteOne) ExecX(ctx context.Context) {
+	if err := fdo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

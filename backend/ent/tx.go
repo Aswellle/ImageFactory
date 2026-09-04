@@ -16,6 +16,8 @@ type Tx struct {
 	config
 	// APIKey is the client for interacting with the APIKey builders.
 	APIKey *APIKeyClient
+	// Account is the client for interacting with the Account builders.
+	Account *AccountClient
 	// Asset is the client for interacting with the Asset builders.
 	Asset *AssetClient
 	// AssetTag is the client for interacting with the AssetTag builders.
@@ -172,6 +174,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.APIKey = NewAPIKeyClient(tx.config)
+	tx.Account = NewAccountClient(tx.config)
 	tx.Asset = NewAssetClient(tx.config)
 	tx.AssetTag = NewAssetTagClient(tx.config)
 	tx.AssetVersion = NewAssetVersionClient(tx.config)

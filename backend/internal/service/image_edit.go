@@ -90,20 +90,19 @@ type ImageEditData struct {
 
 // ImageEditService orchestrates image edits: parse + validate the request,
 // store the source images, run the edit through the generation pipeline, and
-// persist the result as a new AssetVersion linked to the source asset.
 type ImageEditService struct {
-	db    *ent.Client
-	batch *batchimage.PublicService
-	store storage.Storage
-	queue job.Queue
+	db               *ent.Client
+	batch            *batchimage.PublicService
+	store            storage.Storage
+	queue            job.Queue
+	accountResolver  AccountResolverInterface
 }
 
 // NewImageEditService builds an ImageEditService.
-func NewImageEditService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue) *ImageEditService {
-	return &ImageEditService{db: db, batch: batch, store: store, queue: queue}
+func NewImageEditService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, accountResolver AccountResolverInterface) *ImageEditService {
+	return &ImageEditService{db: db, batch: batch, store: store, queue: queue, accountResolver: accountResolver}
 }
 
-// ParseImageEditRequest parses and validates an edit request from either a JSON
 // body (images as base64 data URLs / http(s) URLs) or a multipart/form-data
 // upload. It returns a fully decoded, validated ImageEditRequest.
 func (s *ImageEditService) ParseImageEditRequest(c *gin.Context) (*ImageEditRequest, error) {
@@ -468,10 +467,15 @@ func (s *ImageEditService) submitEditJob(ctx context.Context, userID int64, sour
 		return editJob, nil
 	}
 
-	account := &batchimage.Account{
-		ID:          1,
-		Platform:    "gemini",
-		Credentials: map[string]string{"api_key": ""},
+	// Resolve a real account from the account pool.
+	account, err := s.accountResolver.ResolveAccount(ctx, "gemini")
+	if err != nil {
+		_, _ = s.db.GenerationJob.Update().Where(generationjob.ExternalID(externalID)).
+			SetStatus(generationjob.StatusFailed).
+			SetErrorCode("NO_ACCOUNT").
+			SetErrorMessage("no available AI account: "+err.Error()).
+			Save(ctx)
+		return editJob, errors.Wrap(errors.ErrorCodeImageEdit, "failed to resolve account", err)
 	}
 
 	result, err := s.batch.Submit(ctx, batchimage.SubmitInput{

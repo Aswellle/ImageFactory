@@ -90,7 +90,7 @@ func (*AssetVersion) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the AssetVersion fields.
-func (_m *AssetVersion) assignValues(columns []string, values []any) error {
+func (av *AssetVersion) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -101,87 +101,87 @@ func (_m *AssetVersion) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			av.ID = int64(value.Int64)
 		case assetversion.FieldAssetID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field asset_id", values[i])
 			} else if value.Valid {
-				_m.AssetID = value.Int64
+				av.AssetID = value.Int64
 			}
 		case assetversion.FieldVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field version", values[i])
 			} else if value.Valid {
-				_m.Version = int(value.Int64)
+				av.Version = int(value.Int64)
 			}
 		case assetversion.FieldEditJobID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field edit_job_id", values[i])
 			} else if value.Valid {
-				_m.EditJobID = value.Int64
+				av.EditJobID = value.Int64
 			}
 		case assetversion.FieldPrompt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field prompt", values[i])
 			} else if value.Valid {
-				_m.Prompt = value.String
+				av.Prompt = value.String
 			}
 		case assetversion.FieldNegativePrompt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field negative_prompt", values[i])
 			} else if value.Valid {
-				_m.NegativePrompt = value.String
+				av.NegativePrompt = value.String
 			}
 		case assetversion.FieldModel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field model", values[i])
 			} else if value.Valid {
-				_m.Model = value.String
+				av.Model = value.String
 			}
 		case assetversion.FieldWidth:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field width", values[i])
 			} else if value.Valid {
-				_m.Width = int(value.Int64)
+				av.Width = int(value.Int64)
 			}
 		case assetversion.FieldHeight:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field height", values[i])
 			} else if value.Valid {
-				_m.Height = int(value.Int64)
+				av.Height = int(value.Int64)
 			}
 		case assetversion.FieldMimeType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field mime_type", values[i])
 			} else if value.Valid {
-				_m.MimeType = value.String
+				av.MimeType = value.String
 			}
 		case assetversion.FieldFileSize:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field file_size", values[i])
 			} else if value.Valid {
-				_m.FileSize = value.Int64
+				av.FileSize = value.Int64
 			}
 		case assetversion.FieldStorageKey:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field storage_key", values[i])
 			} else if value.Valid {
-				_m.StorageKey = value.String
+				av.StorageKey = value.String
 			}
 		case assetversion.FieldThumbnailKey:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field thumbnail_key", values[i])
 			} else if value.Valid {
-				_m.ThumbnailKey = value.String
+				av.ThumbnailKey = value.String
 			}
 		case assetversion.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				_m.CreatedAt = value.Time
+				av.CreatedAt = value.Time
 			}
 		default:
-			_m.selectValues.Set(columns[i], values[i])
+			av.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -189,76 +189,76 @@ func (_m *AssetVersion) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the AssetVersion.
 // This includes values selected through modifiers, order, etc.
-func (_m *AssetVersion) Value(name string) (ent.Value, error) {
-	return _m.selectValues.Get(name)
+func (av *AssetVersion) Value(name string) (ent.Value, error) {
+	return av.selectValues.Get(name)
 }
 
 // QueryAsset queries the "asset" edge of the AssetVersion entity.
-func (_m *AssetVersion) QueryAsset() *AssetQuery {
-	return NewAssetVersionClient(_m.config).QueryAsset(_m)
+func (av *AssetVersion) QueryAsset() *AssetQuery {
+	return NewAssetVersionClient(av.config).QueryAsset(av)
 }
 
 // Update returns a builder for updating this AssetVersion.
 // Note that you need to call AssetVersion.Unwrap() before calling this method if this AssetVersion
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *AssetVersion) Update() *AssetVersionUpdateOne {
-	return NewAssetVersionClient(_m.config).UpdateOne(_m)
+func (av *AssetVersion) Update() *AssetVersionUpdateOne {
+	return NewAssetVersionClient(av.config).UpdateOne(av)
 }
 
 // Unwrap unwraps the AssetVersion entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *AssetVersion) Unwrap() *AssetVersion {
-	_tx, ok := _m.config.driver.(*txDriver)
+func (av *AssetVersion) Unwrap() *AssetVersion {
+	_tx, ok := av.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: AssetVersion is not a transactional entity")
 	}
-	_m.config.driver = _tx.drv
-	return _m
+	av.config.driver = _tx.drv
+	return av
 }
 
 // String implements the fmt.Stringer.
-func (_m *AssetVersion) String() string {
+func (av *AssetVersion) String() string {
 	var builder strings.Builder
 	builder.WriteString("AssetVersion(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", av.ID))
 	builder.WriteString("asset_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.AssetID))
+	builder.WriteString(fmt.Sprintf("%v", av.AssetID))
 	builder.WriteString(", ")
 	builder.WriteString("version=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Version))
+	builder.WriteString(fmt.Sprintf("%v", av.Version))
 	builder.WriteString(", ")
 	builder.WriteString("edit_job_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.EditJobID))
+	builder.WriteString(fmt.Sprintf("%v", av.EditJobID))
 	builder.WriteString(", ")
 	builder.WriteString("prompt=")
-	builder.WriteString(_m.Prompt)
+	builder.WriteString(av.Prompt)
 	builder.WriteString(", ")
 	builder.WriteString("negative_prompt=")
-	builder.WriteString(_m.NegativePrompt)
+	builder.WriteString(av.NegativePrompt)
 	builder.WriteString(", ")
 	builder.WriteString("model=")
-	builder.WriteString(_m.Model)
+	builder.WriteString(av.Model)
 	builder.WriteString(", ")
 	builder.WriteString("width=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Width))
+	builder.WriteString(fmt.Sprintf("%v", av.Width))
 	builder.WriteString(", ")
 	builder.WriteString("height=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Height))
+	builder.WriteString(fmt.Sprintf("%v", av.Height))
 	builder.WriteString(", ")
 	builder.WriteString("mime_type=")
-	builder.WriteString(_m.MimeType)
+	builder.WriteString(av.MimeType)
 	builder.WriteString(", ")
 	builder.WriteString("file_size=")
-	builder.WriteString(fmt.Sprintf("%v", _m.FileSize))
+	builder.WriteString(fmt.Sprintf("%v", av.FileSize))
 	builder.WriteString(", ")
 	builder.WriteString("storage_key=")
-	builder.WriteString(_m.StorageKey)
+	builder.WriteString(av.StorageKey)
 	builder.WriteString(", ")
 	builder.WriteString("thumbnail_key=")
-	builder.WriteString(_m.ThumbnailKey)
+	builder.WriteString(av.ThumbnailKey)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(av.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }
