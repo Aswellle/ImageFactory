@@ -3168,3 +3168,577 @@ textarea.if-input { height: auto; padding-top: 0.5rem; padding-bottom: 0.5rem; }
     opacity: 1;
   }
 }
+
+/* ============================================================
+   Design System Foundation — Shared Components & Utilities
+   ============================================================ */
+
+/* ---- Extended Tokens ---- */
+.studio-theme {
+  --studio-warning: #E5A94D;
+  --studio-font-display: 'Sora', system-ui, sans-serif;
+  --studio-font-mono: 'JetBrains Mono', monospace;
+  --studio-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --studio-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --studio-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --studio-shadow-glow: 0 0 20px var(--studio-accent-glow);
+}
+
+/* ---- Shared Layout Patterns ---- */
+.studio-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--studio-bg);
+  font-family: var(--studio-font-display);
+  color: var(--studio-text);
+}
+
+.studio-layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ---- Shared Sidebar ---- */
+.studio-sidebar {
+  width: 64px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  border-right: 1px solid var(--studio-border);
+  background: var(--studio-surface);
+}
+
+.studio-sidebar-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--studio-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.studio-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.studio-nav-item {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--studio-radius-sm);
+  color: var(--studio-text-secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+}
+
+.studio-nav-item:hover {
+  background: var(--studio-surface-2);
+  color: var(--studio-text);
+}
+
+.studio-nav-item.active {
+  background: var(--studio-accent-soft);
+  color: var(--studio-accent);
+}
+
+/* ---- Shared Top Bar ---- */
+.studio-topbar {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--studio-border);
+  background: var(--studio-surface);
+}
+
+.studio-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.studio-topbar-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--studio-text);
+  letter-spacing: 0.02em;
+}
+
+.studio-topbar-count {
+  font-size: 11px;
+  color: var(--studio-text-muted);
+  font-family: var(--studio-font-mono);
+}
+
+.studio-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---- Shared Search Input ---- */
+.studio-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--studio-radius-sm);
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  transition: border-color 0.2s ease;
+}
+
+.studio-search:focus-within {
+  border-color: var(--studio-border-strong);
+}
+
+.studio-search svg {
+  color: var(--studio-text-muted);
+  flex-shrink: 0;
+}
+
+.studio-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--studio-text);
+  font-family: var(--studio-font-display);
+  width: 160px;
+}
+
+.studio-search input::placeholder {
+  color: var(--studio-text-muted);
+}
+
+/* ---- Shared Buttons ---- */
+.studio-btn {
+  padding: 8px 16px;
+  border-radius: var(--studio-radius-sm);
+  border: 1px solid var(--studio-border);
+  background: var(--studio-surface-2);
+  color: var(--studio-text);
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-family: var(--studio-font-display);
+  text-decoration: none;
+}
+
+.studio-btn:hover {
+  background: var(--studio-surface-3);
+  border-color: var(--studio-border-strong);
+}
+
+.studio-btn-primary {
+  background: var(--studio-accent);
+  border-color: var(--studio-accent);
+  color: #0C0A09;
+  font-weight: 500;
+}
+
+.studio-btn-primary:hover {
+  background: var(--studio-accent-hover);
+  border-color: var(--studio-accent-hover);
+}
+
+.studio-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.studio-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.studio-btn-ghost:hover {
+  background: var(--studio-surface-2);
+}
+
+.studio-btn-danger {
+  color: var(--studio-danger);
+  border-color: rgba(196, 90, 74, 0.3);
+}
+
+.studio-btn-danger:hover {
+  background: rgba(196, 90, 74, 0.1);
+}
+
+.studio-btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.studio-btn-lg {
+  padding: 12px 24px;
+  font-size: 14px;
+}
+
+.studio-btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+/* ---- Shared Form Inputs ---- */
+.studio-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  color: var(--studio-text);
+  font-size: 13px;
+  font-family: var(--studio-font-display);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.studio-input:focus {
+  border-color: var(--studio-border-strong);
+}
+
+.studio-input::placeholder {
+  color: var(--studio-text-muted);
+}
+
+.studio-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.studio-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235C5348' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+}
+
+/* ---- Shared Filter Chips ---- */
+.studio-filter-chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  font-size: 11px;
+  color: var(--studio-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: var(--studio-font-mono);
+}
+
+.studio-filter-chip:hover {
+  border-color: var(--studio-border-strong);
+  color: var(--studio-text);
+}
+
+.studio-filter-chip.active {
+  background: var(--studio-accent-soft);
+  border-color: var(--studio-accent);
+  color: var(--studio-accent);
+}
+
+/* ---- Shared Empty State ---- */
+.studio-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 40px;
+}
+
+.studio-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--studio-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--studio-border);
+}
+
+.studio-empty-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--studio-text);
+}
+
+.studio-empty-desc {
+  font-size: 13px;
+  color: var(--studio-text-secondary);
+  max-width: 320px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* ---- Shared Skeleton ---- */
+.studio-skeleton {
+  background: var(--studio-surface-2);
+  border-radius: 2px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.studio-sm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.studio-sm-card {
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  overflow: hidden;
+}
+
+.studio-sm-previews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: var(--studio-border);
+}
+
+.studio-sm-preview {
+  aspect-ratio: 1;
+  background: var(--studio-surface-2);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.studio-sm-info {
+  padding: 12px 14px;
+}
+
+.studio-sm-line {
+  height: 12px;
+  background: var(--studio-surface-2);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.studio-sm-line--short {
+  width: 60%;
+}
+
+/* ---- Shared Modal ---- */
+.studio-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(12, 10, 9, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.studio-modal {
+  width: 420px;
+  max-width: 90%;
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius);
+  padding: 24px;
+  box-shadow: var(--studio-shadow-lg);
+  animation: modalSlide 0.3s ease;
+}
+
+.studio-modal-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--studio-text);
+  margin-bottom: 16px;
+}
+
+.studio-modal-field {
+  margin-bottom: 14px;
+}
+
+.studio-modal-label {
+  display: block;
+  font-size: 11px;
+  color: var(--studio-text-secondary);
+  margin-bottom: 6px;
+  font-family: var(--studio-font-mono);
+  letter-spacing: 0.03em;
+}
+
+.studio-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* ---- Shared Animations ---- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes develop {
+  0% { opacity: 0; filter: brightness(0.3) sepia(0.7); }
+  100% { opacity: 1; filter: brightness(1) sepia(0); }
+}
+
+@keyframes imageDevelop {
+  0% { opacity: 0; filter: brightness(0.4) sepia(0.5); transform: scale(0.98); }
+  100% { opacity: 1; filter: brightness(1) sepia(0); transform: scale(1); }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ---- Shared Typography ---- */
+.studio-heading {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--studio-text);
+  letter-spacing: -0.01em;
+}
+
+.studio-subheading {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--studio-text);
+}
+
+.studio-body {
+  font-size: 14px;
+  color: var(--studio-text-secondary);
+  line-height: 1.5;
+}
+
+.studio-caption {
+  font-size: 12px;
+  color: var(--studio-text-muted);
+}
+
+.studio-mono {
+  font-family: var(--studio-font-mono);
+}
+
+/* ---- Shared Spacing ---- */
+.studio-p-sm { padding: 12px; }
+.studio-p-md { padding: 20px; }
+.studio-p-lg { padding: 32px; }
+
+.studio-m-sm { margin: 12px; }
+.studio-m-md { margin: 20px; }
+.studio-m-lg { margin: 32px; }
+
+/* ---- Shared Utilities ---- */
+.studio-flex { display: flex; }
+.studio-flex-col { flex-direction: column; }
+.studio-items-center { align-items: center; }
+.studio-justify-center { justify-content: center; }
+.studio-justify-between { justify-content: space-between; }
+.studio-gap-sm { gap: 8px; }
+.studio-gap-md { gap: 16px; }
+.studio-gap-lg { gap: 24px; }
+
+.studio-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Focus States ---- */
+.studio-theme *:focus-visible {
+  outline: 2px solid var(--studio-accent);
+  outline-offset: 2px;
+}
+
+.studio-theme button:focus-visible,
+.studio-theme a:focus-visible,
+.studio-theme input:focus-visible {
+  outline: 2px solid var(--studio-accent);
+  outline-offset: 2px;
+}
+
+/* ---- Scrollbar ---- */
+.studio-theme ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.studio-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.studio-theme ::-webkit-scrollbar-thumb {
+  background: var(--studio-border-strong);
+  border-radius: 3px;
+}
+
+.studio-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--studio-text-muted);
+}
+
+/* ---- Selection ---- */
+.studio-theme ::selection {
+  background: var(--studio-accent-soft);
+  color: var(--studio-text);
+}
