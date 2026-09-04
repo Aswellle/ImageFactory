@@ -4,8 +4,6 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import FieldHint from '@/components/FieldHint.vue'
-import PasswordStrengthMeter from '@/components/PasswordStrengthMeter.vue'
 import { passwordScore, EMAIL_PLACEHOLDER } from '@/utils/password'
 
 const auth = useAuthStore()
@@ -28,7 +26,6 @@ const errors = reactive({
   confirmPassword: ''
 })
 
-// Clear validation errors and password visibility when toggling modes
 watch(mode, () => {
   errors.name = ''
   errors.email = ''
@@ -37,6 +34,8 @@ watch(mode, () => {
   showPassword.value = false
   showConfirmPassword.value = false
 })
+
+const strengthLevel = computed(() => passwordScore(password.value))
 
 function validate(): boolean {
   errors.name = ''
@@ -96,165 +95,165 @@ async function submit() {
     // error surfaced via auth.error
   }
 }
+
+function strengthLabel(score: number): string {
+  if (score <= 1) return 'Weak'
+  if (score <= 2) return 'Fair'
+  if (score <= 3) return 'Good'
+  return 'Strong'
+}
+
+import { computed } from 'vue'
 </script>
 
 <template>
-  <div class="min-h-[100dvh] flex items-center justify-center bg-[var(--bg)] px-4 py-8">
-    <div class="w-full max-w-sm">
-      <!-- Logo / wordmark -->
-      <div class="text-center mb-6">
-        <h1 class="text-2xl font-semibold tracking-tight text-[var(--text)]">{{ t('common.appName') }}</h1>
-        <p class="text-sm text-[var(--text-secondary)] mt-1.5">
-          {{ mode === 'login' ? t('auth.signInTitle') : t('auth.createAccountTitle') }}
+  <div class="studio-theme">
+    <div class="auth-screen">
+      <div class="auth-container">
+        <!-- Header -->
+        <div class="auth-header">
+          <div class="auth-logo">
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+              <path d="M8 22V10l8 6-8 6zM16 10l8 6-8 6V10z" fill="#0C0A09" />
+            </svg>
+          </div>
+          <h1 class="auth-title">ImageForge</h1>
+          <p class="auth-subtitle">
+            {{ mode === 'login' ? 'Sign in to your account' : 'Create your account' }}
+          </p>
+        </div>
+
+        <!-- Card -->
+        <form class="auth-card" @submit.prevent="submit">
+          <!-- Name (register only) -->
+          <div v-if="mode === 'register'" class="auth-field">
+            <label class="auth-label" for="name">Name</label>
+            <div class="auth-input-wrap">
+              <input
+                id="name"
+                v-model="name"
+                class="auth-input"
+                :class="{ 'auth-input-error': errors.name }"
+                type="text"
+                placeholder="Your name"
+                autocomplete="name"
+              />
+            </div>
+            <p v-if="errors.name" class="auth-error-text">{{ errors.name }}</p>
+          </div>
+
+          <!-- Email -->
+          <div class="auth-field">
+            <label class="auth-label" for="email">Email</label>
+            <div class="auth-input-wrap">
+              <input
+                id="email"
+                v-model="email"
+                class="auth-input"
+                :class="{ 'auth-input-error': errors.email }"
+                type="email"
+                :placeholder="EMAIL_PLACEHOLDER"
+                autocomplete="email"
+              />
+            </div>
+            <p v-if="errors.email" class="auth-error-text">{{ errors.email }}</p>
+          </div>
+
+          <!-- Password -->
+          <div class="auth-field">
+            <label class="auth-label" for="password">Password</label>
+            <div class="auth-input-wrap">
+              <input
+                id="password"
+                v-model="password"
+                class="auth-input"
+                :class="{ 'auth-input-error': errors.password }"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Enter password"
+                :autocomplete="mode === 'register' ? 'new-password' : 'current-password'"
+              />
+              <button
+                type="button"
+                class="auth-input-icon"
+                @click="showPassword = !showPassword"
+              >
+                <svg v-if="!showPassword" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+            <p v-if="errors.password" class="auth-error-text">{{ errors.password }}</p>
+
+            <!-- Password strength (register only) -->
+            <div v-if="mode === 'register' && password.length > 0" class="auth-strength">
+              <div
+                v-for="i in 4"
+                :key="i"
+                class="auth-strength-bar"
+                :class="{
+                  active: i <= strengthLevel,
+                  weak: strengthLevel <= 1 && i <= strengthLevel,
+                  medium: strengthLevel === 2 && i <= strengthLevel,
+                  strong: strengthLevel >= 3 && i <= strengthLevel
+                }"
+              ></div>
+            </div>
+            <p v-if="mode === 'register' && password.length > 0" style="font-size: 11px; color: var(--studio-text-muted); margin-top: 4px;">
+              {{ strengthLabel(strengthLevel) }}
+            </p>
+          </div>
+
+          <!-- Confirm Password (register only) -->
+          <div v-if="mode === 'register'" class="auth-field">
+            <label class="auth-label" for="confirm">Confirm Password</label>
+            <div class="auth-input-wrap">
+              <input
+                id="confirm"
+                v-model="confirmPassword"
+                class="auth-input"
+                :class="{ 'auth-input-error': errors.confirmPassword }"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                placeholder="Confirm password"
+                autocomplete="new-password"
+              />
+              <button
+                type="button"
+                class="auth-input-icon"
+                @click="showConfirmPassword = !showConfirmPassword"
+              >
+                <svg v-if="!showConfirmPassword" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+            <p v-if="errors.confirmPassword" class="auth-error-text">{{ errors.confirmPassword }}</p>
+          </div>
+
+          <!-- Forgot password (login only) -->
+          <div v-if="mode === 'login'" class="auth-forgot-link">
+            <button type="button" @click="router.push('/forgot-password')">
+              Forgot password?
+            </button>
+          </div>
+
+          <!-- Error -->
+          <p v-if="auth.error" id="auth-error" role="alert" class="auth-error-text" style="margin-bottom: 12px;">
+            {{ auth.error }}
+          </p>
+
+          <!-- Submit -->
+          <button type="submit" class="auth-submit-btn" :disabled="auth.loading">
+            <LoadingSpinner v-if="auth.loading" size="sm" />
+            <span v-else>{{ mode === 'login' ? 'Sign in' : 'Create account' }}</span>
+          </button>
+        </form>
+
+        <!-- Mode toggle -->
+        <p class="auth-footer">
+          {{ mode === 'login' ? "Don't have an account?" : 'Already have an account?' }}
+          <button type="button" @click="mode = mode === 'login' ? 'register' : 'login'">
+            {{ mode === 'login' ? 'Sign up' : 'Sign in' }}
+          </button>
         </p>
       </div>
-
-      <!-- Card -->
-      <form class="surface rounded-2xl p-6 space-y-4" @submit.prevent="submit">
-        <!-- Name (register only) -->
-        <div v-if="mode === 'register'">
-          <label class="text-sm font-medium text-[var(--text)] mb-1.5 block" for="name">{{ t('auth.nameLabel') }}</label>
-          <input
-            id="name"
-            v-model="name"
-            type="text"
-            class="input"
-            :class="{ 'input-error': errors.name }"
-            autocomplete="name"
-            :placeholder="t('auth.namePlaceholder')"
-            :aria-invalid="!!errors.name"
-          />
-          <FieldHint v-if="errors.name" type="error" :message="errors.name" />
-        </div>
-
-        <!-- Email -->
-        <div>
-          <label class="text-sm font-medium text-[var(--text)] mb-1.5 block" for="email">{{ t('auth.emailLabel') }}</label>
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            class="input"
-            :class="{ 'input-error': errors.email }"
-            autocomplete="email"
-            required
-            :placeholder="EMAIL_PLACEHOLDER"
-            :aria-invalid="!!errors.email"
-          />
-          <FieldHint v-if="errors.email" type="error" :message="errors.email" />
-        </div>
-
-        <!-- Password -->
-        <div>
-          <label class="text-sm font-medium text-[var(--text)] mb-1.5 block" for="password">{{ t('auth.passwordLabel') }}</label>
-          <div class="relative">
-            <input
-              id="password"
-              v-model="password"
-              :type="showPassword ? 'text' : 'password'"
-              class="input pr-10"
-              :class="{ 'input-error': errors.password }"
-              :autocomplete="mode === 'login' ? 'current-password' : 'new-password'"
-              required
-              :placeholder="t('auth.passwordPlaceholder')"
-              :aria-invalid="!!errors.password"
-            />
-            <button
-              type="button"
-              class="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-              :aria-label="showPassword ? t('auth.hidePassword') : t('auth.showPassword')"
-              :aria-pressed="showPassword"
-              @click="showPassword = !showPassword"
-            >
-              <svg v-if="!showPassword" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <svg v-else class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                <line x1="1" y1="1" x2="23" y2="23" />
-              </svg>
-            </button>
-          </div>
-          <FieldHint v-if="errors.password" type="error" :message="errors.password" />
-          <PasswordStrengthMeter v-if="mode === 'register'" :model-value="password" />
-        </div>
-
-        <!-- Confirm Password (register only) -->
-        <div v-if="mode === 'register'">
-          <label class="text-sm font-medium text-[var(--text)] mb-1.5 block" for="confirmPassword">{{ t('auth.confirmPasswordLabel') }}</label>
-          <div class="relative">
-            <input
-              id="confirmPassword"
-              v-model="confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
-              class="input pr-10"
-              :class="{ 'input-error': errors.confirmPassword }"
-              autocomplete="new-password"
-              required
-              :placeholder="t('auth.confirmPasswordPlaceholder')"
-              :aria-invalid="!!errors.confirmPassword"
-            />
-            <button
-              type="button"
-              class="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-              :aria-label="showConfirmPassword ? t('auth.hidePassword') : t('auth.showPassword')"
-              :aria-pressed="showConfirmPassword"
-              @click="showConfirmPassword = !showConfirmPassword"
-            >
-              <svg v-if="!showConfirmPassword" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <svg v-else class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                <line x1="1" y1="1" x2="23" y2="23" />
-              </svg>
-            </button>
-          </div>
-          <FieldHint v-if="errors.confirmPassword" type="error" :message="errors.confirmPassword" />
-        </div>
-
-        <!-- Forgot password (login only) -->
-        <div v-if="mode === 'login'" class="flex justify-end">
-          <router-link
-            to="/forgot-password"
-            class="text-sm text-[var(--accent)] hover:underline"
-          >
-            {{ t('auth.forgotPassword') }}
-          </router-link>
-        </div>
-
-        <!-- Error state -->
-        <p v-if="auth.error" id="auth-error" role="alert" class="text-sm text-[var(--danger)]">{{ auth.error }}</p>
-
-        <button type="submit" class="btn btn-primary w-full" :disabled="auth.loading">
-          <span v-if="auth.loading" class="flex items-center justify-center gap-2">
-            <LoadingSpinner size="sm" />
-            {{ t('auth.pleaseWait') }}
-          </span>
-          <span v-else>{{ mode === 'login' ? t('auth.signIn') : t('auth.createAccount') }}</span>
-        </button>
-      </form>
-
-      <!-- Mode toggle -->
-      <p class="text-center text-sm text-[var(--text-secondary)] mt-5">
-        <template v-if="mode === 'login'">
-          {{ t('auth.dontHaveAccount') }}
-          <button class="text-[var(--accent)] font-medium hover:underline" @click="mode = 'register'">{{ t('auth.signUp') }}</button>
-        </template>
-        <template v-else>
-          {{ t('auth.alreadyHaveAccount') }}
-          <button class="text-[var(--accent)] font-medium hover:underline" @click="mode = 'login'">{{ t('auth.signIn') }}</button>
-        </template>
-      </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.input-error {
-  border-color: var(--danger);
-  box-shadow: 0 0 0 1px var(--danger);
-}
-</style>
