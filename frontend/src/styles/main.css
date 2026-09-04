@@ -2055,3 +2055,699 @@ textarea.if-input { height: auto; padding-top: 0.5rem; padding-bottom: 0.5rem; }
   background: var(--studio-surface-2);
   border-radius: 2px;
 }
+
+/* ============================================================
+   Studio Projects — ImageForge Contact Sheet & Light Table
+   ============================================================ */
+
+/* ---- Projects Layout ---- */
+.projects-studio {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--studio-bg);
+  font-family: 'Sora', system-ui, sans-serif;
+  color: var(--studio-text);
+}
+
+.projects-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Projects top bar */
+.projects-topbar {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--studio-border);
+  background: var(--studio-surface);
+}
+
+.projects-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.projects-topbar-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--studio-text);
+  letter-spacing: 0.02em;
+}
+
+.projects-topbar-count {
+  font-size: 11px;
+  color: var(--studio-text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.projects-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Search */
+.projects-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--studio-radius-sm);
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  transition: border-color 0.2s ease;
+}
+
+.projects-search:focus-within {
+  border-color: var(--studio-border-strong);
+}
+
+.projects-search svg {
+  color: var(--studio-text-muted);
+  flex-shrink: 0;
+}
+
+.projects-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--studio-text);
+  font-family: 'Sora', system-ui, sans-serif;
+  width: 160px;
+}
+
+.projects-search input::placeholder {
+  color: var(--studio-text-muted);
+}
+
+/* New project button */
+.projects-new-btn {
+  padding: 6px 14px;
+  border-radius: var(--studio-radius-sm);
+  background: var(--studio-accent);
+  border: none;
+  color: #0C0A09;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+.projects-new-btn:hover {
+  background: var(--studio-accent-hover);
+}
+
+/* ---- Projects Content ---- */
+.projects-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* ---- Contact Sheet Grid ---- */
+.contact-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Contact sheet card */
+.contact-sheet {
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-sheet:hover {
+  border-color: var(--studio-border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Mini thumbnail grid inside contact sheet */
+.contact-sheet-previews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: var(--studio-border);
+}
+
+.contact-sheet-preview {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--studio-surface-2);
+  position: relative;
+}
+
+.contact-sheet-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.contact-sheet:hover .contact-sheet-preview img {
+  transform: scale(1.05);
+}
+
+.contact-sheet-preview-empty {
+  width: 100%;
+  height: 100%;
+  background: var(--studio-surface-2);
+}
+
+/* Contact sheet info */
+.contact-sheet-info {
+  padding: 12px 14px;
+}
+
+.contact-sheet-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--studio-text);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-sheet-desc {
+  font-size: 11px;
+  color: var(--studio-text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.contact-sheet-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--studio-text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.contact-sheet-meta-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--studio-text-muted);
+}
+
+/* ---- Create Project Modal ---- */
+.projects-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(12, 10, 9, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.projects-modal {
+  width: 420px;
+  max-width: 90%;
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius);
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.projects-modal-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--studio-text);
+  margin-bottom: 16px;
+}
+
+.projects-modal-field {
+  margin-bottom: 14px;
+}
+
+.projects-modal-label {
+  display: block;
+  font-size: 11px;
+  color: var(--studio-text-secondary);
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.projects-modal-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  color: var(--studio-text);
+  font-size: 14px;
+  font-family: 'Sora', system-ui, sans-serif;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.projects-modal-input:focus {
+  border-color: var(--studio-border-strong);
+}
+
+.projects-modal-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.projects-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.projects-modal-btn {
+  padding: 8px 18px;
+  border-radius: var(--studio-radius-sm);
+  border: 1px solid var(--studio-border);
+  background: var(--studio-surface-2);
+  color: var(--studio-text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+.projects-modal-btn:hover {
+  background: var(--studio-surface-3);
+}
+
+.projects-modal-btn.primary {
+  background: var(--studio-accent);
+  border-color: var(--studio-accent);
+  color: #0C0A09;
+}
+
+.projects-modal-btn.primary:hover {
+  background: var(--studio-accent-hover);
+}
+
+.projects-modal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Empty State ---- */
+.projects-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 40px;
+}
+
+.projects-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--studio-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--studio-border);
+}
+
+.projects-empty-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--studio-text);
+}
+
+.projects-empty-desc {
+  font-size: 13px;
+  color: var(--studio-text-secondary);
+  max-width: 320px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.projects-empty-btn {
+  padding: 10px 24px;
+  border-radius: 24px;
+  background: var(--studio-accent);
+  border: none;
+  color: #0C0A09;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+}
+
+.projects-empty-btn:hover {
+  background: var(--studio-accent-hover);
+}
+
+/* ---- Loading skeleton ---- */
+.projects-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.projects-skeleton-card {
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  overflow: hidden;
+}
+
+.projects-skeleton-previews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: var(--studio-border);
+}
+
+.projects-skeleton-preview {
+  aspect-ratio: 1;
+  background: var(--studio-surface-2);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.projects-skeleton-info {
+  padding: 12px 14px;
+}
+
+.projects-skeleton-line {
+  height: 12px;
+  background: var(--studio-surface-2);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.projects-skeleton-line.short {
+  width: 60%;
+}
+
+/* ---- Project Detail (Light Table) ---- */
+.project-detail-studio {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--studio-bg);
+  font-family: 'Sora', system-ui, sans-serif;
+  color: var(--studio-text);
+}
+
+.project-detail-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Detail top bar */
+.project-detail-topbar {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--studio-border);
+  background: var(--studio-surface);
+}
+
+.project-detail-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--studio-radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--studio-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+.project-detail-back:hover {
+  color: var(--studio-text);
+  background: var(--studio-surface-2);
+}
+
+.project-detail-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--studio-text);
+  letter-spacing: 0.02em;
+}
+
+.project-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-detail-action-btn {
+  padding: 6px 12px;
+  border-radius: var(--studio-radius-sm);
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border);
+  color: var(--studio-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+.project-detail-action-btn:hover {
+  border-color: var(--studio-border-strong);
+  color: var(--studio-text);
+}
+
+.project-detail-action-btn.danger {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.project-detail-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Light table content */
+.project-detail-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* Project info header */
+.project-info-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--studio-border);
+}
+
+.project-info-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--studio-text);
+  margin-bottom: 4px;
+}
+
+.project-info-desc {
+  font-size: 13px;
+  color: var(--studio-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.project-info-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--studio-text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Light table grid */
+.light-table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.light-table-item {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.light-table-item:hover {
+  transform: scale(1.02);
+}
+
+.light-table-frame {
+  background: var(--studio-surface);
+  border: 1px solid var(--studio-border);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.light-table-item:hover .light-table-frame {
+  border-color: var(--studio-border-strong);
+}
+
+.light-table-img-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--studio-surface-2);
+}
+
+.light-table-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.light-table-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 9, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 2px;
+}
+
+.light-table-item:hover .light-table-overlay {
+  opacity: 1;
+}
+
+.light-table-overlay-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--studio-accent);
+  border: none;
+  color: #0C0A09;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+/* Light table empty */
+.project-detail-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.project-detail-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--studio-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border: 1px solid var(--studio-border);
+}
+
+.project-detail-empty-text {
+  font-size: 14px;
+  color: var(--studio-text-secondary);
+  margin-bottom: 16px;
+}
+
+.project-detail-empty-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: var(--studio-accent);
+  border: none;
+  color: #0C0A09;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+
+.project-detail-empty-btn:hover {
+  background: var(--studio-accent-hover);
+}
+
+/* ---- Mobile responsive ---- */
+@media (max-width: 768px) {
+  .contact-sheet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .light-table-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .projects-topbar {
+    padding: 0 12px;
+  }
+
+  .project-detail-topbar {
+    padding: 0 12px;
+  }
+}
