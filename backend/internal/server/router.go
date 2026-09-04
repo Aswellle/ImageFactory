@@ -25,7 +25,30 @@ import (
 
 // Router wraps a Gin engine and its runtime dependencies.
 type Router struct {
-	Engine *gin.Engine
+	Engine    *gin.Engine
+	db        *ent.Client
+	rdb       *redis.Client
+	processor job.Processor
+}
+
+// Close gracefully shuts down runtime dependencies (DB, Redis, job processor).
+// It is safe to call more than once.
+func (r *Router) Close(log *zap.Logger) {
+	if r.processor != nil {
+		if err := r.processor.Stop(); err != nil {
+			log.Warn("job processor stop returned error", zap.Error(err))
+		}
+	}
+	if r.rdb != nil {
+		if err := r.rdb.Close(); err != nil {
+			log.Warn("redis close returned error", zap.Error(err))
+		}
+	}
+	if r.db != nil {
+		if err := r.db.Close(); err != nil {
+			log.Warn("database close returned error", zap.Error(err))
+		}
+	}
 }
 
 // NewRouter builds the Gin engine, wires all dependencies, and registers routes.
@@ -36,14 +59,28 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	}
 	engine := gin.New()
 
+	// Trust X-Forwarded-For/X-Real-IP from the reverse proxy (Caddy).
+	// In production Caddy sets these from the real client / TCP peer.
+	if len(cfg.Server.TrustedProxies) > 0 {
+		if err := engine.SetTrustedProxies(cfg.Server.TrustedProxies); err != nil {
+			return nil, fmt.Errorf("set trusted proxies: %w", err)
+		}
+	} else {
+		// Default: trust no proxies (use direct remote IP). Deployers should
+		// set IF_SERVER_TRUSTED_PROXIES to the Caddy subnet in production.
+		engine.SetTrustedProxies(nil)
+	}
+
+
 	// --- Global middleware (order matters) ---
 	engine.Use(middleware.RequestID())
-	engine.Use(middleware.CORS())
+	engine.Use(middleware.CORS(cfg.Server.AllowedOrigins))
+	engine.Use(middleware.MaxRequestBodySize(1 << 20)) // 1 MB limit
 	engine.Use(gin.Recovery())
 	engine.Use(requestLogger(log))
 
 	// --- Infrastructure ---
-	db, err := repository.NewEntClient(cfg.Database.DSN(), false)
+	db, err := repository.NewEntClient(cfg.Database.DSN(), cfg.Database.AutoMigrate)
 	if err != nil {
 		return nil, fmt.Errorf("connect database: %w", err)
 	}
@@ -53,6 +90,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		db.Close()
 		return nil, fmt.Errorf("init storage: %w", err)
 	}
+
 
 	// --- Job queue + worker ---
 	queue := job.NewMemoryQueue(256, log)
@@ -77,12 +115,22 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	}
 
 	// --- Services & handlers ---
-	jwt := service.NewJWTService(cfg.Auth)
+	jwt, err := service.NewJWTService(cfg.Auth, cfg.Server.Mode)
+	if err != nil {
+		return nil, fmt.Errorf("init jwt service: %w", err)
+	}
 	password := service.NewPassword(cfg.Auth)
 	users := repository.NewUserRepository(db)
 	authService := service.NewAuthService(users, jwt, password)
 	authHandler := handler.NewAuthHandler(authService)
 	authMW := middleware.NewAuth(jwt)
+
+	// --- Email & password reset ---
+	emailSvc := service.NewEmailService(cfg.Email, log)
+	resetCodes := repository.NewResetCodeStore(rdb)
+	rateLimiter := repository.NewRateLimiter(rdb)
+	resetSvc := service.NewPasswordResetService(users, resetCodes, emailSvc, password, rateLimiter)
+	resetHandler := handler.NewPasswordResetHandler(resetSvc)
 
 	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
 
@@ -127,15 +175,51 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	// --- Public routes ---
 	v1 := engine.Group("/v1")
 	{
+		// Health endpoint. ?deep=true runs dependency checks (DB/Redis/storage).
+		// Caddy uses the shallow check (liveness); monitoring uses deep (readiness).
 		v1.GET("/health", func(c *gin.Context) {
+			if c.Query("deep") == "true" {
+				checks := gin.H{}
+				healthy := true
+
+				dbCtx, dbCancel := context.WithTimeout(c.Request.Context(), 3*time.Second)
+				defer dbCancel()
+				if _, err := db.User.Query().Count(dbCtx); err != nil {
+					checks["database"] = "unavailable: " + err.Error()
+					healthy = false
+				} else {
+					checks["database"] = "ok"
+				}
+
+
+				if rdb != nil {
+					if err := rdb.Ping(c.Request.Context()).Err(); err != nil {
+						checks["redis"] = "unavailable: " + err.Error()
+						healthy = false
+					} else {
+						checks["redis"] = "ok"
+					}
+				}
+
+				checks["storage"] = "ok" // storage is lazily verified on first use
+				if healthy {
+					response.OK(c, gin.H{"status": "ok", "checks": checks})
+				} else {
+					c.JSON(503, gin.H{"data": gin.H{"status": "degraded", "checks": checks}})
+				}
+				return
+			}
 			response.OK(c, gin.H{"status": "ok"})
 		})
+
 		auth := v1.Group("/auth")
 		{
 			auth.POST("/register", authHandler.Register)
 			auth.POST("/login", authHandler.Login)
+			auth.POST("/send-reset-code", resetHandler.SendResetCode)
+			auth.POST("/reset-password", resetHandler.ResetPassword)
 		}
-		auth.GET("/me", authMW.Require(), authHandler.Me)
+
 
 		v1.GET("/models", imageGW.Models)
 
@@ -209,8 +293,10 @@ apiKeyOnly.Use(apiKeyMW)
 // --- Admin routes (adminAuth enforced at group level) ---
 routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
 
-	return &Router{Engine: engine}, nil
+return &Router{Engine: engine, db: db, rdb: rdb, processor: processor}, nil
 }
+
+
 
 // requestLogger logs method, path, status, duration, and request ID. It never
 // logs request bodies or headers (which may carry secrets).

@@ -76,7 +76,7 @@ imageforge.example.com {
 		header_up X-Forwarded-Host {host}
 
 		# 健康检查
-		health_uri /health
+		health_uri /v1/health
 		health_interval 30s
 		health_timeout 10s
 		health_status 200

@@ -18,8 +18,10 @@ func InitializeApplication(cfg *config.Config, log *zap.Logger) (*app, func(), e
 	}
 
 	cleanup := func() {
-		// Close DB, Redis, worker pools here in later phases.
+		log.Info("shutting down runtime dependencies")
+		router.Close(log)
 		log.Info("cleanup complete")
 	}
 	return &app{Router: router}, cleanup, nil
 }
+

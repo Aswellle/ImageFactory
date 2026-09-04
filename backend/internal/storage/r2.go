@@ -46,13 +46,34 @@ func NewR2(cfg config.StorageConfig) (*R2, error) {
 	}
 
 	client := s3.NewFromConfig(awscfg, opts)
-	return &R2{
+	r2 := &R2{
 		client:     client,
 		bucket:     cfg.Bucket,
 		presign:    s3.NewPresignClient(client),
 		publicHost: cfg.PublicHost,
-	}, nil
+	}
+	// Ensure the bucket exists (idempotent). MinIO and R2 both return
+	// BucketAlreadyOwnedByYou when the bucket is already present.
+	if err := r2.ensureBucket(context.Background()); err != nil {
+		return nil, fmt.Errorf("ensure bucket %s: %w", cfg.Bucket, err)
+	}
+	return r2, nil
 }
+
+// ensureBucket creates the bucket if it does not already exist. It is safe to
+// call on every startup.
+func (r *R2) ensureBucket(ctx context.Context) error {
+	_, err := r.client.HeadBucket(ctx, &s3.HeadBucketInput{Bucket: aws.String(r.bucket)})
+	if err == nil {
+		return nil // already exists
+	}
+	_, err = r.client.CreateBucket(ctx, &s3.CreateBucketInput{Bucket: aws.String(r.bucket)})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 
 func (r *R2) Put(ctx context.Context, in PutInput) (string, error) {
 	_, err := r.client.PutObject(ctx, &s3.PutObjectInput{

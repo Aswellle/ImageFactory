@@ -93,9 +93,14 @@ services:
       # HTTPS 感知：当 Caddy 终结 TLS 后端据此生成 https URL
       IF_FORCE_HTTPS: ${IF_FORCE_HTTPS:-true}
       IF_CADDY_HOST: ${IF_CADDY_HOST:-}
+
+      # CORS：允许的前端域名（逗号分隔），生产必须配置
+      IF_SERVER_ALLOWED_ORIGINS: ${IF_ALLOWED_ORIGINS:-}
+      IF_SERVER_TRUSTED_PROXIES: ${IF_TRUSTED_PROXIES:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
     networks:
       - frontend
       - backend_net
+
     depends_on:
       db:
         condition: service_healthy
@@ -178,11 +183,12 @@ services:
     restart: unless-stopped
     command: >
       sh -c '
-        redis-server
-        --save 60 1
-        --appendonly yes
-        --appendfsync everysec
-        ${REDIS_PASSWORD:+--requirepass "$REDIS_PASSWORD"}'
+        PASSWORD="$${REDIS_PASSWORD:-}"
+        if [ -n "$$PASSWORD" ]; then
+          redis-server --save 60 1 --appendonly yes --appendfsync everysec --requirepass "$$PASSWORD"
+        else
+          redis-server --save 60 1 --appendonly yes --appendfsync everysec
+        fi'
     environment:
       TZ: ${TZ:-UTC}
       REDISCLI_AUTH: ${REDIS_PASSWORD:-}
@@ -191,7 +197,11 @@ services:
     networks:
       - backend_net
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test:
+        [
+          "CMD-SHELL",
+          "redis-cli -a \"$${REDIS_PASSWORD:-}\" ping | grep -q PONG || redis-cli ping | grep -q PONG",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -200,6 +210,7 @@ services:
       resources:
         limits:
           memory: 256M
+
 
   # ===========================================================================
   # MinIO（仅当 STORAGE_PROVIDER=minio 时使用）
@@ -219,15 +230,42 @@ services:
     healthcheck:
       test:
         [
-          "CMD",
-          "mc",
-          "ready",
-          "local",
+          "CMD-SHELL",
+          "curl -f http://localhost:9000/minio/health/live || exit 1",
         ]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+
+  # ===========================================================================
+  # MinIO init container — creates the default bucket on first boot.
+  # MinIO server image does not ship `mc`, so use the MinIO client via a
+  # lightweight init container that shares the backend network.
+  # ===========================================================================
+  minio-init:
+    image: minio/mc:latest
+    restart: "no"
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set local http://minio:9000 \"$${MINIO_ROOT_USER}\" \"$${MINIO_ROOT_PASSWORD}\";
+        mc mb --ignore-existing local/$${STORAGE_BUCKET:-imageforge};
+        echo 'bucket ready';
+      "
+    networks:
+      - backend_net
+
     # 不暴露端口到宿主机；若需外部调试，临时添加：
     # ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
 

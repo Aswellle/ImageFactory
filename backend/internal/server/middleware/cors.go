@@ -7,16 +7,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CORS returns the Gin CORS middleware. In production, restrict AllowOrigins to
-// the deployed frontend host(s) via configuration; this default permits common
-// local dev origins.
-func CORS() gin.HandlerFunc {
-	return cors.New(cors.Config{
-		AllowOrigins: []string{
+// CORS returns the Gin CORS middleware. When allowedOrigins is non-empty it is
+// used verbatim (production domains such as https://imageforge.example.com);
+// otherwise the default localhost dev origins are permitted.
+func CORS(allowedOrigins []string) gin.HandlerFunc {
+	origins := allowedOrigins
+	if len(origins) == 0 {
+		origins = []string{
 			"http://localhost:5173",
 			"http://localhost:3000",
 			"http://127.0.0.1:5173",
-		},
+		}
+	}
+	return cors.New(cors.Config{
+		AllowOrigins:     origins,
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Request-ID"},
 		ExposeHeaders:    []string{"X-Request-ID", "Content-Length"},
@@ -24,3 +28,4 @@ func CORS() gin.HandlerFunc {
 		MaxAge:           12 * time.Hour,
 	})
 }
+

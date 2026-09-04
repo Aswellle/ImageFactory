@@ -12,23 +12,28 @@ type Config struct {
 	Redis    RedisConfig    `mapstructure:"redis"`
 	Auth     AuthConfig     `mapstructure:"auth"`
 	Storage  StorageConfig  `mapstructure:"storage"`
+	Email    EmailConfig    `mapstructure:"email"`
 	Sub2API  Sub2APIConfig  `mapstructure:"sub2api"`
 }
 
 type ServerConfig struct {
-	Host    string `mapstructure:"host"`
-	Port    int    `mapstructure:"port"`
-	Mode    string `mapstructure:"mode"` // debug, release, test
-	Timeout int    `mapstructure:"timeout_seconds"`
+	Host            string   `mapstructure:"host"`
+	Port            int      `mapstructure:"port"`
+	Mode            string   `mapstructure:"mode"` // debug, release, test
+	Timeout         int      `mapstructure:"timeout_seconds"`
+	AllowedOrigins  []string `mapstructure:"allowed_origins"` // CORS allowed origins (empty = localhost defaults)
+	TrustedProxies  []string `mapstructure:"trusted_proxies"` // trusted proxy IPs/networks for X-Forwarded-For
 }
 
+
 type DatabaseConfig struct {
-	Host     string `mapstructure:"host"`
-	Port     int    `mapstructure:"port"`
-	User     string `mapstructure:"user"`
-	Password string `mapstructure:"password"` // secret
-	Name     string `mapstructure:"name"`
-	SSLMode  string `mapstructure:"sslmode"`
+	Host        string `mapstructure:"host"`
+	Port        int    `mapstructure:"port"`
+	User        string `mapstructure:"user"`
+	Password    string `mapstructure:"password"` // secret
+	Name        string `mapstructure:"name"`
+	SSLMode     string `mapstructure:"sslmode"`
+	AutoMigrate bool   `mapstructure:"auto_migrate"` // run Ent schema migration on startup
 }
 
 type RedisConfig struct {
@@ -44,6 +49,20 @@ type AuthConfig struct {
 	BcryptCost         int    `mapstructure:"bcrypt_cost"`
 	AdminPanelKey      string `mapstructure:"admin_panel_key"` // optional service-to-service admin panel key
 }
+
+
+// EmailConfig configures the email delivery service (SendGrid).
+type EmailConfig struct {
+	// Provider selects the email delivery backend: "sendgrid" | "smtp" | "console".
+	Provider string `mapstructure:"provider"`
+	// SendGridAPIKey is the SendGrid API key (required when Provider="sendgrid").
+	SendGridAPIKey string `mapstructure:"sendgrid_api_key"` // secret
+	// FromEmail is the sender address shown in sent emails.
+	FromEmail string `mapstructure:"from_email"`
+	// FromName is the sender name shown in sent emails.
+	FromName string `mapstructure:"from_name"`
+}
+
 
 type StorageConfig struct {
 	// S3-compatible object storage (Cloudflare R2, MinIO, etc.)
@@ -113,6 +132,8 @@ func Load(path string) (*Config, error) {
 	v.SetDefault("database.host", "localhost")
 	v.SetDefault("database.port", 5432)
 	v.SetDefault("database.sslmode", "disable")
+	v.SetDefault("database.auto_migrate", true)
+
 
 	v.SetDefault("redis.host", "localhost")
 	v.SetDefault("redis.port", 6379)
@@ -147,6 +168,9 @@ func Load(path string) (*Config, error) {
 	_ = v.BindEnv("storage.secret_key")
 	_ = v.BindEnv("sub2api.admin_api_key")
 	_ = v.BindEnv("sub2api.gemini_api_key")
+	// Bind slice-typed env vars (comma-separated) for CORS + trusted proxies.
+	_ = v.BindEnv("server.allowed_origins")
+	_ = v.BindEnv("server.trusted_proxies")
 
 	var cfg Config
 	if err := v.ReadInConfig(); err != nil {
