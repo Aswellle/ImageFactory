@@ -27,3 +27,4 @@ Thumbs.db
 # Logs
 *.log
 logs/
+frontend/src/views/fix_debounce.py
