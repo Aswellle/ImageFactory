@@ -1,26 +1,7 @@
 import { api } from './client'
+import type { Asset } from '@/types'
 
-export interface Asset {
-  id: number
-  title?: string
-  description?: string
-  source: string
-  status: string
-  prompt?: string
-  model?: string
-  model_provider?: string
-  width?: number
-  height?: number
-  aspect_ratio?: string
-  mime_type?: string
-  file_size?: number
-  storage_key: string
-  thumbnail_key?: string
-  medium_key?: string
-  current_version: number
-  created_at: string
-  updated_at: string
-}
+export type { Asset }
 
 export interface AssetListResponse {
   data: Asset[]

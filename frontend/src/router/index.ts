@@ -16,13 +16,19 @@ const routes: RouteRecordRaw[] = [
     meta: { public: true },
   },
   {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: () => import('@/views/ForgotPasswordView.vue'),
+    meta: { public: true },
+  },
+  {
     path: '/app',
     component: () => import('@/views/AppLayout.vue'),
     meta: { requiresAuth: true, layout: 'app' },
     children: [
-      { path: '', name: 'dashboard', component: () => import('@/views/DashboardView.vue') },
-      { path: 'create', name: 'create', component: () => import('@/views/GenerationView.vue') },
-      { path: 'assets', name: 'assets', component: () => import('@/views/GalleryView.vue') },
+      { path: '', name: 'dashboard', component: () => import(/* webpackPrefetch: true */ '@/views/DashboardView.vue') },
+      { path: 'create', name: 'create', component: () => import(/* webpackPrefetch: true */ '@/views/GenerationView.vue') },
+      { path: 'assets', name: 'assets', component: () => import(/* webpackPrefetch: true */ '@/views/GalleryView.vue') },
       { path: 'assets/:id', name: 'asset-detail', component: () => import('@/views/AssetDetailView.vue') },
       { path: 'projects', name: 'projects', component: () => import('@/views/ProjectView.vue') },
       { path: 'projects/:id', name: 'project-detail', component: () => import('@/views/ProjectDetailView.vue') },

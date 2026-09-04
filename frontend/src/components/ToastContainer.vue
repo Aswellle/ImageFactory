@@ -77,6 +77,7 @@ const orderedToasts = computed(() => store.toasts.slice(0, 5))
         v-for="toast in orderedToasts"
         :key="toast.id"
         class="pointer-events-auto rounded-2xl border backdrop-blur-xl shadow-lg overflow-hidden"
+        role="alert"
         :class="[
           getColors(toast.type).bg,
           getColors(toast.type).border,

@@ -10,6 +10,11 @@ const projectStore = useProjectStore()
 
 const ready = ref(false)
 
+function onImageError(event: Event) {
+  const img = event.target as HTMLImageElement
+  img.style.display = "none"
+}
+
 onMounted(async () => {
   await Promise.all([
     assetStore.fetchAssets({ page_size: 8 }),
@@ -77,6 +82,7 @@ onMounted(async () => {
                 class="w-full h-auto object-cover img-loading"
                 loading="lazy"
                 @load="($event.target as HTMLImageElement)?.classList.add('img-loaded')"
+                @error="onImageError($event)"
               />
             </div>
           </div>
