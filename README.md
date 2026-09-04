@@ -81,7 +81,73 @@ Then open http://127.0.0.1:5173.
 docker compose -f deploy/docker-compose.yml up --build
 ```
 
-## Configuration
+## Production deployment
+
+ImageForge ships a production-ready Docker Compose stack with Caddy reverse
+proxy, automatic HTTPS, isolated networks, and resource limits.
+
+### Prerequisites
+
+- Docker 24+ and Docker Compose v2
+- A domain pointing to your server (for Let's Encrypt)
+- At least 2 GB RAM, 2 CPU cores
+
+### Steps
+
+```bash
+# 1. Clone the repository
+git clone <repo-url> && cd ImageForge
+
+# 2. Create production environment file
+cp .env.example .env
+
+# 3. Edit .env and set required values:
+#    - IF_AUTH_JWT_SECRET (long random string)
+#    - DB_PASSWORD / IF_DATABASE_PASSWORD
+#    - IF_CADDY_HOST (your domain, e.g. imageforge.example.com)
+#    - IF_ALLOWED_ORIGINS (your frontend origin, e.g. https://imageforge.example.com)
+#    - STORAGE credentials (R2 or MinIO)
+
+# 4. Start the production stack
+docker compose -f deploy/docker-compose.prod.yml up -d
+
+# 5. Verify health
+curl https://your-domain/v1/health
+curl https://your-domain/v1/health?deep=true
+```
+
+### Production architecture
+
+```
+Internet → Caddy (80/443, auto-HTTPS) → backend:8080
+                                              ↓
+                                    ┌─────────┼─────────┐
+                                    ↓         ↓         ↓
+                                 Postgres   Redis    R2/MinIO
+```
+
+### Key production features
+
+- **Automatic HTTPS**: Caddy obtains and renews Let's Encrypt certificates
+- **Isolated networks**: `backend_net` is internal-only (no outbound)
+- **Resource limits**: CPU/memory limits on all services
+- **Graceful shutdown**: SIGTERM handling with 15s drain timeout
+- **Deep health checks**: `/v1/health?deep=true` verifies DB/Redis connectivity
+- **Auto-migration**: Ent schema migration runs on startup (configurable)
+- **CORS**: Configurable via `IF_ALLOWED_ORIGINS`
+- **Trusted proxies**: Configure `IF_SERVER_TRUSTED_PROXIES` for correct client IPs
+
+### Required environment variables
+
+| Variable | Purpose | Required |
+|----------|---------|----------|
+| `IF_AUTH_JWT_SECRET` | JWT signing secret | Yes |
+| `DB_PASSWORD` | PostgreSQL password | Yes |
+| `JWT_SECRET` | Alias for JWT secret (compose) | Yes |
+| `IF_CADDY_HOST` | Public domain for HTTPS | Yes |
+| `IF_ALLOWED_ORIGINS` | CORS allowed origins | Recommended |
+| `STORAGE_SECRET_KEY` | R2/MinIO secret key | Yes |
+
 
 All configuration is environment-driven (see `.env.example`). The `IF_` prefix
 is used throughout. Secrets (`IF_AUTH_JWT_SECRET`, `IF_DATABASE_PASSWORD`,

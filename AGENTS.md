@@ -1,358 +1,630 @@
-# ImageForge 工程规范
+# Repository Guidelines
 
-## 0. 项目使命
+## Project Overview
 
-ImageForge 是一个**商业级 AI 图片生产工作台**，以 **Sub2API 本地代码库为基座**构建。
+**ImageForge** is a commercial AI image-production workspace. It lets users create, edit, organize, manage, and programmatically access visual assets. The frontend is a Vue 3 SPA; the backend is a Go API server. ImageForge is built on top of a local **Sub2API** codebase (an upstream AI gateway), which it ports and adapts rather than calling as an external service.
 
-ImageForge 不是一个通用 AI 聊天应用。
-ImageForge 不是 Sub2API 的管理后台复刻。
-ImageForge 不是一个 API 中转面板。
+> Product mission: "Create, edit, organize, manage commercialized visual assets, and provide capabilities via API."
 
-产品目标：
-
-> "创建、编辑、组织、管理商业化视觉资产，并以 API 形式对外提供能力。"
-
-用户体验必须是：图片优先、极简、专业、Apple 风格。
+The UI must be image-first, minimal, professional, and Apple-style. No neon aesthetics, no dense dashboards, no excessive decoration.
 
 ---
 
-## 1. 核心架构原则：以 Sub2API 为基座
+## Architecture & Data Flow
 
-**Sub2API 是本项目的基座代码库**，不是外部依赖服务。
-
-ImageForge 直接复用 Sub2API 的源代码实现：
-
-- **能直接复用的代码** → 直接复制源文件到 ImageForge，适配包路径后使用
-- **能复用的开发模式** → 遵循 Sub2API 的架构模式（错误处理、中间件链、队列 worker、Ent 用法）
-- **能复用的处理逻辑** → 移植 Sub2API 的业务逻辑（图片管道、账户调度、计费、故障转移）
-- **能复用的数据模型** → 通过 Go workspace 直接导入 Sub2API 的 `ent/` 生成包
-
-**最终目标：ImageForge 单独部署上线即可提供完整的商业化服务，无需依赖外部 API（除必要的 AI 上游调用外）。**
-
-### 1.1 Go Workspace 机制
-
-项目使用 Go workspace（`D:\Git-Clone\SRC\Sub2API\go.work`）链接两个模块：
+### Request lifecycle
 
 ```
-github.com/Wei-Shaw/sub2api   ← 基座（本地代码库 D:\Git-Clone\SRC\Sub2API\sub2api\backend）
-github.com/imageforge/imageforge  ← 本项目
+Browser
+  → ImageForge Web (Vue 3 SPA, Vite)
+  → ImageForge API (Gin, /v1)
+    → Auth (JWT middleware or API-key middleware)
+    → Handler (parse + validate)
+    → Service (business logic)
+    → Repository (Ent ORM → PostgreSQL)
+    → Batch-image pipeline (ported from Sub2API)
+      → Provider (Gemini / OpenAI / etc.)
+    → Job queue (in-memory now, Redis later)
+    → Object storage (R2 / MinIO / filesystem)
+    → Asset record
+    → Browser
 ```
 
-通过 workspace，ImageForge 可以直接 import Sub2API 的公开包：
+### Key architectural decisions
+
+| Concern | Choice |
+|---------|--------|
+| Backend framework | Gin (Go 1.26) |
+| ORM | Ent (schema in `ent/schema/`, generated code in `ent/`) |
+| DI | Hand-written initializer in `cmd/server/wire.go` (Wire planned for Phase 2+) |
+| Frontend | Vue 3 + Vite + Tailwind CSS 4 + Pinia + vue-router |
+| Database | PostgreSQL 18 |
+| Cache | Redis 8 (optional — falls back to in-memory) |
+| Storage | S3-compatible via `storage.Storage` interface (R2, MinIO, or local filesystem) |
+| Async jobs | `job.Queue` + `job.Processor` (in-memory `MemoryQueue` in Phase 1) |
+| Config | Viper, env-driven with `IF_` prefix |
+| Logging | zap (JSON in production, console in debug) |
+| Auth | JWT (`golang-jwt/jwt/v5`) + bcrypt passwords; API keys for programmatic access |
+
+### Sub2API relationship
+
+Sub2API is the **base codebase**, not an external service. ImageForge reuses its source code:
+
+- **Ent models**: import directly from `github.com/Wei-Shaw/sub2api/ent/...` via Go workspace
+- **Service logic**: copy source files → adapt package name → replace imports → use ent types → compile + test
+- **Patterns**: follow Sub2API's conventions (error codes, middleware chains, worker queues)
+
+The Go workspace is at `D:\Git-Clone\SRC\Sub2API\go.work` and links:
+- `github.com/Wei-Shaw/sub2api` → `D:\Git-Clone\SRC\Sub2API\sub2api\backend`
+- `github.com/imageforge/imageforge` → this project's `backend/`
+
+---
+
+## Key Directories
+
+```
+ImageForge/
+├── backend/                    # Go API server
+│   ├── cmd/
+│   │   ├── server/             # Main entrypoint (main.go) + DI wiring (wire.go)
+│   │   └── admin-cli/          # CLI for admin tasks (promote/demote users)
+│   ├── ent/
+│   │   ├── schema/             # Ent entity definitions (edit these)
+│   │   └── *.go                # Generated Ent code (run `go generate ./ent` after schema changes)
+│   ├── internal/
+│   │   ├── config/             # Viper config loading (env-driven, IF_ prefix)
+│   │   ├── server/
+│   │   │   ├── router.go       # Gin engine setup, dependency wiring, route registration
+│   │   │   ├── middleware/      # Auth, API-key auth, CORS, request ID, max body
+│   │   │   └── routes/         # Route grouping (admin routes)
+│   │   ├── handler/            # HTTP handlers (auth, asset, generation, tag, etc.)
+│   │   ├── service/            # Business logic (auth, JWT, password, asset, generation, usage, etc.)
+│   │   ├── repository/         # Data access (Ent repositories, DB connector, rate limiter)
+│   │   ├── job/                # Async job model, Queue interface, MemoryQueue, Processor
+│   │   ├── batchimage/         # Ported Sub2API pipeline (provider interface, Gemini provider, public service)
+│   │   ├── storage/            # Object storage (Storage interface, R2, filesystem)
+│   │   ├── domain/             # Domain-wide constants (roles, statuses, error codes)
+│   │   ├── web/                // Embedded frontend assets via go:embed
+│   │   └── pkg/
+│   │       ├── errors/         # Stable, provider-independent error codes
+│   │       ├── response/       # Uniform JSON envelope helpers
+│   │       ├── logger/         # zap logger factory
+│   │       └── image/          # Image processing (thumbnail)
+│   ├── integration/            # Integration + e2e tests (build tags `integration`, `e2e`)
+│   └── migrations/             # SQL migration files
+├── frontend/                   # Vue 3 SPA
+│   ├── src/
+│   │   ├── api/               # Axios client + per-domain API modules
+│   │   ├── views/             # Page components (Dashboard, Login, Gallery, Generation, etc.)
+│   │   ├── components/        # Shared UI components (Toast, Skeleton, TagBadge, etc.)
+│   │   ├── stores/            # Pinia stores (auth, asset, generation, etc.)
+│   │   ├── router/            # vue-router config + auth guard
+│   │   ├── types/             # Shared TypeScript interfaces
+│   │   ├── composables/       # Vue composables (useKeyboard, useDesktopLauncher)
+│   │   ├── i18n/              # vue-i18n localization
+│   │   ├── styles/            # Tailwind CSS entry (main.css)
+│   │   └── utils/             # Utilities (debounce, password rules)
+│   └── public/                 # Static assets
+├── deploy/                     # Docker Compose + Caddyfile
+├── tests/                      # Python Playwright tests
+│   ├── test_webapp.py          # Standalone web UI tests
+│   └── web/                    # pytest + Playwright tests (auth, landing, views)
+│   └── e2e/                    # End-to-end tests with screenshots
+├── docs/                       # PRD (Chinese), RULES.md
+├── Dockerfile                  # Multi-stage build (frontend → Go binary → alpine runtime)
+└── Makefile                    # Dev shortcuts
+```
+
+---
+
+## Development Commands
+
+### Backend
+
+```bash
+cd backend
+
+# Run the server directly
+go run ./cmd/server
+
+# Build the binary
+go build -o ../build/imageforge ./cmd/server
+
+# Run unit tests (build tag `unit`)
+go test -tags=unit ./...
+
+# Run all tests
+go test ./...
+
+# Regenerate Ent code after schema changes
+go generate ./ent
+
+# Lint
+golangci-lint run ./...
+```
+
+### Frontend
+
+```bash
+cd frontend
+
+# Install deps
+pnpm install
+
+# Run dev server (proxies /v1 to backend at 127.0.0.1:8080)
+pnpm dev
+
+# Type-check
+pnpm typecheck
+
+# Build for production
+pnpm build
+
+# Lint
+pnpm lint
+```
+
+### Combined (Makefile)
+
+```bash
+make backend              # Build backend binary
+make backend-generate     # Regenerate Ent code
+make backend-lint         # Lint backend
+make backend-test         # Run backend unit tests
+make frontend             # Install + build frontend
+make frontend-dev         # Run frontend dev server
+make frontend-typecheck   # Type-check frontend
+make docker-up            # Start full stack via Docker Compose
+make docker-down          # Stop Docker stack
+make docker-logs          # Tail backend logs
+```
+
+### Docker
+
+```bash
+# Full stack
+docker compose -f deploy/docker-compose.yml up --build
+
+# Infrastructure only (db, redis, minio)
+docker compose -f deploy/docker-compose.yml up -d db redis minio
+```
+
+### CLI admin tool
+
+```bash
+cd backend
+go run ./cmd/admin-cli promote <email>    # Promote user to admin
+go run ./cmd/admin-cli demote <email>     # Demote admin to user
+go run ./cmd/admin-cli list-admins        # List all admins
+```
+
+---
+
+## Code Conventions & Common Patterns
+
+### Backend layering
+
+The backend follows a strict layered architecture. **Never** let a handler bypass the service layer or let a service write HTTP responses.
+
+```
+Handler (HTTP) → Service (business logic) → Repository (data access) → Ent (ORM) → PostgreSQL
+```
+
+### Handler pattern
+
+Handlers are thin: bind JSON, extract user from context, call service, write response.
 
 ```go
-import "github.com/Wei-Shaw/sub2api/ent"           // Ent 数据模型
-import "github.com/Wei-Shaw/sub2api/ent/user"       // 用户模型
-import "github.com/Wei-Shaw/sub2api/ent/account"    // 账户模型
+func (h *XHandler) Create(c *gin.Context) {
+    var req requestRequest
+    if err := c.ShouldBindJSON(&req); err != nil {
+        response.Error(c, 400, string(errors.ErrorCodeInvalidRequest), "invalid request", requestID(c))
+        return
+    }
+    uid, ok := userID(c)
+    if !ok {
+        response.Error(c, http.StatusUnauthorized, string(errors.ErrorCodeUnauthorized), "authentication required", requestID(c))
+        return
+    }
+    result, err := h.svc.Create(c.Request.Context(), service.CreateInput{...})
+    if err != nil {
+        writeError(c, err)   // maps *errors.Error to HTTP response
+        return
+    }
+    response.Created(c, result)
+}
 ```
 
-### 1.2 代码复用层级
+Key conventions:
+- Request structs use `binding:` tags for validation (e.g., `binding:"required,email"`, `binding:"required,min=8"`)
+- Extract user ID via `userID(c)` helper (from `if.user_id` context key set by auth middleware)
+- Extract request ID via `requestID(c)` helper (from `if.request_id` context key)
+- Use `response.OK`, `response.Created`, `response.Paginated`, `response.Error` for all responses
+- Use `writeError(c, err)` to map `*errors.Error` to HTTP responses
 
-| 层级 | 复用方式 | 示例 |
-|------|----------|------|
-| **Ent 数据模型** | 直接 import `ent/` 包 | `ent.User`、`ent.Account`、`ent.BatchImageJob` |
-| **服务层逻辑** | 复制源文件 → 适配包路径 → 编译验证 | `batch_image` 管道、`openai_images` 网关 |
-| **开发模式** | 遵循 Sub2API 的架构约定 | 错误码枚举、中间件链、worker 队列、配置结构 |
-| **前端组件** | 参考 Sub2API 的 Vue 组件模式 | Pinia store、axios 客户端、路由守卫 |
+### Service pattern
 
-### 1.3 移植标准流程
+Services are structs with constructor functions. They never touch HTTP or Gin.
 
-将 Sub2API 的 `internal/` 包移植到 ImageForge 时，严格遵循以下步骤：
+```go
+type AssetService struct {
+    db    *ent.Client
+    store storage.Storage
+}
 
-1. **复制** — 将源文件复制到 ImageForge 对应的包目录
-2. **改包名** — 将 `package service` 改为 ImageForge 的目标包名
-3. **换导入** — 将 `github.com/Wei-Shaw/sub2api/internal/...` 替换为 ImageForge 本地包或 `ent/` 直接导入
-4. **去 internal 依赖** — 将 Sub2API `internal/` 的类型替换为本地 stub 或直接使用 ent 类型
-5. **编译验证** — `go build ./...` 通过
-6. **测试** — `go test ./...` 通过
-
----
-
-## 2. 绝对开发规则
-
-修改任何代码之前：
-
-1. 阅读相关现有实现（先查 Sub2API，再查 ImageForge）
-2. 理解当前架构和数据流
-3. 搜索已有可复用功能（**先搜 Sub2API，再搜 ImageForge**）
-4. 不创建重复基础设施
-5. 不修改 Sub2API 源文件（只复制适配）
-6. **能复用就复用，不能复用再新建**
-7. 保持变更最小且可逆
-8. 修改后运行相关测试
-
-**绝不盲目重写已有子系统。**
-
----
-
-## 3. Sub2API 边界与复用策略
-
-### 3.1 直接复用（通过 Go workspace import）
-
-以下 Sub2API 包可直接导入使用：
-
-- `github.com/Wei-Shaw/sub2api/ent/...` — 所有 Ent 生成模型
-- `github.com/Wei-Shaw/sub2api/ent/schema/...` — Ent  Schema 定义（参考）
-
-### 3.2 复制移植（internal 包）
-
-以下 Sub2API 功能需要复制源文件到 ImageForge 后适配使用：
-
-| Sub2API 功能 | 源路径 | ImageForge 目标包 |
-|---|---|---|
-| 异步图片批处理管道 | `internal/service/batch_image*.go` | `internal/batchimage/` |
-| 同步图片网关 | `internal/service/openai_images.go` | `internal/imagegateway/` |
-| 异步图片任务处理器 | `internal/handler/image_task_handler.go` | `internal/handler/` |
-| 账户调度 | `internal/service/account.go` | `internal/account/` |
-| 计费服务 | `internal/service/billing_service.go` | `internal/billing/` |
-| 错误处理 | `internal/pkg/errors/` | `internal/pkg/errors/` |
-| 配置结构 | `internal/config/config.go` | `internal/config/` |
-| Redis 队列 | `internal/service/batch_image_queue.go` | `internal/batchimage/` |
-
-### 3.3 ImageForge 独有（新建）
-
-以下功能 Sub2API 不存在，由 ImageForge 全新实现：
-
-- 产品用户系统（`ent/user` 产品级用户，区别于 Sub2API 的网关用户）
-- 项目管理（`ent/project`）
-- 资产库（`ent/asset`、`ent/asset_version`）
-- 提示词模板（`ent/prompt_template`）
-- 产品级 API Key（`ent/api_key`）
-- 收藏与标签（`ent/favorite`、`ent/tag`、`ent/collection`）
-- 产品级生成任务（`ent/generation_job`）
-- 前端 UI（Vue 3 工作台、画廊、编辑器）
-
----
-
-## 4. 架构流向
-
-```
-浏览器
-  → ImageForge Web (Vue 3 SPA)
-  → ImageForge API (Gin)
-    → 认证 (JWT)
-    → 授权 (中间件)
-    → 产品服务层 (项目/资产/提示词/API Key)
-    → 图片生成引擎 (移植自 Sub2API)
-      → 账户调度 (移植自 Sub2API)
-      → 模型路由 (移植自 Sub2API)
-      → 上游 AI 调用 (OpenAI/DALL·E/Gemini)
-      → 故障转移 (移植自 Sub2API)
-    → Worker 队列 (移植自 Sub2API)
-    → 对象存储
-    → 资产记录
-    → 浏览器
+func NewAssetService(db *ent.Client, store storage.Storage) *AssetService {
+    return &AssetService{db: db, store: store}
+}
 ```
 
-**关键区别：** 图片生成引擎不是外部服务调用，而是 ImageForge 内部直接运行的移植代码。
+- Business logic that spans multiple entities should use transactions (Ent's `Tx`)
+- Services depend on interfaces (e.g., `storage.Storage`) not concrete types
+- Services return domain errors (`*errors.Error`) not raw upstream errors
+
+### Repository pattern
+
+Repositories wrap Ent operations. They expose domain-meaningful methods, not raw Ent builders.
+
+```go
+type UserRepository struct {
+    db *ent.Client
+}
+
+func NewUserRepository(db *ent.Client) *UserRepository {
+    return &UserRepository{db: db}
+}
+
+func (r *UserRepository) GetByEmail(ctx context.Context, email string) (*ent.User, error) {
+    return r.db.User.Query().Where(user.Email(email)).Only(ctx)
+}
+```
+
+### Error handling
+
+All API errors use stable, provider-independent codes defined in `internal/pkg/errors`:
+
+```go
+// Error codes (partial list)
+ErrorCodeInvalidRequest      = "INVALID_REQUEST"           // 400
+ErrorCodeUnauthorized        = "UNAUTHORIZED"              // 401
+ErrorCodeForbidden           = "FORBIDDEN"                 // 403
+ErrorCodeNotFound            = "NOT_FOUND"                 // 404
+ErrorCodeConflict            = "CONFLICT"                  // 409
+ErrorCodeImageGeneration     = "IMAGE_GENERATION_FAILED"   // 500
+ErrorCodeImageEdit           = "IMAGE_EDIT_FAILED"         // 500
+ErrorCodeUpstreamTimeout     = "UPSTREAM_TIMEOUT"          // 504
+ErrorCodeUpstreamRateLimited = "UPSTREAM_RATE_LIMITED"     // 429
+ErrorCodeModelUnavailable    = "MODEL_UNAVAILABLE"         // 503
+ErrorCodeAuthExpired         = "AUTHENTICATION_EXPIRED"    // 401
+ErrorCodeStorageFailed       = "STORAGE_FAILED"            // 500
+ErrorCodeQuotaExceeded       = "QUOTA_EXCEEDED"            // 429
+ErrorCodeInternal            = "INTERNAL_ERROR"            // 500
+```
+
+Rules:
+- Never expose raw upstream errors (OpenAI, Gemini, etc.) to clients
+- Use `errors.New(code, msg)` to create; `errors.Wrap(code, msg, cause)` to wrap
+- Map internal errors to these stable codes at the handler layer via `writeError`
+
+### Response envelope
+
+All JSON responses use a uniform envelope:
+
+```json
+// Success
+{ "data": { ... } }
+
+// Created (201)
+{ "data": { ... } }
+
+// Error
+{ "error": { "code": "NOT_FOUND", "message": "asset not found", "request_id": "req_xxx" } }
+
+// Paginated
+{ "data": [ ... ], "pagination": { "total": 100, "page": 1, "page_size": 20 } }
+```
+
+### Ent schema conventions
+
+- Schemas live in `ent/schema/`; generated code in `ent/`
+- Use `field.Enum(...)` for status fields with `.Values(...)` and `.Default(...)`
+- Sensitive fields use `.Sensitive()` (e.g., `password_hash`)
+- Edges use `edge.To(...)` / `edge.From(...).Ref(...)` with `.Unique()` and `.Required()` where appropriate
+- Add indexes via `Indexes()` for query patterns
+- After schema changes: run `go generate ./ent` to regenerate code
+
+### Middleware
+
+Global middleware order (set in `router.go`):
+1. `RequestID()` — attaches `req_<uuid>` or reuses `X-Request-ID` header
+2. `CORS()` — permits common dev origins
+3. `MaxRequestBodySize(1 << 20)` — 1 MB limit
+4. `gin.Recovery()` — panic recovery
+5. `requestLogger(log)` — logs method, path, status, duration, request ID
+
+Route groups apply additional middleware:
+- `authMW.Require()` — JWT required
+- `authMW.RequireAdmin()` — JWT + admin role required
+- `apiKeyMW` — API key required (supports `x-api-key` header and `Authorization: Bearer <key>`)
+- `adminAuth` — combined admin auth for admin route group
+
+Context keys set by middleware:
+- `if.user_id` — authenticated user ID (int64)
+- `if.role` — user role ("user" | "admin")
+- `if.request_id` — request correlation ID
+- `if.auth_method` — "jwt" or "api_key"
+
+### Naming conventions
+
+- **Packages**: short, lowercase, singular (e.g., `service`, `handler`, `repository`, `storage`)
+- **Constructors**: `New<X>(...) *<X>` (e.g., `NewAuthService`, `NewAssetHandler`)
+- **Interfaces**: describe behavior (e.g., `Storage`, `Queue`, `Processor`); often with `var _ Interface = (*Impl)(nil)` compile-time check
+- **Request/response types**: `<action>Request`, `<action>Result`, `<action>Input`
+- **Files**: one handler/service per file, named after the entity (e.g., `asset_handler.go`, `auth_service.go`)
+- **Ent schemas**: singular nouns (`User`, `Asset`, `GenerationJob`)
+
+### Logging
+
+- Use `go.uber.org/zap`; never log secrets (API keys, tokens, passwords, signed URLs, cookies, auth headers)
+- Use `request_id` for correlation
+- In debug mode: colored console output; in production: JSON with ISO 8601 timestamps
+
+### Storage path layout
+
+```
+users/{user_id}/projects/{project_id}/{kind}/{name}
+```
+
+Where `kind` ∈ {`originals`, `thumbnails`, `mediums`, `versions`, `uploads`}.
+
+### Async job pattern
+
+Every image operation is an async job:
+
+```go
+// job.go
+type Job struct {
+    ID, UserID, ProjectID, Type, Status, Model, Prompt string/int
+    Attempt, MaxAttempts int
+    Sub2APITaskID string
+    CreatedAt, ScheduledAt time.Time
+    InputAssetIDs []int64
+}
+
+type Task struct {
+    Job *Job
+    Run func(ctx context.Context) error
+}
+
+type Queue interface {
+    Submit(ctx context.Context, t *Task) error
+    Stop() error
+}
+```
+
+Job statuses: `pending`, `processing`, `completed`, `failed`, `cancelled`.
 
 ---
 
-## 5. 安全
+## Frontend Conventions
 
-所有受保护资源必须验证：
+### State management
 
-认证 + 授权 + 资源所有权
+Pinia stores use the Composition API pattern:
 
-绝不信任客户端传入的 ID。
+```typescript
+export const useAuthStore = defineStore('auth', () => {
+  const token = ref<string | null>(getToken())
+  const user = ref<User | null>(null)
+  const isAuthenticated = computed(() => !!token.value)
+  // ... actions
+  return { token, user, isAuthenticated, login, logout }
+})
+```
 
-绝不使用客户端 user_id 做授权。
+### API client
 
-API Key 不明文存储，存储哈希。
+- Single axios instance at `src/api/client.ts`
+- Request interceptor attaches Bearer token + `X-Request-ID`
+- Response interceptor surfaces 401/403/network errors as toasts
+- Use `parseApiError(err)` to extract `{ code, message, requestID }` from failures
 
-密钥始终在服务端。
+### Routing
 
-绝不提交：API Key、OAuth Token、refresh token、cookie、session 密钥、生产凭证。
+- Lazy-loaded views keep the initial bundle small
+- Auth guard enforces `requiresAuth` and `requiresAdmin` meta fields
+- Authenticated users are redirected from landing to dashboard
 
----
+### Path alias
 
-## 6. 图片存储
+`@/` maps to `src/` (configured in `vite.config.ts`).
 
-绝不将图片二进制存入数据库字段。
+### Dev proxy
 
-使用对象存储（S3/MinIO/R2）。
-
-数据库只存：storage key、MIME 类型、尺寸、大小、校验和、元数据。
-
-私有资源使用签名 URL。
-
-缩略图异步生成。
-
----
-
-## 7. 图片任务
-
-图片生成必须建模为异步任务。
-
-有效状态：pending、processing、completed、failed、cancelled。
-
-失败任务必须保留：request ID、provider、model、error code、脱敏 error message、时间戳。
-
-绝不静默吞掉生成失败。
-
-绝不把 HTTP 200 当作生成成功的充分证据，必须验证实际图片输出。
+Vite dev server proxies `/v1` to the backend at `http://127.0.0.1:8080` (override with `IF_API_TARGET`).
 
 ---
 
-## 8. 错误处理
+## Important Files
 
-绝不把原始上游异常直接暴露给用户。
-
-将内部错误映射为稳定的 ImageForge 错误码。
-
-示例：IMAGE_GENERATION_FAILED、IMAGE_EDIT_FAILED、UPSTREAM_TIMEOUT、UPSTREAM_RATE_LIMITED、MODEL_UNAVAILABLE、AUTHENTICATION_EXPIRED、STORAGE_FAILED。
-
-每个请求必须有 request_id。
-
----
-
-## 9. 数据库
-
-每个用户拥有表必须有 user 所有权关系。
-
-用户资产优先软删除。
-
-文件在数据库生命周期规则确认不再引用前不物理删除。
-
-以下操作使用事务：任务完成、资产创建、版本创建、项目移动、API 用量记录。
-
----
-
-## 10. API 设计
-
-公开 ImageForge API 必须保持 provider 独立。
-
-不在公开 API 合同中暴露 Sub2API 特有概念。
-
-Bad：`provider_account_id`、`sub2api_account_id`
-Good：`model`、`generation_id`、`task_id`
+| File | Purpose |
+|------|---------|
+| `backend/cmd/server/main.go` | Application entrypoint, graceful shutdown |
+| `backend/cmd/server/wire.go` | Dependency injection (hand-written; Wire later) |
+| `backend/internal/server/router.go` | Gin engine setup, all route registration |
+| `backend/internal/config/config.go` | Viper config loading, `Config` struct |
+| `backend/internal/pkg/errors/errors.go` | Stable error codes, `Error` type |
+| `backend/internal/pkg/response/response.go` | Uniform JSON envelope helpers |
+| `backend/internal/domain/constants.go` | Domain constants (roles, statuses, error codes) |
+| `backend/internal/web/web.go` | `go:embed` of frontend `dist/` |
+| `backend/ent/schema/*.go` | Ent entity definitions (source of truth for models) |
+| `backend/migrations/*.sql` | Versioned SQL migrations |
+| `backend/go.mod` | Go module definition |
+| `frontend/src/main.ts` | Vue app bootstrap |
+| `frontend/src/router/index.ts` | Route definitions + auth guard |
+| `frontend/src/api/client.ts` | Shared axios instance + interceptors |
+| `frontend/src/types/index.ts` | Shared TypeScript interfaces |
+| `frontend/vite.config.ts` | Vite config + dev proxy |
+| `Dockerfile` | Multi-stage build (frontend → Go → alpine) |
+| `deploy/docker-compose.yml` | Local infrastructure stack |
+| `deploy/Caddyfile` | Production reverse proxy config |
+| `.env.example` | Environment variable template |
+| `Makefile` | Development shortcuts |
 
 ---
 
-## 11. 前端
+## Runtime/Tooling Preferences
 
-UI 必须是：极简、图片优先、留白、专业、安静、快速。
+| Concern | Requirement |
+|---------|-------------|
+| Go | 1.26+ |
+| Node | 22+ |
+| Package manager (frontend) | pnpm 10+ (corepack enabled in Dockerfile) |
+| Database driver | pgx/v5 (stdlib) |
+| ORM | Ent v0.14.4 |
+| Linting (backend) | golangci-lint |
+| Linting (frontend) | eslint |
+| Type-checking (frontend) | vue-tsc |
 
-避免：过度渐变、过度卡片、过度边框、AI 霓虹美学、过大装饰元素、无意义仪表盘、密集企业风格。
-
-图片是第一视觉元素。
-
----
-
-## 12. UX
-
-每次生成必须传达状态：idle → submitting → processing → completed，或 idle → submitting → processing → failed → retry。
-
-绝不让用户盯着无解释的转圈。
-
----
-
-## 13. Prompt UX
-
-Prompt 输入必须支持：多行、粘贴、历史、模板、重新生成、编辑前次 prompt。
-
-不无故截断用户 prompt。
+> The `backend/go.sh` helper sets `GOROOT=/c/GoInstall/go`, `GOFLAGS=-mod=mod`, `GOSUMDB=off` for the local Windows Go install.
 
 ---
 
-## 14. 资产 UX
+## Testing & QA
 
-每张生成图片自动成为 Asset。
+### Test layers
 
-Asset 可属于：项目、收藏、标签、生成任务。
+| Layer | Location | Build tag | Purpose |
+|-------|----------|-----------|---------|
+| Unit tests | `backend/` (alongside source) | `unit` | Test services/handlers in isolation |
+| Integration tests | `backend/integration/` | `integration` | In-process HTTP tests against real DB |
+| E2E tests | `backend/integration/` | `e2e` | Full request lifecycle (register → login → API key) |
+| Web UI tests | `tests/web/` | — | Playwright tests against running dev server |
+| Legacy web tests | `tests/test_webapp.py` | — | Standalone Playwright script |
+| E2E UX tests | `tests/e2e/` | — | Full-app Playwright tests with screenshots |
 
-绝不强制用户手动保存生成图片。
+### Running tests
 
----
+```bash
+# Backend unit tests
+cd backend && go test -tags=unit ./...
 
-## 15. 版本管理
+# Backend integration tests (needs DB)
+cd backend && go test -tags=integration ./...
 
-图片编辑创建新版本，绝不覆盖原图。
+# Backend e2e tests (needs DB + running infra)
+cd backend && go test -tags=e2e ./...
 
-版本关系必须可追溯。
+# Frontend web UI tests (needs running frontend dev server)
+cd tests/web && pytest
 
----
+# Legacy web tests
+python tests/test_webapp.py
+```
 
-## 16. API Key
+### Integration test harness
 
-API Key 是敏感凭证。
+`backend/integration/main_test.go` provides:
+- `TestMain` that waits for infrastructure, runs migrations, boots the server
+- `doRequest()` helper for in-process HTTP requests
+- `mustSeedUser()` to provision authenticated test users
+- Graceful skip when database is unavailable (so CI without Docker passes)
 
-创建时仅显示一次完整密钥，之后显示掩码。
+### Critical test paths for image generation
 
-支持：创建、撤销、重命名、最后使用时间、创建时间。
-
-绝不记录完整 API Key。
-
----
-
-## 17. 日志
-
-日志绝不包含：API Key、refresh token、OAuth 凭证、cookie、授权头、私有图片数据、完整签名 URL。
-
-使用 request_id 做关联。
-
----
-
-## 18. 测试
-
-每个功能必须有适当的测试：单元测试、集成测试、API 测试。
-
-关键图片路径必须测试：success、timeout、429、500、502、503、invalid response、provider failure、storage failure。
-
----
-
-## 19. 编码前检查清单
-
-对每个任务：
-
-1. 检查仓库（先查 Sub2API，再查 ImageForge）
-2. 找到相关实现
-3. 识别依赖
-4. 写简短实施计划
-5. 实施最小正确变更
-6. 运行测试
-7. 检查 diff
-8. 删除不必要的变更
-9. 报告确切改动
+Must cover: success, timeout, 429, 500, 502, 503, invalid response, provider failure, storage failure.
 
 ---
 
-## 20. 不过度工程
+## API Design Rules
 
-不引入：microservices、event buses、Kubernetes、不必要的消息队列、复杂抽象。
-
-除非当前规模或架构明确要求。
-
-MVP 优先模块化单体。
-
----
-
-## 21. 产品原则
-
-在技术优雅和图片工作流用户体验之间，优先用户体验。
-
-产品必须感觉像专业创作工具，而非基础设施控制台。
+- All public endpoints live under `/v1`
+- API is provider-independent: never expose `provider_account_id`, `sub2api_account_id`, or Sub2API internals
+- Use provider-neutral identifiers: `model`, `generation_id`, `task_id`
+- Two auth paths: JWT (browser sessions) and API keys (programmatic access)
+- OpenAI-compatible endpoint at `POST /v1/images/generations` for SDK access
+- API-key-authed generation at `POST /v1/images/generate` (avoids conflict with public endpoint)
+- Admin routes under `/v1/admin` with admin-only middleware
 
 ---
 
-## 22. 合规门控
+## Security Rules
 
-不要假设"技术上能调用上游订阅"等于"可以商业化转售"。
-
-生产环境上线前必须：
-
-1. 验证适用上游条款
-2. 验证账户类型授权
-3. 验证商业化使用权
-4. 验证转售/API 访问权
-5. 记录结果
-
-法律/商业状态不明确时，明确标记风险，绝不静默假设许可。
+- All protected resources verify: **authentication + authorization + resource ownership**
+- Never trust client-submitted IDs; always resolve ownership server-side
+- Never use client `user_id` for authorization — use the ID from the validated JWT/API key
+- API keys are stored as SHA-256 hashes; plaintext shown only once at creation
+- Passwords hashed with bcrypt (cost configurable, capped at 20)
+- JWT secret must be set in production mode; debug mode auto-generates a temporary secret
+- Never commit: API keys, OAuth tokens, refresh tokens, cookies, session secrets, production credentials
+- Logs must never contain: API keys, tokens, cookies, auth headers, private image data, full signed URLs
+- Token versioning invalidates all existing tokens on password change
 
 ---
 
-## 23. 完成定义
+## Image & Storage Rules
 
-代码编译不等于完成。
+- Never store image binaries in the database — only keys, MIME type, dimensions, size, checksum, metadata
+- Use object storage (S3/MinIO/R2) via the `storage.Storage` interface
+- Private assets use presigned URLs
+- Thumbnails generated asynchronously
+- Editing an image creates a new version; never overwrite the original
+- Storage path layout: `users/{user_id}/projects/{project_id}/{kind}/{name}`
 
-完成意味着：实现完成、错误状态处理、加载状态处理、空状态处理、权限检查实现、测试通过、数据库迁移（如需）、文档更新、UI 响应式、无密钥暴露、无多余变更。
+---
+
+## Porting Code from Sub2API
+
+When porting Sub2API code, follow this exact sequence:
+
+1. **Copy** the source file into the corresponding ImageForge package directory
+2. **Rename** the package declaration to the ImageForge target package
+3. **Replace imports**: `github.com/Wei-Shaw/sub2api/internal/...` → ImageForge local packages or direct `ent/` imports
+4. **Remove internal dependencies**: replace Sub2API `internal/` types with local stubs or ent types
+5. **Compile**: `go build ./...` must pass
+6. **Test**: `go test ./...` must pass
+
+> Always check Sub2API first before writing new code. **REUSE > REWRITE**, **PORT > REIMPLEMENT**.
+
+---
+
+## Decision Hierarchy
+
+When facing a choice:
+
+1. **Existing implementation reusable?** → REUSE (copy from Sub2API)
+2. **Unclear what exists?** → INSPECT (read code) > GUESS
+3. **Requirements ambiguous?** → ASK > ASSUME
+4. **Large change scope?** → MINIMIZE > REFACTOR
+5. **Security concern?** → STOP > SHIP
+6. **Sub2API has it?** → PORT > REIMPLEMENT
+
+---
+
+## Non-Negotiable Stop Conditions
+
+Stop and reassess immediately when:
+
+1. Starting to reimplement something Sub2API already has
+2. Treating Sub2API as an external HTTP service instead of a codebase to port from
+3. Modifying Sub2API source files (only copy and adapt)
+4. Implementing OAuth/upstream account scheduler/provider protocol from scratch
+5. Exposing API keys or refresh tokens to the frontend
+6. Storing image binaries in the database
+7. Making image generation a permanent synchronous HTTP request
+8. Adding excessive gradients, glassmorphism, or decoration
+9. Creating abstraction layers for hypothetical future needs
+10. Modifying files unrelated to the current task
+11. Starting large-scale refactoring
+12. Assuming APIs or database fields exist without verifying
+13. Bypassing tests
+14. Returning raw upstream errors to users
+15. Ignoring the Go workspace's ability to import ent directly
+
+---
+
+## Documentation
+
+- `docs/项目总体定义prd.md` — Product requirements (Chinese)
+- `docs/RULES.md` — Non-negotiable stop conditions (Chinese)
+- `README.md` — Stack overview, quick start, repository layout
