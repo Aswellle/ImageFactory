@@ -2,7 +2,6 @@ package scheduling
 
 import (
 	"encoding/json"
-	"math"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -14,16 +13,11 @@ import (
 // Used by the session window management algorithm ported from Sub2API's
 // ratelimit_service.go (UpdateSessionWindow, samplePassiveUsageFromHeaders).
 type SessionWindowState struct {
-	// WindowStart is when the current 5h window began.
-	WindowStart *time.Time
-	// WindowEnd is when the current 5h window expires.
-	WindowEnd *time.Time
-	// Utilization is the current usage as a percentage (0-100).
-	Utilization float64
-	// RequestCount is the number of requests in the current window.
+	WindowStart  *time.Time
+	WindowEnd    *time.Time
+	Utilization  float64
 	RequestCount int
-	// Cost is the accumulated cost in the current window (USD).
-	Cost float64
+	Cost         float64
 }
 
 // WindowCostSchedulability indicates whether an account can be scheduled
@@ -31,39 +25,21 @@ type SessionWindowState struct {
 type WindowCostSchedulability int
 
 const (
-	// WindowCostSchedulable means the account is fully schedulable.
 	WindowCostSchedulable WindowCostSchedulability = iota
-	// WindowCostStickyOnly means only sticky sessions can use this account.
 	WindowCostStickyOnly
-	// WindowCostNotSchedulable means the account is not schedulable.
 	WindowCostNotSchedulable
 )
 
 // AnthropicRateLimitHeaders holds parsed Anthropic rate-limit information
 // from response headers.
-//
-// Ported from Sub2API: ratelimit_service.go calculateAnthropic429ResetTime
 type AnthropicRateLimitHeaders struct {
-	// Window is which quota window triggered (5h, 7d, 7d_oi).
-	Window string
-	// ResetAt is when the window resets.
-	ResetAt time.Time
-	// Utilization is the current window utilization percentage.
+	Window     string
+	ResetAt    time.Time
 	Utilization float64
-	// Status is "rejected" when the window is exhausted.
-	Status string
+	Status     string
 }
 
 // ParseAnthropicRateLimitHeaders parses Anthropic rate-limit headers from an HTTP response.
-// This is the header-reading portion of Sub2API's UpdateSessionWindow and
-// calculateAnthropic429ResetTime, extracted as a pure function.
-//
-// Headers parsed:
-//   - anthropic-ratelimit-unified-5h-utilization
-//   - anthropic-ratelimit-unified-5h-reset
-//   - anthropic-ratelimit-unified-7d-utilization
-//   - anthropic-ratelimit-unified-7d-reset
-//   - anthropic-ratelimit-unified-reset (aggregated)
 func ParseAnthropicRateLimitHeaders(headers http.Header, now time.Time) *AnthropicRateLimitHeaders {
 	if headers == nil {
 		return nil
@@ -71,7 +47,6 @@ func ParseAnthropicRateLimitHeaders(headers http.Header, now time.Time) *Anthrop
 
 	result := &AnthropicRateLimitHeaders{}
 
-	// Determine which window is rejected
 	for _, window := range []string{"5h", "7d", "7d_oi"} {
 		if isAnthropicWindowRejected(headers, window) {
 			result.Window = window
@@ -79,16 +54,14 @@ func ParseAnthropicRateLimitHeaders(headers http.Header, now time.Time) *Anthrop
 		}
 	}
 
-	// Parse utilization from any available window
 	for _, window := range []string{"5h", "7d"} {
 		key := "anthropic-ratelimit-unified-" + window + "-utilization"
 		if v := headers.Get(key); v != "" {
-			result.Utilization = schedulingPercentValue(v)
+			result.Utilization = utilizationAsPercent(v)
 			break
 		}
 	}
 
-	// Parse reset time from per-window or aggregated header
 	if reset, ok := parseAnthropicWindowReset(headers, "5h", now); ok {
 		result.ResetAt = reset
 	} else if reset, ok := parseAnthropicWindowReset(headers, "7d", now); ok {
@@ -105,37 +78,23 @@ func ParseAnthropicRateLimitHeaders(headers http.Header, now time.Time) *Anthrop
 	return result
 }
 
-// isAnthropicWindowRejected checks whether a given Anthropic rate-limit window
-// (e.g. "5h" or "7d") is in "rejected" status.
-//
-// Ported from Sub2API: ratelimit_service.go isAnthropicWindowRejected
 func isAnthropicWindowRejected(headers http.Header, window string) bool {
 	return strings.EqualFold(strings.TrimSpace(headers.Get("anthropic-ratelimit-unified-"+window+"-status")), "rejected")
 }
 
-// isAnthropic5hRejected is a convenience check for the 5h window.
 func isAnthropic5hRejected(headers http.Header) bool {
 	return isAnthropicWindowRejected(headers, "5h")
 }
 
-// parseAnthropicWindowReset parses a per-window Anthropic reset header.
-// It tries both Unix timestamp (seconds/milliseconds) and RFC3339 formats.
-//
-// Ported from Sub2API: ratelimit_service.go parseAnthropicWindowReset
 func parseAnthropicWindowReset(headers http.Header, window string, now time.Time) (time.Time, bool) {
 	raw := headers.Get("anthropic-ratelimit-unified-" + window + "-reset")
 	return parseAnthropicResetTimestamp(raw, now, 8*24*time.Hour)
 }
 
-// parseAnthropicAggregateReset parses the aggregated reset header.
 func parseAnthropicAggregateReset(headers http.Header, now time.Time) (time.Time, bool) {
 	return parseAnthropicResetTimestamp(headers.Get("anthropic-ratelimit-unified-reset"), now, 8*24*time.Hour)
 }
 
-// parseAnthropicResetTimestamp parses an Anthropic reset header Unix timestamp
-// (auto-detecting milliseconds), and validates it falls within (now, now+maxAge].
-//
-// Ported from Sub2API: ratelimit_service.go parseAnthropicResetTimestamp
 func parseAnthropicResetTimestamp(raw string, now time.Time, maxAge time.Duration) (time.Time, bool) {
 	raw = strings.TrimSpace(raw)
 	if raw == "" {
@@ -144,20 +103,17 @@ func parseAnthropicResetTimestamp(raw string, now time.Time, maxAge time.Duratio
 
 	var unixSec int64
 	if strings.ContainsAny(raw, "T-:") {
-		// Try RFC3339
 		ts, err := parseTime(raw)
 		if err != nil {
 			return time.Time{}, false
 		}
 		unixSec = ts.Unix()
 	} else {
-		// Parse as Unix timestamp (seconds or milliseconds)
 		val, err := strconv.ParseFloat(raw, 64)
 		if err != nil {
 			return time.Time{}, false
 		}
 		if val > 1e12 {
-			// Milliseconds
 			unixSec = int64(val / 1000)
 		} else {
 			unixSec = int64(val)
@@ -176,8 +132,6 @@ func parseAnthropicResetTimestamp(raw string, now time.Time, maxAge time.Duratio
 
 // AnthropicPassiveUsage holds passive usage sampling data from Anthropic
 // response headers for 5h/7d/7d_oi windows.
-//
-// Ported from Sub2API: ratelimit_service.go samplePassiveUsageFromHeaders
 type AnthropicPassiveUsage struct {
 	Window5hUtilization   float64
 	Window5hResetAt       *time.Time
@@ -189,8 +143,6 @@ type AnthropicPassiveUsage struct {
 }
 
 // SampleAnthropicPassiveUsage samples passive usage from Anthropic headers.
-// Returns a struct with all available window data. The HasData field indicates
-// whether any usage information was found.
 func SampleAnthropicPassiveUsage(headers http.Header, now time.Time) AnthropicPassiveUsage {
 	if headers == nil {
 		return AnthropicPassiveUsage{}
@@ -231,14 +183,7 @@ func SampleAnthropicPassiveUsage(headers http.Header, now time.Time) AnthropicPa
 	return usage
 }
 
-// CalculateWindowCostSchedulability determines if an account should be schedulable
-// based on its current window cost vs threshold and sticky reserve.
-//
-//   - cost < limit: schedulable
-//   - limit <= cost < limit+reserve: sticky-only
-//   - cost >= limit+reserve: not schedulable
-//
-// Ported from Sub2API: account.go CheckWindowCostSchedulability
+// CalculateWindowCostSchedulability determines if an account should be schedulable.
 func CalculateWindowCostSchedulability(currentWindowCost, windowCostLimit, windowCostStickyReserve float64) WindowCostSchedulability {
 	if windowCostLimit <= 0 {
 		return WindowCostSchedulable
@@ -253,9 +198,6 @@ func CalculateWindowCostSchedulability(currentWindowCost, windowCostLimit, windo
 }
 
 // PickSooner returns whichever of the two time pointers is earlier.
-// If only one is non-nil, it is returned. If both are nil, returns nil.
-//
-// Ported from Sub2API: ratelimit_service.go pickSooner
 func PickSooner(a, b *time.Time) *time.Time {
 	if a == nil {
 		return b
@@ -271,15 +213,11 @@ func PickSooner(a, b *time.Time) *time.Time {
 
 // Anthropic429Result holds the parsed Anthropic 429 rate-limit information.
 type Anthropic429Result struct {
-	Window        string
-	ResetAt       time.Time
-	IsFableWindow bool
+	Window  string
+	ResetAt time.Time
 }
 
-// CalculateAnthropic429ResetTime parses Anthropic's per-window rate-limit headers
-// to determine which window (5h or 7d) actually triggered the 429.
-//
-// Ported from Sub2API: ratelimit_service.go calculateAnthropic429ResetTime
+// CalculateAnthropic429ResetTime parses Anthropic's per-window rate-limit headers.
 func CalculateAnthropic429ResetTime(headers http.Header, now time.Time) *Anthropic429Result {
 	if headers == nil {
 		return nil
@@ -308,7 +246,6 @@ func CalculateAnthropic429ResetTime(headers http.Header, now time.Time) *Anthrop
 		return nil
 	}
 
-	// Pick the window with the latest reset (most restrictive)
 	var winner *struct {
 		name    string
 		resetAt time.Time
@@ -330,10 +267,7 @@ func CalculateAnthropic429ResetTime(headers http.Header, now time.Time) *Anthrop
 	}
 }
 
-// isAnthropicWindowExceeded checks whether a given Anthropic rate-limit window
-// has been exceeded, using utilization and surpassed-threshold headers.
-//
-// Ported from Sub2API: ratelimit_service.go isAnthropicWindowExceeded
+// isAnthropicWindowExceeded checks whether a given Anthropic rate-limit window has been exceeded.
 func isAnthropicWindowExceeded(headers http.Header, window string) bool {
 	utilHeader := headers.Get("anthropic-ratelimit-unified-" + window + "-utilization")
 	surpassedHeader := headers.Get("anthropic-ratelimit-unified-" + window + "-surpassed-threshold")
@@ -345,15 +279,11 @@ func isAnthropicWindowExceeded(headers http.Header, window string) bool {
 	if strings.EqualFold(strings.TrimSpace(surpassedHeader), "true") {
 		return true
 	}
-	// utilization >= 100 means window is at capacity
 	util := utilizationAsPercent(utilHeader)
 	return util >= 100.0
 }
 
-// ParseOpenAIRateLimitResetTime parses an OpenAI-format 429 response body,
-// returning the reset time.
-//
-// Ported from Sub2API: ratelimit_service.go parseOpenAIRateLimitResetTime
+// ParseOpenAIRateLimitResetTime parses an OpenAI-format 429 response body.
 func ParseOpenAIRateLimitResetTime(body []byte) *time.Time {
 	if len(body) == 0 {
 		return nil
@@ -369,7 +299,6 @@ func ParseOpenAIRateLimitResetTime(body []byte) *time.Time {
 		return nil
 	}
 
-	// Prefer resets_at
 	if parsed.Error.ResetsAt != nil {
 		switch v := parsed.Error.ResetsAt.(type) {
 		case float64:
@@ -382,7 +311,6 @@ func ParseOpenAIRateLimitResetTime(body []byte) *time.Time {
 		}
 	}
 
-	// Fall back to resets_in_seconds from now
 	if parsed.Error.ResetsInSeconds != nil {
 		switch v := parsed.Error.ResetsInSeconds.(type) {
 		case float64:
@@ -397,14 +325,11 @@ func ParseOpenAIRateLimitResetTime(body []byte) *time.Time {
 }
 
 // CalculateOpenAI429ResetTime extracts the reset time from OpenAI 429 response headers.
-//
-// Ported from Sub2API: ratelimit_service.go calculateOpenAI429ResetTime
 func CalculateOpenAI429ResetTime(headers http.Header, now time.Time) *time.Time {
 	if headers == nil {
 		return nil
 	}
 
-	// x-ratelimit-reset-usage: "1h2m3s" format or seconds
 	for _, key := range []string{
 		"x-ratelimit-reset-usage",
 		"x-ratelimit-reset-requests",
@@ -418,7 +343,6 @@ func CalculateOpenAI429ResetTime(headers http.Header, now time.Time) *time.Time 
 		}
 	}
 
-	// retry-after: seconds
 	if v := headers.Get("retry-after"); v != "" {
 		if seconds, err := strconv.Atoi(strings.TrimSpace(v)); err == nil && seconds > 0 {
 			ts := now.Add(time.Duration(seconds) * time.Second)
@@ -429,7 +353,6 @@ func CalculateOpenAI429ResetTime(headers http.Header, now time.Time) *time.Time 
 	return nil
 }
 
-// parseDuration parses a duration string, supporting both "1h2m3s" and plain seconds.
 func parseDuration(s string) (time.Duration, error) {
 	s = strings.TrimSpace(s)
 	if seconds, err := strconv.Atoi(s); err == nil {
@@ -438,13 +361,9 @@ func parseDuration(s string) (time.Duration, error) {
 	return time.ParseDuration(s)
 }
 
-// OpenAI image rate-limit pattern: "try again in 5s", "try again in 1.5 minutes", etc.
 var openAIImageTryAgainPattern = regexp.MustCompile(`(?i)try again in\s+([0-9]+(?:\.[0-9]+)?)\s*(ms|s|sec|secs|second|seconds|m|min|mins|minute|minutes)`)
 
-// ParseOpenAIImageTryAgainCooldown extracts the cooldown duration from an OpenAI
-// image generation "try again in X" error message.
-//
-// Ported from Sub2API: ratelimit_service.go parseOpenAIImageTryAgainCooldown
+// ParseOpenAIImageTryAgainCooldown extracts the cooldown duration from an OpenAI error.
 func ParseOpenAIImageTryAgainCooldown(body []byte) time.Duration {
 	if len(body) == 0 {
 		return 0
@@ -470,8 +389,6 @@ func ParseOpenAIImageTryAgainCooldown(body []byte) time.Duration {
 }
 
 // IsOpenAIImageRateLimitError detects OpenAI image generation rate-limit errors.
-//
-// Ported from Sub2API: ratelimit_service.go isOpenAIImageRateLimitError
 func IsOpenAIImageRateLimitError(statusCode int, body []byte) bool {
 	if statusCode != 429 {
 		return false
@@ -482,8 +399,6 @@ func IsOpenAIImageRateLimitError(statusCode int, body []byte) bool {
 }
 
 // Clamp01 clamps a float64 to the [0, 1] range.
-//
-// Ported from Sub2API: openai_account_scheduler.go clamp01
 func Clamp01(value float64) float64 {
 	if value < 0 {
 		return 0
@@ -495,8 +410,6 @@ func Clamp01(value float64) float64 {
 }
 
 // ParseRetryAfterResetTime parses the Retry-After header as a reset time.
-//
-// Ported from Sub2API: ratelimit_service.go parseRetryAfterResetTime
 func ParseRetryAfterResetTime(headers http.Header, now time.Time) *time.Time {
 	if headers == nil {
 		return nil
@@ -515,6 +428,3 @@ func ParseRetryAfterResetTime(headers http.Header, now time.Time) *time.Time {
 	ts := now.Add(time.Duration(seconds) * time.Second)
 	return &ts
 }
-
-// Ensure math is imported
-var _ = math.Pi

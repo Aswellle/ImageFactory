@@ -102,7 +102,7 @@ func (s *RateLimitStrategy) HandleUpstreamError(ctx context.Context, account *Ac
 
 // calculate429ResetTime determines the appropriate reset time for a 429 response.
 func (s *RateLimitStrategy) calculate429ResetTime(account *Account, headers http.Header, responseBody []byte) time.Time {
-	now := nowFunc()
+	now := time.Now()
 
 	switch account.Platform {
 	case PlatformAnthropic:
@@ -138,7 +138,7 @@ func (s *RateLimitStrategy) calculate429ResetTime(account *Account, headers http
 func (s *RateLimitStrategy) HandleAnthropic429(ctx context.Context, account *Account, headers http.Header) HandleUpstreamErrorResult {
 	result := HandleUpstreamErrorResult{ShouldRateLimit: true}
 
-	now := nowFunc()
+	now := time.Now()
 
 	// Check for Fable 7d_oi window first (model-specific)
 	if limit := selectAnthropicFableWindowLimit(headers, now); limit != nil {
@@ -266,7 +266,7 @@ func (s *RateLimitStrategy) UpdateSessionWindow(ctx context.Context, account *Ac
 		return
 	}
 
-	now := nowFunc()
+	now := time.Now()
 
 	switch account.Platform {
 	case PlatformAnthropic:
@@ -346,7 +346,7 @@ func (s *RateLimitStrategy) HandleOpenAIImageRateLimit(ctx context.Context, acco
 		return false
 	}
 
-	now := nowFunc()
+	now := time.Now()
 
 	cooldown := ParseOpenAIImageTryAgainCooldown(responseBody)
 	if cooldown > 0 {
@@ -391,5 +391,3 @@ func extractForbiddenMessage(body []byte) string {
 	return msg
 }
 
-// nowFunc is a variable so it can be overridden in tests.
-var nowFunc = time.Now

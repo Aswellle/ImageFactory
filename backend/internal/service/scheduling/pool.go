@@ -255,7 +255,7 @@ func DefaultScoreWeights() ScoreWeights {
 //
 // Ported from Sub2API: openai_account_scheduler.go buildOpenAIAccountLoadPlan
 func ScoreCandidates(accounts []*Account, weights ScoreWeights, stickyAccountID *int64) []CandidateScore {
-	now := nowFunc()
+	now := time.Now()
 	candidates := make([]CandidateScore, 0, len(accounts))
 
 	for _, acc := range accounts {
@@ -361,13 +361,6 @@ func (p *Pool) SelectLoadAware(weights ScoreWeights, stickyAccountID *int64, now
 	return topK[len(topK)-1].Account
 }
 
-// min returns the minimum of two ints.
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 
 // Count returns the total number of accounts in the pool.
 func (p *Pool) Count() int {

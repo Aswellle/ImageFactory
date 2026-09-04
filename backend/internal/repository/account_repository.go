@@ -57,7 +57,6 @@ func (r *AccountRepository) ListByPlatform(ctx context.Context, platform string)
 		All(ctx)
 }
 
-
 // Update 更新账号。
 func (r *AccountRepository) Update(ctx context.Context, id int64, updater func(tx *ent.AccountUpdateOne) *ent.AccountUpdateOne) (*ent.Account, error) {
 	acc, err := r.GetByID(ctx, id)
@@ -124,9 +123,19 @@ func (r *AccountRepository) SetSchedulable(ctx context.Context, id int64, schedu
 }
 
 // UpdateExtra 更新账号的 extra 字段（合并式更新）。
+// 使用事务避免 TOCTOU 竞态条件。
 // 移植自 Sub2API 的 account repository UpdateExtra。
 func (r *AccountRepository) UpdateExtra(ctx context.Context, id int64, updates map[string]any) error {
-	acc, err := r.GetByID(ctx, id)
+	tx, err := r.db.Tx(ctx)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			_ = tx.Rollback()
+		}
+	}()
+	acc, err := tx.Account.Query().Where(account.ID(id)).Only(ctx)
 	if err != nil {
 		return err
 	}
@@ -137,16 +146,29 @@ func (r *AccountRepository) UpdateExtra(ctx context.Context, id int64, updates m
 	for k, v := range updates {
 		extra[k] = v
 	}
-	_, err = r.db.Account.UpdateOneID(id).
+	_, err = tx.Account.UpdateOneID(id).
 		SetExtra(extra).
 		Save(ctx)
-	return err
+	if err != nil {
+		return err
+	}
+	return tx.Commit()
 }
 
 // UpdateSessionWindow 更新账号的会话窗口状态。
+// 使用事务避免 TOCTOU 竞态条件。
 // 移植自 Sub2API 的 account repository UpdateSessionWindow。
 func (r *AccountRepository) UpdateSessionWindow(ctx context.Context, id int64, start, end *time.Time, utilization float64) error {
-	updater := r.db.Account.UpdateOneID(id)
+	tx, err := r.db.Tx(ctx)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			_ = tx.Rollback()
+		}
+	}()
+	updater := tx.Account.UpdateOneID(id)
 	if start != nil {
 		updater.SetSessionWindowStart(*start)
 	}
@@ -156,7 +178,7 @@ func (r *AccountRepository) UpdateSessionWindow(ctx context.Context, id int64, s
 	updates := map[string]any{
 		"session_window_utilization": utilization,
 	}
-	acc, err := r.GetByID(ctx, id)
+	acc, err := tx.Account.Query().Where(account.ID(id)).Only(ctx)
 	if err != nil {
 		return err
 	}
@@ -169,5 +191,8 @@ func (r *AccountRepository) UpdateSessionWindow(ctx context.Context, id int64, s
 	}
 	updater.SetExtra(extra)
 	_, err = updater.Save(ctx)
-	return err
+	if err != nil {
+		return err
+	}
+	return tx.Commit()
 }

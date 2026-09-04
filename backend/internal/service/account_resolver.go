@@ -21,8 +21,8 @@ import (
 type AccountResolverInterface interface {
 	ResolveAccount(ctx context.Context, platform string) (*batchimage.Account, error)
 	ResolveAccountByID(ctx context.Context, id int64) (*batchimage.Account, error)
-	MarkRateLimited(ctx context.Context, id int64, retryAfter error)
-	MarkOverloaded(ctx context.Context, id int64, duration error)
+	MarkRateLimited(ctx context.Context, id int64, retryAfter time.Duration)
+	MarkOverloaded(ctx context.Context, id int64, duration time.Duration)
 	UpdateLastUsed(ctx context.Context, id int64)
 }
 
@@ -61,13 +61,11 @@ func (r *AccountResolver) ResolveAccount(ctx context.Context, platform string) (
 		return nil, fmt.Errorf("failed to list accounts for platform %s: %w", platform, err)
 	}
 
-	// 使用调度算法过滤和选择账号
 	available := r.filterAvailable(accounts)
 	if len(available) == 0 {
 		return nil, fmt.Errorf("no available accounts for platform %s", platform)
 	}
 
-	// 按优先级选择（移植自 Sub2API 的优先级轮转算法）
 	selected := r.pickByPriority(available)
 	if selected == nil {
 		return nil, fmt.Errorf("no suitable account found for platform %s", platform)
@@ -86,24 +84,13 @@ func (r *AccountResolver) ResolveAccountByID(ctx context.Context, id int64) (*ba
 }
 
 // MarkRateLimited 标记账号被速率限制。
-//
-// 使用 Sub2API 的限速策略算法计算重置时间。
-func (r *AccountResolver) MarkRateLimited(ctx context.Context, id int64, retryAfter error) {
-	acc, err := r.accountSvc.GetByID(ctx, id)
-	if err != nil {
-		return
-	}
-
-	// 使用调度算法计算限速重置时间
-	sa := EntAccountToScheduling(acc)
-	resetAt := r.calculateRateLimitResetTime(sa)
-
-	r.accountSvc.MarkRateLimited(ctx, id, resetAt.Sub(time.Now()))
+func (r *AccountResolver) MarkRateLimited(ctx context.Context, id int64, retryAfter time.Duration) {
+	r.accountSvc.MarkRateLimited(ctx, id, retryAfter)
 }
 
 // MarkOverloaded 标记账号过载。
-func (r *AccountResolver) MarkOverloaded(ctx context.Context, id int64, duration error) {
-	r.accountSvc.MarkOverloaded(ctx, id, 2*time.Minute)
+func (r *AccountResolver) MarkOverloaded(ctx context.Context, id int64, duration time.Duration) {
+	r.accountSvc.MarkOverloaded(ctx, id, duration)
 }
 
 // UpdateLastUsed 更新账号最后使用时间。
@@ -132,19 +119,15 @@ func (r *AccountResolver) filterAvailable(accounts []*ent.Account) []*ent.Accoun
 		if !acc.Schedulable {
 			continue
 		}
-		// 检查速率限制
 		if acc.RateLimitResetAt != nil && acc.RateLimitResetAt.After(now) {
 			continue
 		}
-		// 检查过载
 		if acc.OverloadUntil != nil && acc.OverloadUntil.After(now) {
 			continue
 		}
-		// 检查临时不可调度
 		if acc.TempUnschedulableUntil != nil && acc.TempUnschedulableUntil.After(now) {
 			continue
 		}
-		// 检查调度阈值（移植自 Sub2API 的 EvaluateAccountSchedulingThreshold）
 		if r.schedulingSvc != nil {
 			sa := EntAccountToScheduling(acc)
 			decision := scheduling.EvaluateAccountSchedulingThreshold(sa, r.schedulingSvc.thresholds, now)
@@ -171,7 +154,6 @@ func (r *AccountResolver) pickByPriority(accounts []*ent.Account) *ent.Account {
 		return accounts[0]
 	}
 
-	// 找到最高优先级（最小值）
 	bestPriority := accounts[0].Priority
 	for _, acc := range accounts {
 		if acc.Priority < bestPriority {
@@ -179,7 +161,6 @@ func (r *AccountResolver) pickByPriority(accounts []*ent.Account) *ent.Account {
 		}
 	}
 
-	// 收集所有最高优先级的账号
 	var bestTier []*ent.Account
 	for _, acc := range accounts {
 		if acc.Priority == bestPriority {
@@ -191,33 +172,10 @@ func (r *AccountResolver) pickByPriority(accounts []*ent.Account) *ent.Account {
 		return bestTier[0]
 	}
 
-	// 随机轮转
 	return bestTier[time.Now().UnixNano()%int64(len(bestTier))]
 }
 
-// calculateRateLimitResetTime 计算限速重置时间。
-//
-// 移植自 Sub2API 的限速策略算法。
-func (r *AccountResolver) calculateRateLimitResetTime(sa *scheduling.Account) time.Time {
-	now := time.Now()
-
-	switch sa.Platform {
-	case scheduling.PlatformAnthropic:
-		// Anthropic: 默认 60 秒冷却
-		return now.Add(60 * time.Second)
-	case scheduling.PlatformOpenAI:
-		// OpenAI: 默认 60 秒冷却
-		return now.Add(60 * time.Second)
-	case scheduling.PlatformGrok:
-		// Grok: 默认 60 秒冷却
-		return now.Add(60 * time.Second)
-	default:
-		return now.Add(60 * time.Second)
-	}
-}
-
 // toBatchImageAccount 将 Ent Account 转换为 batchimage.Account。
-// 转换 Credentials 从 map[string]any 到 map[string]string。
 func (r *AccountResolver) toBatchImageAccount(acc *ent.Account) *batchimage.Account {
 	creds := make(map[string]string)
 	for k, v := range acc.Credentials {
@@ -235,5 +193,4 @@ func (r *AccountResolver) toBatchImageAccount(acc *ent.Account) *batchimage.Acco
 	}
 }
 
-// 确保 AccountResolver 实现了接口。
 var _ AccountResolverInterface = (*AccountResolver)(nil)
