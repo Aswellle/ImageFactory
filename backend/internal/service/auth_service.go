@@ -68,7 +68,7 @@ func (s *AuthService) Register(ctx context.Context, in RegisterInput) (*AuthResu
 		return nil, errors.Wrap(errors.ErrInternal, "failed to create user", err)
 	}
 
-	return s.resultWithToken(created.ID, created.Email, created.Name, string(created.Role))
+	return s.resultWithToken(created.ID, created.Email, created.Name, string(created.Role), created.TokenVersion)
 }
 
 // LoginInput is the login request.
@@ -96,11 +96,11 @@ func (s *AuthService) Login(ctx context.Context, in LoginInput) (*AuthResult, er
 	// Best-effort last-login update; failure must not block login.
 	_ = s.users.UpdateLastLogin(ctx, created.ID)
 
-	return s.resultWithToken(created.ID, created.Email, created.Name, string(created.Role))
+	return s.resultWithToken(created.ID, created.Email, created.Name, string(created.Role), created.TokenVersion)
 }
 
-func (s *AuthService) resultWithToken(id int64, email, name, role string) (*AuthResult, error) {
-	token, err := s.jwt.Generate(id, role)
+func (s *AuthService) resultWithToken(id int64, email, name, role string, tokenVersion int) (*AuthResult, error) {
+	token, err := s.jwt.Generate(id, role, tokenVersion)
 	if err != nil {
 		return nil, errors.Wrap(errors.ErrInternal, "failed to issue token", err)
 	}

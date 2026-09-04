@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -10,10 +11,11 @@ import (
 	"github.com/imageforge/imageforge/internal/domain"
 )
 
-// Claims is the ImageForge JWT payload. Minimal: user id + role. No PII, no secrets.
+// Claims is the ImageForge JWT payload. Minimal: user id + role + token version. No PII, no secrets.
 type Claims struct {
-	UserID int64  `json:"uid"`
-	Role   string `json:"role"`
+	UserID        int64  `json:"uid"`
+	Role          string `json:"role"`
+	TokenVersion  int    `json:"tv"` // Token version - incremented on password change
 	jwt.RegisteredClaims
 }
 
@@ -24,27 +26,33 @@ type JWTService struct {
 }
 
 // NewJWTService builds a JWTService from auth config.
-func NewJWTService(cfg config.AuthConfig) *JWTService {
+// In production mode (release), JWTSecret must be configured or the function returns an error.
+func NewJWTService(cfg config.AuthConfig, mode string) (*JWTService, error) {
 	ttl := time.Duration(cfg.AccessTokenMinutes) * time.Minute
 	if ttl <= 0 {
 		ttl = 24 * time.Hour
 	}
 	secret := cfg.JWTSecret
 	if secret == "" {
+		if mode == "release" || mode == "production" {
+			return nil, fmt.Errorf("JWTSecret must be configured in production mode")
+		}
+		// Only use auto-generated secret in debug/test mode
 		secret = "imageforge-dev-secret-change-in-production-" + strconv.FormatInt(time.Now().UnixNano(), 36)
 	}
-	return &JWTService{secret: []byte(secret), ttl: ttl}
+	return &JWTService{secret: []byte(secret), ttl: ttl}, nil
 }
 
 // Generate signs a token for the given user.
-func (s *JWTService) Generate(userID int64, role string) (string, error) {
+func (s *JWTService) Generate(userID int64, role string, tokenVersion int) (string, error) {
 	if len(s.secret) == 0 {
 		return "", errors.New("jwt secret not configured")
 	}
 	now := time.Now()
 	claims := Claims{
-		UserID: userID,
-		Role:   role,
+		UserID:       userID,
+		Role:         role,
+		TokenVersion: tokenVersion,
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt:  jwt.NewNumericDate(now),
 			ExpiresAt: jwt.NewNumericDate(now.Add(s.ttl)),

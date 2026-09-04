@@ -54,3 +54,15 @@ func (r *UserRepository) UpdateLastLogin(ctx context.Context, id int64) error {
 	_, err := r.db.User.UpdateOneID(id).SetLastLoginAt(time.Now()).Save(ctx)
 	return err
 }
+
+// UpdatePassword updates a user's password hash.
+func (r *UserRepository) UpdatePassword(ctx context.Context, id int64, hash string) error {
+	_, err := r.db.User.UpdateOneID(id).SetPasswordHash(hash).SetUpdatedAt(time.Now()).Save(ctx)
+	return err
+}
+
+// IncrementTokenVersion increments the user's token version, invalidating all existing tokens.
+func (r *UserRepository) IncrementTokenVersion(ctx context.Context, id int64) error {
+	_, err := r.db.User.UpdateOneID(id).AddTokenVersion(1).SetUpdatedAt(time.Now()).Save(ctx)
+	return err
+}
