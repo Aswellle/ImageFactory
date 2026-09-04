@@ -24,86 +24,86 @@ type GenerationInputCreate struct {
 }
 
 // SetJobID sets the "job_id" field.
-func (gic *GenerationInputCreate) SetJobID(i int64) *GenerationInputCreate {
-	gic.mutation.SetJobID(i)
-	return gic
+func (_c *GenerationInputCreate) SetJobID(v int64) *GenerationInputCreate {
+	_c.mutation.SetJobID(v)
+	return _c
 }
 
 // SetSourceAssetID sets the "source_asset_id" field.
-func (gic *GenerationInputCreate) SetSourceAssetID(i int64) *GenerationInputCreate {
-	gic.mutation.SetSourceAssetID(i)
-	return gic
+func (_c *GenerationInputCreate) SetSourceAssetID(v int64) *GenerationInputCreate {
+	_c.mutation.SetSourceAssetID(v)
+	return _c
 }
 
 // SetNillableSourceAssetID sets the "source_asset_id" field if the given value is not nil.
-func (gic *GenerationInputCreate) SetNillableSourceAssetID(i *int64) *GenerationInputCreate {
-	if i != nil {
-		gic.SetSourceAssetID(*i)
+func (_c *GenerationInputCreate) SetNillableSourceAssetID(v *int64) *GenerationInputCreate {
+	if v != nil {
+		_c.SetSourceAssetID(*v)
 	}
-	return gic
+	return _c
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (gic *GenerationInputCreate) SetStorageKey(s string) *GenerationInputCreate {
-	gic.mutation.SetStorageKey(s)
-	return gic
+func (_c *GenerationInputCreate) SetStorageKey(v string) *GenerationInputCreate {
+	_c.mutation.SetStorageKey(v)
+	return _c
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (gic *GenerationInputCreate) SetNillableStorageKey(s *string) *GenerationInputCreate {
-	if s != nil {
-		gic.SetStorageKey(*s)
+func (_c *GenerationInputCreate) SetNillableStorageKey(v *string) *GenerationInputCreate {
+	if v != nil {
+		_c.SetStorageKey(*v)
 	}
-	return gic
+	return _c
 }
 
 // SetRole sets the "role" field.
-func (gic *GenerationInputCreate) SetRole(s string) *GenerationInputCreate {
-	gic.mutation.SetRole(s)
-	return gic
+func (_c *GenerationInputCreate) SetRole(v string) *GenerationInputCreate {
+	_c.mutation.SetRole(v)
+	return _c
 }
 
 // SetNillableRole sets the "role" field if the given value is not nil.
-func (gic *GenerationInputCreate) SetNillableRole(s *string) *GenerationInputCreate {
-	if s != nil {
-		gic.SetRole(*s)
+func (_c *GenerationInputCreate) SetNillableRole(v *string) *GenerationInputCreate {
+	if v != nil {
+		_c.SetRole(*v)
 	}
-	return gic
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (gic *GenerationInputCreate) SetCreatedAt(t time.Time) *GenerationInputCreate {
-	gic.mutation.SetCreatedAt(t)
-	return gic
+func (_c *GenerationInputCreate) SetCreatedAt(v time.Time) *GenerationInputCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (gic *GenerationInputCreate) SetNillableCreatedAt(t *time.Time) *GenerationInputCreate {
-	if t != nil {
-		gic.SetCreatedAt(*t)
+func (_c *GenerationInputCreate) SetNillableCreatedAt(v *time.Time) *GenerationInputCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return gic
+	return _c
 }
 
 // SetJob sets the "job" edge to the GenerationJob entity.
-func (gic *GenerationInputCreate) SetJob(g *GenerationJob) *GenerationInputCreate {
-	return gic.SetJobID(g.ID)
+func (_c *GenerationInputCreate) SetJob(v *GenerationJob) *GenerationInputCreate {
+	return _c.SetJobID(v.ID)
 }
 
 // Mutation returns the GenerationInputMutation object of the builder.
-func (gic *GenerationInputCreate) Mutation() *GenerationInputMutation {
-	return gic.mutation
+func (_c *GenerationInputCreate) Mutation() *GenerationInputMutation {
+	return _c.mutation
 }
 
 // Save creates the GenerationInput in the database.
-func (gic *GenerationInputCreate) Save(ctx context.Context) (*GenerationInput, error) {
-	gic.defaults()
-	return withHooks(ctx, gic.sqlSave, gic.mutation, gic.hooks)
+func (_c *GenerationInputCreate) Save(ctx context.Context) (*GenerationInput, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (gic *GenerationInputCreate) SaveX(ctx context.Context) *GenerationInput {
-	v, err := gic.Save(ctx)
+func (_c *GenerationInputCreate) SaveX(ctx context.Context) *GenerationInput {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -111,46 +111,46 @@ func (gic *GenerationInputCreate) SaveX(ctx context.Context) *GenerationInput {
 }
 
 // Exec executes the query.
-func (gic *GenerationInputCreate) Exec(ctx context.Context) error {
-	_, err := gic.Save(ctx)
+func (_c *GenerationInputCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gic *GenerationInputCreate) ExecX(ctx context.Context) {
-	if err := gic.Exec(ctx); err != nil {
+func (_c *GenerationInputCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gic *GenerationInputCreate) defaults() {
-	if _, ok := gic.mutation.CreatedAt(); !ok {
+func (_c *GenerationInputCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := generationinput.DefaultCreatedAt()
-		gic.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (gic *GenerationInputCreate) check() error {
-	if _, ok := gic.mutation.JobID(); !ok {
+func (_c *GenerationInputCreate) check() error {
+	if _, ok := _c.mutation.JobID(); !ok {
 		return &ValidationError{Name: "job_id", err: errors.New(`ent: missing required field "GenerationInput.job_id"`)}
 	}
-	if _, ok := gic.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "GenerationInput.created_at"`)}
 	}
-	if len(gic.mutation.JobIDs()) == 0 {
+	if len(_c.mutation.JobIDs()) == 0 {
 		return &ValidationError{Name: "job", err: errors.New(`ent: missing required edge "GenerationInput.job"`)}
 	}
 	return nil
 }
 
-func (gic *GenerationInputCreate) sqlSave(ctx context.Context) (*GenerationInput, error) {
-	if err := gic.check(); err != nil {
+func (_c *GenerationInputCreate) sqlSave(ctx context.Context) (*GenerationInput, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := gic.createSpec()
-	if err := sqlgraph.CreateNode(ctx, gic.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -158,34 +158,34 @@ func (gic *GenerationInputCreate) sqlSave(ctx context.Context) (*GenerationInput
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	gic.mutation.id = &_node.ID
-	gic.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (gic *GenerationInputCreate) createSpec() (*GenerationInput, *sqlgraph.CreateSpec) {
+func (_c *GenerationInputCreate) createSpec() (*GenerationInput, *sqlgraph.CreateSpec) {
 	var (
-		_node = &GenerationInput{config: gic.config}
+		_node = &GenerationInput{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(generationinput.Table, sqlgraph.NewFieldSpec(generationinput.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = gic.conflict
-	if value, ok := gic.mutation.SourceAssetID(); ok {
+	_spec.OnConflict = _c.conflict
+	if value, ok := _c.mutation.SourceAssetID(); ok {
 		_spec.SetField(generationinput.FieldSourceAssetID, field.TypeInt64, value)
 		_node.SourceAssetID = value
 	}
-	if value, ok := gic.mutation.StorageKey(); ok {
+	if value, ok := _c.mutation.StorageKey(); ok {
 		_spec.SetField(generationinput.FieldStorageKey, field.TypeString, value)
 		_node.StorageKey = value
 	}
-	if value, ok := gic.mutation.Role(); ok {
+	if value, ok := _c.mutation.Role(); ok {
 		_spec.SetField(generationinput.FieldRole, field.TypeString, value)
 		_node.Role = value
 	}
-	if value, ok := gic.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(generationinput.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if nodes := gic.mutation.JobIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.JobIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -221,10 +221,10 @@ func (gic *GenerationInputCreate) createSpec() (*GenerationInput, *sqlgraph.Crea
 //			SetJobID(v+v).
 //		}).
 //		Exec(ctx)
-func (gic *GenerationInputCreate) OnConflict(opts ...sql.ConflictOption) *GenerationInputUpsertOne {
-	gic.conflict = opts
+func (_c *GenerationInputCreate) OnConflict(opts ...sql.ConflictOption) *GenerationInputUpsertOne {
+	_c.conflict = opts
 	return &GenerationInputUpsertOne{
-		create: gic,
+		create: _c,
 	}
 }
 
@@ -234,10 +234,10 @@ func (gic *GenerationInputCreate) OnConflict(opts ...sql.ConflictOption) *Genera
 //	client.GenerationInput.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (gic *GenerationInputCreate) OnConflictColumns(columns ...string) *GenerationInputUpsertOne {
-	gic.conflict = append(gic.conflict, sql.ConflictColumns(columns...))
+func (_c *GenerationInputCreate) OnConflictColumns(columns ...string) *GenerationInputUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &GenerationInputUpsertOne{
-		create: gic,
+		create: _c,
 	}
 }
 
@@ -497,16 +497,16 @@ type GenerationInputCreateBulk struct {
 }
 
 // Save creates the GenerationInput entities in the database.
-func (gicb *GenerationInputCreateBulk) Save(ctx context.Context) ([]*GenerationInput, error) {
-	if gicb.err != nil {
-		return nil, gicb.err
+func (_c *GenerationInputCreateBulk) Save(ctx context.Context) ([]*GenerationInput, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(gicb.builders))
-	nodes := make([]*GenerationInput, len(gicb.builders))
-	mutators := make([]Mutator, len(gicb.builders))
-	for i := range gicb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*GenerationInput, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := gicb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*GenerationInputMutation)
@@ -520,12 +520,12 @@ func (gicb *GenerationInputCreateBulk) Save(ctx context.Context) ([]*GenerationI
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, gicb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = gicb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, gicb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -549,7 +549,7 @@ func (gicb *GenerationInputCreateBulk) Save(ctx context.Context) ([]*GenerationI
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, gicb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -557,8 +557,8 @@ func (gicb *GenerationInputCreateBulk) Save(ctx context.Context) ([]*GenerationI
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gicb *GenerationInputCreateBulk) SaveX(ctx context.Context) []*GenerationInput {
-	v, err := gicb.Save(ctx)
+func (_c *GenerationInputCreateBulk) SaveX(ctx context.Context) []*GenerationInput {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -566,14 +566,14 @@ func (gicb *GenerationInputCreateBulk) SaveX(ctx context.Context) []*GenerationI
 }
 
 // Exec executes the query.
-func (gicb *GenerationInputCreateBulk) Exec(ctx context.Context) error {
-	_, err := gicb.Save(ctx)
+func (_c *GenerationInputCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gicb *GenerationInputCreateBulk) ExecX(ctx context.Context) {
-	if err := gicb.Exec(ctx); err != nil {
+func (_c *GenerationInputCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -593,10 +593,10 @@ func (gicb *GenerationInputCreateBulk) ExecX(ctx context.Context) {
 //			SetJobID(v+v).
 //		}).
 //		Exec(ctx)
-func (gicb *GenerationInputCreateBulk) OnConflict(opts ...sql.ConflictOption) *GenerationInputUpsertBulk {
-	gicb.conflict = opts
+func (_c *GenerationInputCreateBulk) OnConflict(opts ...sql.ConflictOption) *GenerationInputUpsertBulk {
+	_c.conflict = opts
 	return &GenerationInputUpsertBulk{
-		create: gicb,
+		create: _c,
 	}
 }
 
@@ -606,10 +606,10 @@ func (gicb *GenerationInputCreateBulk) OnConflict(opts ...sql.ConflictOption) *G
 //	client.GenerationInput.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (gicb *GenerationInputCreateBulk) OnConflictColumns(columns ...string) *GenerationInputUpsertBulk {
-	gicb.conflict = append(gicb.conflict, sql.ConflictColumns(columns...))
+func (_c *GenerationInputCreateBulk) OnConflictColumns(columns ...string) *GenerationInputUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &GenerationInputUpsertBulk{
-		create: gicb,
+		create: _c,
 	}
 }
 

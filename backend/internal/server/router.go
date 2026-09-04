@@ -135,7 +135,8 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	// --- Account management (Sub2API integration) ---
 	accountRepo := repository.NewAccountRepository(db)
 	accountSvc := service.NewAccountService(accountRepo)
-	accountResolver := service.NewAccountResolver(accountSvc)
+	schedulingSvc := service.NewSchedulingService(accountRepo)
+	accountResolver := service.NewAccountResolver(accountRepo, accountSvc, schedulingSvc)
 
 	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
 

@@ -26,6 +26,8 @@ type Account struct {
 	Type string `json:"type,omitempty"`
 	// Credentials holds the value of the "credentials" field.
 	Credentials map[string]interface{} `json:"credentials,omitempty"`
+	// Extra holds the value of the "extra" field.
+	Extra map[string]interface{} `json:"extra,omitempty"`
 	// Priority holds the value of the "priority" field.
 	Priority int `json:"priority,omitempty"`
 	// Status holds the value of the "status" field.
@@ -44,6 +46,12 @@ type Account struct {
 	RateLimitResetAt *time.Time `json:"rate_limit_reset_at,omitempty"`
 	// OverloadUntil holds the value of the "overload_until" field.
 	OverloadUntil *time.Time `json:"overload_until,omitempty"`
+	// TempUnschedulableUntil holds the value of the "temp_unschedulable_until" field.
+	TempUnschedulableUntil *time.Time `json:"temp_unschedulable_until,omitempty"`
+	// SessionWindowStart holds the value of the "session_window_start" field.
+	SessionWindowStart *time.Time `json:"session_window_start,omitempty"`
+	// SessionWindowEnd holds the value of the "session_window_end" field.
+	SessionWindowEnd *time.Time `json:"session_window_end,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -77,7 +85,7 @@ func (*Account) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case account.FieldCredentials:
+		case account.FieldCredentials, account.FieldExtra:
 			values[i] = new([]byte)
 		case account.FieldSchedulable:
 			values[i] = new(sql.NullBool)
@@ -85,7 +93,7 @@ func (*Account) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullInt64)
 		case account.FieldName, account.FieldPlatform, account.FieldType, account.FieldStatus, account.FieldErrorMessage:
 			values[i] = new(sql.NullString)
-		case account.FieldLastUsedAt, account.FieldExpiresAt, account.FieldRateLimitedAt, account.FieldRateLimitResetAt, account.FieldOverloadUntil, account.FieldCreatedAt, account.FieldUpdatedAt:
+		case account.FieldLastUsedAt, account.FieldExpiresAt, account.FieldRateLimitedAt, account.FieldRateLimitResetAt, account.FieldOverloadUntil, account.FieldTempUnschedulableUntil, account.FieldSessionWindowStart, account.FieldSessionWindowEnd, account.FieldCreatedAt, account.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -96,7 +104,7 @@ func (*Account) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Account fields.
-func (a *Account) assignValues(columns []string, values []any) error {
+func (_m *Account) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -107,107 +115,136 @@ func (a *Account) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			a.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case account.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				a.Name = value.String
+				_m.Name = value.String
 			}
 		case account.FieldPlatform:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field platform", values[i])
 			} else if value.Valid {
-				a.Platform = value.String
+				_m.Platform = value.String
 			}
 		case account.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				a.Type = value.String
+				_m.Type = value.String
 			}
 		case account.FieldCredentials:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field credentials", values[i])
 			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &a.Credentials); err != nil {
+				if err := json.Unmarshal(*value, &_m.Credentials); err != nil {
 					return fmt.Errorf("unmarshal field credentials: %w", err)
+				}
+			}
+		case account.FieldExtra:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field extra", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.Extra); err != nil {
+					return fmt.Errorf("unmarshal field extra: %w", err)
 				}
 			}
 		case account.FieldPriority:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field priority", values[i])
 			} else if value.Valid {
-				a.Priority = int(value.Int64)
+				_m.Priority = int(value.Int64)
 			}
 		case account.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				a.Status = account.Status(value.String)
+				_m.Status = account.Status(value.String)
 			}
 		case account.FieldErrorMessage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field error_message", values[i])
 			} else if value.Valid {
-				a.ErrorMessage = new(string)
-				*a.ErrorMessage = value.String
+				_m.ErrorMessage = new(string)
+				*_m.ErrorMessage = value.String
 			}
 		case account.FieldLastUsedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_used_at", values[i])
 			} else if value.Valid {
-				a.LastUsedAt = new(time.Time)
-				*a.LastUsedAt = value.Time
+				_m.LastUsedAt = new(time.Time)
+				*_m.LastUsedAt = value.Time
 			}
 		case account.FieldExpiresAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field expires_at", values[i])
 			} else if value.Valid {
-				a.ExpiresAt = new(time.Time)
-				*a.ExpiresAt = value.Time
+				_m.ExpiresAt = new(time.Time)
+				*_m.ExpiresAt = value.Time
 			}
 		case account.FieldSchedulable:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field schedulable", values[i])
 			} else if value.Valid {
-				a.Schedulable = value.Bool
+				_m.Schedulable = value.Bool
 			}
 		case account.FieldRateLimitedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field rate_limited_at", values[i])
 			} else if value.Valid {
-				a.RateLimitedAt = new(time.Time)
-				*a.RateLimitedAt = value.Time
+				_m.RateLimitedAt = new(time.Time)
+				*_m.RateLimitedAt = value.Time
 			}
 		case account.FieldRateLimitResetAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field rate_limit_reset_at", values[i])
 			} else if value.Valid {
-				a.RateLimitResetAt = new(time.Time)
-				*a.RateLimitResetAt = value.Time
+				_m.RateLimitResetAt = new(time.Time)
+				*_m.RateLimitResetAt = value.Time
 			}
 		case account.FieldOverloadUntil:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field overload_until", values[i])
 			} else if value.Valid {
-				a.OverloadUntil = new(time.Time)
-				*a.OverloadUntil = value.Time
+				_m.OverloadUntil = new(time.Time)
+				*_m.OverloadUntil = value.Time
+			}
+		case account.FieldTempUnschedulableUntil:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field temp_unschedulable_until", values[i])
+			} else if value.Valid {
+				_m.TempUnschedulableUntil = new(time.Time)
+				*_m.TempUnschedulableUntil = value.Time
+			}
+		case account.FieldSessionWindowStart:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field session_window_start", values[i])
+			} else if value.Valid {
+				_m.SessionWindowStart = new(time.Time)
+				*_m.SessionWindowStart = value.Time
+			}
+		case account.FieldSessionWindowEnd:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field session_window_end", values[i])
+			} else if value.Valid {
+				_m.SessionWindowEnd = new(time.Time)
+				*_m.SessionWindowEnd = value.Time
 			}
 		case account.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				a.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case account.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				a.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		default:
-			a.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -215,94 +252,112 @@ func (a *Account) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Account.
 // This includes values selected through modifiers, order, etc.
-func (a *Account) Value(name string) (ent.Value, error) {
-	return a.selectValues.Get(name)
+func (_m *Account) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryUsageLogs queries the "usage_logs" edge of the Account entity.
-func (a *Account) QueryUsageLogs() *UsageRecordQuery {
-	return NewAccountClient(a.config).QueryUsageLogs(a)
+func (_m *Account) QueryUsageLogs() *UsageRecordQuery {
+	return NewAccountClient(_m.config).QueryUsageLogs(_m)
 }
 
 // Update returns a builder for updating this Account.
 // Note that you need to call Account.Unwrap() before calling this method if this Account
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (a *Account) Update() *AccountUpdateOne {
-	return NewAccountClient(a.config).UpdateOne(a)
+func (_m *Account) Update() *AccountUpdateOne {
+	return NewAccountClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the Account entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (a *Account) Unwrap() *Account {
-	_tx, ok := a.config.driver.(*txDriver)
+func (_m *Account) Unwrap() *Account {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Account is not a transactional entity")
 	}
-	a.config.driver = _tx.drv
-	return a
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (a *Account) String() string {
+func (_m *Account) String() string {
 	var builder strings.Builder
 	builder.WriteString("Account(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", a.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("name=")
-	builder.WriteString(a.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
 	builder.WriteString("platform=")
-	builder.WriteString(a.Platform)
+	builder.WriteString(_m.Platform)
 	builder.WriteString(", ")
 	builder.WriteString("type=")
-	builder.WriteString(a.Type)
+	builder.WriteString(_m.Type)
 	builder.WriteString(", ")
 	builder.WriteString("credentials=")
-	builder.WriteString(fmt.Sprintf("%v", a.Credentials))
+	builder.WriteString(fmt.Sprintf("%v", _m.Credentials))
+	builder.WriteString(", ")
+	builder.WriteString("extra=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Extra))
 	builder.WriteString(", ")
 	builder.WriteString("priority=")
-	builder.WriteString(fmt.Sprintf("%v", a.Priority))
+	builder.WriteString(fmt.Sprintf("%v", _m.Priority))
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", a.Status))
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteString(", ")
-	if v := a.ErrorMessage; v != nil {
+	if v := _m.ErrorMessage; v != nil {
 		builder.WriteString("error_message=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := a.LastUsedAt; v != nil {
+	if v := _m.LastUsedAt; v != nil {
 		builder.WriteString("last_used_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := a.ExpiresAt; v != nil {
+	if v := _m.ExpiresAt; v != nil {
 		builder.WriteString("expires_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("schedulable=")
-	builder.WriteString(fmt.Sprintf("%v", a.Schedulable))
+	builder.WriteString(fmt.Sprintf("%v", _m.Schedulable))
 	builder.WriteString(", ")
-	if v := a.RateLimitedAt; v != nil {
+	if v := _m.RateLimitedAt; v != nil {
 		builder.WriteString("rate_limited_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := a.RateLimitResetAt; v != nil {
+	if v := _m.RateLimitResetAt; v != nil {
 		builder.WriteString("rate_limit_reset_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := a.OverloadUntil; v != nil {
+	if v := _m.OverloadUntil; v != nil {
 		builder.WriteString("overload_until=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	if v := _m.TempUnschedulableUntil; v != nil {
+		builder.WriteString("temp_unschedulable_until=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.SessionWindowStart; v != nil {
+		builder.WriteString("session_window_start=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.SessionWindowEnd; v != nil {
+		builder.WriteString("session_window_end=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(a.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(a.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

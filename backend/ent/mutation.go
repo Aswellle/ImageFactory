@@ -983,32 +983,36 @@ func (m *APIKeyMutation) ResetEdge(name string) error {
 // AccountMutation represents an operation that mutates the Account nodes in the graph.
 type AccountMutation struct {
 	config
-	op                  Op
-	typ                 string
-	id                  *int64
-	name                *string
-	platform            *string
-	_type               *string
-	credentials         *map[string]interface{}
-	priority            *int
-	addpriority         *int
-	status              *account.Status
-	error_message       *string
-	last_used_at        *time.Time
-	expires_at          *time.Time
-	schedulable         *bool
-	rate_limited_at     *time.Time
-	rate_limit_reset_at *time.Time
-	overload_until      *time.Time
-	created_at          *time.Time
-	updated_at          *time.Time
-	clearedFields       map[string]struct{}
-	usage_logs          map[int64]struct{}
-	removedusage_logs   map[int64]struct{}
-	clearedusage_logs   bool
-	done                bool
-	oldValue            func(context.Context) (*Account, error)
-	predicates          []predicate.Account
+	op                       Op
+	typ                      string
+	id                       *int64
+	name                     *string
+	platform                 *string
+	_type                    *string
+	credentials              *map[string]interface{}
+	extra                    *map[string]interface{}
+	priority                 *int
+	addpriority              *int
+	status                   *account.Status
+	error_message            *string
+	last_used_at             *time.Time
+	expires_at               *time.Time
+	schedulable              *bool
+	rate_limited_at          *time.Time
+	rate_limit_reset_at      *time.Time
+	overload_until           *time.Time
+	temp_unschedulable_until *time.Time
+	session_window_start     *time.Time
+	session_window_end       *time.Time
+	created_at               *time.Time
+	updated_at               *time.Time
+	clearedFields            map[string]struct{}
+	usage_logs               map[int64]struct{}
+	removedusage_logs        map[int64]struct{}
+	clearedusage_logs        bool
+	done                     bool
+	oldValue                 func(context.Context) (*Account, error)
+	predicates               []predicate.Account
 }
 
 var _ ent.Mutation = (*AccountMutation)(nil)
@@ -1251,6 +1255,55 @@ func (m *AccountMutation) OldCredentials(ctx context.Context) (v map[string]inte
 // ResetCredentials resets all changes to the "credentials" field.
 func (m *AccountMutation) ResetCredentials() {
 	m.credentials = nil
+}
+
+// SetExtra sets the "extra" field.
+func (m *AccountMutation) SetExtra(value map[string]interface{}) {
+	m.extra = &value
+}
+
+// Extra returns the value of the "extra" field in the mutation.
+func (m *AccountMutation) Extra() (r map[string]interface{}, exists bool) {
+	v := m.extra
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldExtra returns the old "extra" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldExtra(ctx context.Context) (v map[string]interface{}, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldExtra is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldExtra requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldExtra: %w", err)
+	}
+	return oldValue.Extra, nil
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (m *AccountMutation) ClearExtra() {
+	m.extra = nil
+	m.clearedFields[account.FieldExtra] = struct{}{}
+}
+
+// ExtraCleared returns if the "extra" field was cleared in this mutation.
+func (m *AccountMutation) ExtraCleared() bool {
+	_, ok := m.clearedFields[account.FieldExtra]
+	return ok
+}
+
+// ResetExtra resets all changes to the "extra" field.
+func (m *AccountMutation) ResetExtra() {
+	m.extra = nil
+	delete(m.clearedFields, account.FieldExtra)
 }
 
 // SetPriority sets the "priority" field.
@@ -1675,6 +1728,153 @@ func (m *AccountMutation) ResetOverloadUntil() {
 	delete(m.clearedFields, account.FieldOverloadUntil)
 }
 
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (m *AccountMutation) SetTempUnschedulableUntil(t time.Time) {
+	m.temp_unschedulable_until = &t
+}
+
+// TempUnschedulableUntil returns the value of the "temp_unschedulable_until" field in the mutation.
+func (m *AccountMutation) TempUnschedulableUntil() (r time.Time, exists bool) {
+	v := m.temp_unschedulable_until
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTempUnschedulableUntil returns the old "temp_unschedulable_until" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldTempUnschedulableUntil(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTempUnschedulableUntil is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTempUnschedulableUntil requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTempUnschedulableUntil: %w", err)
+	}
+	return oldValue.TempUnschedulableUntil, nil
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (m *AccountMutation) ClearTempUnschedulableUntil() {
+	m.temp_unschedulable_until = nil
+	m.clearedFields[account.FieldTempUnschedulableUntil] = struct{}{}
+}
+
+// TempUnschedulableUntilCleared returns if the "temp_unschedulable_until" field was cleared in this mutation.
+func (m *AccountMutation) TempUnschedulableUntilCleared() bool {
+	_, ok := m.clearedFields[account.FieldTempUnschedulableUntil]
+	return ok
+}
+
+// ResetTempUnschedulableUntil resets all changes to the "temp_unschedulable_until" field.
+func (m *AccountMutation) ResetTempUnschedulableUntil() {
+	m.temp_unschedulable_until = nil
+	delete(m.clearedFields, account.FieldTempUnschedulableUntil)
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (m *AccountMutation) SetSessionWindowStart(t time.Time) {
+	m.session_window_start = &t
+}
+
+// SessionWindowStart returns the value of the "session_window_start" field in the mutation.
+func (m *AccountMutation) SessionWindowStart() (r time.Time, exists bool) {
+	v := m.session_window_start
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSessionWindowStart returns the old "session_window_start" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldSessionWindowStart(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSessionWindowStart is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSessionWindowStart requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSessionWindowStart: %w", err)
+	}
+	return oldValue.SessionWindowStart, nil
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (m *AccountMutation) ClearSessionWindowStart() {
+	m.session_window_start = nil
+	m.clearedFields[account.FieldSessionWindowStart] = struct{}{}
+}
+
+// SessionWindowStartCleared returns if the "session_window_start" field was cleared in this mutation.
+func (m *AccountMutation) SessionWindowStartCleared() bool {
+	_, ok := m.clearedFields[account.FieldSessionWindowStart]
+	return ok
+}
+
+// ResetSessionWindowStart resets all changes to the "session_window_start" field.
+func (m *AccountMutation) ResetSessionWindowStart() {
+	m.session_window_start = nil
+	delete(m.clearedFields, account.FieldSessionWindowStart)
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (m *AccountMutation) SetSessionWindowEnd(t time.Time) {
+	m.session_window_end = &t
+}
+
+// SessionWindowEnd returns the value of the "session_window_end" field in the mutation.
+func (m *AccountMutation) SessionWindowEnd() (r time.Time, exists bool) {
+	v := m.session_window_end
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSessionWindowEnd returns the old "session_window_end" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldSessionWindowEnd(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSessionWindowEnd is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSessionWindowEnd requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSessionWindowEnd: %w", err)
+	}
+	return oldValue.SessionWindowEnd, nil
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (m *AccountMutation) ClearSessionWindowEnd() {
+	m.session_window_end = nil
+	m.clearedFields[account.FieldSessionWindowEnd] = struct{}{}
+}
+
+// SessionWindowEndCleared returns if the "session_window_end" field was cleared in this mutation.
+func (m *AccountMutation) SessionWindowEndCleared() bool {
+	_, ok := m.clearedFields[account.FieldSessionWindowEnd]
+	return ok
+}
+
+// ResetSessionWindowEnd resets all changes to the "session_window_end" field.
+func (m *AccountMutation) ResetSessionWindowEnd() {
+	m.session_window_end = nil
+	delete(m.clearedFields, account.FieldSessionWindowEnd)
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (m *AccountMutation) SetCreatedAt(t time.Time) {
 	m.created_at = &t
@@ -1835,7 +2035,7 @@ func (m *AccountMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AccountMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 19)
 	if m.name != nil {
 		fields = append(fields, account.FieldName)
 	}
@@ -1847,6 +2047,9 @@ func (m *AccountMutation) Fields() []string {
 	}
 	if m.credentials != nil {
 		fields = append(fields, account.FieldCredentials)
+	}
+	if m.extra != nil {
+		fields = append(fields, account.FieldExtra)
 	}
 	if m.priority != nil {
 		fields = append(fields, account.FieldPriority)
@@ -1875,6 +2078,15 @@ func (m *AccountMutation) Fields() []string {
 	if m.overload_until != nil {
 		fields = append(fields, account.FieldOverloadUntil)
 	}
+	if m.temp_unschedulable_until != nil {
+		fields = append(fields, account.FieldTempUnschedulableUntil)
+	}
+	if m.session_window_start != nil {
+		fields = append(fields, account.FieldSessionWindowStart)
+	}
+	if m.session_window_end != nil {
+		fields = append(fields, account.FieldSessionWindowEnd)
+	}
 	if m.created_at != nil {
 		fields = append(fields, account.FieldCreatedAt)
 	}
@@ -1897,6 +2109,8 @@ func (m *AccountMutation) Field(name string) (ent.Value, bool) {
 		return m.GetType()
 	case account.FieldCredentials:
 		return m.Credentials()
+	case account.FieldExtra:
+		return m.Extra()
 	case account.FieldPriority:
 		return m.Priority()
 	case account.FieldStatus:
@@ -1915,6 +2129,12 @@ func (m *AccountMutation) Field(name string) (ent.Value, bool) {
 		return m.RateLimitResetAt()
 	case account.FieldOverloadUntil:
 		return m.OverloadUntil()
+	case account.FieldTempUnschedulableUntil:
+		return m.TempUnschedulableUntil()
+	case account.FieldSessionWindowStart:
+		return m.SessionWindowStart()
+	case account.FieldSessionWindowEnd:
+		return m.SessionWindowEnd()
 	case account.FieldCreatedAt:
 		return m.CreatedAt()
 	case account.FieldUpdatedAt:
@@ -1936,6 +2156,8 @@ func (m *AccountMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldType(ctx)
 	case account.FieldCredentials:
 		return m.OldCredentials(ctx)
+	case account.FieldExtra:
+		return m.OldExtra(ctx)
 	case account.FieldPriority:
 		return m.OldPriority(ctx)
 	case account.FieldStatus:
@@ -1954,6 +2176,12 @@ func (m *AccountMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldRateLimitResetAt(ctx)
 	case account.FieldOverloadUntil:
 		return m.OldOverloadUntil(ctx)
+	case account.FieldTempUnschedulableUntil:
+		return m.OldTempUnschedulableUntil(ctx)
+	case account.FieldSessionWindowStart:
+		return m.OldSessionWindowStart(ctx)
+	case account.FieldSessionWindowEnd:
+		return m.OldSessionWindowEnd(ctx)
 	case account.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case account.FieldUpdatedAt:
@@ -1994,6 +2222,13 @@ func (m *AccountMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCredentials(v)
+		return nil
+	case account.FieldExtra:
+		v, ok := value.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetExtra(v)
 		return nil
 	case account.FieldPriority:
 		v, ok := value.(int)
@@ -2058,6 +2293,27 @@ func (m *AccountMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetOverloadUntil(v)
 		return nil
+	case account.FieldTempUnschedulableUntil:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTempUnschedulableUntil(v)
+		return nil
+	case account.FieldSessionWindowStart:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSessionWindowStart(v)
+		return nil
+	case account.FieldSessionWindowEnd:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSessionWindowEnd(v)
+		return nil
 	case account.FieldCreatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -2117,6 +2373,9 @@ func (m *AccountMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *AccountMutation) ClearedFields() []string {
 	var fields []string
+	if m.FieldCleared(account.FieldExtra) {
+		fields = append(fields, account.FieldExtra)
+	}
 	if m.FieldCleared(account.FieldErrorMessage) {
 		fields = append(fields, account.FieldErrorMessage)
 	}
@@ -2135,6 +2394,15 @@ func (m *AccountMutation) ClearedFields() []string {
 	if m.FieldCleared(account.FieldOverloadUntil) {
 		fields = append(fields, account.FieldOverloadUntil)
 	}
+	if m.FieldCleared(account.FieldTempUnschedulableUntil) {
+		fields = append(fields, account.FieldTempUnschedulableUntil)
+	}
+	if m.FieldCleared(account.FieldSessionWindowStart) {
+		fields = append(fields, account.FieldSessionWindowStart)
+	}
+	if m.FieldCleared(account.FieldSessionWindowEnd) {
+		fields = append(fields, account.FieldSessionWindowEnd)
+	}
 	return fields
 }
 
@@ -2149,6 +2417,9 @@ func (m *AccountMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *AccountMutation) ClearField(name string) error {
 	switch name {
+	case account.FieldExtra:
+		m.ClearExtra()
+		return nil
 	case account.FieldErrorMessage:
 		m.ClearErrorMessage()
 		return nil
@@ -2166,6 +2437,15 @@ func (m *AccountMutation) ClearField(name string) error {
 		return nil
 	case account.FieldOverloadUntil:
 		m.ClearOverloadUntil()
+		return nil
+	case account.FieldTempUnschedulableUntil:
+		m.ClearTempUnschedulableUntil()
+		return nil
+	case account.FieldSessionWindowStart:
+		m.ClearSessionWindowStart()
+		return nil
+	case account.FieldSessionWindowEnd:
+		m.ClearSessionWindowEnd()
 		return nil
 	}
 	return fmt.Errorf("unknown Account nullable field %s", name)
@@ -2186,6 +2466,9 @@ func (m *AccountMutation) ResetField(name string) error {
 		return nil
 	case account.FieldCredentials:
 		m.ResetCredentials()
+		return nil
+	case account.FieldExtra:
+		m.ResetExtra()
 		return nil
 	case account.FieldPriority:
 		m.ResetPriority()
@@ -2213,6 +2496,15 @@ func (m *AccountMutation) ResetField(name string) error {
 		return nil
 	case account.FieldOverloadUntil:
 		m.ResetOverloadUntil()
+		return nil
+	case account.FieldTempUnschedulableUntil:
+		m.ResetTempUnschedulableUntil()
+		return nil
+	case account.FieldSessionWindowStart:
+		m.ResetSessionWindowStart()
+		return nil
+	case account.FieldSessionWindowEnd:
+		m.ResetSessionWindowEnd()
 		return nil
 	case account.FieldCreatedAt:
 		m.ResetCreatedAt()

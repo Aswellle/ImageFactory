@@ -27,455 +27,455 @@ type GenerationJobUpdate struct {
 }
 
 // Where appends a list predicates to the GenerationJobUpdate builder.
-func (gju *GenerationJobUpdate) Where(ps ...predicate.GenerationJob) *GenerationJobUpdate {
-	gju.mutation.Where(ps...)
-	return gju
+func (_u *GenerationJobUpdate) Where(ps ...predicate.GenerationJob) *GenerationJobUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (gju *GenerationJobUpdate) SetUserID(i int64) *GenerationJobUpdate {
-	gju.mutation.SetUserID(i)
-	return gju
+func (_u *GenerationJobUpdate) SetUserID(v int64) *GenerationJobUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableUserID(i *int64) *GenerationJobUpdate {
-	if i != nil {
-		gju.SetUserID(*i)
+func (_u *GenerationJobUpdate) SetNillableUserID(v *int64) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return gju
+	return _u
 }
 
 // SetExternalID sets the "external_id" field.
-func (gju *GenerationJobUpdate) SetExternalID(s string) *GenerationJobUpdate {
-	gju.mutation.SetExternalID(s)
-	return gju
+func (_u *GenerationJobUpdate) SetExternalID(v string) *GenerationJobUpdate {
+	_u.mutation.SetExternalID(v)
+	return _u
 }
 
 // SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableExternalID(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetExternalID(*s)
+func (_u *GenerationJobUpdate) SetNillableExternalID(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetExternalID(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearExternalID clears the value of the "external_id" field.
-func (gju *GenerationJobUpdate) ClearExternalID() *GenerationJobUpdate {
-	gju.mutation.ClearExternalID()
-	return gju
+func (_u *GenerationJobUpdate) ClearExternalID() *GenerationJobUpdate {
+	_u.mutation.ClearExternalID()
+	return _u
 }
 
 // SetProjectID sets the "project_id" field.
-func (gju *GenerationJobUpdate) SetProjectID(i int64) *GenerationJobUpdate {
-	gju.mutation.SetProjectID(i)
-	return gju
+func (_u *GenerationJobUpdate) SetProjectID(v int64) *GenerationJobUpdate {
+	_u.mutation.SetProjectID(v)
+	return _u
 }
 
 // SetNillableProjectID sets the "project_id" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableProjectID(i *int64) *GenerationJobUpdate {
-	if i != nil {
-		gju.SetProjectID(*i)
+func (_u *GenerationJobUpdate) SetNillableProjectID(v *int64) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetProjectID(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearProjectID clears the value of the "project_id" field.
-func (gju *GenerationJobUpdate) ClearProjectID() *GenerationJobUpdate {
-	gju.mutation.ClearProjectID()
-	return gju
+func (_u *GenerationJobUpdate) ClearProjectID() *GenerationJobUpdate {
+	_u.mutation.ClearProjectID()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (gju *GenerationJobUpdate) SetStatus(ge generationjob.Status) *GenerationJobUpdate {
-	gju.mutation.SetStatus(ge)
-	return gju
+func (_u *GenerationJobUpdate) SetStatus(v generationjob.Status) *GenerationJobUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableStatus(ge *generationjob.Status) *GenerationJobUpdate {
-	if ge != nil {
-		gju.SetStatus(*ge)
+func (_u *GenerationJobUpdate) SetNillableStatus(v *generationjob.Status) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return gju
+	return _u
 }
 
 // SetProvider sets the "provider" field.
-func (gju *GenerationJobUpdate) SetProvider(s string) *GenerationJobUpdate {
-	gju.mutation.SetProvider(s)
-	return gju
+func (_u *GenerationJobUpdate) SetProvider(v string) *GenerationJobUpdate {
+	_u.mutation.SetProvider(v)
+	return _u
 }
 
 // SetNillableProvider sets the "provider" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableProvider(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetProvider(*s)
+func (_u *GenerationJobUpdate) SetNillableProvider(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetProvider(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearProvider clears the value of the "provider" field.
-func (gju *GenerationJobUpdate) ClearProvider() *GenerationJobUpdate {
-	gju.mutation.ClearProvider()
-	return gju
+func (_u *GenerationJobUpdate) ClearProvider() *GenerationJobUpdate {
+	_u.mutation.ClearProvider()
+	return _u
 }
 
 // SetModel sets the "model" field.
-func (gju *GenerationJobUpdate) SetModel(s string) *GenerationJobUpdate {
-	gju.mutation.SetModel(s)
-	return gju
+func (_u *GenerationJobUpdate) SetModel(v string) *GenerationJobUpdate {
+	_u.mutation.SetModel(v)
+	return _u
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableModel(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetModel(*s)
+func (_u *GenerationJobUpdate) SetNillableModel(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetModel(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearModel clears the value of the "model" field.
-func (gju *GenerationJobUpdate) ClearModel() *GenerationJobUpdate {
-	gju.mutation.ClearModel()
-	return gju
+func (_u *GenerationJobUpdate) ClearModel() *GenerationJobUpdate {
+	_u.mutation.ClearModel()
+	return _u
 }
 
 // SetSub2apiTaskID sets the "sub2api_task_id" field.
-func (gju *GenerationJobUpdate) SetSub2apiTaskID(s string) *GenerationJobUpdate {
-	gju.mutation.SetSub2apiTaskID(s)
-	return gju
+func (_u *GenerationJobUpdate) SetSub2apiTaskID(v string) *GenerationJobUpdate {
+	_u.mutation.SetSub2apiTaskID(v)
+	return _u
 }
 
 // SetNillableSub2apiTaskID sets the "sub2api_task_id" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableSub2apiTaskID(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetSub2apiTaskID(*s)
+func (_u *GenerationJobUpdate) SetNillableSub2apiTaskID(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetSub2apiTaskID(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearSub2apiTaskID clears the value of the "sub2api_task_id" field.
-func (gju *GenerationJobUpdate) ClearSub2apiTaskID() *GenerationJobUpdate {
-	gju.mutation.ClearSub2apiTaskID()
-	return gju
+func (_u *GenerationJobUpdate) ClearSub2apiTaskID() *GenerationJobUpdate {
+	_u.mutation.ClearSub2apiTaskID()
+	return _u
 }
 
 // SetPrompt sets the "prompt" field.
-func (gju *GenerationJobUpdate) SetPrompt(s string) *GenerationJobUpdate {
-	gju.mutation.SetPrompt(s)
-	return gju
+func (_u *GenerationJobUpdate) SetPrompt(v string) *GenerationJobUpdate {
+	_u.mutation.SetPrompt(v)
+	return _u
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillablePrompt(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetPrompt(*s)
+func (_u *GenerationJobUpdate) SetNillablePrompt(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetPrompt(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (gju *GenerationJobUpdate) ClearPrompt() *GenerationJobUpdate {
-	gju.mutation.ClearPrompt()
-	return gju
+func (_u *GenerationJobUpdate) ClearPrompt() *GenerationJobUpdate {
+	_u.mutation.ClearPrompt()
+	return _u
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (gju *GenerationJobUpdate) SetNegativePrompt(s string) *GenerationJobUpdate {
-	gju.mutation.SetNegativePrompt(s)
-	return gju
+func (_u *GenerationJobUpdate) SetNegativePrompt(v string) *GenerationJobUpdate {
+	_u.mutation.SetNegativePrompt(v)
+	return _u
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableNegativePrompt(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetNegativePrompt(*s)
+func (_u *GenerationJobUpdate) SetNillableNegativePrompt(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetNegativePrompt(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (gju *GenerationJobUpdate) ClearNegativePrompt() *GenerationJobUpdate {
-	gju.mutation.ClearNegativePrompt()
-	return gju
+func (_u *GenerationJobUpdate) ClearNegativePrompt() *GenerationJobUpdate {
+	_u.mutation.ClearNegativePrompt()
+	return _u
 }
 
 // SetAspectRatio sets the "aspect_ratio" field.
-func (gju *GenerationJobUpdate) SetAspectRatio(s string) *GenerationJobUpdate {
-	gju.mutation.SetAspectRatio(s)
-	return gju
+func (_u *GenerationJobUpdate) SetAspectRatio(v string) *GenerationJobUpdate {
+	_u.mutation.SetAspectRatio(v)
+	return _u
 }
 
 // SetNillableAspectRatio sets the "aspect_ratio" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableAspectRatio(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetAspectRatio(*s)
+func (_u *GenerationJobUpdate) SetNillableAspectRatio(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetAspectRatio(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearAspectRatio clears the value of the "aspect_ratio" field.
-func (gju *GenerationJobUpdate) ClearAspectRatio() *GenerationJobUpdate {
-	gju.mutation.ClearAspectRatio()
-	return gju
+func (_u *GenerationJobUpdate) ClearAspectRatio() *GenerationJobUpdate {
+	_u.mutation.ClearAspectRatio()
+	return _u
 }
 
 // SetImageCount sets the "image_count" field.
-func (gju *GenerationJobUpdate) SetImageCount(i int) *GenerationJobUpdate {
-	gju.mutation.ResetImageCount()
-	gju.mutation.SetImageCount(i)
-	return gju
+func (_u *GenerationJobUpdate) SetImageCount(v int) *GenerationJobUpdate {
+	_u.mutation.ResetImageCount()
+	_u.mutation.SetImageCount(v)
+	return _u
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableImageCount(i *int) *GenerationJobUpdate {
-	if i != nil {
-		gju.SetImageCount(*i)
+func (_u *GenerationJobUpdate) SetNillableImageCount(v *int) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetImageCount(*v)
 	}
-	return gju
+	return _u
 }
 
-// AddImageCount adds i to the "image_count" field.
-func (gju *GenerationJobUpdate) AddImageCount(i int) *GenerationJobUpdate {
-	gju.mutation.AddImageCount(i)
-	return gju
+// AddImageCount adds value to the "image_count" field.
+func (_u *GenerationJobUpdate) AddImageCount(v int) *GenerationJobUpdate {
+	_u.mutation.AddImageCount(v)
+	return _u
 }
 
 // SetOutputFormat sets the "output_format" field.
-func (gju *GenerationJobUpdate) SetOutputFormat(s string) *GenerationJobUpdate {
-	gju.mutation.SetOutputFormat(s)
-	return gju
+func (_u *GenerationJobUpdate) SetOutputFormat(v string) *GenerationJobUpdate {
+	_u.mutation.SetOutputFormat(v)
+	return _u
 }
 
 // SetNillableOutputFormat sets the "output_format" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableOutputFormat(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetOutputFormat(*s)
+func (_u *GenerationJobUpdate) SetNillableOutputFormat(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetOutputFormat(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearOutputFormat clears the value of the "output_format" field.
-func (gju *GenerationJobUpdate) ClearOutputFormat() *GenerationJobUpdate {
-	gju.mutation.ClearOutputFormat()
-	return gju
+func (_u *GenerationJobUpdate) ClearOutputFormat() *GenerationJobUpdate {
+	_u.mutation.ClearOutputFormat()
+	return _u
 }
 
 // SetErrorCode sets the "error_code" field.
-func (gju *GenerationJobUpdate) SetErrorCode(s string) *GenerationJobUpdate {
-	gju.mutation.SetErrorCode(s)
-	return gju
+func (_u *GenerationJobUpdate) SetErrorCode(v string) *GenerationJobUpdate {
+	_u.mutation.SetErrorCode(v)
+	return _u
 }
 
 // SetNillableErrorCode sets the "error_code" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableErrorCode(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetErrorCode(*s)
+func (_u *GenerationJobUpdate) SetNillableErrorCode(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetErrorCode(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearErrorCode clears the value of the "error_code" field.
-func (gju *GenerationJobUpdate) ClearErrorCode() *GenerationJobUpdate {
-	gju.mutation.ClearErrorCode()
-	return gju
+func (_u *GenerationJobUpdate) ClearErrorCode() *GenerationJobUpdate {
+	_u.mutation.ClearErrorCode()
+	return _u
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (gju *GenerationJobUpdate) SetErrorMessage(s string) *GenerationJobUpdate {
-	gju.mutation.SetErrorMessage(s)
-	return gju
+func (_u *GenerationJobUpdate) SetErrorMessage(v string) *GenerationJobUpdate {
+	_u.mutation.SetErrorMessage(v)
+	return _u
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableErrorMessage(s *string) *GenerationJobUpdate {
-	if s != nil {
-		gju.SetErrorMessage(*s)
+func (_u *GenerationJobUpdate) SetNillableErrorMessage(v *string) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetErrorMessage(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearErrorMessage clears the value of the "error_message" field.
-func (gju *GenerationJobUpdate) ClearErrorMessage() *GenerationJobUpdate {
-	gju.mutation.ClearErrorMessage()
-	return gju
+func (_u *GenerationJobUpdate) ClearErrorMessage() *GenerationJobUpdate {
+	_u.mutation.ClearErrorMessage()
+	return _u
 }
 
 // SetRetryCount sets the "retry_count" field.
-func (gju *GenerationJobUpdate) SetRetryCount(i int) *GenerationJobUpdate {
-	gju.mutation.ResetRetryCount()
-	gju.mutation.SetRetryCount(i)
-	return gju
+func (_u *GenerationJobUpdate) SetRetryCount(v int) *GenerationJobUpdate {
+	_u.mutation.ResetRetryCount()
+	_u.mutation.SetRetryCount(v)
+	return _u
 }
 
 // SetNillableRetryCount sets the "retry_count" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableRetryCount(i *int) *GenerationJobUpdate {
-	if i != nil {
-		gju.SetRetryCount(*i)
+func (_u *GenerationJobUpdate) SetNillableRetryCount(v *int) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetRetryCount(*v)
 	}
-	return gju
+	return _u
 }
 
-// AddRetryCount adds i to the "retry_count" field.
-func (gju *GenerationJobUpdate) AddRetryCount(i int) *GenerationJobUpdate {
-	gju.mutation.AddRetryCount(i)
-	return gju
+// AddRetryCount adds value to the "retry_count" field.
+func (_u *GenerationJobUpdate) AddRetryCount(v int) *GenerationJobUpdate {
+	_u.mutation.AddRetryCount(v)
+	return _u
 }
 
 // SetStartedAt sets the "started_at" field.
-func (gju *GenerationJobUpdate) SetStartedAt(t time.Time) *GenerationJobUpdate {
-	gju.mutation.SetStartedAt(t)
-	return gju
+func (_u *GenerationJobUpdate) SetStartedAt(v time.Time) *GenerationJobUpdate {
+	_u.mutation.SetStartedAt(v)
+	return _u
 }
 
 // SetNillableStartedAt sets the "started_at" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableStartedAt(t *time.Time) *GenerationJobUpdate {
-	if t != nil {
-		gju.SetStartedAt(*t)
+func (_u *GenerationJobUpdate) SetNillableStartedAt(v *time.Time) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetStartedAt(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearStartedAt clears the value of the "started_at" field.
-func (gju *GenerationJobUpdate) ClearStartedAt() *GenerationJobUpdate {
-	gju.mutation.ClearStartedAt()
-	return gju
+func (_u *GenerationJobUpdate) ClearStartedAt() *GenerationJobUpdate {
+	_u.mutation.ClearStartedAt()
+	return _u
 }
 
 // SetCompletedAt sets the "completed_at" field.
-func (gju *GenerationJobUpdate) SetCompletedAt(t time.Time) *GenerationJobUpdate {
-	gju.mutation.SetCompletedAt(t)
-	return gju
+func (_u *GenerationJobUpdate) SetCompletedAt(v time.Time) *GenerationJobUpdate {
+	_u.mutation.SetCompletedAt(v)
+	return _u
 }
 
 // SetNillableCompletedAt sets the "completed_at" field if the given value is not nil.
-func (gju *GenerationJobUpdate) SetNillableCompletedAt(t *time.Time) *GenerationJobUpdate {
-	if t != nil {
-		gju.SetCompletedAt(*t)
+func (_u *GenerationJobUpdate) SetNillableCompletedAt(v *time.Time) *GenerationJobUpdate {
+	if v != nil {
+		_u.SetCompletedAt(*v)
 	}
-	return gju
+	return _u
 }
 
 // ClearCompletedAt clears the value of the "completed_at" field.
-func (gju *GenerationJobUpdate) ClearCompletedAt() *GenerationJobUpdate {
-	gju.mutation.ClearCompletedAt()
-	return gju
+func (_u *GenerationJobUpdate) ClearCompletedAt() *GenerationJobUpdate {
+	_u.mutation.ClearCompletedAt()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (gju *GenerationJobUpdate) SetUpdatedAt(t time.Time) *GenerationJobUpdate {
-	gju.mutation.SetUpdatedAt(t)
-	return gju
+func (_u *GenerationJobUpdate) SetUpdatedAt(v time.Time) *GenerationJobUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (gju *GenerationJobUpdate) SetUser(u *User) *GenerationJobUpdate {
-	return gju.SetUserID(u.ID)
+func (_u *GenerationJobUpdate) SetUser(v *User) *GenerationJobUpdate {
+	return _u.SetUserID(v.ID)
 }
 
 // SetProject sets the "project" edge to the Project entity.
-func (gju *GenerationJobUpdate) SetProject(p *Project) *GenerationJobUpdate {
-	return gju.SetProjectID(p.ID)
+func (_u *GenerationJobUpdate) SetProject(v *Project) *GenerationJobUpdate {
+	return _u.SetProjectID(v.ID)
 }
 
 // AddInputIDs adds the "inputs" edge to the GenerationInput entity by IDs.
-func (gju *GenerationJobUpdate) AddInputIDs(ids ...int64) *GenerationJobUpdate {
-	gju.mutation.AddInputIDs(ids...)
-	return gju
+func (_u *GenerationJobUpdate) AddInputIDs(ids ...int64) *GenerationJobUpdate {
+	_u.mutation.AddInputIDs(ids...)
+	return _u
 }
 
 // AddInputs adds the "inputs" edges to the GenerationInput entity.
-func (gju *GenerationJobUpdate) AddInputs(g ...*GenerationInput) *GenerationJobUpdate {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *GenerationJobUpdate) AddInputs(v ...*GenerationInput) *GenerationJobUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gju.AddInputIDs(ids...)
+	return _u.AddInputIDs(ids...)
 }
 
 // AddOutputAssetIDs adds the "output_assets" edge to the Asset entity by IDs.
-func (gju *GenerationJobUpdate) AddOutputAssetIDs(ids ...int64) *GenerationJobUpdate {
-	gju.mutation.AddOutputAssetIDs(ids...)
-	return gju
+func (_u *GenerationJobUpdate) AddOutputAssetIDs(ids ...int64) *GenerationJobUpdate {
+	_u.mutation.AddOutputAssetIDs(ids...)
+	return _u
 }
 
 // AddOutputAssets adds the "output_assets" edges to the Asset entity.
-func (gju *GenerationJobUpdate) AddOutputAssets(a ...*Asset) *GenerationJobUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *GenerationJobUpdate) AddOutputAssets(v ...*Asset) *GenerationJobUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gju.AddOutputAssetIDs(ids...)
+	return _u.AddOutputAssetIDs(ids...)
 }
 
 // Mutation returns the GenerationJobMutation object of the builder.
-func (gju *GenerationJobUpdate) Mutation() *GenerationJobMutation {
-	return gju.mutation
+func (_u *GenerationJobUpdate) Mutation() *GenerationJobMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (gju *GenerationJobUpdate) ClearUser() *GenerationJobUpdate {
-	gju.mutation.ClearUser()
-	return gju
+func (_u *GenerationJobUpdate) ClearUser() *GenerationJobUpdate {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearProject clears the "project" edge to the Project entity.
-func (gju *GenerationJobUpdate) ClearProject() *GenerationJobUpdate {
-	gju.mutation.ClearProject()
-	return gju
+func (_u *GenerationJobUpdate) ClearProject() *GenerationJobUpdate {
+	_u.mutation.ClearProject()
+	return _u
 }
 
 // ClearInputs clears all "inputs" edges to the GenerationInput entity.
-func (gju *GenerationJobUpdate) ClearInputs() *GenerationJobUpdate {
-	gju.mutation.ClearInputs()
-	return gju
+func (_u *GenerationJobUpdate) ClearInputs() *GenerationJobUpdate {
+	_u.mutation.ClearInputs()
+	return _u
 }
 
 // RemoveInputIDs removes the "inputs" edge to GenerationInput entities by IDs.
-func (gju *GenerationJobUpdate) RemoveInputIDs(ids ...int64) *GenerationJobUpdate {
-	gju.mutation.RemoveInputIDs(ids...)
-	return gju
+func (_u *GenerationJobUpdate) RemoveInputIDs(ids ...int64) *GenerationJobUpdate {
+	_u.mutation.RemoveInputIDs(ids...)
+	return _u
 }
 
 // RemoveInputs removes "inputs" edges to GenerationInput entities.
-func (gju *GenerationJobUpdate) RemoveInputs(g ...*GenerationInput) *GenerationJobUpdate {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *GenerationJobUpdate) RemoveInputs(v ...*GenerationInput) *GenerationJobUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gju.RemoveInputIDs(ids...)
+	return _u.RemoveInputIDs(ids...)
 }
 
 // ClearOutputAssets clears all "output_assets" edges to the Asset entity.
-func (gju *GenerationJobUpdate) ClearOutputAssets() *GenerationJobUpdate {
-	gju.mutation.ClearOutputAssets()
-	return gju
+func (_u *GenerationJobUpdate) ClearOutputAssets() *GenerationJobUpdate {
+	_u.mutation.ClearOutputAssets()
+	return _u
 }
 
 // RemoveOutputAssetIDs removes the "output_assets" edge to Asset entities by IDs.
-func (gju *GenerationJobUpdate) RemoveOutputAssetIDs(ids ...int64) *GenerationJobUpdate {
-	gju.mutation.RemoveOutputAssetIDs(ids...)
-	return gju
+func (_u *GenerationJobUpdate) RemoveOutputAssetIDs(ids ...int64) *GenerationJobUpdate {
+	_u.mutation.RemoveOutputAssetIDs(ids...)
+	return _u
 }
 
 // RemoveOutputAssets removes "output_assets" edges to Asset entities.
-func (gju *GenerationJobUpdate) RemoveOutputAssets(a ...*Asset) *GenerationJobUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *GenerationJobUpdate) RemoveOutputAssets(v ...*Asset) *GenerationJobUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gju.RemoveOutputAssetIDs(ids...)
+	return _u.RemoveOutputAssetIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (gju *GenerationJobUpdate) Save(ctx context.Context) (int, error) {
-	gju.defaults()
-	return withHooks(ctx, gju.sqlSave, gju.mutation, gju.hooks)
+func (_u *GenerationJobUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gju *GenerationJobUpdate) SaveX(ctx context.Context) int {
-	affected, err := gju.Save(ctx)
+func (_u *GenerationJobUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -483,142 +483,142 @@ func (gju *GenerationJobUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (gju *GenerationJobUpdate) Exec(ctx context.Context) error {
-	_, err := gju.Save(ctx)
+func (_u *GenerationJobUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gju *GenerationJobUpdate) ExecX(ctx context.Context) {
-	if err := gju.Exec(ctx); err != nil {
+func (_u *GenerationJobUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gju *GenerationJobUpdate) defaults() {
-	if _, ok := gju.mutation.UpdatedAt(); !ok {
+func (_u *GenerationJobUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := generationjob.UpdateDefaultUpdatedAt()
-		gju.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (gju *GenerationJobUpdate) check() error {
-	if v, ok := gju.mutation.Status(); ok {
+func (_u *GenerationJobUpdate) check() error {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := generationjob.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "GenerationJob.status": %w`, err)}
 		}
 	}
-	if gju.mutation.UserCleared() && len(gju.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "GenerationJob.user"`)
 	}
 	return nil
 }
 
-func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := gju.check(); err != nil {
-		return n, err
+func (_u *GenerationJobUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(generationjob.Table, generationjob.Columns, sqlgraph.NewFieldSpec(generationjob.FieldID, field.TypeInt64))
-	if ps := gju.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := gju.mutation.ExternalID(); ok {
+	if value, ok := _u.mutation.ExternalID(); ok {
 		_spec.SetField(generationjob.FieldExternalID, field.TypeString, value)
 	}
-	if gju.mutation.ExternalIDCleared() {
+	if _u.mutation.ExternalIDCleared() {
 		_spec.ClearField(generationjob.FieldExternalID, field.TypeString)
 	}
-	if value, ok := gju.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(generationjob.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := gju.mutation.Provider(); ok {
+	if value, ok := _u.mutation.Provider(); ok {
 		_spec.SetField(generationjob.FieldProvider, field.TypeString, value)
 	}
-	if gju.mutation.ProviderCleared() {
+	if _u.mutation.ProviderCleared() {
 		_spec.ClearField(generationjob.FieldProvider, field.TypeString)
 	}
-	if value, ok := gju.mutation.Model(); ok {
+	if value, ok := _u.mutation.Model(); ok {
 		_spec.SetField(generationjob.FieldModel, field.TypeString, value)
 	}
-	if gju.mutation.ModelCleared() {
+	if _u.mutation.ModelCleared() {
 		_spec.ClearField(generationjob.FieldModel, field.TypeString)
 	}
-	if value, ok := gju.mutation.Sub2apiTaskID(); ok {
+	if value, ok := _u.mutation.Sub2apiTaskID(); ok {
 		_spec.SetField(generationjob.FieldSub2apiTaskID, field.TypeString, value)
 	}
-	if gju.mutation.Sub2apiTaskIDCleared() {
+	if _u.mutation.Sub2apiTaskIDCleared() {
 		_spec.ClearField(generationjob.FieldSub2apiTaskID, field.TypeString)
 	}
-	if value, ok := gju.mutation.Prompt(); ok {
+	if value, ok := _u.mutation.Prompt(); ok {
 		_spec.SetField(generationjob.FieldPrompt, field.TypeString, value)
 	}
-	if gju.mutation.PromptCleared() {
+	if _u.mutation.PromptCleared() {
 		_spec.ClearField(generationjob.FieldPrompt, field.TypeString)
 	}
-	if value, ok := gju.mutation.NegativePrompt(); ok {
+	if value, ok := _u.mutation.NegativePrompt(); ok {
 		_spec.SetField(generationjob.FieldNegativePrompt, field.TypeString, value)
 	}
-	if gju.mutation.NegativePromptCleared() {
+	if _u.mutation.NegativePromptCleared() {
 		_spec.ClearField(generationjob.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := gju.mutation.AspectRatio(); ok {
+	if value, ok := _u.mutation.AspectRatio(); ok {
 		_spec.SetField(generationjob.FieldAspectRatio, field.TypeString, value)
 	}
-	if gju.mutation.AspectRatioCleared() {
+	if _u.mutation.AspectRatioCleared() {
 		_spec.ClearField(generationjob.FieldAspectRatio, field.TypeString)
 	}
-	if value, ok := gju.mutation.ImageCount(); ok {
+	if value, ok := _u.mutation.ImageCount(); ok {
 		_spec.SetField(generationjob.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := gju.mutation.AddedImageCount(); ok {
+	if value, ok := _u.mutation.AddedImageCount(); ok {
 		_spec.AddField(generationjob.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := gju.mutation.OutputFormat(); ok {
+	if value, ok := _u.mutation.OutputFormat(); ok {
 		_spec.SetField(generationjob.FieldOutputFormat, field.TypeString, value)
 	}
-	if gju.mutation.OutputFormatCleared() {
+	if _u.mutation.OutputFormatCleared() {
 		_spec.ClearField(generationjob.FieldOutputFormat, field.TypeString)
 	}
-	if value, ok := gju.mutation.ErrorCode(); ok {
+	if value, ok := _u.mutation.ErrorCode(); ok {
 		_spec.SetField(generationjob.FieldErrorCode, field.TypeString, value)
 	}
-	if gju.mutation.ErrorCodeCleared() {
+	if _u.mutation.ErrorCodeCleared() {
 		_spec.ClearField(generationjob.FieldErrorCode, field.TypeString)
 	}
-	if value, ok := gju.mutation.ErrorMessage(); ok {
+	if value, ok := _u.mutation.ErrorMessage(); ok {
 		_spec.SetField(generationjob.FieldErrorMessage, field.TypeString, value)
 	}
-	if gju.mutation.ErrorMessageCleared() {
+	if _u.mutation.ErrorMessageCleared() {
 		_spec.ClearField(generationjob.FieldErrorMessage, field.TypeString)
 	}
-	if value, ok := gju.mutation.RetryCount(); ok {
+	if value, ok := _u.mutation.RetryCount(); ok {
 		_spec.SetField(generationjob.FieldRetryCount, field.TypeInt, value)
 	}
-	if value, ok := gju.mutation.AddedRetryCount(); ok {
+	if value, ok := _u.mutation.AddedRetryCount(); ok {
 		_spec.AddField(generationjob.FieldRetryCount, field.TypeInt, value)
 	}
-	if value, ok := gju.mutation.StartedAt(); ok {
+	if value, ok := _u.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)
 	}
-	if gju.mutation.StartedAtCleared() {
+	if _u.mutation.StartedAtCleared() {
 		_spec.ClearField(generationjob.FieldStartedAt, field.TypeTime)
 	}
-	if value, ok := gju.mutation.CompletedAt(); ok {
+	if value, ok := _u.mutation.CompletedAt(); ok {
 		_spec.SetField(generationjob.FieldCompletedAt, field.TypeTime, value)
 	}
-	if gju.mutation.CompletedAtCleared() {
+	if _u.mutation.CompletedAtCleared() {
 		_spec.ClearField(generationjob.FieldCompletedAt, field.TypeTime)
 	}
-	if value, ok := gju.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(generationjob.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if gju.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -631,7 +631,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -647,7 +647,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gju.mutation.ProjectCleared() {
+	if _u.mutation.ProjectCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -660,7 +660,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.ProjectIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ProjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -676,7 +676,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gju.mutation.InputsCleared() {
+	if _u.mutation.InputsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -689,7 +689,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.RemovedInputsIDs(); len(nodes) > 0 && !gju.mutation.InputsCleared() {
+	if nodes := _u.mutation.RemovedInputsIDs(); len(nodes) > 0 && !_u.mutation.InputsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -705,7 +705,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.InputsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.InputsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -721,7 +721,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gju.mutation.OutputAssetsCleared() {
+	if _u.mutation.OutputAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -734,7 +734,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.RemovedOutputAssetsIDs(); len(nodes) > 0 && !gju.mutation.OutputAssetsCleared() {
+	if nodes := _u.mutation.RemovedOutputAssetsIDs(); len(nodes) > 0 && !_u.mutation.OutputAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -750,7 +750,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gju.mutation.OutputAssetsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OutputAssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -766,7 +766,7 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, gju.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{generationjob.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -774,8 +774,8 @@ func (gju *GenerationJobUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		}
 		return 0, err
 	}
-	gju.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // GenerationJobUpdateOne is the builder for updating a single GenerationJob entity.
@@ -787,462 +787,462 @@ type GenerationJobUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (gjuo *GenerationJobUpdateOne) SetUserID(i int64) *GenerationJobUpdateOne {
-	gjuo.mutation.SetUserID(i)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetUserID(v int64) *GenerationJobUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableUserID(i *int64) *GenerationJobUpdateOne {
-	if i != nil {
-		gjuo.SetUserID(*i)
+func (_u *GenerationJobUpdateOne) SetNillableUserID(v *int64) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // SetExternalID sets the "external_id" field.
-func (gjuo *GenerationJobUpdateOne) SetExternalID(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetExternalID(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetExternalID(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetExternalID(v)
+	return _u
 }
 
 // SetNillableExternalID sets the "external_id" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableExternalID(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetExternalID(*s)
+func (_u *GenerationJobUpdateOne) SetNillableExternalID(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetExternalID(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearExternalID clears the value of the "external_id" field.
-func (gjuo *GenerationJobUpdateOne) ClearExternalID() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearExternalID()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearExternalID() *GenerationJobUpdateOne {
+	_u.mutation.ClearExternalID()
+	return _u
 }
 
 // SetProjectID sets the "project_id" field.
-func (gjuo *GenerationJobUpdateOne) SetProjectID(i int64) *GenerationJobUpdateOne {
-	gjuo.mutation.SetProjectID(i)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetProjectID(v int64) *GenerationJobUpdateOne {
+	_u.mutation.SetProjectID(v)
+	return _u
 }
 
 // SetNillableProjectID sets the "project_id" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableProjectID(i *int64) *GenerationJobUpdateOne {
-	if i != nil {
-		gjuo.SetProjectID(*i)
+func (_u *GenerationJobUpdateOne) SetNillableProjectID(v *int64) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetProjectID(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearProjectID clears the value of the "project_id" field.
-func (gjuo *GenerationJobUpdateOne) ClearProjectID() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearProjectID()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearProjectID() *GenerationJobUpdateOne {
+	_u.mutation.ClearProjectID()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (gjuo *GenerationJobUpdateOne) SetStatus(ge generationjob.Status) *GenerationJobUpdateOne {
-	gjuo.mutation.SetStatus(ge)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetStatus(v generationjob.Status) *GenerationJobUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableStatus(ge *generationjob.Status) *GenerationJobUpdateOne {
-	if ge != nil {
-		gjuo.SetStatus(*ge)
+func (_u *GenerationJobUpdateOne) SetNillableStatus(v *generationjob.Status) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // SetProvider sets the "provider" field.
-func (gjuo *GenerationJobUpdateOne) SetProvider(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetProvider(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetProvider(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetProvider(v)
+	return _u
 }
 
 // SetNillableProvider sets the "provider" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableProvider(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetProvider(*s)
+func (_u *GenerationJobUpdateOne) SetNillableProvider(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetProvider(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearProvider clears the value of the "provider" field.
-func (gjuo *GenerationJobUpdateOne) ClearProvider() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearProvider()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearProvider() *GenerationJobUpdateOne {
+	_u.mutation.ClearProvider()
+	return _u
 }
 
 // SetModel sets the "model" field.
-func (gjuo *GenerationJobUpdateOne) SetModel(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetModel(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetModel(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetModel(v)
+	return _u
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableModel(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetModel(*s)
+func (_u *GenerationJobUpdateOne) SetNillableModel(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetModel(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearModel clears the value of the "model" field.
-func (gjuo *GenerationJobUpdateOne) ClearModel() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearModel()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearModel() *GenerationJobUpdateOne {
+	_u.mutation.ClearModel()
+	return _u
 }
 
 // SetSub2apiTaskID sets the "sub2api_task_id" field.
-func (gjuo *GenerationJobUpdateOne) SetSub2apiTaskID(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetSub2apiTaskID(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetSub2apiTaskID(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetSub2apiTaskID(v)
+	return _u
 }
 
 // SetNillableSub2apiTaskID sets the "sub2api_task_id" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableSub2apiTaskID(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetSub2apiTaskID(*s)
+func (_u *GenerationJobUpdateOne) SetNillableSub2apiTaskID(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetSub2apiTaskID(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearSub2apiTaskID clears the value of the "sub2api_task_id" field.
-func (gjuo *GenerationJobUpdateOne) ClearSub2apiTaskID() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearSub2apiTaskID()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearSub2apiTaskID() *GenerationJobUpdateOne {
+	_u.mutation.ClearSub2apiTaskID()
+	return _u
 }
 
 // SetPrompt sets the "prompt" field.
-func (gjuo *GenerationJobUpdateOne) SetPrompt(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetPrompt(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetPrompt(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetPrompt(v)
+	return _u
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillablePrompt(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetPrompt(*s)
+func (_u *GenerationJobUpdateOne) SetNillablePrompt(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetPrompt(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (gjuo *GenerationJobUpdateOne) ClearPrompt() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearPrompt()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearPrompt() *GenerationJobUpdateOne {
+	_u.mutation.ClearPrompt()
+	return _u
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (gjuo *GenerationJobUpdateOne) SetNegativePrompt(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetNegativePrompt(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetNegativePrompt(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetNegativePrompt(v)
+	return _u
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableNegativePrompt(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetNegativePrompt(*s)
+func (_u *GenerationJobUpdateOne) SetNillableNegativePrompt(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetNegativePrompt(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (gjuo *GenerationJobUpdateOne) ClearNegativePrompt() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearNegativePrompt()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearNegativePrompt() *GenerationJobUpdateOne {
+	_u.mutation.ClearNegativePrompt()
+	return _u
 }
 
 // SetAspectRatio sets the "aspect_ratio" field.
-func (gjuo *GenerationJobUpdateOne) SetAspectRatio(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetAspectRatio(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetAspectRatio(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetAspectRatio(v)
+	return _u
 }
 
 // SetNillableAspectRatio sets the "aspect_ratio" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableAspectRatio(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetAspectRatio(*s)
+func (_u *GenerationJobUpdateOne) SetNillableAspectRatio(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetAspectRatio(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearAspectRatio clears the value of the "aspect_ratio" field.
-func (gjuo *GenerationJobUpdateOne) ClearAspectRatio() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearAspectRatio()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearAspectRatio() *GenerationJobUpdateOne {
+	_u.mutation.ClearAspectRatio()
+	return _u
 }
 
 // SetImageCount sets the "image_count" field.
-func (gjuo *GenerationJobUpdateOne) SetImageCount(i int) *GenerationJobUpdateOne {
-	gjuo.mutation.ResetImageCount()
-	gjuo.mutation.SetImageCount(i)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetImageCount(v int) *GenerationJobUpdateOne {
+	_u.mutation.ResetImageCount()
+	_u.mutation.SetImageCount(v)
+	return _u
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableImageCount(i *int) *GenerationJobUpdateOne {
-	if i != nil {
-		gjuo.SetImageCount(*i)
+func (_u *GenerationJobUpdateOne) SetNillableImageCount(v *int) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetImageCount(*v)
 	}
-	return gjuo
+	return _u
 }
 
-// AddImageCount adds i to the "image_count" field.
-func (gjuo *GenerationJobUpdateOne) AddImageCount(i int) *GenerationJobUpdateOne {
-	gjuo.mutation.AddImageCount(i)
-	return gjuo
+// AddImageCount adds value to the "image_count" field.
+func (_u *GenerationJobUpdateOne) AddImageCount(v int) *GenerationJobUpdateOne {
+	_u.mutation.AddImageCount(v)
+	return _u
 }
 
 // SetOutputFormat sets the "output_format" field.
-func (gjuo *GenerationJobUpdateOne) SetOutputFormat(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetOutputFormat(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetOutputFormat(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetOutputFormat(v)
+	return _u
 }
 
 // SetNillableOutputFormat sets the "output_format" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableOutputFormat(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetOutputFormat(*s)
+func (_u *GenerationJobUpdateOne) SetNillableOutputFormat(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetOutputFormat(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearOutputFormat clears the value of the "output_format" field.
-func (gjuo *GenerationJobUpdateOne) ClearOutputFormat() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearOutputFormat()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearOutputFormat() *GenerationJobUpdateOne {
+	_u.mutation.ClearOutputFormat()
+	return _u
 }
 
 // SetErrorCode sets the "error_code" field.
-func (gjuo *GenerationJobUpdateOne) SetErrorCode(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetErrorCode(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetErrorCode(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetErrorCode(v)
+	return _u
 }
 
 // SetNillableErrorCode sets the "error_code" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableErrorCode(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetErrorCode(*s)
+func (_u *GenerationJobUpdateOne) SetNillableErrorCode(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetErrorCode(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearErrorCode clears the value of the "error_code" field.
-func (gjuo *GenerationJobUpdateOne) ClearErrorCode() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearErrorCode()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearErrorCode() *GenerationJobUpdateOne {
+	_u.mutation.ClearErrorCode()
+	return _u
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (gjuo *GenerationJobUpdateOne) SetErrorMessage(s string) *GenerationJobUpdateOne {
-	gjuo.mutation.SetErrorMessage(s)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetErrorMessage(v string) *GenerationJobUpdateOne {
+	_u.mutation.SetErrorMessage(v)
+	return _u
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableErrorMessage(s *string) *GenerationJobUpdateOne {
-	if s != nil {
-		gjuo.SetErrorMessage(*s)
+func (_u *GenerationJobUpdateOne) SetNillableErrorMessage(v *string) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetErrorMessage(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearErrorMessage clears the value of the "error_message" field.
-func (gjuo *GenerationJobUpdateOne) ClearErrorMessage() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearErrorMessage()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearErrorMessage() *GenerationJobUpdateOne {
+	_u.mutation.ClearErrorMessage()
+	return _u
 }
 
 // SetRetryCount sets the "retry_count" field.
-func (gjuo *GenerationJobUpdateOne) SetRetryCount(i int) *GenerationJobUpdateOne {
-	gjuo.mutation.ResetRetryCount()
-	gjuo.mutation.SetRetryCount(i)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetRetryCount(v int) *GenerationJobUpdateOne {
+	_u.mutation.ResetRetryCount()
+	_u.mutation.SetRetryCount(v)
+	return _u
 }
 
 // SetNillableRetryCount sets the "retry_count" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableRetryCount(i *int) *GenerationJobUpdateOne {
-	if i != nil {
-		gjuo.SetRetryCount(*i)
+func (_u *GenerationJobUpdateOne) SetNillableRetryCount(v *int) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetRetryCount(*v)
 	}
-	return gjuo
+	return _u
 }
 
-// AddRetryCount adds i to the "retry_count" field.
-func (gjuo *GenerationJobUpdateOne) AddRetryCount(i int) *GenerationJobUpdateOne {
-	gjuo.mutation.AddRetryCount(i)
-	return gjuo
+// AddRetryCount adds value to the "retry_count" field.
+func (_u *GenerationJobUpdateOne) AddRetryCount(v int) *GenerationJobUpdateOne {
+	_u.mutation.AddRetryCount(v)
+	return _u
 }
 
 // SetStartedAt sets the "started_at" field.
-func (gjuo *GenerationJobUpdateOne) SetStartedAt(t time.Time) *GenerationJobUpdateOne {
-	gjuo.mutation.SetStartedAt(t)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetStartedAt(v time.Time) *GenerationJobUpdateOne {
+	_u.mutation.SetStartedAt(v)
+	return _u
 }
 
 // SetNillableStartedAt sets the "started_at" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableStartedAt(t *time.Time) *GenerationJobUpdateOne {
-	if t != nil {
-		gjuo.SetStartedAt(*t)
+func (_u *GenerationJobUpdateOne) SetNillableStartedAt(v *time.Time) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetStartedAt(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearStartedAt clears the value of the "started_at" field.
-func (gjuo *GenerationJobUpdateOne) ClearStartedAt() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearStartedAt()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearStartedAt() *GenerationJobUpdateOne {
+	_u.mutation.ClearStartedAt()
+	return _u
 }
 
 // SetCompletedAt sets the "completed_at" field.
-func (gjuo *GenerationJobUpdateOne) SetCompletedAt(t time.Time) *GenerationJobUpdateOne {
-	gjuo.mutation.SetCompletedAt(t)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetCompletedAt(v time.Time) *GenerationJobUpdateOne {
+	_u.mutation.SetCompletedAt(v)
+	return _u
 }
 
 // SetNillableCompletedAt sets the "completed_at" field if the given value is not nil.
-func (gjuo *GenerationJobUpdateOne) SetNillableCompletedAt(t *time.Time) *GenerationJobUpdateOne {
-	if t != nil {
-		gjuo.SetCompletedAt(*t)
+func (_u *GenerationJobUpdateOne) SetNillableCompletedAt(v *time.Time) *GenerationJobUpdateOne {
+	if v != nil {
+		_u.SetCompletedAt(*v)
 	}
-	return gjuo
+	return _u
 }
 
 // ClearCompletedAt clears the value of the "completed_at" field.
-func (gjuo *GenerationJobUpdateOne) ClearCompletedAt() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearCompletedAt()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearCompletedAt() *GenerationJobUpdateOne {
+	_u.mutation.ClearCompletedAt()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (gjuo *GenerationJobUpdateOne) SetUpdatedAt(t time.Time) *GenerationJobUpdateOne {
-	gjuo.mutation.SetUpdatedAt(t)
-	return gjuo
+func (_u *GenerationJobUpdateOne) SetUpdatedAt(v time.Time) *GenerationJobUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (gjuo *GenerationJobUpdateOne) SetUser(u *User) *GenerationJobUpdateOne {
-	return gjuo.SetUserID(u.ID)
+func (_u *GenerationJobUpdateOne) SetUser(v *User) *GenerationJobUpdateOne {
+	return _u.SetUserID(v.ID)
 }
 
 // SetProject sets the "project" edge to the Project entity.
-func (gjuo *GenerationJobUpdateOne) SetProject(p *Project) *GenerationJobUpdateOne {
-	return gjuo.SetProjectID(p.ID)
+func (_u *GenerationJobUpdateOne) SetProject(v *Project) *GenerationJobUpdateOne {
+	return _u.SetProjectID(v.ID)
 }
 
 // AddInputIDs adds the "inputs" edge to the GenerationInput entity by IDs.
-func (gjuo *GenerationJobUpdateOne) AddInputIDs(ids ...int64) *GenerationJobUpdateOne {
-	gjuo.mutation.AddInputIDs(ids...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) AddInputIDs(ids ...int64) *GenerationJobUpdateOne {
+	_u.mutation.AddInputIDs(ids...)
+	return _u
 }
 
 // AddInputs adds the "inputs" edges to the GenerationInput entity.
-func (gjuo *GenerationJobUpdateOne) AddInputs(g ...*GenerationInput) *GenerationJobUpdateOne {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *GenerationJobUpdateOne) AddInputs(v ...*GenerationInput) *GenerationJobUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gjuo.AddInputIDs(ids...)
+	return _u.AddInputIDs(ids...)
 }
 
 // AddOutputAssetIDs adds the "output_assets" edge to the Asset entity by IDs.
-func (gjuo *GenerationJobUpdateOne) AddOutputAssetIDs(ids ...int64) *GenerationJobUpdateOne {
-	gjuo.mutation.AddOutputAssetIDs(ids...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) AddOutputAssetIDs(ids ...int64) *GenerationJobUpdateOne {
+	_u.mutation.AddOutputAssetIDs(ids...)
+	return _u
 }
 
 // AddOutputAssets adds the "output_assets" edges to the Asset entity.
-func (gjuo *GenerationJobUpdateOne) AddOutputAssets(a ...*Asset) *GenerationJobUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *GenerationJobUpdateOne) AddOutputAssets(v ...*Asset) *GenerationJobUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gjuo.AddOutputAssetIDs(ids...)
+	return _u.AddOutputAssetIDs(ids...)
 }
 
 // Mutation returns the GenerationJobMutation object of the builder.
-func (gjuo *GenerationJobUpdateOne) Mutation() *GenerationJobMutation {
-	return gjuo.mutation
+func (_u *GenerationJobUpdateOne) Mutation() *GenerationJobMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (gjuo *GenerationJobUpdateOne) ClearUser() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearUser()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearUser() *GenerationJobUpdateOne {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearProject clears the "project" edge to the Project entity.
-func (gjuo *GenerationJobUpdateOne) ClearProject() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearProject()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearProject() *GenerationJobUpdateOne {
+	_u.mutation.ClearProject()
+	return _u
 }
 
 // ClearInputs clears all "inputs" edges to the GenerationInput entity.
-func (gjuo *GenerationJobUpdateOne) ClearInputs() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearInputs()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearInputs() *GenerationJobUpdateOne {
+	_u.mutation.ClearInputs()
+	return _u
 }
 
 // RemoveInputIDs removes the "inputs" edge to GenerationInput entities by IDs.
-func (gjuo *GenerationJobUpdateOne) RemoveInputIDs(ids ...int64) *GenerationJobUpdateOne {
-	gjuo.mutation.RemoveInputIDs(ids...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) RemoveInputIDs(ids ...int64) *GenerationJobUpdateOne {
+	_u.mutation.RemoveInputIDs(ids...)
+	return _u
 }
 
 // RemoveInputs removes "inputs" edges to GenerationInput entities.
-func (gjuo *GenerationJobUpdateOne) RemoveInputs(g ...*GenerationInput) *GenerationJobUpdateOne {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *GenerationJobUpdateOne) RemoveInputs(v ...*GenerationInput) *GenerationJobUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gjuo.RemoveInputIDs(ids...)
+	return _u.RemoveInputIDs(ids...)
 }
 
 // ClearOutputAssets clears all "output_assets" edges to the Asset entity.
-func (gjuo *GenerationJobUpdateOne) ClearOutputAssets() *GenerationJobUpdateOne {
-	gjuo.mutation.ClearOutputAssets()
-	return gjuo
+func (_u *GenerationJobUpdateOne) ClearOutputAssets() *GenerationJobUpdateOne {
+	_u.mutation.ClearOutputAssets()
+	return _u
 }
 
 // RemoveOutputAssetIDs removes the "output_assets" edge to Asset entities by IDs.
-func (gjuo *GenerationJobUpdateOne) RemoveOutputAssetIDs(ids ...int64) *GenerationJobUpdateOne {
-	gjuo.mutation.RemoveOutputAssetIDs(ids...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) RemoveOutputAssetIDs(ids ...int64) *GenerationJobUpdateOne {
+	_u.mutation.RemoveOutputAssetIDs(ids...)
+	return _u
 }
 
 // RemoveOutputAssets removes "output_assets" edges to Asset entities.
-func (gjuo *GenerationJobUpdateOne) RemoveOutputAssets(a ...*Asset) *GenerationJobUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *GenerationJobUpdateOne) RemoveOutputAssets(v ...*Asset) *GenerationJobUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return gjuo.RemoveOutputAssetIDs(ids...)
+	return _u.RemoveOutputAssetIDs(ids...)
 }
 
 // Where appends a list predicates to the GenerationJobUpdate builder.
-func (gjuo *GenerationJobUpdateOne) Where(ps ...predicate.GenerationJob) *GenerationJobUpdateOne {
-	gjuo.mutation.Where(ps...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) Where(ps ...predicate.GenerationJob) *GenerationJobUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (gjuo *GenerationJobUpdateOne) Select(field string, fields ...string) *GenerationJobUpdateOne {
-	gjuo.fields = append([]string{field}, fields...)
-	return gjuo
+func (_u *GenerationJobUpdateOne) Select(field string, fields ...string) *GenerationJobUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated GenerationJob entity.
-func (gjuo *GenerationJobUpdateOne) Save(ctx context.Context) (*GenerationJob, error) {
-	gjuo.defaults()
-	return withHooks(ctx, gjuo.sqlSave, gjuo.mutation, gjuo.hooks)
+func (_u *GenerationJobUpdateOne) Save(ctx context.Context) (*GenerationJob, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gjuo *GenerationJobUpdateOne) SaveX(ctx context.Context) *GenerationJob {
-	node, err := gjuo.Save(ctx)
+func (_u *GenerationJobUpdateOne) SaveX(ctx context.Context) *GenerationJob {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1250,50 +1250,50 @@ func (gjuo *GenerationJobUpdateOne) SaveX(ctx context.Context) *GenerationJob {
 }
 
 // Exec executes the query on the entity.
-func (gjuo *GenerationJobUpdateOne) Exec(ctx context.Context) error {
-	_, err := gjuo.Save(ctx)
+func (_u *GenerationJobUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gjuo *GenerationJobUpdateOne) ExecX(ctx context.Context) {
-	if err := gjuo.Exec(ctx); err != nil {
+func (_u *GenerationJobUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gjuo *GenerationJobUpdateOne) defaults() {
-	if _, ok := gjuo.mutation.UpdatedAt(); !ok {
+func (_u *GenerationJobUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := generationjob.UpdateDefaultUpdatedAt()
-		gjuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (gjuo *GenerationJobUpdateOne) check() error {
-	if v, ok := gjuo.mutation.Status(); ok {
+func (_u *GenerationJobUpdateOne) check() error {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := generationjob.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "GenerationJob.status": %w`, err)}
 		}
 	}
-	if gjuo.mutation.UserCleared() && len(gjuo.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "GenerationJob.user"`)
 	}
 	return nil
 }
 
-func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *GenerationJob, err error) {
-	if err := gjuo.check(); err != nil {
+func (_u *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *GenerationJob, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(generationjob.Table, generationjob.Columns, sqlgraph.NewFieldSpec(generationjob.FieldID, field.TypeInt64))
-	id, ok := gjuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GenerationJob.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := gjuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, generationjob.FieldID)
 		for _, f := range fields {
@@ -1305,104 +1305,104 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 			}
 		}
 	}
-	if ps := gjuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := gjuo.mutation.ExternalID(); ok {
+	if value, ok := _u.mutation.ExternalID(); ok {
 		_spec.SetField(generationjob.FieldExternalID, field.TypeString, value)
 	}
-	if gjuo.mutation.ExternalIDCleared() {
+	if _u.mutation.ExternalIDCleared() {
 		_spec.ClearField(generationjob.FieldExternalID, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(generationjob.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := gjuo.mutation.Provider(); ok {
+	if value, ok := _u.mutation.Provider(); ok {
 		_spec.SetField(generationjob.FieldProvider, field.TypeString, value)
 	}
-	if gjuo.mutation.ProviderCleared() {
+	if _u.mutation.ProviderCleared() {
 		_spec.ClearField(generationjob.FieldProvider, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.Model(); ok {
+	if value, ok := _u.mutation.Model(); ok {
 		_spec.SetField(generationjob.FieldModel, field.TypeString, value)
 	}
-	if gjuo.mutation.ModelCleared() {
+	if _u.mutation.ModelCleared() {
 		_spec.ClearField(generationjob.FieldModel, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.Sub2apiTaskID(); ok {
+	if value, ok := _u.mutation.Sub2apiTaskID(); ok {
 		_spec.SetField(generationjob.FieldSub2apiTaskID, field.TypeString, value)
 	}
-	if gjuo.mutation.Sub2apiTaskIDCleared() {
+	if _u.mutation.Sub2apiTaskIDCleared() {
 		_spec.ClearField(generationjob.FieldSub2apiTaskID, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.Prompt(); ok {
+	if value, ok := _u.mutation.Prompt(); ok {
 		_spec.SetField(generationjob.FieldPrompt, field.TypeString, value)
 	}
-	if gjuo.mutation.PromptCleared() {
+	if _u.mutation.PromptCleared() {
 		_spec.ClearField(generationjob.FieldPrompt, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.NegativePrompt(); ok {
+	if value, ok := _u.mutation.NegativePrompt(); ok {
 		_spec.SetField(generationjob.FieldNegativePrompt, field.TypeString, value)
 	}
-	if gjuo.mutation.NegativePromptCleared() {
+	if _u.mutation.NegativePromptCleared() {
 		_spec.ClearField(generationjob.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.AspectRatio(); ok {
+	if value, ok := _u.mutation.AspectRatio(); ok {
 		_spec.SetField(generationjob.FieldAspectRatio, field.TypeString, value)
 	}
-	if gjuo.mutation.AspectRatioCleared() {
+	if _u.mutation.AspectRatioCleared() {
 		_spec.ClearField(generationjob.FieldAspectRatio, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.ImageCount(); ok {
+	if value, ok := _u.mutation.ImageCount(); ok {
 		_spec.SetField(generationjob.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := gjuo.mutation.AddedImageCount(); ok {
+	if value, ok := _u.mutation.AddedImageCount(); ok {
 		_spec.AddField(generationjob.FieldImageCount, field.TypeInt, value)
 	}
-	if value, ok := gjuo.mutation.OutputFormat(); ok {
+	if value, ok := _u.mutation.OutputFormat(); ok {
 		_spec.SetField(generationjob.FieldOutputFormat, field.TypeString, value)
 	}
-	if gjuo.mutation.OutputFormatCleared() {
+	if _u.mutation.OutputFormatCleared() {
 		_spec.ClearField(generationjob.FieldOutputFormat, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.ErrorCode(); ok {
+	if value, ok := _u.mutation.ErrorCode(); ok {
 		_spec.SetField(generationjob.FieldErrorCode, field.TypeString, value)
 	}
-	if gjuo.mutation.ErrorCodeCleared() {
+	if _u.mutation.ErrorCodeCleared() {
 		_spec.ClearField(generationjob.FieldErrorCode, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.ErrorMessage(); ok {
+	if value, ok := _u.mutation.ErrorMessage(); ok {
 		_spec.SetField(generationjob.FieldErrorMessage, field.TypeString, value)
 	}
-	if gjuo.mutation.ErrorMessageCleared() {
+	if _u.mutation.ErrorMessageCleared() {
 		_spec.ClearField(generationjob.FieldErrorMessage, field.TypeString)
 	}
-	if value, ok := gjuo.mutation.RetryCount(); ok {
+	if value, ok := _u.mutation.RetryCount(); ok {
 		_spec.SetField(generationjob.FieldRetryCount, field.TypeInt, value)
 	}
-	if value, ok := gjuo.mutation.AddedRetryCount(); ok {
+	if value, ok := _u.mutation.AddedRetryCount(); ok {
 		_spec.AddField(generationjob.FieldRetryCount, field.TypeInt, value)
 	}
-	if value, ok := gjuo.mutation.StartedAt(); ok {
+	if value, ok := _u.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)
 	}
-	if gjuo.mutation.StartedAtCleared() {
+	if _u.mutation.StartedAtCleared() {
 		_spec.ClearField(generationjob.FieldStartedAt, field.TypeTime)
 	}
-	if value, ok := gjuo.mutation.CompletedAt(); ok {
+	if value, ok := _u.mutation.CompletedAt(); ok {
 		_spec.SetField(generationjob.FieldCompletedAt, field.TypeTime, value)
 	}
-	if gjuo.mutation.CompletedAtCleared() {
+	if _u.mutation.CompletedAtCleared() {
 		_spec.ClearField(generationjob.FieldCompletedAt, field.TypeTime)
 	}
-	if value, ok := gjuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(generationjob.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if gjuo.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1415,7 +1415,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1431,7 +1431,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gjuo.mutation.ProjectCleared() {
+	if _u.mutation.ProjectCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1444,7 +1444,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.ProjectIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ProjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1460,7 +1460,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gjuo.mutation.InputsCleared() {
+	if _u.mutation.InputsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1473,7 +1473,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.RemovedInputsIDs(); len(nodes) > 0 && !gjuo.mutation.InputsCleared() {
+	if nodes := _u.mutation.RemovedInputsIDs(); len(nodes) > 0 && !_u.mutation.InputsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1489,7 +1489,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.InputsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.InputsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1505,7 +1505,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if gjuo.mutation.OutputAssetsCleared() {
+	if _u.mutation.OutputAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1518,7 +1518,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.RemovedOutputAssetsIDs(); len(nodes) > 0 && !gjuo.mutation.OutputAssetsCleared() {
+	if nodes := _u.mutation.RemovedOutputAssetsIDs(); len(nodes) > 0 && !_u.mutation.OutputAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1534,7 +1534,7 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := gjuo.mutation.OutputAssetsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OutputAssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1550,10 +1550,10 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &GenerationJob{config: gjuo.config}
+	_node = &GenerationJob{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, gjuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{generationjob.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1561,6 +1561,6 @@ func (gjuo *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generat
 		}
 		return nil, err
 	}
-	gjuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

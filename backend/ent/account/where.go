@@ -110,6 +110,21 @@ func OverloadUntil(v time.Time) predicate.Account {
 	return predicate.Account(sql.FieldEQ(FieldOverloadUntil, v))
 }
 
+// TempUnschedulableUntil applies equality check predicate on the "temp_unschedulable_until" field. It's identical to TempUnschedulableUntilEQ.
+func TempUnschedulableUntil(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldTempUnschedulableUntil, v))
+}
+
+// SessionWindowStart applies equality check predicate on the "session_window_start" field. It's identical to SessionWindowStartEQ.
+func SessionWindowStart(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldSessionWindowStart, v))
+}
+
+// SessionWindowEnd applies equality check predicate on the "session_window_end" field. It's identical to SessionWindowEndEQ.
+func SessionWindowEnd(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldSessionWindowEnd, v))
+}
+
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.Account {
 	return predicate.Account(sql.FieldEQ(FieldCreatedAt, v))
@@ -313,6 +328,16 @@ func TypeEqualFold(v string) predicate.Account {
 // TypeContainsFold applies the ContainsFold predicate on the "type" field.
 func TypeContainsFold(v string) predicate.Account {
 	return predicate.Account(sql.FieldContainsFold(FieldType, v))
+}
+
+// ExtraIsNil applies the IsNil predicate on the "extra" field.
+func ExtraIsNil() predicate.Account {
+	return predicate.Account(sql.FieldIsNull(FieldExtra))
+}
+
+// ExtraNotNil applies the NotNil predicate on the "extra" field.
+func ExtraNotNil() predicate.Account {
+	return predicate.Account(sql.FieldNotNull(FieldExtra))
 }
 
 // PriorityEQ applies the EQ predicate on the "priority" field.
@@ -708,6 +733,156 @@ func OverloadUntilIsNil() predicate.Account {
 // OverloadUntilNotNil applies the NotNil predicate on the "overload_until" field.
 func OverloadUntilNotNil() predicate.Account {
 	return predicate.Account(sql.FieldNotNull(FieldOverloadUntil))
+}
+
+// TempUnschedulableUntilEQ applies the EQ predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilNEQ applies the NEQ predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilNEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNEQ(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilIn applies the In predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldIn(FieldTempUnschedulableUntil, vs...))
+}
+
+// TempUnschedulableUntilNotIn applies the NotIn predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilNotIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNotIn(FieldTempUnschedulableUntil, vs...))
+}
+
+// TempUnschedulableUntilGT applies the GT predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilGT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGT(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilGTE applies the GTE predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilGTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGTE(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilLT applies the LT predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilLT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLT(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilLTE applies the LTE predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilLTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLTE(FieldTempUnschedulableUntil, v))
+}
+
+// TempUnschedulableUntilIsNil applies the IsNil predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilIsNil() predicate.Account {
+	return predicate.Account(sql.FieldIsNull(FieldTempUnschedulableUntil))
+}
+
+// TempUnschedulableUntilNotNil applies the NotNil predicate on the "temp_unschedulable_until" field.
+func TempUnschedulableUntilNotNil() predicate.Account {
+	return predicate.Account(sql.FieldNotNull(FieldTempUnschedulableUntil))
+}
+
+// SessionWindowStartEQ applies the EQ predicate on the "session_window_start" field.
+func SessionWindowStartEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartNEQ applies the NEQ predicate on the "session_window_start" field.
+func SessionWindowStartNEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNEQ(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartIn applies the In predicate on the "session_window_start" field.
+func SessionWindowStartIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldIn(FieldSessionWindowStart, vs...))
+}
+
+// SessionWindowStartNotIn applies the NotIn predicate on the "session_window_start" field.
+func SessionWindowStartNotIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNotIn(FieldSessionWindowStart, vs...))
+}
+
+// SessionWindowStartGT applies the GT predicate on the "session_window_start" field.
+func SessionWindowStartGT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGT(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartGTE applies the GTE predicate on the "session_window_start" field.
+func SessionWindowStartGTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGTE(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartLT applies the LT predicate on the "session_window_start" field.
+func SessionWindowStartLT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLT(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartLTE applies the LTE predicate on the "session_window_start" field.
+func SessionWindowStartLTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLTE(FieldSessionWindowStart, v))
+}
+
+// SessionWindowStartIsNil applies the IsNil predicate on the "session_window_start" field.
+func SessionWindowStartIsNil() predicate.Account {
+	return predicate.Account(sql.FieldIsNull(FieldSessionWindowStart))
+}
+
+// SessionWindowStartNotNil applies the NotNil predicate on the "session_window_start" field.
+func SessionWindowStartNotNil() predicate.Account {
+	return predicate.Account(sql.FieldNotNull(FieldSessionWindowStart))
+}
+
+// SessionWindowEndEQ applies the EQ predicate on the "session_window_end" field.
+func SessionWindowEndEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndNEQ applies the NEQ predicate on the "session_window_end" field.
+func SessionWindowEndNEQ(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNEQ(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndIn applies the In predicate on the "session_window_end" field.
+func SessionWindowEndIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldIn(FieldSessionWindowEnd, vs...))
+}
+
+// SessionWindowEndNotIn applies the NotIn predicate on the "session_window_end" field.
+func SessionWindowEndNotIn(vs ...time.Time) predicate.Account {
+	return predicate.Account(sql.FieldNotIn(FieldSessionWindowEnd, vs...))
+}
+
+// SessionWindowEndGT applies the GT predicate on the "session_window_end" field.
+func SessionWindowEndGT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGT(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndGTE applies the GTE predicate on the "session_window_end" field.
+func SessionWindowEndGTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldGTE(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndLT applies the LT predicate on the "session_window_end" field.
+func SessionWindowEndLT(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLT(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndLTE applies the LTE predicate on the "session_window_end" field.
+func SessionWindowEndLTE(v time.Time) predicate.Account {
+	return predicate.Account(sql.FieldLTE(FieldSessionWindowEnd, v))
+}
+
+// SessionWindowEndIsNil applies the IsNil predicate on the "session_window_end" field.
+func SessionWindowEndIsNil() predicate.Account {
+	return predicate.Account(sql.FieldIsNull(FieldSessionWindowEnd))
+}
+
+// SessionWindowEndNotNil applies the NotNil predicate on the "session_window_end" field.
+func SessionWindowEndNotNil() predicate.Account {
+	return predicate.Account(sql.FieldNotNull(FieldSessionWindowEnd))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

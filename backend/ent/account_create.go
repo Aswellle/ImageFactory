@@ -24,212 +24,260 @@ type AccountCreate struct {
 }
 
 // SetName sets the "name" field.
-func (ac *AccountCreate) SetName(s string) *AccountCreate {
-	ac.mutation.SetName(s)
-	return ac
+func (_c *AccountCreate) SetName(v string) *AccountCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetPlatform sets the "platform" field.
-func (ac *AccountCreate) SetPlatform(s string) *AccountCreate {
-	ac.mutation.SetPlatform(s)
-	return ac
+func (_c *AccountCreate) SetPlatform(v string) *AccountCreate {
+	_c.mutation.SetPlatform(v)
+	return _c
 }
 
 // SetType sets the "type" field.
-func (ac *AccountCreate) SetType(s string) *AccountCreate {
-	ac.mutation.SetType(s)
-	return ac
+func (_c *AccountCreate) SetType(v string) *AccountCreate {
+	_c.mutation.SetType(v)
+	return _c
 }
 
 // SetCredentials sets the "credentials" field.
-func (ac *AccountCreate) SetCredentials(m map[string]interface{}) *AccountCreate {
-	ac.mutation.SetCredentials(m)
-	return ac
+func (_c *AccountCreate) SetCredentials(v map[string]interface{}) *AccountCreate {
+	_c.mutation.SetCredentials(v)
+	return _c
+}
+
+// SetExtra sets the "extra" field.
+func (_c *AccountCreate) SetExtra(v map[string]interface{}) *AccountCreate {
+	_c.mutation.SetExtra(v)
+	return _c
 }
 
 // SetPriority sets the "priority" field.
-func (ac *AccountCreate) SetPriority(i int) *AccountCreate {
-	ac.mutation.SetPriority(i)
-	return ac
+func (_c *AccountCreate) SetPriority(v int) *AccountCreate {
+	_c.mutation.SetPriority(v)
+	return _c
 }
 
 // SetNillablePriority sets the "priority" field if the given value is not nil.
-func (ac *AccountCreate) SetNillablePriority(i *int) *AccountCreate {
-	if i != nil {
-		ac.SetPriority(*i)
+func (_c *AccountCreate) SetNillablePriority(v *int) *AccountCreate {
+	if v != nil {
+		_c.SetPriority(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetStatus sets the "status" field.
-func (ac *AccountCreate) SetStatus(a account.Status) *AccountCreate {
-	ac.mutation.SetStatus(a)
-	return ac
+func (_c *AccountCreate) SetStatus(v account.Status) *AccountCreate {
+	_c.mutation.SetStatus(v)
+	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableStatus(a *account.Status) *AccountCreate {
-	if a != nil {
-		ac.SetStatus(*a)
+func (_c *AccountCreate) SetNillableStatus(v *account.Status) *AccountCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (ac *AccountCreate) SetErrorMessage(s string) *AccountCreate {
-	ac.mutation.SetErrorMessage(s)
-	return ac
+func (_c *AccountCreate) SetErrorMessage(v string) *AccountCreate {
+	_c.mutation.SetErrorMessage(v)
+	return _c
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableErrorMessage(s *string) *AccountCreate {
-	if s != nil {
-		ac.SetErrorMessage(*s)
+func (_c *AccountCreate) SetNillableErrorMessage(v *string) *AccountCreate {
+	if v != nil {
+		_c.SetErrorMessage(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetLastUsedAt sets the "last_used_at" field.
-func (ac *AccountCreate) SetLastUsedAt(t time.Time) *AccountCreate {
-	ac.mutation.SetLastUsedAt(t)
-	return ac
+func (_c *AccountCreate) SetLastUsedAt(v time.Time) *AccountCreate {
+	_c.mutation.SetLastUsedAt(v)
+	return _c
 }
 
 // SetNillableLastUsedAt sets the "last_used_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableLastUsedAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetLastUsedAt(*t)
+func (_c *AccountCreate) SetNillableLastUsedAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetLastUsedAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetExpiresAt sets the "expires_at" field.
-func (ac *AccountCreate) SetExpiresAt(t time.Time) *AccountCreate {
-	ac.mutation.SetExpiresAt(t)
-	return ac
+func (_c *AccountCreate) SetExpiresAt(v time.Time) *AccountCreate {
+	_c.mutation.SetExpiresAt(v)
+	return _c
 }
 
 // SetNillableExpiresAt sets the "expires_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableExpiresAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetExpiresAt(*t)
+func (_c *AccountCreate) SetNillableExpiresAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetExpiresAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetSchedulable sets the "schedulable" field.
-func (ac *AccountCreate) SetSchedulable(b bool) *AccountCreate {
-	ac.mutation.SetSchedulable(b)
-	return ac
+func (_c *AccountCreate) SetSchedulable(v bool) *AccountCreate {
+	_c.mutation.SetSchedulable(v)
+	return _c
 }
 
 // SetNillableSchedulable sets the "schedulable" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableSchedulable(b *bool) *AccountCreate {
-	if b != nil {
-		ac.SetSchedulable(*b)
+func (_c *AccountCreate) SetNillableSchedulable(v *bool) *AccountCreate {
+	if v != nil {
+		_c.SetSchedulable(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetRateLimitedAt sets the "rate_limited_at" field.
-func (ac *AccountCreate) SetRateLimitedAt(t time.Time) *AccountCreate {
-	ac.mutation.SetRateLimitedAt(t)
-	return ac
+func (_c *AccountCreate) SetRateLimitedAt(v time.Time) *AccountCreate {
+	_c.mutation.SetRateLimitedAt(v)
+	return _c
 }
 
 // SetNillableRateLimitedAt sets the "rate_limited_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableRateLimitedAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetRateLimitedAt(*t)
+func (_c *AccountCreate) SetNillableRateLimitedAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetRateLimitedAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetRateLimitResetAt sets the "rate_limit_reset_at" field.
-func (ac *AccountCreate) SetRateLimitResetAt(t time.Time) *AccountCreate {
-	ac.mutation.SetRateLimitResetAt(t)
-	return ac
+func (_c *AccountCreate) SetRateLimitResetAt(v time.Time) *AccountCreate {
+	_c.mutation.SetRateLimitResetAt(v)
+	return _c
 }
 
 // SetNillableRateLimitResetAt sets the "rate_limit_reset_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableRateLimitResetAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetRateLimitResetAt(*t)
+func (_c *AccountCreate) SetNillableRateLimitResetAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetRateLimitResetAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetOverloadUntil sets the "overload_until" field.
-func (ac *AccountCreate) SetOverloadUntil(t time.Time) *AccountCreate {
-	ac.mutation.SetOverloadUntil(t)
-	return ac
+func (_c *AccountCreate) SetOverloadUntil(v time.Time) *AccountCreate {
+	_c.mutation.SetOverloadUntil(v)
+	return _c
 }
 
 // SetNillableOverloadUntil sets the "overload_until" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableOverloadUntil(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetOverloadUntil(*t)
+func (_c *AccountCreate) SetNillableOverloadUntil(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetOverloadUntil(*v)
 	}
-	return ac
+	return _c
+}
+
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (_c *AccountCreate) SetTempUnschedulableUntil(v time.Time) *AccountCreate {
+	_c.mutation.SetTempUnschedulableUntil(v)
+	return _c
+}
+
+// SetNillableTempUnschedulableUntil sets the "temp_unschedulable_until" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableTempUnschedulableUntil(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetTempUnschedulableUntil(*v)
+	}
+	return _c
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (_c *AccountCreate) SetSessionWindowStart(v time.Time) *AccountCreate {
+	_c.mutation.SetSessionWindowStart(v)
+	return _c
+}
+
+// SetNillableSessionWindowStart sets the "session_window_start" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableSessionWindowStart(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetSessionWindowStart(*v)
+	}
+	return _c
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (_c *AccountCreate) SetSessionWindowEnd(v time.Time) *AccountCreate {
+	_c.mutation.SetSessionWindowEnd(v)
+	return _c
+}
+
+// SetNillableSessionWindowEnd sets the "session_window_end" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableSessionWindowEnd(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetSessionWindowEnd(*v)
+	}
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (ac *AccountCreate) SetCreatedAt(t time.Time) *AccountCreate {
-	ac.mutation.SetCreatedAt(t)
-	return ac
+func (_c *AccountCreate) SetCreatedAt(v time.Time) *AccountCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableCreatedAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetCreatedAt(*t)
+func (_c *AccountCreate) SetNillableCreatedAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (ac *AccountCreate) SetUpdatedAt(t time.Time) *AccountCreate {
-	ac.mutation.SetUpdatedAt(t)
-	return ac
+func (_c *AccountCreate) SetUpdatedAt(v time.Time) *AccountCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (ac *AccountCreate) SetNillableUpdatedAt(t *time.Time) *AccountCreate {
-	if t != nil {
-		ac.SetUpdatedAt(*t)
+func (_c *AccountCreate) SetNillableUpdatedAt(v *time.Time) *AccountCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return ac
+	return _c
 }
 
 // AddUsageLogIDs adds the "usage_logs" edge to the UsageRecord entity by IDs.
-func (ac *AccountCreate) AddUsageLogIDs(ids ...int64) *AccountCreate {
-	ac.mutation.AddUsageLogIDs(ids...)
-	return ac
+func (_c *AccountCreate) AddUsageLogIDs(ids ...int64) *AccountCreate {
+	_c.mutation.AddUsageLogIDs(ids...)
+	return _c
 }
 
 // AddUsageLogs adds the "usage_logs" edges to the UsageRecord entity.
-func (ac *AccountCreate) AddUsageLogs(u ...*UsageRecord) *AccountCreate {
-	ids := make([]int64, len(u))
-	for i := range u {
-		ids[i] = u[i].ID
+func (_c *AccountCreate) AddUsageLogs(v ...*UsageRecord) *AccountCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return ac.AddUsageLogIDs(ids...)
+	return _c.AddUsageLogIDs(ids...)
 }
 
 // Mutation returns the AccountMutation object of the builder.
-func (ac *AccountCreate) Mutation() *AccountMutation {
-	return ac.mutation
+func (_c *AccountCreate) Mutation() *AccountMutation {
+	return _c.mutation
 }
 
 // Save creates the Account in the database.
-func (ac *AccountCreate) Save(ctx context.Context) (*Account, error) {
-	ac.defaults()
-	return withHooks(ctx, ac.sqlSave, ac.mutation, ac.hooks)
+func (_c *AccountCreate) Save(ctx context.Context) (*Account, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (ac *AccountCreate) SaveX(ctx context.Context) *Account {
-	v, err := ac.Save(ctx)
+func (_c *AccountCreate) SaveX(ctx context.Context) *Account {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -237,104 +285,108 @@ func (ac *AccountCreate) SaveX(ctx context.Context) *Account {
 }
 
 // Exec executes the query.
-func (ac *AccountCreate) Exec(ctx context.Context) error {
-	_, err := ac.Save(ctx)
+func (_c *AccountCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ac *AccountCreate) ExecX(ctx context.Context) {
-	if err := ac.Exec(ctx); err != nil {
+func (_c *AccountCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (ac *AccountCreate) defaults() {
-	if _, ok := ac.mutation.Credentials(); !ok {
+func (_c *AccountCreate) defaults() {
+	if _, ok := _c.mutation.Credentials(); !ok {
 		v := account.DefaultCredentials()
-		ac.mutation.SetCredentials(v)
+		_c.mutation.SetCredentials(v)
 	}
-	if _, ok := ac.mutation.Priority(); !ok {
+	if _, ok := _c.mutation.Extra(); !ok {
+		v := account.DefaultExtra()
+		_c.mutation.SetExtra(v)
+	}
+	if _, ok := _c.mutation.Priority(); !ok {
 		v := account.DefaultPriority
-		ac.mutation.SetPriority(v)
+		_c.mutation.SetPriority(v)
 	}
-	if _, ok := ac.mutation.Status(); !ok {
+	if _, ok := _c.mutation.Status(); !ok {
 		v := account.DefaultStatus
-		ac.mutation.SetStatus(v)
+		_c.mutation.SetStatus(v)
 	}
-	if _, ok := ac.mutation.Schedulable(); !ok {
+	if _, ok := _c.mutation.Schedulable(); !ok {
 		v := account.DefaultSchedulable
-		ac.mutation.SetSchedulable(v)
+		_c.mutation.SetSchedulable(v)
 	}
-	if _, ok := ac.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := account.DefaultCreatedAt()
-		ac.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := ac.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := account.DefaultUpdatedAt()
-		ac.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (ac *AccountCreate) check() error {
-	if _, ok := ac.mutation.Name(); !ok {
+func (_c *AccountCreate) check() error {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Account.name"`)}
 	}
-	if v, ok := ac.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := account.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Account.name": %w`, err)}
 		}
 	}
-	if _, ok := ac.mutation.Platform(); !ok {
+	if _, ok := _c.mutation.Platform(); !ok {
 		return &ValidationError{Name: "platform", err: errors.New(`ent: missing required field "Account.platform"`)}
 	}
-	if v, ok := ac.mutation.Platform(); ok {
+	if v, ok := _c.mutation.Platform(); ok {
 		if err := account.PlatformValidator(v); err != nil {
 			return &ValidationError{Name: "platform", err: fmt.Errorf(`ent: validator failed for field "Account.platform": %w`, err)}
 		}
 	}
-	if _, ok := ac.mutation.GetType(); !ok {
+	if _, ok := _c.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Account.type"`)}
 	}
-	if v, ok := ac.mutation.GetType(); ok {
+	if v, ok := _c.mutation.GetType(); ok {
 		if err := account.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Account.type": %w`, err)}
 		}
 	}
-	if _, ok := ac.mutation.Credentials(); !ok {
+	if _, ok := _c.mutation.Credentials(); !ok {
 		return &ValidationError{Name: "credentials", err: errors.New(`ent: missing required field "Account.credentials"`)}
 	}
-	if _, ok := ac.mutation.Priority(); !ok {
+	if _, ok := _c.mutation.Priority(); !ok {
 		return &ValidationError{Name: "priority", err: errors.New(`ent: missing required field "Account.priority"`)}
 	}
-	if _, ok := ac.mutation.Status(); !ok {
+	if _, ok := _c.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "Account.status"`)}
 	}
-	if v, ok := ac.mutation.Status(); ok {
+	if v, ok := _c.mutation.Status(); ok {
 		if err := account.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Account.status": %w`, err)}
 		}
 	}
-	if _, ok := ac.mutation.Schedulable(); !ok {
+	if _, ok := _c.mutation.Schedulable(); !ok {
 		return &ValidationError{Name: "schedulable", err: errors.New(`ent: missing required field "Account.schedulable"`)}
 	}
-	if _, ok := ac.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Account.created_at"`)}
 	}
-	if _, ok := ac.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Account.updated_at"`)}
 	}
 	return nil
 }
 
-func (ac *AccountCreate) sqlSave(ctx context.Context) (*Account, error) {
-	if err := ac.check(); err != nil {
+func (_c *AccountCreate) sqlSave(ctx context.Context) (*Account, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := ac.createSpec()
-	if err := sqlgraph.CreateNode(ctx, ac.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -342,78 +394,94 @@ func (ac *AccountCreate) sqlSave(ctx context.Context) (*Account, error) {
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	ac.mutation.id = &_node.ID
-	ac.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (ac *AccountCreate) createSpec() (*Account, *sqlgraph.CreateSpec) {
+func (_c *AccountCreate) createSpec() (*Account, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Account{config: ac.config}
+		_node = &Account{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(account.Table, sqlgraph.NewFieldSpec(account.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = ac.conflict
-	if value, ok := ac.mutation.Name(); ok {
+	_spec.OnConflict = _c.conflict
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(account.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := ac.mutation.Platform(); ok {
+	if value, ok := _c.mutation.Platform(); ok {
 		_spec.SetField(account.FieldPlatform, field.TypeString, value)
 		_node.Platform = value
 	}
-	if value, ok := ac.mutation.GetType(); ok {
+	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(account.FieldType, field.TypeString, value)
 		_node.Type = value
 	}
-	if value, ok := ac.mutation.Credentials(); ok {
+	if value, ok := _c.mutation.Credentials(); ok {
 		_spec.SetField(account.FieldCredentials, field.TypeJSON, value)
 		_node.Credentials = value
 	}
-	if value, ok := ac.mutation.Priority(); ok {
+	if value, ok := _c.mutation.Extra(); ok {
+		_spec.SetField(account.FieldExtra, field.TypeJSON, value)
+		_node.Extra = value
+	}
+	if value, ok := _c.mutation.Priority(); ok {
 		_spec.SetField(account.FieldPriority, field.TypeInt, value)
 		_node.Priority = value
 	}
-	if value, ok := ac.mutation.Status(); ok {
+	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(account.FieldStatus, field.TypeEnum, value)
 		_node.Status = value
 	}
-	if value, ok := ac.mutation.ErrorMessage(); ok {
+	if value, ok := _c.mutation.ErrorMessage(); ok {
 		_spec.SetField(account.FieldErrorMessage, field.TypeString, value)
 		_node.ErrorMessage = &value
 	}
-	if value, ok := ac.mutation.LastUsedAt(); ok {
+	if value, ok := _c.mutation.LastUsedAt(); ok {
 		_spec.SetField(account.FieldLastUsedAt, field.TypeTime, value)
 		_node.LastUsedAt = &value
 	}
-	if value, ok := ac.mutation.ExpiresAt(); ok {
+	if value, ok := _c.mutation.ExpiresAt(); ok {
 		_spec.SetField(account.FieldExpiresAt, field.TypeTime, value)
 		_node.ExpiresAt = &value
 	}
-	if value, ok := ac.mutation.Schedulable(); ok {
+	if value, ok := _c.mutation.Schedulable(); ok {
 		_spec.SetField(account.FieldSchedulable, field.TypeBool, value)
 		_node.Schedulable = value
 	}
-	if value, ok := ac.mutation.RateLimitedAt(); ok {
+	if value, ok := _c.mutation.RateLimitedAt(); ok {
 		_spec.SetField(account.FieldRateLimitedAt, field.TypeTime, value)
 		_node.RateLimitedAt = &value
 	}
-	if value, ok := ac.mutation.RateLimitResetAt(); ok {
+	if value, ok := _c.mutation.RateLimitResetAt(); ok {
 		_spec.SetField(account.FieldRateLimitResetAt, field.TypeTime, value)
 		_node.RateLimitResetAt = &value
 	}
-	if value, ok := ac.mutation.OverloadUntil(); ok {
+	if value, ok := _c.mutation.OverloadUntil(); ok {
 		_spec.SetField(account.FieldOverloadUntil, field.TypeTime, value)
 		_node.OverloadUntil = &value
 	}
-	if value, ok := ac.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.TempUnschedulableUntil(); ok {
+		_spec.SetField(account.FieldTempUnschedulableUntil, field.TypeTime, value)
+		_node.TempUnschedulableUntil = &value
+	}
+	if value, ok := _c.mutation.SessionWindowStart(); ok {
+		_spec.SetField(account.FieldSessionWindowStart, field.TypeTime, value)
+		_node.SessionWindowStart = &value
+	}
+	if value, ok := _c.mutation.SessionWindowEnd(); ok {
+		_spec.SetField(account.FieldSessionWindowEnd, field.TypeTime, value)
+		_node.SessionWindowEnd = &value
+	}
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(account.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := ac.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if nodes := ac.mutation.UsageLogsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.UsageLogsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -448,10 +516,10 @@ func (ac *AccountCreate) createSpec() (*Account, *sqlgraph.CreateSpec) {
 //			SetName(v+v).
 //		}).
 //		Exec(ctx)
-func (ac *AccountCreate) OnConflict(opts ...sql.ConflictOption) *AccountUpsertOne {
-	ac.conflict = opts
+func (_c *AccountCreate) OnConflict(opts ...sql.ConflictOption) *AccountUpsertOne {
+	_c.conflict = opts
 	return &AccountUpsertOne{
-		create: ac,
+		create: _c,
 	}
 }
 
@@ -461,10 +529,10 @@ func (ac *AccountCreate) OnConflict(opts ...sql.ConflictOption) *AccountUpsertOn
 //	client.Account.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (ac *AccountCreate) OnConflictColumns(columns ...string) *AccountUpsertOne {
-	ac.conflict = append(ac.conflict, sql.ConflictColumns(columns...))
+func (_c *AccountCreate) OnConflictColumns(columns ...string) *AccountUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AccountUpsertOne{
-		create: ac,
+		create: _c,
 	}
 }
 
@@ -526,6 +594,24 @@ func (u *AccountUpsert) SetCredentials(v map[string]interface{}) *AccountUpsert 
 // UpdateCredentials sets the "credentials" field to the value that was provided on create.
 func (u *AccountUpsert) UpdateCredentials() *AccountUpsert {
 	u.SetExcluded(account.FieldCredentials)
+	return u
+}
+
+// SetExtra sets the "extra" field.
+func (u *AccountUpsert) SetExtra(v map[string]interface{}) *AccountUpsert {
+	u.Set(account.FieldExtra, v)
+	return u
+}
+
+// UpdateExtra sets the "extra" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateExtra() *AccountUpsert {
+	u.SetExcluded(account.FieldExtra)
+	return u
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (u *AccountUpsert) ClearExtra() *AccountUpsert {
+	u.SetNull(account.FieldExtra)
 	return u
 }
 
@@ -679,6 +765,60 @@ func (u *AccountUpsert) ClearOverloadUntil() *AccountUpsert {
 	return u
 }
 
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (u *AccountUpsert) SetTempUnschedulableUntil(v time.Time) *AccountUpsert {
+	u.Set(account.FieldTempUnschedulableUntil, v)
+	return u
+}
+
+// UpdateTempUnschedulableUntil sets the "temp_unschedulable_until" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateTempUnschedulableUntil() *AccountUpsert {
+	u.SetExcluded(account.FieldTempUnschedulableUntil)
+	return u
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (u *AccountUpsert) ClearTempUnschedulableUntil() *AccountUpsert {
+	u.SetNull(account.FieldTempUnschedulableUntil)
+	return u
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (u *AccountUpsert) SetSessionWindowStart(v time.Time) *AccountUpsert {
+	u.Set(account.FieldSessionWindowStart, v)
+	return u
+}
+
+// UpdateSessionWindowStart sets the "session_window_start" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateSessionWindowStart() *AccountUpsert {
+	u.SetExcluded(account.FieldSessionWindowStart)
+	return u
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (u *AccountUpsert) ClearSessionWindowStart() *AccountUpsert {
+	u.SetNull(account.FieldSessionWindowStart)
+	return u
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (u *AccountUpsert) SetSessionWindowEnd(v time.Time) *AccountUpsert {
+	u.Set(account.FieldSessionWindowEnd, v)
+	return u
+}
+
+// UpdateSessionWindowEnd sets the "session_window_end" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateSessionWindowEnd() *AccountUpsert {
+	u.SetExcluded(account.FieldSessionWindowEnd)
+	return u
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (u *AccountUpsert) ClearSessionWindowEnd() *AccountUpsert {
+	u.SetNull(account.FieldSessionWindowEnd)
+	return u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (u *AccountUpsert) SetUpdatedAt(v time.Time) *AccountUpsert {
 	u.Set(account.FieldUpdatedAt, v)
@@ -789,6 +929,27 @@ func (u *AccountUpsertOne) SetCredentials(v map[string]interface{}) *AccountUpse
 func (u *AccountUpsertOne) UpdateCredentials() *AccountUpsertOne {
 	return u.Update(func(s *AccountUpsert) {
 		s.UpdateCredentials()
+	})
+}
+
+// SetExtra sets the "extra" field.
+func (u *AccountUpsertOne) SetExtra(v map[string]interface{}) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetExtra(v)
+	})
+}
+
+// UpdateExtra sets the "extra" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateExtra() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateExtra()
+	})
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (u *AccountUpsertOne) ClearExtra() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearExtra()
 	})
 }
 
@@ -967,6 +1128,69 @@ func (u *AccountUpsertOne) ClearOverloadUntil() *AccountUpsertOne {
 	})
 }
 
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (u *AccountUpsertOne) SetTempUnschedulableUntil(v time.Time) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetTempUnschedulableUntil(v)
+	})
+}
+
+// UpdateTempUnschedulableUntil sets the "temp_unschedulable_until" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateTempUnschedulableUntil() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateTempUnschedulableUntil()
+	})
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (u *AccountUpsertOne) ClearTempUnschedulableUntil() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearTempUnschedulableUntil()
+	})
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (u *AccountUpsertOne) SetSessionWindowStart(v time.Time) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSessionWindowStart(v)
+	})
+}
+
+// UpdateSessionWindowStart sets the "session_window_start" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateSessionWindowStart() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSessionWindowStart()
+	})
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (u *AccountUpsertOne) ClearSessionWindowStart() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSessionWindowStart()
+	})
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (u *AccountUpsertOne) SetSessionWindowEnd(v time.Time) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSessionWindowEnd(v)
+	})
+}
+
+// UpdateSessionWindowEnd sets the "session_window_end" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateSessionWindowEnd() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSessionWindowEnd()
+	})
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (u *AccountUpsertOne) ClearSessionWindowEnd() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSessionWindowEnd()
+	})
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (u *AccountUpsertOne) SetUpdatedAt(v time.Time) *AccountUpsertOne {
 	return u.Update(func(s *AccountUpsert) {
@@ -1023,16 +1247,16 @@ type AccountCreateBulk struct {
 }
 
 // Save creates the Account entities in the database.
-func (acb *AccountCreateBulk) Save(ctx context.Context) ([]*Account, error) {
-	if acb.err != nil {
-		return nil, acb.err
+func (_c *AccountCreateBulk) Save(ctx context.Context) ([]*Account, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(acb.builders))
-	nodes := make([]*Account, len(acb.builders))
-	mutators := make([]Mutator, len(acb.builders))
-	for i := range acb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*Account, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := acb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*AccountMutation)
@@ -1046,12 +1270,12 @@ func (acb *AccountCreateBulk) Save(ctx context.Context) ([]*Account, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, acb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = acb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, acb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1075,7 +1299,7 @@ func (acb *AccountCreateBulk) Save(ctx context.Context) ([]*Account, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, acb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1083,8 +1307,8 @@ func (acb *AccountCreateBulk) Save(ctx context.Context) ([]*Account, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (acb *AccountCreateBulk) SaveX(ctx context.Context) []*Account {
-	v, err := acb.Save(ctx)
+func (_c *AccountCreateBulk) SaveX(ctx context.Context) []*Account {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1092,14 +1316,14 @@ func (acb *AccountCreateBulk) SaveX(ctx context.Context) []*Account {
 }
 
 // Exec executes the query.
-func (acb *AccountCreateBulk) Exec(ctx context.Context) error {
-	_, err := acb.Save(ctx)
+func (_c *AccountCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (acb *AccountCreateBulk) ExecX(ctx context.Context) {
-	if err := acb.Exec(ctx); err != nil {
+func (_c *AccountCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1119,10 +1343,10 @@ func (acb *AccountCreateBulk) ExecX(ctx context.Context) {
 //			SetName(v+v).
 //		}).
 //		Exec(ctx)
-func (acb *AccountCreateBulk) OnConflict(opts ...sql.ConflictOption) *AccountUpsertBulk {
-	acb.conflict = opts
+func (_c *AccountCreateBulk) OnConflict(opts ...sql.ConflictOption) *AccountUpsertBulk {
+	_c.conflict = opts
 	return &AccountUpsertBulk{
-		create: acb,
+		create: _c,
 	}
 }
 
@@ -1132,10 +1356,10 @@ func (acb *AccountCreateBulk) OnConflict(opts ...sql.ConflictOption) *AccountUps
 //	client.Account.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (acb *AccountCreateBulk) OnConflictColumns(columns ...string) *AccountUpsertBulk {
-	acb.conflict = append(acb.conflict, sql.ConflictColumns(columns...))
+func (_c *AccountCreateBulk) OnConflictColumns(columns ...string) *AccountUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AccountUpsertBulk{
-		create: acb,
+		create: _c,
 	}
 }
 
@@ -1245,6 +1469,27 @@ func (u *AccountUpsertBulk) SetCredentials(v map[string]interface{}) *AccountUps
 func (u *AccountUpsertBulk) UpdateCredentials() *AccountUpsertBulk {
 	return u.Update(func(s *AccountUpsert) {
 		s.UpdateCredentials()
+	})
+}
+
+// SetExtra sets the "extra" field.
+func (u *AccountUpsertBulk) SetExtra(v map[string]interface{}) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetExtra(v)
+	})
+}
+
+// UpdateExtra sets the "extra" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateExtra() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateExtra()
+	})
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (u *AccountUpsertBulk) ClearExtra() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearExtra()
 	})
 }
 
@@ -1420,6 +1665,69 @@ func (u *AccountUpsertBulk) UpdateOverloadUntil() *AccountUpsertBulk {
 func (u *AccountUpsertBulk) ClearOverloadUntil() *AccountUpsertBulk {
 	return u.Update(func(s *AccountUpsert) {
 		s.ClearOverloadUntil()
+	})
+}
+
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (u *AccountUpsertBulk) SetTempUnschedulableUntil(v time.Time) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetTempUnschedulableUntil(v)
+	})
+}
+
+// UpdateTempUnschedulableUntil sets the "temp_unschedulable_until" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateTempUnschedulableUntil() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateTempUnschedulableUntil()
+	})
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (u *AccountUpsertBulk) ClearTempUnschedulableUntil() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearTempUnschedulableUntil()
+	})
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (u *AccountUpsertBulk) SetSessionWindowStart(v time.Time) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSessionWindowStart(v)
+	})
+}
+
+// UpdateSessionWindowStart sets the "session_window_start" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateSessionWindowStart() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSessionWindowStart()
+	})
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (u *AccountUpsertBulk) ClearSessionWindowStart() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSessionWindowStart()
+	})
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (u *AccountUpsertBulk) SetSessionWindowEnd(v time.Time) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSessionWindowEnd(v)
+	})
+}
+
+// UpdateSessionWindowEnd sets the "session_window_end" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateSessionWindowEnd() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSessionWindowEnd()
+	})
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (u *AccountUpsertBulk) ClearSessionWindowEnd() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSessionWindowEnd()
 	})
 }
 

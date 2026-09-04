@@ -34,44 +34,44 @@ type AssetTagQuery struct {
 }
 
 // Where adds a new predicate for the AssetTagQuery builder.
-func (atq *AssetTagQuery) Where(ps ...predicate.AssetTag) *AssetTagQuery {
-	atq.predicates = append(atq.predicates, ps...)
-	return atq
+func (_q *AssetTagQuery) Where(ps ...predicate.AssetTag) *AssetTagQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (atq *AssetTagQuery) Limit(limit int) *AssetTagQuery {
-	atq.ctx.Limit = &limit
-	return atq
+func (_q *AssetTagQuery) Limit(limit int) *AssetTagQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (atq *AssetTagQuery) Offset(offset int) *AssetTagQuery {
-	atq.ctx.Offset = &offset
-	return atq
+func (_q *AssetTagQuery) Offset(offset int) *AssetTagQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (atq *AssetTagQuery) Unique(unique bool) *AssetTagQuery {
-	atq.ctx.Unique = &unique
-	return atq
+func (_q *AssetTagQuery) Unique(unique bool) *AssetTagQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (atq *AssetTagQuery) Order(o ...assettag.OrderOption) *AssetTagQuery {
-	atq.order = append(atq.order, o...)
-	return atq
+func (_q *AssetTagQuery) Order(o ...assettag.OrderOption) *AssetTagQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryAsset chains the current query on the "asset" edge.
-func (atq *AssetTagQuery) QueryAsset() *AssetQuery {
-	query := (&AssetClient{config: atq.config}).Query()
+func (_q *AssetTagQuery) QueryAsset() *AssetQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := atq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := atq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -80,20 +80,20 @@ func (atq *AssetTagQuery) QueryAsset() *AssetQuery {
 			sqlgraph.To(asset.Table, asset.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, assettag.AssetTable, assettag.AssetColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(atq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryTag chains the current query on the "tag" edge.
-func (atq *AssetTagQuery) QueryTag() *TagQuery {
-	query := (&TagClient{config: atq.config}).Query()
+func (_q *AssetTagQuery) QueryTag() *TagQuery {
+	query := (&TagClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := atq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := atq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -102,7 +102,7 @@ func (atq *AssetTagQuery) QueryTag() *TagQuery {
 			sqlgraph.To(tag.Table, tag.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, assettag.TagTable, assettag.TagColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(atq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -110,8 +110,8 @@ func (atq *AssetTagQuery) QueryTag() *TagQuery {
 
 // First returns the first AssetTag entity from the query.
 // Returns a *NotFoundError when no AssetTag was found.
-func (atq *AssetTagQuery) First(ctx context.Context) (*AssetTag, error) {
-	nodes, err := atq.Limit(1).All(setContextOp(ctx, atq.ctx, ent.OpQueryFirst))
+func (_q *AssetTagQuery) First(ctx context.Context) (*AssetTag, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -122,8 +122,8 @@ func (atq *AssetTagQuery) First(ctx context.Context) (*AssetTag, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (atq *AssetTagQuery) FirstX(ctx context.Context) *AssetTag {
-	node, err := atq.First(ctx)
+func (_q *AssetTagQuery) FirstX(ctx context.Context) *AssetTag {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,9 +132,9 @@ func (atq *AssetTagQuery) FirstX(ctx context.Context) *AssetTag {
 
 // FirstID returns the first AssetTag ID from the query.
 // Returns a *NotFoundError when no AssetTag ID was found.
-func (atq *AssetTagQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *AssetTagQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = atq.Limit(1).IDs(setContextOp(ctx, atq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -145,8 +145,8 @@ func (atq *AssetTagQuery) FirstID(ctx context.Context) (id int64, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (atq *AssetTagQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := atq.FirstID(ctx)
+func (_q *AssetTagQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -156,8 +156,8 @@ func (atq *AssetTagQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single AssetTag entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one AssetTag entity is found.
 // Returns a *NotFoundError when no AssetTag entities are found.
-func (atq *AssetTagQuery) Only(ctx context.Context) (*AssetTag, error) {
-	nodes, err := atq.Limit(2).All(setContextOp(ctx, atq.ctx, ent.OpQueryOnly))
+func (_q *AssetTagQuery) Only(ctx context.Context) (*AssetTag, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -172,8 +172,8 @@ func (atq *AssetTagQuery) Only(ctx context.Context) (*AssetTag, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (atq *AssetTagQuery) OnlyX(ctx context.Context) *AssetTag {
-	node, err := atq.Only(ctx)
+func (_q *AssetTagQuery) OnlyX(ctx context.Context) *AssetTag {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -183,9 +183,9 @@ func (atq *AssetTagQuery) OnlyX(ctx context.Context) *AssetTag {
 // OnlyID is like Only, but returns the only AssetTag ID in the query.
 // Returns a *NotSingularError when more than one AssetTag ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (atq *AssetTagQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *AssetTagQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = atq.Limit(2).IDs(setContextOp(ctx, atq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -200,8 +200,8 @@ func (atq *AssetTagQuery) OnlyID(ctx context.Context) (id int64, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (atq *AssetTagQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := atq.OnlyID(ctx)
+func (_q *AssetTagQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -209,18 +209,18 @@ func (atq *AssetTagQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of AssetTags.
-func (atq *AssetTagQuery) All(ctx context.Context) ([]*AssetTag, error) {
-	ctx = setContextOp(ctx, atq.ctx, ent.OpQueryAll)
-	if err := atq.prepareQuery(ctx); err != nil {
+func (_q *AssetTagQuery) All(ctx context.Context) ([]*AssetTag, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*AssetTag, *AssetTagQuery]()
-	return withInterceptors[[]*AssetTag](ctx, atq, qr, atq.inters)
+	return withInterceptors[[]*AssetTag](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (atq *AssetTagQuery) AllX(ctx context.Context) []*AssetTag {
-	nodes, err := atq.All(ctx)
+func (_q *AssetTagQuery) AllX(ctx context.Context) []*AssetTag {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -228,20 +228,20 @@ func (atq *AssetTagQuery) AllX(ctx context.Context) []*AssetTag {
 }
 
 // IDs executes the query and returns a list of AssetTag IDs.
-func (atq *AssetTagQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if atq.ctx.Unique == nil && atq.path != nil {
-		atq.Unique(true)
+func (_q *AssetTagQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, atq.ctx, ent.OpQueryIDs)
-	if err = atq.Select(assettag.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(assettag.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (atq *AssetTagQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := atq.IDs(ctx)
+func (_q *AssetTagQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -249,17 +249,17 @@ func (atq *AssetTagQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (atq *AssetTagQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, atq.ctx, ent.OpQueryCount)
-	if err := atq.prepareQuery(ctx); err != nil {
+func (_q *AssetTagQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, atq, querierCount[*AssetTagQuery](), atq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*AssetTagQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (atq *AssetTagQuery) CountX(ctx context.Context) int {
-	count, err := atq.Count(ctx)
+func (_q *AssetTagQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -267,9 +267,9 @@ func (atq *AssetTagQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (atq *AssetTagQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, atq.ctx, ent.OpQueryExist)
-	switch _, err := atq.FirstID(ctx); {
+func (_q *AssetTagQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -280,8 +280,8 @@ func (atq *AssetTagQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (atq *AssetTagQuery) ExistX(ctx context.Context) bool {
-	exist, err := atq.Exist(ctx)
+func (_q *AssetTagQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -290,44 +290,44 @@ func (atq *AssetTagQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the AssetTagQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (atq *AssetTagQuery) Clone() *AssetTagQuery {
-	if atq == nil {
+func (_q *AssetTagQuery) Clone() *AssetTagQuery {
+	if _q == nil {
 		return nil
 	}
 	return &AssetTagQuery{
-		config:     atq.config,
-		ctx:        atq.ctx.Clone(),
-		order:      append([]assettag.OrderOption{}, atq.order...),
-		inters:     append([]Interceptor{}, atq.inters...),
-		predicates: append([]predicate.AssetTag{}, atq.predicates...),
-		withAsset:  atq.withAsset.Clone(),
-		withTag:    atq.withTag.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]assettag.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.AssetTag{}, _q.predicates...),
+		withAsset:  _q.withAsset.Clone(),
+		withTag:    _q.withTag.Clone(),
 		// clone intermediate query.
-		sql:  atq.sql.Clone(),
-		path: atq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
 // WithAsset tells the query-builder to eager-load the nodes that are connected to
 // the "asset" edge. The optional arguments are used to configure the query builder of the edge.
-func (atq *AssetTagQuery) WithAsset(opts ...func(*AssetQuery)) *AssetTagQuery {
-	query := (&AssetClient{config: atq.config}).Query()
+func (_q *AssetTagQuery) WithAsset(opts ...func(*AssetQuery)) *AssetTagQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	atq.withAsset = query
-	return atq
+	_q.withAsset = query
+	return _q
 }
 
 // WithTag tells the query-builder to eager-load the nodes that are connected to
 // the "tag" edge. The optional arguments are used to configure the query builder of the edge.
-func (atq *AssetTagQuery) WithTag(opts ...func(*TagQuery)) *AssetTagQuery {
-	query := (&TagClient{config: atq.config}).Query()
+func (_q *AssetTagQuery) WithTag(opts ...func(*TagQuery)) *AssetTagQuery {
+	query := (&TagClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	atq.withTag = query
-	return atq
+	_q.withTag = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -344,10 +344,10 @@ func (atq *AssetTagQuery) WithTag(opts ...func(*TagQuery)) *AssetTagQuery {
 //		GroupBy(assettag.FieldAssetID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (atq *AssetTagQuery) GroupBy(field string, fields ...string) *AssetTagGroupBy {
-	atq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &AssetTagGroupBy{build: atq}
-	grbuild.flds = &atq.ctx.Fields
+func (_q *AssetTagQuery) GroupBy(field string, fields ...string) *AssetTagGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &AssetTagGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = assettag.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -365,83 +365,83 @@ func (atq *AssetTagQuery) GroupBy(field string, fields ...string) *AssetTagGroup
 //	client.AssetTag.Query().
 //		Select(assettag.FieldAssetID).
 //		Scan(ctx, &v)
-func (atq *AssetTagQuery) Select(fields ...string) *AssetTagSelect {
-	atq.ctx.Fields = append(atq.ctx.Fields, fields...)
-	sbuild := &AssetTagSelect{AssetTagQuery: atq}
+func (_q *AssetTagQuery) Select(fields ...string) *AssetTagSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &AssetTagSelect{AssetTagQuery: _q}
 	sbuild.label = assettag.Label
-	sbuild.flds, sbuild.scan = &atq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a AssetTagSelect configured with the given aggregations.
-func (atq *AssetTagQuery) Aggregate(fns ...AggregateFunc) *AssetTagSelect {
-	return atq.Select().Aggregate(fns...)
+func (_q *AssetTagQuery) Aggregate(fns ...AggregateFunc) *AssetTagSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (atq *AssetTagQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range atq.inters {
+func (_q *AssetTagQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, atq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range atq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !assettag.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if atq.path != nil {
-		prev, err := atq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		atq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (atq *AssetTagQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*AssetTag, error) {
+func (_q *AssetTagQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*AssetTag, error) {
 	var (
 		nodes       = []*AssetTag{}
-		_spec       = atq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [2]bool{
-			atq.withAsset != nil,
-			atq.withTag != nil,
+			_q.withAsset != nil,
+			_q.withTag != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*AssetTag).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &AssetTag{config: atq.config}
+		node := &AssetTag{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(atq.modifiers) > 0 {
-		_spec.Modifiers = atq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, atq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := atq.withAsset; query != nil {
-		if err := atq.loadAsset(ctx, query, nodes, nil,
+	if query := _q.withAsset; query != nil {
+		if err := _q.loadAsset(ctx, query, nodes, nil,
 			func(n *AssetTag, e *Asset) { n.Edges.Asset = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := atq.withTag; query != nil {
-		if err := atq.loadTag(ctx, query, nodes, nil,
+	if query := _q.withTag; query != nil {
+		if err := _q.loadTag(ctx, query, nodes, nil,
 			func(n *AssetTag, e *Tag) { n.Edges.Tag = e }); err != nil {
 			return nil, err
 		}
@@ -449,7 +449,7 @@ func (atq *AssetTagQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*As
 	return nodes, nil
 }
 
-func (atq *AssetTagQuery) loadAsset(ctx context.Context, query *AssetQuery, nodes []*AssetTag, init func(*AssetTag), assign func(*AssetTag, *Asset)) error {
+func (_q *AssetTagQuery) loadAsset(ctx context.Context, query *AssetQuery, nodes []*AssetTag, init func(*AssetTag), assign func(*AssetTag, *Asset)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*AssetTag)
 	for i := range nodes {
@@ -478,7 +478,7 @@ func (atq *AssetTagQuery) loadAsset(ctx context.Context, query *AssetQuery, node
 	}
 	return nil
 }
-func (atq *AssetTagQuery) loadTag(ctx context.Context, query *TagQuery, nodes []*AssetTag, init func(*AssetTag), assign func(*AssetTag, *Tag)) error {
+func (_q *AssetTagQuery) loadTag(ctx context.Context, query *TagQuery, nodes []*AssetTag, init func(*AssetTag), assign func(*AssetTag, *Tag)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*AssetTag)
 	for i := range nodes {
@@ -508,27 +508,27 @@ func (atq *AssetTagQuery) loadTag(ctx context.Context, query *TagQuery, nodes []
 	return nil
 }
 
-func (atq *AssetTagQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := atq.querySpec()
-	if len(atq.modifiers) > 0 {
-		_spec.Modifiers = atq.modifiers
+func (_q *AssetTagQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = atq.ctx.Fields
-	if len(atq.ctx.Fields) > 0 {
-		_spec.Unique = atq.ctx.Unique != nil && *atq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, atq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (atq *AssetTagQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *AssetTagQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(assettag.Table, assettag.Columns, sqlgraph.NewFieldSpec(assettag.FieldID, field.TypeInt64))
-	_spec.From = atq.sql
-	if unique := atq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if atq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := atq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, assettag.FieldID)
 		for i := range fields {
@@ -536,27 +536,27 @@ func (atq *AssetTagQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if atq.withAsset != nil {
+		if _q.withAsset != nil {
 			_spec.Node.AddColumnOnce(assettag.FieldAssetID)
 		}
-		if atq.withTag != nil {
+		if _q.withTag != nil {
 			_spec.Node.AddColumnOnce(assettag.FieldTagID)
 		}
 	}
-	if ps := atq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := atq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := atq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := atq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -566,36 +566,36 @@ func (atq *AssetTagQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (atq *AssetTagQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(atq.driver.Dialect())
+func (_q *AssetTagQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(assettag.Table)
-	columns := atq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = assettag.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if atq.sql != nil {
-		selector = atq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if atq.ctx.Unique != nil && *atq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range atq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range atq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range atq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := atq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := atq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -604,27 +604,27 @@ func (atq *AssetTagQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (atq *AssetTagQuery) ForUpdate(opts ...sql.LockOption) *AssetTagQuery {
-	if atq.driver.Dialect() == dialect.Postgres {
-		atq.Unique(false)
+func (_q *AssetTagQuery) ForUpdate(opts ...sql.LockOption) *AssetTagQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	atq.modifiers = append(atq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return atq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (atq *AssetTagQuery) ForShare(opts ...sql.LockOption) *AssetTagQuery {
-	if atq.driver.Dialect() == dialect.Postgres {
-		atq.Unique(false)
+func (_q *AssetTagQuery) ForShare(opts ...sql.LockOption) *AssetTagQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	atq.modifiers = append(atq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return atq
+	return _q
 }
 
 // AssetTagGroupBy is the group-by builder for AssetTag entities.
@@ -634,41 +634,41 @@ type AssetTagGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (atgb *AssetTagGroupBy) Aggregate(fns ...AggregateFunc) *AssetTagGroupBy {
-	atgb.fns = append(atgb.fns, fns...)
-	return atgb
+func (_g *AssetTagGroupBy) Aggregate(fns ...AggregateFunc) *AssetTagGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (atgb *AssetTagGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, atgb.build.ctx, ent.OpQueryGroupBy)
-	if err := atgb.build.prepareQuery(ctx); err != nil {
+func (_g *AssetTagGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetTagQuery, *AssetTagGroupBy](ctx, atgb.build, atgb, atgb.build.inters, v)
+	return scanWithInterceptors[*AssetTagQuery, *AssetTagGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (atgb *AssetTagGroupBy) sqlScan(ctx context.Context, root *AssetTagQuery, v any) error {
+func (_g *AssetTagGroupBy) sqlScan(ctx context.Context, root *AssetTagQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(atgb.fns))
-	for _, fn := range atgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*atgb.flds)+len(atgb.fns))
-		for _, f := range *atgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*atgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := atgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -682,27 +682,27 @@ type AssetTagSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (ats *AssetTagSelect) Aggregate(fns ...AggregateFunc) *AssetTagSelect {
-	ats.fns = append(ats.fns, fns...)
-	return ats
+func (_s *AssetTagSelect) Aggregate(fns ...AggregateFunc) *AssetTagSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (ats *AssetTagSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ats.ctx, ent.OpQuerySelect)
-	if err := ats.prepareQuery(ctx); err != nil {
+func (_s *AssetTagSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetTagQuery, *AssetTagSelect](ctx, ats.AssetTagQuery, ats, ats.inters, v)
+	return scanWithInterceptors[*AssetTagQuery, *AssetTagSelect](ctx, _s.AssetTagQuery, _s, _s.inters, v)
 }
 
-func (ats *AssetTagSelect) sqlScan(ctx context.Context, root *AssetTagQuery, v any) error {
+func (_s *AssetTagSelect) sqlScan(ctx context.Context, root *AssetTagQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(ats.fns))
-	for _, fn := range ats.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*ats.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -710,7 +710,7 @@ func (ats *AssetTagSelect) sqlScan(ctx context.Context, root *AssetTagQuery, v a
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := ats.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

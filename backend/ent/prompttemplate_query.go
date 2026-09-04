@@ -32,44 +32,44 @@ type PromptTemplateQuery struct {
 }
 
 // Where adds a new predicate for the PromptTemplateQuery builder.
-func (ptq *PromptTemplateQuery) Where(ps ...predicate.PromptTemplate) *PromptTemplateQuery {
-	ptq.predicates = append(ptq.predicates, ps...)
-	return ptq
+func (_q *PromptTemplateQuery) Where(ps ...predicate.PromptTemplate) *PromptTemplateQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (ptq *PromptTemplateQuery) Limit(limit int) *PromptTemplateQuery {
-	ptq.ctx.Limit = &limit
-	return ptq
+func (_q *PromptTemplateQuery) Limit(limit int) *PromptTemplateQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (ptq *PromptTemplateQuery) Offset(offset int) *PromptTemplateQuery {
-	ptq.ctx.Offset = &offset
-	return ptq
+func (_q *PromptTemplateQuery) Offset(offset int) *PromptTemplateQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (ptq *PromptTemplateQuery) Unique(unique bool) *PromptTemplateQuery {
-	ptq.ctx.Unique = &unique
-	return ptq
+func (_q *PromptTemplateQuery) Unique(unique bool) *PromptTemplateQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (ptq *PromptTemplateQuery) Order(o ...prompttemplate.OrderOption) *PromptTemplateQuery {
-	ptq.order = append(ptq.order, o...)
-	return ptq
+func (_q *PromptTemplateQuery) Order(o ...prompttemplate.OrderOption) *PromptTemplateQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryUser chains the current query on the "user" edge.
-func (ptq *PromptTemplateQuery) QueryUser() *UserQuery {
-	query := (&UserClient{config: ptq.config}).Query()
+func (_q *PromptTemplateQuery) QueryUser() *UserQuery {
+	query := (&UserClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := ptq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := ptq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -78,7 +78,7 @@ func (ptq *PromptTemplateQuery) QueryUser() *UserQuery {
 			sqlgraph.To(user.Table, user.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, prompttemplate.UserTable, prompttemplate.UserColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(ptq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -86,8 +86,8 @@ func (ptq *PromptTemplateQuery) QueryUser() *UserQuery {
 
 // First returns the first PromptTemplate entity from the query.
 // Returns a *NotFoundError when no PromptTemplate was found.
-func (ptq *PromptTemplateQuery) First(ctx context.Context) (*PromptTemplate, error) {
-	nodes, err := ptq.Limit(1).All(setContextOp(ctx, ptq.ctx, ent.OpQueryFirst))
+func (_q *PromptTemplateQuery) First(ctx context.Context) (*PromptTemplate, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +98,8 @@ func (ptq *PromptTemplateQuery) First(ctx context.Context) (*PromptTemplate, err
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) FirstX(ctx context.Context) *PromptTemplate {
-	node, err := ptq.First(ctx)
+func (_q *PromptTemplateQuery) FirstX(ctx context.Context) *PromptTemplate {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,9 +108,9 @@ func (ptq *PromptTemplateQuery) FirstX(ctx context.Context) *PromptTemplate {
 
 // FirstID returns the first PromptTemplate ID from the query.
 // Returns a *NotFoundError when no PromptTemplate ID was found.
-func (ptq *PromptTemplateQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *PromptTemplateQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = ptq.Limit(1).IDs(setContextOp(ctx, ptq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -121,8 +121,8 @@ func (ptq *PromptTemplateQuery) FirstID(ctx context.Context) (id int64, err erro
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := ptq.FirstID(ctx)
+func (_q *PromptTemplateQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,8 +132,8 @@ func (ptq *PromptTemplateQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single PromptTemplate entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one PromptTemplate entity is found.
 // Returns a *NotFoundError when no PromptTemplate entities are found.
-func (ptq *PromptTemplateQuery) Only(ctx context.Context) (*PromptTemplate, error) {
-	nodes, err := ptq.Limit(2).All(setContextOp(ctx, ptq.ctx, ent.OpQueryOnly))
+func (_q *PromptTemplateQuery) Only(ctx context.Context) (*PromptTemplate, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ func (ptq *PromptTemplateQuery) Only(ctx context.Context) (*PromptTemplate, erro
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) OnlyX(ctx context.Context) *PromptTemplate {
-	node, err := ptq.Only(ctx)
+func (_q *PromptTemplateQuery) OnlyX(ctx context.Context) *PromptTemplate {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -159,9 +159,9 @@ func (ptq *PromptTemplateQuery) OnlyX(ctx context.Context) *PromptTemplate {
 // OnlyID is like Only, but returns the only PromptTemplate ID in the query.
 // Returns a *NotSingularError when more than one PromptTemplate ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (ptq *PromptTemplateQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *PromptTemplateQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = ptq.Limit(2).IDs(setContextOp(ctx, ptq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -176,8 +176,8 @@ func (ptq *PromptTemplateQuery) OnlyID(ctx context.Context) (id int64, err error
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := ptq.OnlyID(ctx)
+func (_q *PromptTemplateQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -185,18 +185,18 @@ func (ptq *PromptTemplateQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of PromptTemplates.
-func (ptq *PromptTemplateQuery) All(ctx context.Context) ([]*PromptTemplate, error) {
-	ctx = setContextOp(ctx, ptq.ctx, ent.OpQueryAll)
-	if err := ptq.prepareQuery(ctx); err != nil {
+func (_q *PromptTemplateQuery) All(ctx context.Context) ([]*PromptTemplate, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*PromptTemplate, *PromptTemplateQuery]()
-	return withInterceptors[[]*PromptTemplate](ctx, ptq, qr, ptq.inters)
+	return withInterceptors[[]*PromptTemplate](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) AllX(ctx context.Context) []*PromptTemplate {
-	nodes, err := ptq.All(ctx)
+func (_q *PromptTemplateQuery) AllX(ctx context.Context) []*PromptTemplate {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,20 +204,20 @@ func (ptq *PromptTemplateQuery) AllX(ctx context.Context) []*PromptTemplate {
 }
 
 // IDs executes the query and returns a list of PromptTemplate IDs.
-func (ptq *PromptTemplateQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if ptq.ctx.Unique == nil && ptq.path != nil {
-		ptq.Unique(true)
+func (_q *PromptTemplateQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, ptq.ctx, ent.OpQueryIDs)
-	if err = ptq.Select(prompttemplate.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(prompttemplate.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := ptq.IDs(ctx)
+func (_q *PromptTemplateQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -225,17 +225,17 @@ func (ptq *PromptTemplateQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (ptq *PromptTemplateQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, ptq.ctx, ent.OpQueryCount)
-	if err := ptq.prepareQuery(ctx); err != nil {
+func (_q *PromptTemplateQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, ptq, querierCount[*PromptTemplateQuery](), ptq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*PromptTemplateQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) CountX(ctx context.Context) int {
-	count, err := ptq.Count(ctx)
+func (_q *PromptTemplateQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -243,9 +243,9 @@ func (ptq *PromptTemplateQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (ptq *PromptTemplateQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, ptq.ctx, ent.OpQueryExist)
-	switch _, err := ptq.FirstID(ctx); {
+func (_q *PromptTemplateQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -256,8 +256,8 @@ func (ptq *PromptTemplateQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (ptq *PromptTemplateQuery) ExistX(ctx context.Context) bool {
-	exist, err := ptq.Exist(ctx)
+func (_q *PromptTemplateQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -266,32 +266,32 @@ func (ptq *PromptTemplateQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the PromptTemplateQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (ptq *PromptTemplateQuery) Clone() *PromptTemplateQuery {
-	if ptq == nil {
+func (_q *PromptTemplateQuery) Clone() *PromptTemplateQuery {
+	if _q == nil {
 		return nil
 	}
 	return &PromptTemplateQuery{
-		config:     ptq.config,
-		ctx:        ptq.ctx.Clone(),
-		order:      append([]prompttemplate.OrderOption{}, ptq.order...),
-		inters:     append([]Interceptor{}, ptq.inters...),
-		predicates: append([]predicate.PromptTemplate{}, ptq.predicates...),
-		withUser:   ptq.withUser.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]prompttemplate.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.PromptTemplate{}, _q.predicates...),
+		withUser:   _q.withUser.Clone(),
 		// clone intermediate query.
-		sql:  ptq.sql.Clone(),
-		path: ptq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
 // WithUser tells the query-builder to eager-load the nodes that are connected to
 // the "user" edge. The optional arguments are used to configure the query builder of the edge.
-func (ptq *PromptTemplateQuery) WithUser(opts ...func(*UserQuery)) *PromptTemplateQuery {
-	query := (&UserClient{config: ptq.config}).Query()
+func (_q *PromptTemplateQuery) WithUser(opts ...func(*UserQuery)) *PromptTemplateQuery {
+	query := (&UserClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	ptq.withUser = query
-	return ptq
+	_q.withUser = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -308,10 +308,10 @@ func (ptq *PromptTemplateQuery) WithUser(opts ...func(*UserQuery)) *PromptTempla
 //		GroupBy(prompttemplate.FieldUserID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (ptq *PromptTemplateQuery) GroupBy(field string, fields ...string) *PromptTemplateGroupBy {
-	ptq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &PromptTemplateGroupBy{build: ptq}
-	grbuild.flds = &ptq.ctx.Fields
+func (_q *PromptTemplateQuery) GroupBy(field string, fields ...string) *PromptTemplateGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &PromptTemplateGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = prompttemplate.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -329,76 +329,76 @@ func (ptq *PromptTemplateQuery) GroupBy(field string, fields ...string) *PromptT
 //	client.PromptTemplate.Query().
 //		Select(prompttemplate.FieldUserID).
 //		Scan(ctx, &v)
-func (ptq *PromptTemplateQuery) Select(fields ...string) *PromptTemplateSelect {
-	ptq.ctx.Fields = append(ptq.ctx.Fields, fields...)
-	sbuild := &PromptTemplateSelect{PromptTemplateQuery: ptq}
+func (_q *PromptTemplateQuery) Select(fields ...string) *PromptTemplateSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &PromptTemplateSelect{PromptTemplateQuery: _q}
 	sbuild.label = prompttemplate.Label
-	sbuild.flds, sbuild.scan = &ptq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a PromptTemplateSelect configured with the given aggregations.
-func (ptq *PromptTemplateQuery) Aggregate(fns ...AggregateFunc) *PromptTemplateSelect {
-	return ptq.Select().Aggregate(fns...)
+func (_q *PromptTemplateQuery) Aggregate(fns ...AggregateFunc) *PromptTemplateSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (ptq *PromptTemplateQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range ptq.inters {
+func (_q *PromptTemplateQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, ptq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range ptq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !prompttemplate.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if ptq.path != nil {
-		prev, err := ptq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		ptq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (ptq *PromptTemplateQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*PromptTemplate, error) {
+func (_q *PromptTemplateQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*PromptTemplate, error) {
 	var (
 		nodes       = []*PromptTemplate{}
-		_spec       = ptq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [1]bool{
-			ptq.withUser != nil,
+			_q.withUser != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*PromptTemplate).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &PromptTemplate{config: ptq.config}
+		node := &PromptTemplate{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(ptq.modifiers) > 0 {
-		_spec.Modifiers = ptq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, ptq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := ptq.withUser; query != nil {
-		if err := ptq.loadUser(ctx, query, nodes, nil,
+	if query := _q.withUser; query != nil {
+		if err := _q.loadUser(ctx, query, nodes, nil,
 			func(n *PromptTemplate, e *User) { n.Edges.User = e }); err != nil {
 			return nil, err
 		}
@@ -406,7 +406,7 @@ func (ptq *PromptTemplateQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 	return nodes, nil
 }
 
-func (ptq *PromptTemplateQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*PromptTemplate, init func(*PromptTemplate), assign func(*PromptTemplate, *User)) error {
+func (_q *PromptTemplateQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*PromptTemplate, init func(*PromptTemplate), assign func(*PromptTemplate, *User)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*PromptTemplate)
 	for i := range nodes {
@@ -436,27 +436,27 @@ func (ptq *PromptTemplateQuery) loadUser(ctx context.Context, query *UserQuery, 
 	return nil
 }
 
-func (ptq *PromptTemplateQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := ptq.querySpec()
-	if len(ptq.modifiers) > 0 {
-		_spec.Modifiers = ptq.modifiers
+func (_q *PromptTemplateQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = ptq.ctx.Fields
-	if len(ptq.ctx.Fields) > 0 {
-		_spec.Unique = ptq.ctx.Unique != nil && *ptq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, ptq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (ptq *PromptTemplateQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *PromptTemplateQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(prompttemplate.Table, prompttemplate.Columns, sqlgraph.NewFieldSpec(prompttemplate.FieldID, field.TypeInt64))
-	_spec.From = ptq.sql
-	if unique := ptq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if ptq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := ptq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, prompttemplate.FieldID)
 		for i := range fields {
@@ -464,24 +464,24 @@ func (ptq *PromptTemplateQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if ptq.withUser != nil {
+		if _q.withUser != nil {
 			_spec.Node.AddColumnOnce(prompttemplate.FieldUserID)
 		}
 	}
-	if ps := ptq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := ptq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := ptq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := ptq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -491,36 +491,36 @@ func (ptq *PromptTemplateQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (ptq *PromptTemplateQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(ptq.driver.Dialect())
+func (_q *PromptTemplateQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(prompttemplate.Table)
-	columns := ptq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = prompttemplate.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if ptq.sql != nil {
-		selector = ptq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if ptq.ctx.Unique != nil && *ptq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range ptq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range ptq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range ptq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := ptq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := ptq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -529,27 +529,27 @@ func (ptq *PromptTemplateQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (ptq *PromptTemplateQuery) ForUpdate(opts ...sql.LockOption) *PromptTemplateQuery {
-	if ptq.driver.Dialect() == dialect.Postgres {
-		ptq.Unique(false)
+func (_q *PromptTemplateQuery) ForUpdate(opts ...sql.LockOption) *PromptTemplateQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	ptq.modifiers = append(ptq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return ptq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (ptq *PromptTemplateQuery) ForShare(opts ...sql.LockOption) *PromptTemplateQuery {
-	if ptq.driver.Dialect() == dialect.Postgres {
-		ptq.Unique(false)
+func (_q *PromptTemplateQuery) ForShare(opts ...sql.LockOption) *PromptTemplateQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	ptq.modifiers = append(ptq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return ptq
+	return _q
 }
 
 // PromptTemplateGroupBy is the group-by builder for PromptTemplate entities.
@@ -559,41 +559,41 @@ type PromptTemplateGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (ptgb *PromptTemplateGroupBy) Aggregate(fns ...AggregateFunc) *PromptTemplateGroupBy {
-	ptgb.fns = append(ptgb.fns, fns...)
-	return ptgb
+func (_g *PromptTemplateGroupBy) Aggregate(fns ...AggregateFunc) *PromptTemplateGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (ptgb *PromptTemplateGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ptgb.build.ctx, ent.OpQueryGroupBy)
-	if err := ptgb.build.prepareQuery(ctx); err != nil {
+func (_g *PromptTemplateGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*PromptTemplateQuery, *PromptTemplateGroupBy](ctx, ptgb.build, ptgb, ptgb.build.inters, v)
+	return scanWithInterceptors[*PromptTemplateQuery, *PromptTemplateGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (ptgb *PromptTemplateGroupBy) sqlScan(ctx context.Context, root *PromptTemplateQuery, v any) error {
+func (_g *PromptTemplateGroupBy) sqlScan(ctx context.Context, root *PromptTemplateQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(ptgb.fns))
-	for _, fn := range ptgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*ptgb.flds)+len(ptgb.fns))
-		for _, f := range *ptgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*ptgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := ptgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -607,27 +607,27 @@ type PromptTemplateSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (pts *PromptTemplateSelect) Aggregate(fns ...AggregateFunc) *PromptTemplateSelect {
-	pts.fns = append(pts.fns, fns...)
-	return pts
+func (_s *PromptTemplateSelect) Aggregate(fns ...AggregateFunc) *PromptTemplateSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (pts *PromptTemplateSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, pts.ctx, ent.OpQuerySelect)
-	if err := pts.prepareQuery(ctx); err != nil {
+func (_s *PromptTemplateSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*PromptTemplateQuery, *PromptTemplateSelect](ctx, pts.PromptTemplateQuery, pts, pts.inters, v)
+	return scanWithInterceptors[*PromptTemplateQuery, *PromptTemplateSelect](ctx, _s.PromptTemplateQuery, _s, _s.inters, v)
 }
 
-func (pts *PromptTemplateSelect) sqlScan(ctx context.Context, root *PromptTemplateQuery, v any) error {
+func (_s *PromptTemplateSelect) sqlScan(ctx context.Context, root *PromptTemplateQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(pts.fns))
-	for _, fn := range pts.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*pts.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -635,7 +635,7 @@ func (pts *PromptTemplateSelect) sqlScan(ctx context.Context, root *PromptTempla
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := pts.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

@@ -24,40 +24,40 @@ type AssetTagCreate struct {
 }
 
 // SetAssetID sets the "asset_id" field.
-func (atc *AssetTagCreate) SetAssetID(i int64) *AssetTagCreate {
-	atc.mutation.SetAssetID(i)
-	return atc
+func (_c *AssetTagCreate) SetAssetID(v int64) *AssetTagCreate {
+	_c.mutation.SetAssetID(v)
+	return _c
 }
 
 // SetTagID sets the "tag_id" field.
-func (atc *AssetTagCreate) SetTagID(i int64) *AssetTagCreate {
-	atc.mutation.SetTagID(i)
-	return atc
+func (_c *AssetTagCreate) SetTagID(v int64) *AssetTagCreate {
+	_c.mutation.SetTagID(v)
+	return _c
 }
 
 // SetAsset sets the "asset" edge to the Asset entity.
-func (atc *AssetTagCreate) SetAsset(a *Asset) *AssetTagCreate {
-	return atc.SetAssetID(a.ID)
+func (_c *AssetTagCreate) SetAsset(v *Asset) *AssetTagCreate {
+	return _c.SetAssetID(v.ID)
 }
 
 // SetTag sets the "tag" edge to the Tag entity.
-func (atc *AssetTagCreate) SetTag(t *Tag) *AssetTagCreate {
-	return atc.SetTagID(t.ID)
+func (_c *AssetTagCreate) SetTag(v *Tag) *AssetTagCreate {
+	return _c.SetTagID(v.ID)
 }
 
 // Mutation returns the AssetTagMutation object of the builder.
-func (atc *AssetTagCreate) Mutation() *AssetTagMutation {
-	return atc.mutation
+func (_c *AssetTagCreate) Mutation() *AssetTagMutation {
+	return _c.mutation
 }
 
 // Save creates the AssetTag in the database.
-func (atc *AssetTagCreate) Save(ctx context.Context) (*AssetTag, error) {
-	return withHooks(ctx, atc.sqlSave, atc.mutation, atc.hooks)
+func (_c *AssetTagCreate) Save(ctx context.Context) (*AssetTag, error) {
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (atc *AssetTagCreate) SaveX(ctx context.Context) *AssetTag {
-	v, err := atc.Save(ctx)
+func (_c *AssetTagCreate) SaveX(ctx context.Context) *AssetTag {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -65,41 +65,41 @@ func (atc *AssetTagCreate) SaveX(ctx context.Context) *AssetTag {
 }
 
 // Exec executes the query.
-func (atc *AssetTagCreate) Exec(ctx context.Context) error {
-	_, err := atc.Save(ctx)
+func (_c *AssetTagCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (atc *AssetTagCreate) ExecX(ctx context.Context) {
-	if err := atc.Exec(ctx); err != nil {
+func (_c *AssetTagCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (atc *AssetTagCreate) check() error {
-	if _, ok := atc.mutation.AssetID(); !ok {
+func (_c *AssetTagCreate) check() error {
+	if _, ok := _c.mutation.AssetID(); !ok {
 		return &ValidationError{Name: "asset_id", err: errors.New(`ent: missing required field "AssetTag.asset_id"`)}
 	}
-	if _, ok := atc.mutation.TagID(); !ok {
+	if _, ok := _c.mutation.TagID(); !ok {
 		return &ValidationError{Name: "tag_id", err: errors.New(`ent: missing required field "AssetTag.tag_id"`)}
 	}
-	if len(atc.mutation.AssetIDs()) == 0 {
+	if len(_c.mutation.AssetIDs()) == 0 {
 		return &ValidationError{Name: "asset", err: errors.New(`ent: missing required edge "AssetTag.asset"`)}
 	}
-	if len(atc.mutation.TagIDs()) == 0 {
+	if len(_c.mutation.TagIDs()) == 0 {
 		return &ValidationError{Name: "tag", err: errors.New(`ent: missing required edge "AssetTag.tag"`)}
 	}
 	return nil
 }
 
-func (atc *AssetTagCreate) sqlSave(ctx context.Context) (*AssetTag, error) {
-	if err := atc.check(); err != nil {
+func (_c *AssetTagCreate) sqlSave(ctx context.Context) (*AssetTag, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := atc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, atc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -107,18 +107,18 @@ func (atc *AssetTagCreate) sqlSave(ctx context.Context) (*AssetTag, error) {
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	atc.mutation.id = &_node.ID
-	atc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (atc *AssetTagCreate) createSpec() (*AssetTag, *sqlgraph.CreateSpec) {
+func (_c *AssetTagCreate) createSpec() (*AssetTag, *sqlgraph.CreateSpec) {
 	var (
-		_node = &AssetTag{config: atc.config}
+		_node = &AssetTag{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(assettag.Table, sqlgraph.NewFieldSpec(assettag.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = atc.conflict
-	if nodes := atc.mutation.AssetIDs(); len(nodes) > 0 {
+	_spec.OnConflict = _c.conflict
+	if nodes := _c.mutation.AssetIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: false,
@@ -135,7 +135,7 @@ func (atc *AssetTagCreate) createSpec() (*AssetTag, *sqlgraph.CreateSpec) {
 		_node.AssetID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := atc.mutation.TagIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.TagIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: false,
@@ -171,10 +171,10 @@ func (atc *AssetTagCreate) createSpec() (*AssetTag, *sqlgraph.CreateSpec) {
 //			SetAssetID(v+v).
 //		}).
 //		Exec(ctx)
-func (atc *AssetTagCreate) OnConflict(opts ...sql.ConflictOption) *AssetTagUpsertOne {
-	atc.conflict = opts
+func (_c *AssetTagCreate) OnConflict(opts ...sql.ConflictOption) *AssetTagUpsertOne {
+	_c.conflict = opts
 	return &AssetTagUpsertOne{
-		create: atc,
+		create: _c,
 	}
 }
 
@@ -184,10 +184,10 @@ func (atc *AssetTagCreate) OnConflict(opts ...sql.ConflictOption) *AssetTagUpser
 //	client.AssetTag.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (atc *AssetTagCreate) OnConflictColumns(columns ...string) *AssetTagUpsertOne {
-	atc.conflict = append(atc.conflict, sql.ConflictColumns(columns...))
+func (_c *AssetTagCreate) OnConflictColumns(columns ...string) *AssetTagUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AssetTagUpsertOne{
-		create: atc,
+		create: _c,
 	}
 }
 
@@ -338,16 +338,16 @@ type AssetTagCreateBulk struct {
 }
 
 // Save creates the AssetTag entities in the database.
-func (atcb *AssetTagCreateBulk) Save(ctx context.Context) ([]*AssetTag, error) {
-	if atcb.err != nil {
-		return nil, atcb.err
+func (_c *AssetTagCreateBulk) Save(ctx context.Context) ([]*AssetTag, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(atcb.builders))
-	nodes := make([]*AssetTag, len(atcb.builders))
-	mutators := make([]Mutator, len(atcb.builders))
-	for i := range atcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*AssetTag, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := atcb.builders[i]
+			builder := _c.builders[i]
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*AssetTagMutation)
 				if !ok {
@@ -360,12 +360,12 @@ func (atcb *AssetTagCreateBulk) Save(ctx context.Context) ([]*AssetTag, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, atcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = atcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, atcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -389,7 +389,7 @@ func (atcb *AssetTagCreateBulk) Save(ctx context.Context) ([]*AssetTag, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, atcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -397,8 +397,8 @@ func (atcb *AssetTagCreateBulk) Save(ctx context.Context) ([]*AssetTag, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (atcb *AssetTagCreateBulk) SaveX(ctx context.Context) []*AssetTag {
-	v, err := atcb.Save(ctx)
+func (_c *AssetTagCreateBulk) SaveX(ctx context.Context) []*AssetTag {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -406,14 +406,14 @@ func (atcb *AssetTagCreateBulk) SaveX(ctx context.Context) []*AssetTag {
 }
 
 // Exec executes the query.
-func (atcb *AssetTagCreateBulk) Exec(ctx context.Context) error {
-	_, err := atcb.Save(ctx)
+func (_c *AssetTagCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (atcb *AssetTagCreateBulk) ExecX(ctx context.Context) {
-	if err := atcb.Exec(ctx); err != nil {
+func (_c *AssetTagCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -433,10 +433,10 @@ func (atcb *AssetTagCreateBulk) ExecX(ctx context.Context) {
 //			SetAssetID(v+v).
 //		}).
 //		Exec(ctx)
-func (atcb *AssetTagCreateBulk) OnConflict(opts ...sql.ConflictOption) *AssetTagUpsertBulk {
-	atcb.conflict = opts
+func (_c *AssetTagCreateBulk) OnConflict(opts ...sql.ConflictOption) *AssetTagUpsertBulk {
+	_c.conflict = opts
 	return &AssetTagUpsertBulk{
-		create: atcb,
+		create: _c,
 	}
 }
 
@@ -446,10 +446,10 @@ func (atcb *AssetTagCreateBulk) OnConflict(opts ...sql.ConflictOption) *AssetTag
 //	client.AssetTag.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (atcb *AssetTagCreateBulk) OnConflictColumns(columns ...string) *AssetTagUpsertBulk {
-	atcb.conflict = append(atcb.conflict, sql.ConflictColumns(columns...))
+func (_c *AssetTagCreateBulk) OnConflictColumns(columns ...string) *AssetTagUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AssetTagUpsertBulk{
-		create: atcb,
+		create: _c,
 	}
 }
 

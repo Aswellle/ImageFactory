@@ -26,176 +26,176 @@ type ProjectUpdate struct {
 }
 
 // Where appends a list predicates to the ProjectUpdate builder.
-func (pu *ProjectUpdate) Where(ps ...predicate.Project) *ProjectUpdate {
-	pu.mutation.Where(ps...)
-	return pu
+func (_u *ProjectUpdate) Where(ps ...predicate.Project) *ProjectUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (pu *ProjectUpdate) SetUserID(i int64) *ProjectUpdate {
-	pu.mutation.SetUserID(i)
-	return pu
+func (_u *ProjectUpdate) SetUserID(v int64) *ProjectUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (pu *ProjectUpdate) SetNillableUserID(i *int64) *ProjectUpdate {
-	if i != nil {
-		pu.SetUserID(*i)
+func (_u *ProjectUpdate) SetNillableUserID(v *int64) *ProjectUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return pu
+	return _u
 }
 
 // SetName sets the "name" field.
-func (pu *ProjectUpdate) SetName(s string) *ProjectUpdate {
-	pu.mutation.SetName(s)
-	return pu
+func (_u *ProjectUpdate) SetName(v string) *ProjectUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (pu *ProjectUpdate) SetNillableName(s *string) *ProjectUpdate {
-	if s != nil {
-		pu.SetName(*s)
+func (_u *ProjectUpdate) SetNillableName(v *string) *ProjectUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return pu
+	return _u
 }
 
 // SetDescription sets the "description" field.
-func (pu *ProjectUpdate) SetDescription(s string) *ProjectUpdate {
-	pu.mutation.SetDescription(s)
-	return pu
+func (_u *ProjectUpdate) SetDescription(v string) *ProjectUpdate {
+	_u.mutation.SetDescription(v)
+	return _u
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (pu *ProjectUpdate) SetNillableDescription(s *string) *ProjectUpdate {
-	if s != nil {
-		pu.SetDescription(*s)
+func (_u *ProjectUpdate) SetNillableDescription(v *string) *ProjectUpdate {
+	if v != nil {
+		_u.SetDescription(*v)
 	}
-	return pu
+	return _u
 }
 
 // ClearDescription clears the value of the "description" field.
-func (pu *ProjectUpdate) ClearDescription() *ProjectUpdate {
-	pu.mutation.ClearDescription()
-	return pu
+func (_u *ProjectUpdate) ClearDescription() *ProjectUpdate {
+	_u.mutation.ClearDescription()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (pu *ProjectUpdate) SetStatus(pr project.Status) *ProjectUpdate {
-	pu.mutation.SetStatus(pr)
-	return pu
+func (_u *ProjectUpdate) SetStatus(v project.Status) *ProjectUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (pu *ProjectUpdate) SetNillableStatus(pr *project.Status) *ProjectUpdate {
-	if pr != nil {
-		pu.SetStatus(*pr)
+func (_u *ProjectUpdate) SetNillableStatus(v *project.Status) *ProjectUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return pu
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (pu *ProjectUpdate) SetUpdatedAt(t time.Time) *ProjectUpdate {
-	pu.mutation.SetUpdatedAt(t)
-	return pu
+func (_u *ProjectUpdate) SetUpdatedAt(v time.Time) *ProjectUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (pu *ProjectUpdate) SetUser(u *User) *ProjectUpdate {
-	return pu.SetUserID(u.ID)
+func (_u *ProjectUpdate) SetUser(v *User) *ProjectUpdate {
+	return _u.SetUserID(v.ID)
 }
 
 // AddAssetIDs adds the "assets" edge to the Asset entity by IDs.
-func (pu *ProjectUpdate) AddAssetIDs(ids ...int64) *ProjectUpdate {
-	pu.mutation.AddAssetIDs(ids...)
-	return pu
+func (_u *ProjectUpdate) AddAssetIDs(ids ...int64) *ProjectUpdate {
+	_u.mutation.AddAssetIDs(ids...)
+	return _u
 }
 
 // AddAssets adds the "assets" edges to the Asset entity.
-func (pu *ProjectUpdate) AddAssets(a ...*Asset) *ProjectUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *ProjectUpdate) AddAssets(v ...*Asset) *ProjectUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return pu.AddAssetIDs(ids...)
+	return _u.AddAssetIDs(ids...)
 }
 
 // AddGenerationJobIDs adds the "generation_jobs" edge to the GenerationJob entity by IDs.
-func (pu *ProjectUpdate) AddGenerationJobIDs(ids ...int64) *ProjectUpdate {
-	pu.mutation.AddGenerationJobIDs(ids...)
-	return pu
+func (_u *ProjectUpdate) AddGenerationJobIDs(ids ...int64) *ProjectUpdate {
+	_u.mutation.AddGenerationJobIDs(ids...)
+	return _u
 }
 
 // AddGenerationJobs adds the "generation_jobs" edges to the GenerationJob entity.
-func (pu *ProjectUpdate) AddGenerationJobs(g ...*GenerationJob) *ProjectUpdate {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *ProjectUpdate) AddGenerationJobs(v ...*GenerationJob) *ProjectUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return pu.AddGenerationJobIDs(ids...)
+	return _u.AddGenerationJobIDs(ids...)
 }
 
 // Mutation returns the ProjectMutation object of the builder.
-func (pu *ProjectUpdate) Mutation() *ProjectMutation {
-	return pu.mutation
+func (_u *ProjectUpdate) Mutation() *ProjectMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (pu *ProjectUpdate) ClearUser() *ProjectUpdate {
-	pu.mutation.ClearUser()
-	return pu
+func (_u *ProjectUpdate) ClearUser() *ProjectUpdate {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearAssets clears all "assets" edges to the Asset entity.
-func (pu *ProjectUpdate) ClearAssets() *ProjectUpdate {
-	pu.mutation.ClearAssets()
-	return pu
+func (_u *ProjectUpdate) ClearAssets() *ProjectUpdate {
+	_u.mutation.ClearAssets()
+	return _u
 }
 
 // RemoveAssetIDs removes the "assets" edge to Asset entities by IDs.
-func (pu *ProjectUpdate) RemoveAssetIDs(ids ...int64) *ProjectUpdate {
-	pu.mutation.RemoveAssetIDs(ids...)
-	return pu
+func (_u *ProjectUpdate) RemoveAssetIDs(ids ...int64) *ProjectUpdate {
+	_u.mutation.RemoveAssetIDs(ids...)
+	return _u
 }
 
 // RemoveAssets removes "assets" edges to Asset entities.
-func (pu *ProjectUpdate) RemoveAssets(a ...*Asset) *ProjectUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *ProjectUpdate) RemoveAssets(v ...*Asset) *ProjectUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return pu.RemoveAssetIDs(ids...)
+	return _u.RemoveAssetIDs(ids...)
 }
 
 // ClearGenerationJobs clears all "generation_jobs" edges to the GenerationJob entity.
-func (pu *ProjectUpdate) ClearGenerationJobs() *ProjectUpdate {
-	pu.mutation.ClearGenerationJobs()
-	return pu
+func (_u *ProjectUpdate) ClearGenerationJobs() *ProjectUpdate {
+	_u.mutation.ClearGenerationJobs()
+	return _u
 }
 
 // RemoveGenerationJobIDs removes the "generation_jobs" edge to GenerationJob entities by IDs.
-func (pu *ProjectUpdate) RemoveGenerationJobIDs(ids ...int64) *ProjectUpdate {
-	pu.mutation.RemoveGenerationJobIDs(ids...)
-	return pu
+func (_u *ProjectUpdate) RemoveGenerationJobIDs(ids ...int64) *ProjectUpdate {
+	_u.mutation.RemoveGenerationJobIDs(ids...)
+	return _u
 }
 
 // RemoveGenerationJobs removes "generation_jobs" edges to GenerationJob entities.
-func (pu *ProjectUpdate) RemoveGenerationJobs(g ...*GenerationJob) *ProjectUpdate {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *ProjectUpdate) RemoveGenerationJobs(v ...*GenerationJob) *ProjectUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return pu.RemoveGenerationJobIDs(ids...)
+	return _u.RemoveGenerationJobIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (pu *ProjectUpdate) Save(ctx context.Context) (int, error) {
-	pu.defaults()
-	return withHooks(ctx, pu.sqlSave, pu.mutation, pu.hooks)
+func (_u *ProjectUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (pu *ProjectUpdate) SaveX(ctx context.Context) int {
-	affected, err := pu.Save(ctx)
+func (_u *ProjectUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -203,72 +203,72 @@ func (pu *ProjectUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (pu *ProjectUpdate) Exec(ctx context.Context) error {
-	_, err := pu.Save(ctx)
+func (_u *ProjectUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (pu *ProjectUpdate) ExecX(ctx context.Context) {
-	if err := pu.Exec(ctx); err != nil {
+func (_u *ProjectUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (pu *ProjectUpdate) defaults() {
-	if _, ok := pu.mutation.UpdatedAt(); !ok {
+func (_u *ProjectUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := project.UpdateDefaultUpdatedAt()
-		pu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (pu *ProjectUpdate) check() error {
-	if v, ok := pu.mutation.Name(); ok {
+func (_u *ProjectUpdate) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := project.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Project.name": %w`, err)}
 		}
 	}
-	if v, ok := pu.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := project.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Project.status": %w`, err)}
 		}
 	}
-	if pu.mutation.UserCleared() && len(pu.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "Project.user"`)
 	}
 	return nil
 }
 
-func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := pu.check(); err != nil {
-		return n, err
+func (_u *ProjectUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(project.Table, project.Columns, sqlgraph.NewFieldSpec(project.FieldID, field.TypeInt64))
-	if ps := pu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := pu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(project.FieldName, field.TypeString, value)
 	}
-	if value, ok := pu.mutation.Description(); ok {
+	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(project.FieldDescription, field.TypeString, value)
 	}
-	if pu.mutation.DescriptionCleared() {
+	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(project.FieldDescription, field.TypeString)
 	}
-	if value, ok := pu.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(project.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := pu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(project.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if pu.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -281,7 +281,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -297,7 +297,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if pu.mutation.AssetsCleared() {
+	if _u.mutation.AssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -310,7 +310,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.RemovedAssetsIDs(); len(nodes) > 0 && !pu.mutation.AssetsCleared() {
+	if nodes := _u.mutation.RemovedAssetsIDs(); len(nodes) > 0 && !_u.mutation.AssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -326,7 +326,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.AssetsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.AssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -342,7 +342,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if pu.mutation.GenerationJobsCleared() {
+	if _u.mutation.GenerationJobsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -355,7 +355,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.RemovedGenerationJobsIDs(); len(nodes) > 0 && !pu.mutation.GenerationJobsCleared() {
+	if nodes := _u.mutation.RemovedGenerationJobsIDs(); len(nodes) > 0 && !_u.mutation.GenerationJobsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -371,7 +371,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.GenerationJobsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.GenerationJobsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -387,7 +387,7 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{project.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -395,8 +395,8 @@ func (pu *ProjectUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	pu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // ProjectUpdateOne is the builder for updating a single Project entity.
@@ -408,183 +408,183 @@ type ProjectUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (puo *ProjectUpdateOne) SetUserID(i int64) *ProjectUpdateOne {
-	puo.mutation.SetUserID(i)
-	return puo
+func (_u *ProjectUpdateOne) SetUserID(v int64) *ProjectUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (puo *ProjectUpdateOne) SetNillableUserID(i *int64) *ProjectUpdateOne {
-	if i != nil {
-		puo.SetUserID(*i)
+func (_u *ProjectUpdateOne) SetNillableUserID(v *int64) *ProjectUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return puo
+	return _u
 }
 
 // SetName sets the "name" field.
-func (puo *ProjectUpdateOne) SetName(s string) *ProjectUpdateOne {
-	puo.mutation.SetName(s)
-	return puo
+func (_u *ProjectUpdateOne) SetName(v string) *ProjectUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (puo *ProjectUpdateOne) SetNillableName(s *string) *ProjectUpdateOne {
-	if s != nil {
-		puo.SetName(*s)
+func (_u *ProjectUpdateOne) SetNillableName(v *string) *ProjectUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return puo
+	return _u
 }
 
 // SetDescription sets the "description" field.
-func (puo *ProjectUpdateOne) SetDescription(s string) *ProjectUpdateOne {
-	puo.mutation.SetDescription(s)
-	return puo
+func (_u *ProjectUpdateOne) SetDescription(v string) *ProjectUpdateOne {
+	_u.mutation.SetDescription(v)
+	return _u
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (puo *ProjectUpdateOne) SetNillableDescription(s *string) *ProjectUpdateOne {
-	if s != nil {
-		puo.SetDescription(*s)
+func (_u *ProjectUpdateOne) SetNillableDescription(v *string) *ProjectUpdateOne {
+	if v != nil {
+		_u.SetDescription(*v)
 	}
-	return puo
+	return _u
 }
 
 // ClearDescription clears the value of the "description" field.
-func (puo *ProjectUpdateOne) ClearDescription() *ProjectUpdateOne {
-	puo.mutation.ClearDescription()
-	return puo
+func (_u *ProjectUpdateOne) ClearDescription() *ProjectUpdateOne {
+	_u.mutation.ClearDescription()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (puo *ProjectUpdateOne) SetStatus(pr project.Status) *ProjectUpdateOne {
-	puo.mutation.SetStatus(pr)
-	return puo
+func (_u *ProjectUpdateOne) SetStatus(v project.Status) *ProjectUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (puo *ProjectUpdateOne) SetNillableStatus(pr *project.Status) *ProjectUpdateOne {
-	if pr != nil {
-		puo.SetStatus(*pr)
+func (_u *ProjectUpdateOne) SetNillableStatus(v *project.Status) *ProjectUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return puo
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (puo *ProjectUpdateOne) SetUpdatedAt(t time.Time) *ProjectUpdateOne {
-	puo.mutation.SetUpdatedAt(t)
-	return puo
+func (_u *ProjectUpdateOne) SetUpdatedAt(v time.Time) *ProjectUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (puo *ProjectUpdateOne) SetUser(u *User) *ProjectUpdateOne {
-	return puo.SetUserID(u.ID)
+func (_u *ProjectUpdateOne) SetUser(v *User) *ProjectUpdateOne {
+	return _u.SetUserID(v.ID)
 }
 
 // AddAssetIDs adds the "assets" edge to the Asset entity by IDs.
-func (puo *ProjectUpdateOne) AddAssetIDs(ids ...int64) *ProjectUpdateOne {
-	puo.mutation.AddAssetIDs(ids...)
-	return puo
+func (_u *ProjectUpdateOne) AddAssetIDs(ids ...int64) *ProjectUpdateOne {
+	_u.mutation.AddAssetIDs(ids...)
+	return _u
 }
 
 // AddAssets adds the "assets" edges to the Asset entity.
-func (puo *ProjectUpdateOne) AddAssets(a ...*Asset) *ProjectUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *ProjectUpdateOne) AddAssets(v ...*Asset) *ProjectUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return puo.AddAssetIDs(ids...)
+	return _u.AddAssetIDs(ids...)
 }
 
 // AddGenerationJobIDs adds the "generation_jobs" edge to the GenerationJob entity by IDs.
-func (puo *ProjectUpdateOne) AddGenerationJobIDs(ids ...int64) *ProjectUpdateOne {
-	puo.mutation.AddGenerationJobIDs(ids...)
-	return puo
+func (_u *ProjectUpdateOne) AddGenerationJobIDs(ids ...int64) *ProjectUpdateOne {
+	_u.mutation.AddGenerationJobIDs(ids...)
+	return _u
 }
 
 // AddGenerationJobs adds the "generation_jobs" edges to the GenerationJob entity.
-func (puo *ProjectUpdateOne) AddGenerationJobs(g ...*GenerationJob) *ProjectUpdateOne {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *ProjectUpdateOne) AddGenerationJobs(v ...*GenerationJob) *ProjectUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return puo.AddGenerationJobIDs(ids...)
+	return _u.AddGenerationJobIDs(ids...)
 }
 
 // Mutation returns the ProjectMutation object of the builder.
-func (puo *ProjectUpdateOne) Mutation() *ProjectMutation {
-	return puo.mutation
+func (_u *ProjectUpdateOne) Mutation() *ProjectMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (puo *ProjectUpdateOne) ClearUser() *ProjectUpdateOne {
-	puo.mutation.ClearUser()
-	return puo
+func (_u *ProjectUpdateOne) ClearUser() *ProjectUpdateOne {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearAssets clears all "assets" edges to the Asset entity.
-func (puo *ProjectUpdateOne) ClearAssets() *ProjectUpdateOne {
-	puo.mutation.ClearAssets()
-	return puo
+func (_u *ProjectUpdateOne) ClearAssets() *ProjectUpdateOne {
+	_u.mutation.ClearAssets()
+	return _u
 }
 
 // RemoveAssetIDs removes the "assets" edge to Asset entities by IDs.
-func (puo *ProjectUpdateOne) RemoveAssetIDs(ids ...int64) *ProjectUpdateOne {
-	puo.mutation.RemoveAssetIDs(ids...)
-	return puo
+func (_u *ProjectUpdateOne) RemoveAssetIDs(ids ...int64) *ProjectUpdateOne {
+	_u.mutation.RemoveAssetIDs(ids...)
+	return _u
 }
 
 // RemoveAssets removes "assets" edges to Asset entities.
-func (puo *ProjectUpdateOne) RemoveAssets(a ...*Asset) *ProjectUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *ProjectUpdateOne) RemoveAssets(v ...*Asset) *ProjectUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return puo.RemoveAssetIDs(ids...)
+	return _u.RemoveAssetIDs(ids...)
 }
 
 // ClearGenerationJobs clears all "generation_jobs" edges to the GenerationJob entity.
-func (puo *ProjectUpdateOne) ClearGenerationJobs() *ProjectUpdateOne {
-	puo.mutation.ClearGenerationJobs()
-	return puo
+func (_u *ProjectUpdateOne) ClearGenerationJobs() *ProjectUpdateOne {
+	_u.mutation.ClearGenerationJobs()
+	return _u
 }
 
 // RemoveGenerationJobIDs removes the "generation_jobs" edge to GenerationJob entities by IDs.
-func (puo *ProjectUpdateOne) RemoveGenerationJobIDs(ids ...int64) *ProjectUpdateOne {
-	puo.mutation.RemoveGenerationJobIDs(ids...)
-	return puo
+func (_u *ProjectUpdateOne) RemoveGenerationJobIDs(ids ...int64) *ProjectUpdateOne {
+	_u.mutation.RemoveGenerationJobIDs(ids...)
+	return _u
 }
 
 // RemoveGenerationJobs removes "generation_jobs" edges to GenerationJob entities.
-func (puo *ProjectUpdateOne) RemoveGenerationJobs(g ...*GenerationJob) *ProjectUpdateOne {
-	ids := make([]int64, len(g))
-	for i := range g {
-		ids[i] = g[i].ID
+func (_u *ProjectUpdateOne) RemoveGenerationJobs(v ...*GenerationJob) *ProjectUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return puo.RemoveGenerationJobIDs(ids...)
+	return _u.RemoveGenerationJobIDs(ids...)
 }
 
 // Where appends a list predicates to the ProjectUpdate builder.
-func (puo *ProjectUpdateOne) Where(ps ...predicate.Project) *ProjectUpdateOne {
-	puo.mutation.Where(ps...)
-	return puo
+func (_u *ProjectUpdateOne) Where(ps ...predicate.Project) *ProjectUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (puo *ProjectUpdateOne) Select(field string, fields ...string) *ProjectUpdateOne {
-	puo.fields = append([]string{field}, fields...)
-	return puo
+func (_u *ProjectUpdateOne) Select(field string, fields ...string) *ProjectUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated Project entity.
-func (puo *ProjectUpdateOne) Save(ctx context.Context) (*Project, error) {
-	puo.defaults()
-	return withHooks(ctx, puo.sqlSave, puo.mutation, puo.hooks)
+func (_u *ProjectUpdateOne) Save(ctx context.Context) (*Project, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (puo *ProjectUpdateOne) SaveX(ctx context.Context) *Project {
-	node, err := puo.Save(ctx)
+func (_u *ProjectUpdateOne) SaveX(ctx context.Context) *Project {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -592,55 +592,55 @@ func (puo *ProjectUpdateOne) SaveX(ctx context.Context) *Project {
 }
 
 // Exec executes the query on the entity.
-func (puo *ProjectUpdateOne) Exec(ctx context.Context) error {
-	_, err := puo.Save(ctx)
+func (_u *ProjectUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (puo *ProjectUpdateOne) ExecX(ctx context.Context) {
-	if err := puo.Exec(ctx); err != nil {
+func (_u *ProjectUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (puo *ProjectUpdateOne) defaults() {
-	if _, ok := puo.mutation.UpdatedAt(); !ok {
+func (_u *ProjectUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := project.UpdateDefaultUpdatedAt()
-		puo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (puo *ProjectUpdateOne) check() error {
-	if v, ok := puo.mutation.Name(); ok {
+func (_u *ProjectUpdateOne) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := project.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Project.name": %w`, err)}
 		}
 	}
-	if v, ok := puo.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := project.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Project.status": %w`, err)}
 		}
 	}
-	if puo.mutation.UserCleared() && len(puo.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "Project.user"`)
 	}
 	return nil
 }
 
-func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err error) {
-	if err := puo.check(); err != nil {
+func (_u *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(project.Table, project.Columns, sqlgraph.NewFieldSpec(project.FieldID, field.TypeInt64))
-	id, ok := puo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Project.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := puo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, project.FieldID)
 		for _, f := range fields {
@@ -652,29 +652,29 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 			}
 		}
 	}
-	if ps := puo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := puo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(project.FieldName, field.TypeString, value)
 	}
-	if value, ok := puo.mutation.Description(); ok {
+	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(project.FieldDescription, field.TypeString, value)
 	}
-	if puo.mutation.DescriptionCleared() {
+	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(project.FieldDescription, field.TypeString)
 	}
-	if value, ok := puo.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(project.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := puo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(project.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if puo.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -687,7 +687,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -703,7 +703,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if puo.mutation.AssetsCleared() {
+	if _u.mutation.AssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -716,7 +716,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.RemovedAssetsIDs(); len(nodes) > 0 && !puo.mutation.AssetsCleared() {
+	if nodes := _u.mutation.RemovedAssetsIDs(); len(nodes) > 0 && !_u.mutation.AssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -732,7 +732,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.AssetsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.AssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -748,7 +748,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if puo.mutation.GenerationJobsCleared() {
+	if _u.mutation.GenerationJobsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -761,7 +761,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.RemovedGenerationJobsIDs(); len(nodes) > 0 && !puo.mutation.GenerationJobsCleared() {
+	if nodes := _u.mutation.RemovedGenerationJobsIDs(); len(nodes) > 0 && !_u.mutation.GenerationJobsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -777,7 +777,7 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.GenerationJobsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.GenerationJobsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -793,10 +793,10 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &Project{config: puo.config}
+	_node = &Project{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, puo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{project.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -804,6 +804,6 @@ func (puo *ProjectUpdateOne) sqlSave(ctx context.Context) (_node *Project, err e
 		}
 		return nil, err
 	}
-	puo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

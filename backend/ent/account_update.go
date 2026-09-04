@@ -24,284 +24,356 @@ type AccountUpdate struct {
 }
 
 // Where appends a list predicates to the AccountUpdate builder.
-func (au *AccountUpdate) Where(ps ...predicate.Account) *AccountUpdate {
-	au.mutation.Where(ps...)
-	return au
+func (_u *AccountUpdate) Where(ps ...predicate.Account) *AccountUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetName sets the "name" field.
-func (au *AccountUpdate) SetName(s string) *AccountUpdate {
-	au.mutation.SetName(s)
-	return au
+func (_u *AccountUpdate) SetName(v string) *AccountUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableName(s *string) *AccountUpdate {
-	if s != nil {
-		au.SetName(*s)
+func (_u *AccountUpdate) SetNillableName(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return au
+	return _u
 }
 
 // SetPlatform sets the "platform" field.
-func (au *AccountUpdate) SetPlatform(s string) *AccountUpdate {
-	au.mutation.SetPlatform(s)
-	return au
+func (_u *AccountUpdate) SetPlatform(v string) *AccountUpdate {
+	_u.mutation.SetPlatform(v)
+	return _u
 }
 
 // SetNillablePlatform sets the "platform" field if the given value is not nil.
-func (au *AccountUpdate) SetNillablePlatform(s *string) *AccountUpdate {
-	if s != nil {
-		au.SetPlatform(*s)
+func (_u *AccountUpdate) SetNillablePlatform(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetPlatform(*v)
 	}
-	return au
+	return _u
 }
 
 // SetType sets the "type" field.
-func (au *AccountUpdate) SetType(s string) *AccountUpdate {
-	au.mutation.SetType(s)
-	return au
+func (_u *AccountUpdate) SetType(v string) *AccountUpdate {
+	_u.mutation.SetType(v)
+	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableType(s *string) *AccountUpdate {
-	if s != nil {
-		au.SetType(*s)
+func (_u *AccountUpdate) SetNillableType(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetType(*v)
 	}
-	return au
+	return _u
 }
 
 // SetCredentials sets the "credentials" field.
-func (au *AccountUpdate) SetCredentials(m map[string]interface{}) *AccountUpdate {
-	au.mutation.SetCredentials(m)
-	return au
+func (_u *AccountUpdate) SetCredentials(v map[string]interface{}) *AccountUpdate {
+	_u.mutation.SetCredentials(v)
+	return _u
+}
+
+// SetExtra sets the "extra" field.
+func (_u *AccountUpdate) SetExtra(v map[string]interface{}) *AccountUpdate {
+	_u.mutation.SetExtra(v)
+	return _u
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (_u *AccountUpdate) ClearExtra() *AccountUpdate {
+	_u.mutation.ClearExtra()
+	return _u
 }
 
 // SetPriority sets the "priority" field.
-func (au *AccountUpdate) SetPriority(i int) *AccountUpdate {
-	au.mutation.ResetPriority()
-	au.mutation.SetPriority(i)
-	return au
+func (_u *AccountUpdate) SetPriority(v int) *AccountUpdate {
+	_u.mutation.ResetPriority()
+	_u.mutation.SetPriority(v)
+	return _u
 }
 
 // SetNillablePriority sets the "priority" field if the given value is not nil.
-func (au *AccountUpdate) SetNillablePriority(i *int) *AccountUpdate {
-	if i != nil {
-		au.SetPriority(*i)
+func (_u *AccountUpdate) SetNillablePriority(v *int) *AccountUpdate {
+	if v != nil {
+		_u.SetPriority(*v)
 	}
-	return au
+	return _u
 }
 
-// AddPriority adds i to the "priority" field.
-func (au *AccountUpdate) AddPriority(i int) *AccountUpdate {
-	au.mutation.AddPriority(i)
-	return au
+// AddPriority adds value to the "priority" field.
+func (_u *AccountUpdate) AddPriority(v int) *AccountUpdate {
+	_u.mutation.AddPriority(v)
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (au *AccountUpdate) SetStatus(a account.Status) *AccountUpdate {
-	au.mutation.SetStatus(a)
-	return au
+func (_u *AccountUpdate) SetStatus(v account.Status) *AccountUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableStatus(a *account.Status) *AccountUpdate {
-	if a != nil {
-		au.SetStatus(*a)
+func (_u *AccountUpdate) SetNillableStatus(v *account.Status) *AccountUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return au
+	return _u
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (au *AccountUpdate) SetErrorMessage(s string) *AccountUpdate {
-	au.mutation.SetErrorMessage(s)
-	return au
+func (_u *AccountUpdate) SetErrorMessage(v string) *AccountUpdate {
+	_u.mutation.SetErrorMessage(v)
+	return _u
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableErrorMessage(s *string) *AccountUpdate {
-	if s != nil {
-		au.SetErrorMessage(*s)
+func (_u *AccountUpdate) SetNillableErrorMessage(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetErrorMessage(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearErrorMessage clears the value of the "error_message" field.
-func (au *AccountUpdate) ClearErrorMessage() *AccountUpdate {
-	au.mutation.ClearErrorMessage()
-	return au
+func (_u *AccountUpdate) ClearErrorMessage() *AccountUpdate {
+	_u.mutation.ClearErrorMessage()
+	return _u
 }
 
 // SetLastUsedAt sets the "last_used_at" field.
-func (au *AccountUpdate) SetLastUsedAt(t time.Time) *AccountUpdate {
-	au.mutation.SetLastUsedAt(t)
-	return au
+func (_u *AccountUpdate) SetLastUsedAt(v time.Time) *AccountUpdate {
+	_u.mutation.SetLastUsedAt(v)
+	return _u
 }
 
 // SetNillableLastUsedAt sets the "last_used_at" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableLastUsedAt(t *time.Time) *AccountUpdate {
-	if t != nil {
-		au.SetLastUsedAt(*t)
+func (_u *AccountUpdate) SetNillableLastUsedAt(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetLastUsedAt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearLastUsedAt clears the value of the "last_used_at" field.
-func (au *AccountUpdate) ClearLastUsedAt() *AccountUpdate {
-	au.mutation.ClearLastUsedAt()
-	return au
+func (_u *AccountUpdate) ClearLastUsedAt() *AccountUpdate {
+	_u.mutation.ClearLastUsedAt()
+	return _u
 }
 
 // SetExpiresAt sets the "expires_at" field.
-func (au *AccountUpdate) SetExpiresAt(t time.Time) *AccountUpdate {
-	au.mutation.SetExpiresAt(t)
-	return au
+func (_u *AccountUpdate) SetExpiresAt(v time.Time) *AccountUpdate {
+	_u.mutation.SetExpiresAt(v)
+	return _u
 }
 
 // SetNillableExpiresAt sets the "expires_at" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableExpiresAt(t *time.Time) *AccountUpdate {
-	if t != nil {
-		au.SetExpiresAt(*t)
+func (_u *AccountUpdate) SetNillableExpiresAt(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetExpiresAt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearExpiresAt clears the value of the "expires_at" field.
-func (au *AccountUpdate) ClearExpiresAt() *AccountUpdate {
-	au.mutation.ClearExpiresAt()
-	return au
+func (_u *AccountUpdate) ClearExpiresAt() *AccountUpdate {
+	_u.mutation.ClearExpiresAt()
+	return _u
 }
 
 // SetSchedulable sets the "schedulable" field.
-func (au *AccountUpdate) SetSchedulable(b bool) *AccountUpdate {
-	au.mutation.SetSchedulable(b)
-	return au
+func (_u *AccountUpdate) SetSchedulable(v bool) *AccountUpdate {
+	_u.mutation.SetSchedulable(v)
+	return _u
 }
 
 // SetNillableSchedulable sets the "schedulable" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableSchedulable(b *bool) *AccountUpdate {
-	if b != nil {
-		au.SetSchedulable(*b)
+func (_u *AccountUpdate) SetNillableSchedulable(v *bool) *AccountUpdate {
+	if v != nil {
+		_u.SetSchedulable(*v)
 	}
-	return au
+	return _u
 }
 
 // SetRateLimitedAt sets the "rate_limited_at" field.
-func (au *AccountUpdate) SetRateLimitedAt(t time.Time) *AccountUpdate {
-	au.mutation.SetRateLimitedAt(t)
-	return au
+func (_u *AccountUpdate) SetRateLimitedAt(v time.Time) *AccountUpdate {
+	_u.mutation.SetRateLimitedAt(v)
+	return _u
 }
 
 // SetNillableRateLimitedAt sets the "rate_limited_at" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableRateLimitedAt(t *time.Time) *AccountUpdate {
-	if t != nil {
-		au.SetRateLimitedAt(*t)
+func (_u *AccountUpdate) SetNillableRateLimitedAt(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetRateLimitedAt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearRateLimitedAt clears the value of the "rate_limited_at" field.
-func (au *AccountUpdate) ClearRateLimitedAt() *AccountUpdate {
-	au.mutation.ClearRateLimitedAt()
-	return au
+func (_u *AccountUpdate) ClearRateLimitedAt() *AccountUpdate {
+	_u.mutation.ClearRateLimitedAt()
+	return _u
 }
 
 // SetRateLimitResetAt sets the "rate_limit_reset_at" field.
-func (au *AccountUpdate) SetRateLimitResetAt(t time.Time) *AccountUpdate {
-	au.mutation.SetRateLimitResetAt(t)
-	return au
+func (_u *AccountUpdate) SetRateLimitResetAt(v time.Time) *AccountUpdate {
+	_u.mutation.SetRateLimitResetAt(v)
+	return _u
 }
 
 // SetNillableRateLimitResetAt sets the "rate_limit_reset_at" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableRateLimitResetAt(t *time.Time) *AccountUpdate {
-	if t != nil {
-		au.SetRateLimitResetAt(*t)
+func (_u *AccountUpdate) SetNillableRateLimitResetAt(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetRateLimitResetAt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearRateLimitResetAt clears the value of the "rate_limit_reset_at" field.
-func (au *AccountUpdate) ClearRateLimitResetAt() *AccountUpdate {
-	au.mutation.ClearRateLimitResetAt()
-	return au
+func (_u *AccountUpdate) ClearRateLimitResetAt() *AccountUpdate {
+	_u.mutation.ClearRateLimitResetAt()
+	return _u
 }
 
 // SetOverloadUntil sets the "overload_until" field.
-func (au *AccountUpdate) SetOverloadUntil(t time.Time) *AccountUpdate {
-	au.mutation.SetOverloadUntil(t)
-	return au
+func (_u *AccountUpdate) SetOverloadUntil(v time.Time) *AccountUpdate {
+	_u.mutation.SetOverloadUntil(v)
+	return _u
 }
 
 // SetNillableOverloadUntil sets the "overload_until" field if the given value is not nil.
-func (au *AccountUpdate) SetNillableOverloadUntil(t *time.Time) *AccountUpdate {
-	if t != nil {
-		au.SetOverloadUntil(*t)
+func (_u *AccountUpdate) SetNillableOverloadUntil(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetOverloadUntil(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearOverloadUntil clears the value of the "overload_until" field.
-func (au *AccountUpdate) ClearOverloadUntil() *AccountUpdate {
-	au.mutation.ClearOverloadUntil()
-	return au
+func (_u *AccountUpdate) ClearOverloadUntil() *AccountUpdate {
+	_u.mutation.ClearOverloadUntil()
+	return _u
+}
+
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (_u *AccountUpdate) SetTempUnschedulableUntil(v time.Time) *AccountUpdate {
+	_u.mutation.SetTempUnschedulableUntil(v)
+	return _u
+}
+
+// SetNillableTempUnschedulableUntil sets the "temp_unschedulable_until" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableTempUnschedulableUntil(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetTempUnschedulableUntil(*v)
+	}
+	return _u
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (_u *AccountUpdate) ClearTempUnschedulableUntil() *AccountUpdate {
+	_u.mutation.ClearTempUnschedulableUntil()
+	return _u
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (_u *AccountUpdate) SetSessionWindowStart(v time.Time) *AccountUpdate {
+	_u.mutation.SetSessionWindowStart(v)
+	return _u
+}
+
+// SetNillableSessionWindowStart sets the "session_window_start" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableSessionWindowStart(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetSessionWindowStart(*v)
+	}
+	return _u
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (_u *AccountUpdate) ClearSessionWindowStart() *AccountUpdate {
+	_u.mutation.ClearSessionWindowStart()
+	return _u
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (_u *AccountUpdate) SetSessionWindowEnd(v time.Time) *AccountUpdate {
+	_u.mutation.SetSessionWindowEnd(v)
+	return _u
+}
+
+// SetNillableSessionWindowEnd sets the "session_window_end" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableSessionWindowEnd(v *time.Time) *AccountUpdate {
+	if v != nil {
+		_u.SetSessionWindowEnd(*v)
+	}
+	return _u
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (_u *AccountUpdate) ClearSessionWindowEnd() *AccountUpdate {
+	_u.mutation.ClearSessionWindowEnd()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (au *AccountUpdate) SetUpdatedAt(t time.Time) *AccountUpdate {
-	au.mutation.SetUpdatedAt(t)
-	return au
+func (_u *AccountUpdate) SetUpdatedAt(v time.Time) *AccountUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // AddUsageLogIDs adds the "usage_logs" edge to the UsageRecord entity by IDs.
-func (au *AccountUpdate) AddUsageLogIDs(ids ...int64) *AccountUpdate {
-	au.mutation.AddUsageLogIDs(ids...)
-	return au
+func (_u *AccountUpdate) AddUsageLogIDs(ids ...int64) *AccountUpdate {
+	_u.mutation.AddUsageLogIDs(ids...)
+	return _u
 }
 
 // AddUsageLogs adds the "usage_logs" edges to the UsageRecord entity.
-func (au *AccountUpdate) AddUsageLogs(u ...*UsageRecord) *AccountUpdate {
-	ids := make([]int64, len(u))
-	for i := range u {
-		ids[i] = u[i].ID
+func (_u *AccountUpdate) AddUsageLogs(v ...*UsageRecord) *AccountUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.AddUsageLogIDs(ids...)
+	return _u.AddUsageLogIDs(ids...)
 }
 
 // Mutation returns the AccountMutation object of the builder.
-func (au *AccountUpdate) Mutation() *AccountMutation {
-	return au.mutation
+func (_u *AccountUpdate) Mutation() *AccountMutation {
+	return _u.mutation
 }
 
 // ClearUsageLogs clears all "usage_logs" edges to the UsageRecord entity.
-func (au *AccountUpdate) ClearUsageLogs() *AccountUpdate {
-	au.mutation.ClearUsageLogs()
-	return au
+func (_u *AccountUpdate) ClearUsageLogs() *AccountUpdate {
+	_u.mutation.ClearUsageLogs()
+	return _u
 }
 
 // RemoveUsageLogIDs removes the "usage_logs" edge to UsageRecord entities by IDs.
-func (au *AccountUpdate) RemoveUsageLogIDs(ids ...int64) *AccountUpdate {
-	au.mutation.RemoveUsageLogIDs(ids...)
-	return au
+func (_u *AccountUpdate) RemoveUsageLogIDs(ids ...int64) *AccountUpdate {
+	_u.mutation.RemoveUsageLogIDs(ids...)
+	return _u
 }
 
 // RemoveUsageLogs removes "usage_logs" edges to UsageRecord entities.
-func (au *AccountUpdate) RemoveUsageLogs(u ...*UsageRecord) *AccountUpdate {
-	ids := make([]int64, len(u))
-	for i := range u {
-		ids[i] = u[i].ID
+func (_u *AccountUpdate) RemoveUsageLogs(v ...*UsageRecord) *AccountUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.RemoveUsageLogIDs(ids...)
+	return _u.RemoveUsageLogIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (au *AccountUpdate) Save(ctx context.Context) (int, error) {
-	au.defaults()
-	return withHooks(ctx, au.sqlSave, au.mutation, au.hooks)
+func (_u *AccountUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (au *AccountUpdate) SaveX(ctx context.Context) int {
-	affected, err := au.Save(ctx)
+func (_u *AccountUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -309,44 +381,44 @@ func (au *AccountUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (au *AccountUpdate) Exec(ctx context.Context) error {
-	_, err := au.Save(ctx)
+func (_u *AccountUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (au *AccountUpdate) ExecX(ctx context.Context) {
-	if err := au.Exec(ctx); err != nil {
+func (_u *AccountUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (au *AccountUpdate) defaults() {
-	if _, ok := au.mutation.UpdatedAt(); !ok {
+func (_u *AccountUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := account.UpdateDefaultUpdatedAt()
-		au.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (au *AccountUpdate) check() error {
-	if v, ok := au.mutation.Name(); ok {
+func (_u *AccountUpdate) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := account.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Account.name": %w`, err)}
 		}
 	}
-	if v, ok := au.mutation.Platform(); ok {
+	if v, ok := _u.mutation.Platform(); ok {
 		if err := account.PlatformValidator(v); err != nil {
 			return &ValidationError{Name: "platform", err: fmt.Errorf(`ent: validator failed for field "Account.platform": %w`, err)}
 		}
 	}
-	if v, ok := au.mutation.GetType(); ok {
+	if v, ok := _u.mutation.GetType(); ok {
 		if err := account.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Account.type": %w`, err)}
 		}
 	}
-	if v, ok := au.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := account.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Account.status": %w`, err)}
 		}
@@ -354,82 +426,106 @@ func (au *AccountUpdate) check() error {
 	return nil
 }
 
-func (au *AccountUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := au.check(); err != nil {
-		return n, err
+func (_u *AccountUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(account.Table, account.Columns, sqlgraph.NewFieldSpec(account.FieldID, field.TypeInt64))
-	if ps := au.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := au.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(account.FieldName, field.TypeString, value)
 	}
-	if value, ok := au.mutation.Platform(); ok {
+	if value, ok := _u.mutation.Platform(); ok {
 		_spec.SetField(account.FieldPlatform, field.TypeString, value)
 	}
-	if value, ok := au.mutation.GetType(); ok {
+	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(account.FieldType, field.TypeString, value)
 	}
-	if value, ok := au.mutation.Credentials(); ok {
+	if value, ok := _u.mutation.Credentials(); ok {
 		_spec.SetField(account.FieldCredentials, field.TypeJSON, value)
 	}
-	if value, ok := au.mutation.Priority(); ok {
+	if value, ok := _u.mutation.Extra(); ok {
+		_spec.SetField(account.FieldExtra, field.TypeJSON, value)
+	}
+	if _u.mutation.ExtraCleared() {
+		_spec.ClearField(account.FieldExtra, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.Priority(); ok {
 		_spec.SetField(account.FieldPriority, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.AddedPriority(); ok {
+	if value, ok := _u.mutation.AddedPriority(); ok {
 		_spec.AddField(account.FieldPriority, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(account.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := au.mutation.ErrorMessage(); ok {
+	if value, ok := _u.mutation.ErrorMessage(); ok {
 		_spec.SetField(account.FieldErrorMessage, field.TypeString, value)
 	}
-	if au.mutation.ErrorMessageCleared() {
+	if _u.mutation.ErrorMessageCleared() {
 		_spec.ClearField(account.FieldErrorMessage, field.TypeString)
 	}
-	if value, ok := au.mutation.LastUsedAt(); ok {
+	if value, ok := _u.mutation.LastUsedAt(); ok {
 		_spec.SetField(account.FieldLastUsedAt, field.TypeTime, value)
 	}
-	if au.mutation.LastUsedAtCleared() {
+	if _u.mutation.LastUsedAtCleared() {
 		_spec.ClearField(account.FieldLastUsedAt, field.TypeTime)
 	}
-	if value, ok := au.mutation.ExpiresAt(); ok {
+	if value, ok := _u.mutation.ExpiresAt(); ok {
 		_spec.SetField(account.FieldExpiresAt, field.TypeTime, value)
 	}
-	if au.mutation.ExpiresAtCleared() {
+	if _u.mutation.ExpiresAtCleared() {
 		_spec.ClearField(account.FieldExpiresAt, field.TypeTime)
 	}
-	if value, ok := au.mutation.Schedulable(); ok {
+	if value, ok := _u.mutation.Schedulable(); ok {
 		_spec.SetField(account.FieldSchedulable, field.TypeBool, value)
 	}
-	if value, ok := au.mutation.RateLimitedAt(); ok {
+	if value, ok := _u.mutation.RateLimitedAt(); ok {
 		_spec.SetField(account.FieldRateLimitedAt, field.TypeTime, value)
 	}
-	if au.mutation.RateLimitedAtCleared() {
+	if _u.mutation.RateLimitedAtCleared() {
 		_spec.ClearField(account.FieldRateLimitedAt, field.TypeTime)
 	}
-	if value, ok := au.mutation.RateLimitResetAt(); ok {
+	if value, ok := _u.mutation.RateLimitResetAt(); ok {
 		_spec.SetField(account.FieldRateLimitResetAt, field.TypeTime, value)
 	}
-	if au.mutation.RateLimitResetAtCleared() {
+	if _u.mutation.RateLimitResetAtCleared() {
 		_spec.ClearField(account.FieldRateLimitResetAt, field.TypeTime)
 	}
-	if value, ok := au.mutation.OverloadUntil(); ok {
+	if value, ok := _u.mutation.OverloadUntil(); ok {
 		_spec.SetField(account.FieldOverloadUntil, field.TypeTime, value)
 	}
-	if au.mutation.OverloadUntilCleared() {
+	if _u.mutation.OverloadUntilCleared() {
 		_spec.ClearField(account.FieldOverloadUntil, field.TypeTime)
 	}
-	if value, ok := au.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.TempUnschedulableUntil(); ok {
+		_spec.SetField(account.FieldTempUnschedulableUntil, field.TypeTime, value)
+	}
+	if _u.mutation.TempUnschedulableUntilCleared() {
+		_spec.ClearField(account.FieldTempUnschedulableUntil, field.TypeTime)
+	}
+	if value, ok := _u.mutation.SessionWindowStart(); ok {
+		_spec.SetField(account.FieldSessionWindowStart, field.TypeTime, value)
+	}
+	if _u.mutation.SessionWindowStartCleared() {
+		_spec.ClearField(account.FieldSessionWindowStart, field.TypeTime)
+	}
+	if value, ok := _u.mutation.SessionWindowEnd(); ok {
+		_spec.SetField(account.FieldSessionWindowEnd, field.TypeTime, value)
+	}
+	if _u.mutation.SessionWindowEndCleared() {
+		_spec.ClearField(account.FieldSessionWindowEnd, field.TypeTime)
+	}
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if au.mutation.UsageLogsCleared() {
+	if _u.mutation.UsageLogsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -442,7 +538,7 @@ func (au *AccountUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.RemovedUsageLogsIDs(); len(nodes) > 0 && !au.mutation.UsageLogsCleared() {
+	if nodes := _u.mutation.RemovedUsageLogsIDs(); len(nodes) > 0 && !_u.mutation.UsageLogsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -458,7 +554,7 @@ func (au *AccountUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.UsageLogsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UsageLogsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -474,7 +570,7 @@ func (au *AccountUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, au.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{account.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -482,8 +578,8 @@ func (au *AccountUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	au.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // AccountUpdateOne is the builder for updating a single Account entity.
@@ -495,291 +591,363 @@ type AccountUpdateOne struct {
 }
 
 // SetName sets the "name" field.
-func (auo *AccountUpdateOne) SetName(s string) *AccountUpdateOne {
-	auo.mutation.SetName(s)
-	return auo
+func (_u *AccountUpdateOne) SetName(v string) *AccountUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableName(s *string) *AccountUpdateOne {
-	if s != nil {
-		auo.SetName(*s)
+func (_u *AccountUpdateOne) SetNillableName(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetPlatform sets the "platform" field.
-func (auo *AccountUpdateOne) SetPlatform(s string) *AccountUpdateOne {
-	auo.mutation.SetPlatform(s)
-	return auo
+func (_u *AccountUpdateOne) SetPlatform(v string) *AccountUpdateOne {
+	_u.mutation.SetPlatform(v)
+	return _u
 }
 
 // SetNillablePlatform sets the "platform" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillablePlatform(s *string) *AccountUpdateOne {
-	if s != nil {
-		auo.SetPlatform(*s)
+func (_u *AccountUpdateOne) SetNillablePlatform(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetPlatform(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetType sets the "type" field.
-func (auo *AccountUpdateOne) SetType(s string) *AccountUpdateOne {
-	auo.mutation.SetType(s)
-	return auo
+func (_u *AccountUpdateOne) SetType(v string) *AccountUpdateOne {
+	_u.mutation.SetType(v)
+	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableType(s *string) *AccountUpdateOne {
-	if s != nil {
-		auo.SetType(*s)
+func (_u *AccountUpdateOne) SetNillableType(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetType(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetCredentials sets the "credentials" field.
-func (auo *AccountUpdateOne) SetCredentials(m map[string]interface{}) *AccountUpdateOne {
-	auo.mutation.SetCredentials(m)
-	return auo
+func (_u *AccountUpdateOne) SetCredentials(v map[string]interface{}) *AccountUpdateOne {
+	_u.mutation.SetCredentials(v)
+	return _u
+}
+
+// SetExtra sets the "extra" field.
+func (_u *AccountUpdateOne) SetExtra(v map[string]interface{}) *AccountUpdateOne {
+	_u.mutation.SetExtra(v)
+	return _u
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (_u *AccountUpdateOne) ClearExtra() *AccountUpdateOne {
+	_u.mutation.ClearExtra()
+	return _u
 }
 
 // SetPriority sets the "priority" field.
-func (auo *AccountUpdateOne) SetPriority(i int) *AccountUpdateOne {
-	auo.mutation.ResetPriority()
-	auo.mutation.SetPriority(i)
-	return auo
+func (_u *AccountUpdateOne) SetPriority(v int) *AccountUpdateOne {
+	_u.mutation.ResetPriority()
+	_u.mutation.SetPriority(v)
+	return _u
 }
 
 // SetNillablePriority sets the "priority" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillablePriority(i *int) *AccountUpdateOne {
-	if i != nil {
-		auo.SetPriority(*i)
+func (_u *AccountUpdateOne) SetNillablePriority(v *int) *AccountUpdateOne {
+	if v != nil {
+		_u.SetPriority(*v)
 	}
-	return auo
+	return _u
 }
 
-// AddPriority adds i to the "priority" field.
-func (auo *AccountUpdateOne) AddPriority(i int) *AccountUpdateOne {
-	auo.mutation.AddPriority(i)
-	return auo
+// AddPriority adds value to the "priority" field.
+func (_u *AccountUpdateOne) AddPriority(v int) *AccountUpdateOne {
+	_u.mutation.AddPriority(v)
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (auo *AccountUpdateOne) SetStatus(a account.Status) *AccountUpdateOne {
-	auo.mutation.SetStatus(a)
-	return auo
+func (_u *AccountUpdateOne) SetStatus(v account.Status) *AccountUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableStatus(a *account.Status) *AccountUpdateOne {
-	if a != nil {
-		auo.SetStatus(*a)
+func (_u *AccountUpdateOne) SetNillableStatus(v *account.Status) *AccountUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetErrorMessage sets the "error_message" field.
-func (auo *AccountUpdateOne) SetErrorMessage(s string) *AccountUpdateOne {
-	auo.mutation.SetErrorMessage(s)
-	return auo
+func (_u *AccountUpdateOne) SetErrorMessage(v string) *AccountUpdateOne {
+	_u.mutation.SetErrorMessage(v)
+	return _u
 }
 
 // SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableErrorMessage(s *string) *AccountUpdateOne {
-	if s != nil {
-		auo.SetErrorMessage(*s)
+func (_u *AccountUpdateOne) SetNillableErrorMessage(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetErrorMessage(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearErrorMessage clears the value of the "error_message" field.
-func (auo *AccountUpdateOne) ClearErrorMessage() *AccountUpdateOne {
-	auo.mutation.ClearErrorMessage()
-	return auo
+func (_u *AccountUpdateOne) ClearErrorMessage() *AccountUpdateOne {
+	_u.mutation.ClearErrorMessage()
+	return _u
 }
 
 // SetLastUsedAt sets the "last_used_at" field.
-func (auo *AccountUpdateOne) SetLastUsedAt(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetLastUsedAt(t)
-	return auo
+func (_u *AccountUpdateOne) SetLastUsedAt(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetLastUsedAt(v)
+	return _u
 }
 
 // SetNillableLastUsedAt sets the "last_used_at" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableLastUsedAt(t *time.Time) *AccountUpdateOne {
-	if t != nil {
-		auo.SetLastUsedAt(*t)
+func (_u *AccountUpdateOne) SetNillableLastUsedAt(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetLastUsedAt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearLastUsedAt clears the value of the "last_used_at" field.
-func (auo *AccountUpdateOne) ClearLastUsedAt() *AccountUpdateOne {
-	auo.mutation.ClearLastUsedAt()
-	return auo
+func (_u *AccountUpdateOne) ClearLastUsedAt() *AccountUpdateOne {
+	_u.mutation.ClearLastUsedAt()
+	return _u
 }
 
 // SetExpiresAt sets the "expires_at" field.
-func (auo *AccountUpdateOne) SetExpiresAt(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetExpiresAt(t)
-	return auo
+func (_u *AccountUpdateOne) SetExpiresAt(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetExpiresAt(v)
+	return _u
 }
 
 // SetNillableExpiresAt sets the "expires_at" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableExpiresAt(t *time.Time) *AccountUpdateOne {
-	if t != nil {
-		auo.SetExpiresAt(*t)
+func (_u *AccountUpdateOne) SetNillableExpiresAt(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetExpiresAt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearExpiresAt clears the value of the "expires_at" field.
-func (auo *AccountUpdateOne) ClearExpiresAt() *AccountUpdateOne {
-	auo.mutation.ClearExpiresAt()
-	return auo
+func (_u *AccountUpdateOne) ClearExpiresAt() *AccountUpdateOne {
+	_u.mutation.ClearExpiresAt()
+	return _u
 }
 
 // SetSchedulable sets the "schedulable" field.
-func (auo *AccountUpdateOne) SetSchedulable(b bool) *AccountUpdateOne {
-	auo.mutation.SetSchedulable(b)
-	return auo
+func (_u *AccountUpdateOne) SetSchedulable(v bool) *AccountUpdateOne {
+	_u.mutation.SetSchedulable(v)
+	return _u
 }
 
 // SetNillableSchedulable sets the "schedulable" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableSchedulable(b *bool) *AccountUpdateOne {
-	if b != nil {
-		auo.SetSchedulable(*b)
+func (_u *AccountUpdateOne) SetNillableSchedulable(v *bool) *AccountUpdateOne {
+	if v != nil {
+		_u.SetSchedulable(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetRateLimitedAt sets the "rate_limited_at" field.
-func (auo *AccountUpdateOne) SetRateLimitedAt(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetRateLimitedAt(t)
-	return auo
+func (_u *AccountUpdateOne) SetRateLimitedAt(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetRateLimitedAt(v)
+	return _u
 }
 
 // SetNillableRateLimitedAt sets the "rate_limited_at" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableRateLimitedAt(t *time.Time) *AccountUpdateOne {
-	if t != nil {
-		auo.SetRateLimitedAt(*t)
+func (_u *AccountUpdateOne) SetNillableRateLimitedAt(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetRateLimitedAt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearRateLimitedAt clears the value of the "rate_limited_at" field.
-func (auo *AccountUpdateOne) ClearRateLimitedAt() *AccountUpdateOne {
-	auo.mutation.ClearRateLimitedAt()
-	return auo
+func (_u *AccountUpdateOne) ClearRateLimitedAt() *AccountUpdateOne {
+	_u.mutation.ClearRateLimitedAt()
+	return _u
 }
 
 // SetRateLimitResetAt sets the "rate_limit_reset_at" field.
-func (auo *AccountUpdateOne) SetRateLimitResetAt(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetRateLimitResetAt(t)
-	return auo
+func (_u *AccountUpdateOne) SetRateLimitResetAt(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetRateLimitResetAt(v)
+	return _u
 }
 
 // SetNillableRateLimitResetAt sets the "rate_limit_reset_at" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableRateLimitResetAt(t *time.Time) *AccountUpdateOne {
-	if t != nil {
-		auo.SetRateLimitResetAt(*t)
+func (_u *AccountUpdateOne) SetNillableRateLimitResetAt(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetRateLimitResetAt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearRateLimitResetAt clears the value of the "rate_limit_reset_at" field.
-func (auo *AccountUpdateOne) ClearRateLimitResetAt() *AccountUpdateOne {
-	auo.mutation.ClearRateLimitResetAt()
-	return auo
+func (_u *AccountUpdateOne) ClearRateLimitResetAt() *AccountUpdateOne {
+	_u.mutation.ClearRateLimitResetAt()
+	return _u
 }
 
 // SetOverloadUntil sets the "overload_until" field.
-func (auo *AccountUpdateOne) SetOverloadUntil(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetOverloadUntil(t)
-	return auo
+func (_u *AccountUpdateOne) SetOverloadUntil(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetOverloadUntil(v)
+	return _u
 }
 
 // SetNillableOverloadUntil sets the "overload_until" field if the given value is not nil.
-func (auo *AccountUpdateOne) SetNillableOverloadUntil(t *time.Time) *AccountUpdateOne {
-	if t != nil {
-		auo.SetOverloadUntil(*t)
+func (_u *AccountUpdateOne) SetNillableOverloadUntil(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetOverloadUntil(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearOverloadUntil clears the value of the "overload_until" field.
-func (auo *AccountUpdateOne) ClearOverloadUntil() *AccountUpdateOne {
-	auo.mutation.ClearOverloadUntil()
-	return auo
+func (_u *AccountUpdateOne) ClearOverloadUntil() *AccountUpdateOne {
+	_u.mutation.ClearOverloadUntil()
+	return _u
+}
+
+// SetTempUnschedulableUntil sets the "temp_unschedulable_until" field.
+func (_u *AccountUpdateOne) SetTempUnschedulableUntil(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetTempUnschedulableUntil(v)
+	return _u
+}
+
+// SetNillableTempUnschedulableUntil sets the "temp_unschedulable_until" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableTempUnschedulableUntil(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetTempUnschedulableUntil(*v)
+	}
+	return _u
+}
+
+// ClearTempUnschedulableUntil clears the value of the "temp_unschedulable_until" field.
+func (_u *AccountUpdateOne) ClearTempUnschedulableUntil() *AccountUpdateOne {
+	_u.mutation.ClearTempUnschedulableUntil()
+	return _u
+}
+
+// SetSessionWindowStart sets the "session_window_start" field.
+func (_u *AccountUpdateOne) SetSessionWindowStart(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetSessionWindowStart(v)
+	return _u
+}
+
+// SetNillableSessionWindowStart sets the "session_window_start" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableSessionWindowStart(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetSessionWindowStart(*v)
+	}
+	return _u
+}
+
+// ClearSessionWindowStart clears the value of the "session_window_start" field.
+func (_u *AccountUpdateOne) ClearSessionWindowStart() *AccountUpdateOne {
+	_u.mutation.ClearSessionWindowStart()
+	return _u
+}
+
+// SetSessionWindowEnd sets the "session_window_end" field.
+func (_u *AccountUpdateOne) SetSessionWindowEnd(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetSessionWindowEnd(v)
+	return _u
+}
+
+// SetNillableSessionWindowEnd sets the "session_window_end" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableSessionWindowEnd(v *time.Time) *AccountUpdateOne {
+	if v != nil {
+		_u.SetSessionWindowEnd(*v)
+	}
+	return _u
+}
+
+// ClearSessionWindowEnd clears the value of the "session_window_end" field.
+func (_u *AccountUpdateOne) ClearSessionWindowEnd() *AccountUpdateOne {
+	_u.mutation.ClearSessionWindowEnd()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (auo *AccountUpdateOne) SetUpdatedAt(t time.Time) *AccountUpdateOne {
-	auo.mutation.SetUpdatedAt(t)
-	return auo
+func (_u *AccountUpdateOne) SetUpdatedAt(v time.Time) *AccountUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // AddUsageLogIDs adds the "usage_logs" edge to the UsageRecord entity by IDs.
-func (auo *AccountUpdateOne) AddUsageLogIDs(ids ...int64) *AccountUpdateOne {
-	auo.mutation.AddUsageLogIDs(ids...)
-	return auo
+func (_u *AccountUpdateOne) AddUsageLogIDs(ids ...int64) *AccountUpdateOne {
+	_u.mutation.AddUsageLogIDs(ids...)
+	return _u
 }
 
 // AddUsageLogs adds the "usage_logs" edges to the UsageRecord entity.
-func (auo *AccountUpdateOne) AddUsageLogs(u ...*UsageRecord) *AccountUpdateOne {
-	ids := make([]int64, len(u))
-	for i := range u {
-		ids[i] = u[i].ID
+func (_u *AccountUpdateOne) AddUsageLogs(v ...*UsageRecord) *AccountUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.AddUsageLogIDs(ids...)
+	return _u.AddUsageLogIDs(ids...)
 }
 
 // Mutation returns the AccountMutation object of the builder.
-func (auo *AccountUpdateOne) Mutation() *AccountMutation {
-	return auo.mutation
+func (_u *AccountUpdateOne) Mutation() *AccountMutation {
+	return _u.mutation
 }
 
 // ClearUsageLogs clears all "usage_logs" edges to the UsageRecord entity.
-func (auo *AccountUpdateOne) ClearUsageLogs() *AccountUpdateOne {
-	auo.mutation.ClearUsageLogs()
-	return auo
+func (_u *AccountUpdateOne) ClearUsageLogs() *AccountUpdateOne {
+	_u.mutation.ClearUsageLogs()
+	return _u
 }
 
 // RemoveUsageLogIDs removes the "usage_logs" edge to UsageRecord entities by IDs.
-func (auo *AccountUpdateOne) RemoveUsageLogIDs(ids ...int64) *AccountUpdateOne {
-	auo.mutation.RemoveUsageLogIDs(ids...)
-	return auo
+func (_u *AccountUpdateOne) RemoveUsageLogIDs(ids ...int64) *AccountUpdateOne {
+	_u.mutation.RemoveUsageLogIDs(ids...)
+	return _u
 }
 
 // RemoveUsageLogs removes "usage_logs" edges to UsageRecord entities.
-func (auo *AccountUpdateOne) RemoveUsageLogs(u ...*UsageRecord) *AccountUpdateOne {
-	ids := make([]int64, len(u))
-	for i := range u {
-		ids[i] = u[i].ID
+func (_u *AccountUpdateOne) RemoveUsageLogs(v ...*UsageRecord) *AccountUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.RemoveUsageLogIDs(ids...)
+	return _u.RemoveUsageLogIDs(ids...)
 }
 
 // Where appends a list predicates to the AccountUpdate builder.
-func (auo *AccountUpdateOne) Where(ps ...predicate.Account) *AccountUpdateOne {
-	auo.mutation.Where(ps...)
-	return auo
+func (_u *AccountUpdateOne) Where(ps ...predicate.Account) *AccountUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (auo *AccountUpdateOne) Select(field string, fields ...string) *AccountUpdateOne {
-	auo.fields = append([]string{field}, fields...)
-	return auo
+func (_u *AccountUpdateOne) Select(field string, fields ...string) *AccountUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated Account entity.
-func (auo *AccountUpdateOne) Save(ctx context.Context) (*Account, error) {
-	auo.defaults()
-	return withHooks(ctx, auo.sqlSave, auo.mutation, auo.hooks)
+func (_u *AccountUpdateOne) Save(ctx context.Context) (*Account, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (auo *AccountUpdateOne) SaveX(ctx context.Context) *Account {
-	node, err := auo.Save(ctx)
+func (_u *AccountUpdateOne) SaveX(ctx context.Context) *Account {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -787,44 +955,44 @@ func (auo *AccountUpdateOne) SaveX(ctx context.Context) *Account {
 }
 
 // Exec executes the query on the entity.
-func (auo *AccountUpdateOne) Exec(ctx context.Context) error {
-	_, err := auo.Save(ctx)
+func (_u *AccountUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (auo *AccountUpdateOne) ExecX(ctx context.Context) {
-	if err := auo.Exec(ctx); err != nil {
+func (_u *AccountUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (auo *AccountUpdateOne) defaults() {
-	if _, ok := auo.mutation.UpdatedAt(); !ok {
+func (_u *AccountUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := account.UpdateDefaultUpdatedAt()
-		auo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (auo *AccountUpdateOne) check() error {
-	if v, ok := auo.mutation.Name(); ok {
+func (_u *AccountUpdateOne) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := account.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Account.name": %w`, err)}
 		}
 	}
-	if v, ok := auo.mutation.Platform(); ok {
+	if v, ok := _u.mutation.Platform(); ok {
 		if err := account.PlatformValidator(v); err != nil {
 			return &ValidationError{Name: "platform", err: fmt.Errorf(`ent: validator failed for field "Account.platform": %w`, err)}
 		}
 	}
-	if v, ok := auo.mutation.GetType(); ok {
+	if v, ok := _u.mutation.GetType(); ok {
 		if err := account.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Account.type": %w`, err)}
 		}
 	}
-	if v, ok := auo.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := account.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Account.status": %w`, err)}
 		}
@@ -832,17 +1000,17 @@ func (auo *AccountUpdateOne) check() error {
 	return nil
 }
 
-func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err error) {
-	if err := auo.check(); err != nil {
+func (_u *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(account.Table, account.Columns, sqlgraph.NewFieldSpec(account.FieldID, field.TypeInt64))
-	id, ok := auo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Account.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := auo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, account.FieldID)
 		for _, f := range fields {
@@ -854,77 +1022,101 @@ func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err e
 			}
 		}
 	}
-	if ps := auo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := auo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(account.FieldName, field.TypeString, value)
 	}
-	if value, ok := auo.mutation.Platform(); ok {
+	if value, ok := _u.mutation.Platform(); ok {
 		_spec.SetField(account.FieldPlatform, field.TypeString, value)
 	}
-	if value, ok := auo.mutation.GetType(); ok {
+	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(account.FieldType, field.TypeString, value)
 	}
-	if value, ok := auo.mutation.Credentials(); ok {
+	if value, ok := _u.mutation.Credentials(); ok {
 		_spec.SetField(account.FieldCredentials, field.TypeJSON, value)
 	}
-	if value, ok := auo.mutation.Priority(); ok {
+	if value, ok := _u.mutation.Extra(); ok {
+		_spec.SetField(account.FieldExtra, field.TypeJSON, value)
+	}
+	if _u.mutation.ExtraCleared() {
+		_spec.ClearField(account.FieldExtra, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.Priority(); ok {
 		_spec.SetField(account.FieldPriority, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.AddedPriority(); ok {
+	if value, ok := _u.mutation.AddedPriority(); ok {
 		_spec.AddField(account.FieldPriority, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(account.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := auo.mutation.ErrorMessage(); ok {
+	if value, ok := _u.mutation.ErrorMessage(); ok {
 		_spec.SetField(account.FieldErrorMessage, field.TypeString, value)
 	}
-	if auo.mutation.ErrorMessageCleared() {
+	if _u.mutation.ErrorMessageCleared() {
 		_spec.ClearField(account.FieldErrorMessage, field.TypeString)
 	}
-	if value, ok := auo.mutation.LastUsedAt(); ok {
+	if value, ok := _u.mutation.LastUsedAt(); ok {
 		_spec.SetField(account.FieldLastUsedAt, field.TypeTime, value)
 	}
-	if auo.mutation.LastUsedAtCleared() {
+	if _u.mutation.LastUsedAtCleared() {
 		_spec.ClearField(account.FieldLastUsedAt, field.TypeTime)
 	}
-	if value, ok := auo.mutation.ExpiresAt(); ok {
+	if value, ok := _u.mutation.ExpiresAt(); ok {
 		_spec.SetField(account.FieldExpiresAt, field.TypeTime, value)
 	}
-	if auo.mutation.ExpiresAtCleared() {
+	if _u.mutation.ExpiresAtCleared() {
 		_spec.ClearField(account.FieldExpiresAt, field.TypeTime)
 	}
-	if value, ok := auo.mutation.Schedulable(); ok {
+	if value, ok := _u.mutation.Schedulable(); ok {
 		_spec.SetField(account.FieldSchedulable, field.TypeBool, value)
 	}
-	if value, ok := auo.mutation.RateLimitedAt(); ok {
+	if value, ok := _u.mutation.RateLimitedAt(); ok {
 		_spec.SetField(account.FieldRateLimitedAt, field.TypeTime, value)
 	}
-	if auo.mutation.RateLimitedAtCleared() {
+	if _u.mutation.RateLimitedAtCleared() {
 		_spec.ClearField(account.FieldRateLimitedAt, field.TypeTime)
 	}
-	if value, ok := auo.mutation.RateLimitResetAt(); ok {
+	if value, ok := _u.mutation.RateLimitResetAt(); ok {
 		_spec.SetField(account.FieldRateLimitResetAt, field.TypeTime, value)
 	}
-	if auo.mutation.RateLimitResetAtCleared() {
+	if _u.mutation.RateLimitResetAtCleared() {
 		_spec.ClearField(account.FieldRateLimitResetAt, field.TypeTime)
 	}
-	if value, ok := auo.mutation.OverloadUntil(); ok {
+	if value, ok := _u.mutation.OverloadUntil(); ok {
 		_spec.SetField(account.FieldOverloadUntil, field.TypeTime, value)
 	}
-	if auo.mutation.OverloadUntilCleared() {
+	if _u.mutation.OverloadUntilCleared() {
 		_spec.ClearField(account.FieldOverloadUntil, field.TypeTime)
 	}
-	if value, ok := auo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.TempUnschedulableUntil(); ok {
+		_spec.SetField(account.FieldTempUnschedulableUntil, field.TypeTime, value)
+	}
+	if _u.mutation.TempUnschedulableUntilCleared() {
+		_spec.ClearField(account.FieldTempUnschedulableUntil, field.TypeTime)
+	}
+	if value, ok := _u.mutation.SessionWindowStart(); ok {
+		_spec.SetField(account.FieldSessionWindowStart, field.TypeTime, value)
+	}
+	if _u.mutation.SessionWindowStartCleared() {
+		_spec.ClearField(account.FieldSessionWindowStart, field.TypeTime)
+	}
+	if value, ok := _u.mutation.SessionWindowEnd(); ok {
+		_spec.SetField(account.FieldSessionWindowEnd, field.TypeTime, value)
+	}
+	if _u.mutation.SessionWindowEndCleared() {
+		_spec.ClearField(account.FieldSessionWindowEnd, field.TypeTime)
+	}
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if auo.mutation.UsageLogsCleared() {
+	if _u.mutation.UsageLogsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -937,7 +1129,7 @@ func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.RemovedUsageLogsIDs(); len(nodes) > 0 && !auo.mutation.UsageLogsCleared() {
+	if nodes := _u.mutation.RemovedUsageLogsIDs(); len(nodes) > 0 && !_u.mutation.UsageLogsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -953,7 +1145,7 @@ func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.UsageLogsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UsageLogsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -969,10 +1161,10 @@ func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &Account{config: auo.config}
+	_node = &Account{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, auo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{account.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -980,6 +1172,6 @@ func (auo *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err e
 		}
 		return nil, err
 	}
-	auo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

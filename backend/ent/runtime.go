@@ -103,20 +103,24 @@ func init() {
 	accountDescCredentials := accountFields[3].Descriptor()
 	// account.DefaultCredentials holds the default value on creation for the credentials field.
 	account.DefaultCredentials = accountDescCredentials.Default.(func() map[string]interface{})
+	// accountDescExtra is the schema descriptor for extra field.
+	accountDescExtra := accountFields[4].Descriptor()
+	// account.DefaultExtra holds the default value on creation for the extra field.
+	account.DefaultExtra = accountDescExtra.Default.(func() map[string]interface{})
 	// accountDescPriority is the schema descriptor for priority field.
-	accountDescPriority := accountFields[4].Descriptor()
+	accountDescPriority := accountFields[5].Descriptor()
 	// account.DefaultPriority holds the default value on creation for the priority field.
 	account.DefaultPriority = accountDescPriority.Default.(int)
 	// accountDescSchedulable is the schema descriptor for schedulable field.
-	accountDescSchedulable := accountFields[9].Descriptor()
+	accountDescSchedulable := accountFields[10].Descriptor()
 	// account.DefaultSchedulable holds the default value on creation for the schedulable field.
 	account.DefaultSchedulable = accountDescSchedulable.Default.(bool)
 	// accountDescCreatedAt is the schema descriptor for created_at field.
-	accountDescCreatedAt := accountFields[13].Descriptor()
+	accountDescCreatedAt := accountFields[17].Descriptor()
 	// account.DefaultCreatedAt holds the default value on creation for the created_at field.
 	account.DefaultCreatedAt = accountDescCreatedAt.Default.(func() time.Time)
 	// accountDescUpdatedAt is the schema descriptor for updated_at field.
-	accountDescUpdatedAt := accountFields[14].Descriptor()
+	accountDescUpdatedAt := accountFields[18].Descriptor()
 	// account.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	account.DefaultUpdatedAt = accountDescUpdatedAt.Default.(func() time.Time)
 	// account.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

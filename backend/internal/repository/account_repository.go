@@ -122,3 +122,52 @@ func (r *AccountRepository) SetSchedulable(ctx context.Context, id int64, schedu
 		Save(ctx)
 	return err
 }
+
+// UpdateExtra 更新账号的 extra 字段（合并式更新）。
+// 移植自 Sub2API 的 account repository UpdateExtra。
+func (r *AccountRepository) UpdateExtra(ctx context.Context, id int64, updates map[string]any) error {
+	acc, err := r.GetByID(ctx, id)
+	if err != nil {
+		return err
+	}
+	extra := acc.Extra
+	if extra == nil {
+		extra = make(map[string]any)
+	}
+	for k, v := range updates {
+		extra[k] = v
+	}
+	_, err = r.db.Account.UpdateOneID(id).
+		SetExtra(extra).
+		Save(ctx)
+	return err
+}
+
+// UpdateSessionWindow 更新账号的会话窗口状态。
+// 移植自 Sub2API 的 account repository UpdateSessionWindow。
+func (r *AccountRepository) UpdateSessionWindow(ctx context.Context, id int64, start, end *time.Time, utilization float64) error {
+	updater := r.db.Account.UpdateOneID(id)
+	if start != nil {
+		updater.SetSessionWindowStart(*start)
+	}
+	if end != nil {
+		updater.SetSessionWindowEnd(*end)
+	}
+	updates := map[string]any{
+		"session_window_utilization": utilization,
+	}
+	acc, err := r.GetByID(ctx, id)
+	if err != nil {
+		return err
+	}
+	extra := acc.Extra
+	if extra == nil {
+		extra = make(map[string]any)
+	}
+	for k, v := range updates {
+		extra[k] = v
+	}
+	updater.SetExtra(extra)
+	_, err = updater.Save(ctx)
+	return err
+}

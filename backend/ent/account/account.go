@@ -23,6 +23,8 @@ const (
 	FieldType = "type"
 	// FieldCredentials holds the string denoting the credentials field in the database.
 	FieldCredentials = "credentials"
+	// FieldExtra holds the string denoting the extra field in the database.
+	FieldExtra = "extra"
 	// FieldPriority holds the string denoting the priority field in the database.
 	FieldPriority = "priority"
 	// FieldStatus holds the string denoting the status field in the database.
@@ -41,6 +43,12 @@ const (
 	FieldRateLimitResetAt = "rate_limit_reset_at"
 	// FieldOverloadUntil holds the string denoting the overload_until field in the database.
 	FieldOverloadUntil = "overload_until"
+	// FieldTempUnschedulableUntil holds the string denoting the temp_unschedulable_until field in the database.
+	FieldTempUnschedulableUntil = "temp_unschedulable_until"
+	// FieldSessionWindowStart holds the string denoting the session_window_start field in the database.
+	FieldSessionWindowStart = "session_window_start"
+	// FieldSessionWindowEnd holds the string denoting the session_window_end field in the database.
+	FieldSessionWindowEnd = "session_window_end"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -65,6 +73,7 @@ var Columns = []string{
 	FieldPlatform,
 	FieldType,
 	FieldCredentials,
+	FieldExtra,
 	FieldPriority,
 	FieldStatus,
 	FieldErrorMessage,
@@ -74,6 +83,9 @@ var Columns = []string{
 	FieldRateLimitedAt,
 	FieldRateLimitResetAt,
 	FieldOverloadUntil,
+	FieldTempUnschedulableUntil,
+	FieldSessionWindowStart,
+	FieldSessionWindowEnd,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -97,6 +109,8 @@ var (
 	TypeValidator func(string) error
 	// DefaultCredentials holds the default value on creation for the "credentials" field.
 	DefaultCredentials func() map[string]interface{}
+	// DefaultExtra holds the default value on creation for the "extra" field.
+	DefaultExtra func() map[string]interface{}
 	// DefaultPriority holds the default value on creation for the "priority" field.
 	DefaultPriority int
 	// DefaultSchedulable holds the default value on creation for the "schedulable" field.
@@ -202,6 +216,21 @@ func ByRateLimitResetAt(opts ...sql.OrderTermOption) OrderOption {
 // ByOverloadUntil orders the results by the overload_until field.
 func ByOverloadUntil(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOverloadUntil, opts...).ToFunc()
+}
+
+// ByTempUnschedulableUntil orders the results by the temp_unschedulable_until field.
+func ByTempUnschedulableUntil(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTempUnschedulableUntil, opts...).ToFunc()
+}
+
+// BySessionWindowStart orders the results by the session_window_start field.
+func BySessionWindowStart(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSessionWindowStart, opts...).ToFunc()
+}
+
+// BySessionWindowEnd orders the results by the session_window_end field.
+func BySessionWindowEnd(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSessionWindowEnd, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
