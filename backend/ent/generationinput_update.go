@@ -23,116 +23,116 @@ type GenerationInputUpdate struct {
 }
 
 // Where appends a list predicates to the GenerationInputUpdate builder.
-func (giu *GenerationInputUpdate) Where(ps ...predicate.GenerationInput) *GenerationInputUpdate {
-	giu.mutation.Where(ps...)
-	return giu
+func (_u *GenerationInputUpdate) Where(ps ...predicate.GenerationInput) *GenerationInputUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetJobID sets the "job_id" field.
-func (giu *GenerationInputUpdate) SetJobID(i int64) *GenerationInputUpdate {
-	giu.mutation.SetJobID(i)
-	return giu
+func (_u *GenerationInputUpdate) SetJobID(v int64) *GenerationInputUpdate {
+	_u.mutation.SetJobID(v)
+	return _u
 }
 
 // SetNillableJobID sets the "job_id" field if the given value is not nil.
-func (giu *GenerationInputUpdate) SetNillableJobID(i *int64) *GenerationInputUpdate {
-	if i != nil {
-		giu.SetJobID(*i)
+func (_u *GenerationInputUpdate) SetNillableJobID(v *int64) *GenerationInputUpdate {
+	if v != nil {
+		_u.SetJobID(*v)
 	}
-	return giu
+	return _u
 }
 
 // SetSourceAssetID sets the "source_asset_id" field.
-func (giu *GenerationInputUpdate) SetSourceAssetID(i int64) *GenerationInputUpdate {
-	giu.mutation.ResetSourceAssetID()
-	giu.mutation.SetSourceAssetID(i)
-	return giu
+func (_u *GenerationInputUpdate) SetSourceAssetID(v int64) *GenerationInputUpdate {
+	_u.mutation.ResetSourceAssetID()
+	_u.mutation.SetSourceAssetID(v)
+	return _u
 }
 
 // SetNillableSourceAssetID sets the "source_asset_id" field if the given value is not nil.
-func (giu *GenerationInputUpdate) SetNillableSourceAssetID(i *int64) *GenerationInputUpdate {
-	if i != nil {
-		giu.SetSourceAssetID(*i)
+func (_u *GenerationInputUpdate) SetNillableSourceAssetID(v *int64) *GenerationInputUpdate {
+	if v != nil {
+		_u.SetSourceAssetID(*v)
 	}
-	return giu
+	return _u
 }
 
-// AddSourceAssetID adds i to the "source_asset_id" field.
-func (giu *GenerationInputUpdate) AddSourceAssetID(i int64) *GenerationInputUpdate {
-	giu.mutation.AddSourceAssetID(i)
-	return giu
+// AddSourceAssetID adds value to the "source_asset_id" field.
+func (_u *GenerationInputUpdate) AddSourceAssetID(v int64) *GenerationInputUpdate {
+	_u.mutation.AddSourceAssetID(v)
+	return _u
 }
 
 // ClearSourceAssetID clears the value of the "source_asset_id" field.
-func (giu *GenerationInputUpdate) ClearSourceAssetID() *GenerationInputUpdate {
-	giu.mutation.ClearSourceAssetID()
-	return giu
+func (_u *GenerationInputUpdate) ClearSourceAssetID() *GenerationInputUpdate {
+	_u.mutation.ClearSourceAssetID()
+	return _u
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (giu *GenerationInputUpdate) SetStorageKey(s string) *GenerationInputUpdate {
-	giu.mutation.SetStorageKey(s)
-	return giu
+func (_u *GenerationInputUpdate) SetStorageKey(v string) *GenerationInputUpdate {
+	_u.mutation.SetStorageKey(v)
+	return _u
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (giu *GenerationInputUpdate) SetNillableStorageKey(s *string) *GenerationInputUpdate {
-	if s != nil {
-		giu.SetStorageKey(*s)
+func (_u *GenerationInputUpdate) SetNillableStorageKey(v *string) *GenerationInputUpdate {
+	if v != nil {
+		_u.SetStorageKey(*v)
 	}
-	return giu
+	return _u
 }
 
 // ClearStorageKey clears the value of the "storage_key" field.
-func (giu *GenerationInputUpdate) ClearStorageKey() *GenerationInputUpdate {
-	giu.mutation.ClearStorageKey()
-	return giu
+func (_u *GenerationInputUpdate) ClearStorageKey() *GenerationInputUpdate {
+	_u.mutation.ClearStorageKey()
+	return _u
 }
 
 // SetRole sets the "role" field.
-func (giu *GenerationInputUpdate) SetRole(s string) *GenerationInputUpdate {
-	giu.mutation.SetRole(s)
-	return giu
+func (_u *GenerationInputUpdate) SetRole(v string) *GenerationInputUpdate {
+	_u.mutation.SetRole(v)
+	return _u
 }
 
 // SetNillableRole sets the "role" field if the given value is not nil.
-func (giu *GenerationInputUpdate) SetNillableRole(s *string) *GenerationInputUpdate {
-	if s != nil {
-		giu.SetRole(*s)
+func (_u *GenerationInputUpdate) SetNillableRole(v *string) *GenerationInputUpdate {
+	if v != nil {
+		_u.SetRole(*v)
 	}
-	return giu
+	return _u
 }
 
 // ClearRole clears the value of the "role" field.
-func (giu *GenerationInputUpdate) ClearRole() *GenerationInputUpdate {
-	giu.mutation.ClearRole()
-	return giu
+func (_u *GenerationInputUpdate) ClearRole() *GenerationInputUpdate {
+	_u.mutation.ClearRole()
+	return _u
 }
 
 // SetJob sets the "job" edge to the GenerationJob entity.
-func (giu *GenerationInputUpdate) SetJob(g *GenerationJob) *GenerationInputUpdate {
-	return giu.SetJobID(g.ID)
+func (_u *GenerationInputUpdate) SetJob(v *GenerationJob) *GenerationInputUpdate {
+	return _u.SetJobID(v.ID)
 }
 
 // Mutation returns the GenerationInputMutation object of the builder.
-func (giu *GenerationInputUpdate) Mutation() *GenerationInputMutation {
-	return giu.mutation
+func (_u *GenerationInputUpdate) Mutation() *GenerationInputMutation {
+	return _u.mutation
 }
 
 // ClearJob clears the "job" edge to the GenerationJob entity.
-func (giu *GenerationInputUpdate) ClearJob() *GenerationInputUpdate {
-	giu.mutation.ClearJob()
-	return giu
+func (_u *GenerationInputUpdate) ClearJob() *GenerationInputUpdate {
+	_u.mutation.ClearJob()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (giu *GenerationInputUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks(ctx, giu.sqlSave, giu.mutation, giu.hooks)
+func (_u *GenerationInputUpdate) Save(ctx context.Context) (int, error) {
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (giu *GenerationInputUpdate) SaveX(ctx context.Context) int {
-	affected, err := giu.Save(ctx)
+func (_u *GenerationInputUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -140,60 +140,60 @@ func (giu *GenerationInputUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (giu *GenerationInputUpdate) Exec(ctx context.Context) error {
-	_, err := giu.Save(ctx)
+func (_u *GenerationInputUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (giu *GenerationInputUpdate) ExecX(ctx context.Context) {
-	if err := giu.Exec(ctx); err != nil {
+func (_u *GenerationInputUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (giu *GenerationInputUpdate) check() error {
-	if giu.mutation.JobCleared() && len(giu.mutation.JobIDs()) > 0 {
+func (_u *GenerationInputUpdate) check() error {
+	if _u.mutation.JobCleared() && len(_u.mutation.JobIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "GenerationInput.job"`)
 	}
 	return nil
 }
 
-func (giu *GenerationInputUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := giu.check(); err != nil {
-		return n, err
+func (_u *GenerationInputUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(generationinput.Table, generationinput.Columns, sqlgraph.NewFieldSpec(generationinput.FieldID, field.TypeInt64))
-	if ps := giu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := giu.mutation.SourceAssetID(); ok {
+	if value, ok := _u.mutation.SourceAssetID(); ok {
 		_spec.SetField(generationinput.FieldSourceAssetID, field.TypeInt64, value)
 	}
-	if value, ok := giu.mutation.AddedSourceAssetID(); ok {
+	if value, ok := _u.mutation.AddedSourceAssetID(); ok {
 		_spec.AddField(generationinput.FieldSourceAssetID, field.TypeInt64, value)
 	}
-	if giu.mutation.SourceAssetIDCleared() {
+	if _u.mutation.SourceAssetIDCleared() {
 		_spec.ClearField(generationinput.FieldSourceAssetID, field.TypeInt64)
 	}
-	if value, ok := giu.mutation.StorageKey(); ok {
+	if value, ok := _u.mutation.StorageKey(); ok {
 		_spec.SetField(generationinput.FieldStorageKey, field.TypeString, value)
 	}
-	if giu.mutation.StorageKeyCleared() {
+	if _u.mutation.StorageKeyCleared() {
 		_spec.ClearField(generationinput.FieldStorageKey, field.TypeString)
 	}
-	if value, ok := giu.mutation.Role(); ok {
+	if value, ok := _u.mutation.Role(); ok {
 		_spec.SetField(generationinput.FieldRole, field.TypeString, value)
 	}
-	if giu.mutation.RoleCleared() {
+	if _u.mutation.RoleCleared() {
 		_spec.ClearField(generationinput.FieldRole, field.TypeString)
 	}
-	if giu.mutation.JobCleared() {
+	if _u.mutation.JobCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -206,7 +206,7 @@ func (giu *GenerationInputUpdate) sqlSave(ctx context.Context) (n int, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := giu.mutation.JobIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.JobIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -222,7 +222,7 @@ func (giu *GenerationInputUpdate) sqlSave(ctx context.Context) (n int, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, giu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{generationinput.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -230,8 +230,8 @@ func (giu *GenerationInputUpdate) sqlSave(ctx context.Context) (n int, err error
 		}
 		return 0, err
 	}
-	giu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // GenerationInputUpdateOne is the builder for updating a single GenerationInput entity.
@@ -243,123 +243,123 @@ type GenerationInputUpdateOne struct {
 }
 
 // SetJobID sets the "job_id" field.
-func (giuo *GenerationInputUpdateOne) SetJobID(i int64) *GenerationInputUpdateOne {
-	giuo.mutation.SetJobID(i)
-	return giuo
+func (_u *GenerationInputUpdateOne) SetJobID(v int64) *GenerationInputUpdateOne {
+	_u.mutation.SetJobID(v)
+	return _u
 }
 
 // SetNillableJobID sets the "job_id" field if the given value is not nil.
-func (giuo *GenerationInputUpdateOne) SetNillableJobID(i *int64) *GenerationInputUpdateOne {
-	if i != nil {
-		giuo.SetJobID(*i)
+func (_u *GenerationInputUpdateOne) SetNillableJobID(v *int64) *GenerationInputUpdateOne {
+	if v != nil {
+		_u.SetJobID(*v)
 	}
-	return giuo
+	return _u
 }
 
 // SetSourceAssetID sets the "source_asset_id" field.
-func (giuo *GenerationInputUpdateOne) SetSourceAssetID(i int64) *GenerationInputUpdateOne {
-	giuo.mutation.ResetSourceAssetID()
-	giuo.mutation.SetSourceAssetID(i)
-	return giuo
+func (_u *GenerationInputUpdateOne) SetSourceAssetID(v int64) *GenerationInputUpdateOne {
+	_u.mutation.ResetSourceAssetID()
+	_u.mutation.SetSourceAssetID(v)
+	return _u
 }
 
 // SetNillableSourceAssetID sets the "source_asset_id" field if the given value is not nil.
-func (giuo *GenerationInputUpdateOne) SetNillableSourceAssetID(i *int64) *GenerationInputUpdateOne {
-	if i != nil {
-		giuo.SetSourceAssetID(*i)
+func (_u *GenerationInputUpdateOne) SetNillableSourceAssetID(v *int64) *GenerationInputUpdateOne {
+	if v != nil {
+		_u.SetSourceAssetID(*v)
 	}
-	return giuo
+	return _u
 }
 
-// AddSourceAssetID adds i to the "source_asset_id" field.
-func (giuo *GenerationInputUpdateOne) AddSourceAssetID(i int64) *GenerationInputUpdateOne {
-	giuo.mutation.AddSourceAssetID(i)
-	return giuo
+// AddSourceAssetID adds value to the "source_asset_id" field.
+func (_u *GenerationInputUpdateOne) AddSourceAssetID(v int64) *GenerationInputUpdateOne {
+	_u.mutation.AddSourceAssetID(v)
+	return _u
 }
 
 // ClearSourceAssetID clears the value of the "source_asset_id" field.
-func (giuo *GenerationInputUpdateOne) ClearSourceAssetID() *GenerationInputUpdateOne {
-	giuo.mutation.ClearSourceAssetID()
-	return giuo
+func (_u *GenerationInputUpdateOne) ClearSourceAssetID() *GenerationInputUpdateOne {
+	_u.mutation.ClearSourceAssetID()
+	return _u
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (giuo *GenerationInputUpdateOne) SetStorageKey(s string) *GenerationInputUpdateOne {
-	giuo.mutation.SetStorageKey(s)
-	return giuo
+func (_u *GenerationInputUpdateOne) SetStorageKey(v string) *GenerationInputUpdateOne {
+	_u.mutation.SetStorageKey(v)
+	return _u
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (giuo *GenerationInputUpdateOne) SetNillableStorageKey(s *string) *GenerationInputUpdateOne {
-	if s != nil {
-		giuo.SetStorageKey(*s)
+func (_u *GenerationInputUpdateOne) SetNillableStorageKey(v *string) *GenerationInputUpdateOne {
+	if v != nil {
+		_u.SetStorageKey(*v)
 	}
-	return giuo
+	return _u
 }
 
 // ClearStorageKey clears the value of the "storage_key" field.
-func (giuo *GenerationInputUpdateOne) ClearStorageKey() *GenerationInputUpdateOne {
-	giuo.mutation.ClearStorageKey()
-	return giuo
+func (_u *GenerationInputUpdateOne) ClearStorageKey() *GenerationInputUpdateOne {
+	_u.mutation.ClearStorageKey()
+	return _u
 }
 
 // SetRole sets the "role" field.
-func (giuo *GenerationInputUpdateOne) SetRole(s string) *GenerationInputUpdateOne {
-	giuo.mutation.SetRole(s)
-	return giuo
+func (_u *GenerationInputUpdateOne) SetRole(v string) *GenerationInputUpdateOne {
+	_u.mutation.SetRole(v)
+	return _u
 }
 
 // SetNillableRole sets the "role" field if the given value is not nil.
-func (giuo *GenerationInputUpdateOne) SetNillableRole(s *string) *GenerationInputUpdateOne {
-	if s != nil {
-		giuo.SetRole(*s)
+func (_u *GenerationInputUpdateOne) SetNillableRole(v *string) *GenerationInputUpdateOne {
+	if v != nil {
+		_u.SetRole(*v)
 	}
-	return giuo
+	return _u
 }
 
 // ClearRole clears the value of the "role" field.
-func (giuo *GenerationInputUpdateOne) ClearRole() *GenerationInputUpdateOne {
-	giuo.mutation.ClearRole()
-	return giuo
+func (_u *GenerationInputUpdateOne) ClearRole() *GenerationInputUpdateOne {
+	_u.mutation.ClearRole()
+	return _u
 }
 
 // SetJob sets the "job" edge to the GenerationJob entity.
-func (giuo *GenerationInputUpdateOne) SetJob(g *GenerationJob) *GenerationInputUpdateOne {
-	return giuo.SetJobID(g.ID)
+func (_u *GenerationInputUpdateOne) SetJob(v *GenerationJob) *GenerationInputUpdateOne {
+	return _u.SetJobID(v.ID)
 }
 
 // Mutation returns the GenerationInputMutation object of the builder.
-func (giuo *GenerationInputUpdateOne) Mutation() *GenerationInputMutation {
-	return giuo.mutation
+func (_u *GenerationInputUpdateOne) Mutation() *GenerationInputMutation {
+	return _u.mutation
 }
 
 // ClearJob clears the "job" edge to the GenerationJob entity.
-func (giuo *GenerationInputUpdateOne) ClearJob() *GenerationInputUpdateOne {
-	giuo.mutation.ClearJob()
-	return giuo
+func (_u *GenerationInputUpdateOne) ClearJob() *GenerationInputUpdateOne {
+	_u.mutation.ClearJob()
+	return _u
 }
 
 // Where appends a list predicates to the GenerationInputUpdate builder.
-func (giuo *GenerationInputUpdateOne) Where(ps ...predicate.GenerationInput) *GenerationInputUpdateOne {
-	giuo.mutation.Where(ps...)
-	return giuo
+func (_u *GenerationInputUpdateOne) Where(ps ...predicate.GenerationInput) *GenerationInputUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (giuo *GenerationInputUpdateOne) Select(field string, fields ...string) *GenerationInputUpdateOne {
-	giuo.fields = append([]string{field}, fields...)
-	return giuo
+func (_u *GenerationInputUpdateOne) Select(field string, fields ...string) *GenerationInputUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated GenerationInput entity.
-func (giuo *GenerationInputUpdateOne) Save(ctx context.Context) (*GenerationInput, error) {
-	return withHooks(ctx, giuo.sqlSave, giuo.mutation, giuo.hooks)
+func (_u *GenerationInputUpdateOne) Save(ctx context.Context) (*GenerationInput, error) {
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (giuo *GenerationInputUpdateOne) SaveX(ctx context.Context) *GenerationInput {
-	node, err := giuo.Save(ctx)
+func (_u *GenerationInputUpdateOne) SaveX(ctx context.Context) *GenerationInput {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -367,37 +367,37 @@ func (giuo *GenerationInputUpdateOne) SaveX(ctx context.Context) *GenerationInpu
 }
 
 // Exec executes the query on the entity.
-func (giuo *GenerationInputUpdateOne) Exec(ctx context.Context) error {
-	_, err := giuo.Save(ctx)
+func (_u *GenerationInputUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (giuo *GenerationInputUpdateOne) ExecX(ctx context.Context) {
-	if err := giuo.Exec(ctx); err != nil {
+func (_u *GenerationInputUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (giuo *GenerationInputUpdateOne) check() error {
-	if giuo.mutation.JobCleared() && len(giuo.mutation.JobIDs()) > 0 {
+func (_u *GenerationInputUpdateOne) check() error {
+	if _u.mutation.JobCleared() && len(_u.mutation.JobIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "GenerationInput.job"`)
 	}
 	return nil
 }
 
-func (giuo *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *GenerationInput, err error) {
-	if err := giuo.check(); err != nil {
+func (_u *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *GenerationInput, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(generationinput.Table, generationinput.Columns, sqlgraph.NewFieldSpec(generationinput.FieldID, field.TypeInt64))
-	id, ok := giuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GenerationInput.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := giuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, generationinput.FieldID)
 		for _, f := range fields {
@@ -409,35 +409,35 @@ func (giuo *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *Gener
 			}
 		}
 	}
-	if ps := giuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := giuo.mutation.SourceAssetID(); ok {
+	if value, ok := _u.mutation.SourceAssetID(); ok {
 		_spec.SetField(generationinput.FieldSourceAssetID, field.TypeInt64, value)
 	}
-	if value, ok := giuo.mutation.AddedSourceAssetID(); ok {
+	if value, ok := _u.mutation.AddedSourceAssetID(); ok {
 		_spec.AddField(generationinput.FieldSourceAssetID, field.TypeInt64, value)
 	}
-	if giuo.mutation.SourceAssetIDCleared() {
+	if _u.mutation.SourceAssetIDCleared() {
 		_spec.ClearField(generationinput.FieldSourceAssetID, field.TypeInt64)
 	}
-	if value, ok := giuo.mutation.StorageKey(); ok {
+	if value, ok := _u.mutation.StorageKey(); ok {
 		_spec.SetField(generationinput.FieldStorageKey, field.TypeString, value)
 	}
-	if giuo.mutation.StorageKeyCleared() {
+	if _u.mutation.StorageKeyCleared() {
 		_spec.ClearField(generationinput.FieldStorageKey, field.TypeString)
 	}
-	if value, ok := giuo.mutation.Role(); ok {
+	if value, ok := _u.mutation.Role(); ok {
 		_spec.SetField(generationinput.FieldRole, field.TypeString, value)
 	}
-	if giuo.mutation.RoleCleared() {
+	if _u.mutation.RoleCleared() {
 		_spec.ClearField(generationinput.FieldRole, field.TypeString)
 	}
-	if giuo.mutation.JobCleared() {
+	if _u.mutation.JobCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -450,7 +450,7 @@ func (giuo *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *Gener
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := giuo.mutation.JobIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.JobIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -466,10 +466,10 @@ func (giuo *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *Gener
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &GenerationInput{config: giuo.config}
+	_node = &GenerationInput{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, giuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{generationinput.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -477,6 +477,6 @@ func (giuo *GenerationInputUpdateOne) sqlSave(ctx context.Context) (_node *Gener
 		}
 		return nil, err
 	}
-	giuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

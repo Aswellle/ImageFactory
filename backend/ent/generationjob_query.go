@@ -39,44 +39,44 @@ type GenerationJobQuery struct {
 }
 
 // Where adds a new predicate for the GenerationJobQuery builder.
-func (gjq *GenerationJobQuery) Where(ps ...predicate.GenerationJob) *GenerationJobQuery {
-	gjq.predicates = append(gjq.predicates, ps...)
-	return gjq
+func (_q *GenerationJobQuery) Where(ps ...predicate.GenerationJob) *GenerationJobQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (gjq *GenerationJobQuery) Limit(limit int) *GenerationJobQuery {
-	gjq.ctx.Limit = &limit
-	return gjq
+func (_q *GenerationJobQuery) Limit(limit int) *GenerationJobQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (gjq *GenerationJobQuery) Offset(offset int) *GenerationJobQuery {
-	gjq.ctx.Offset = &offset
-	return gjq
+func (_q *GenerationJobQuery) Offset(offset int) *GenerationJobQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (gjq *GenerationJobQuery) Unique(unique bool) *GenerationJobQuery {
-	gjq.ctx.Unique = &unique
-	return gjq
+func (_q *GenerationJobQuery) Unique(unique bool) *GenerationJobQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (gjq *GenerationJobQuery) Order(o ...generationjob.OrderOption) *GenerationJobQuery {
-	gjq.order = append(gjq.order, o...)
-	return gjq
+func (_q *GenerationJobQuery) Order(o ...generationjob.OrderOption) *GenerationJobQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryUser chains the current query on the "user" edge.
-func (gjq *GenerationJobQuery) QueryUser() *UserQuery {
-	query := (&UserClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) QueryUser() *UserQuery {
+	query := (&UserClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := gjq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := gjq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -85,20 +85,20 @@ func (gjq *GenerationJobQuery) QueryUser() *UserQuery {
 			sqlgraph.To(user.Table, user.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, generationjob.UserTable, generationjob.UserColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(gjq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryProject chains the current query on the "project" edge.
-func (gjq *GenerationJobQuery) QueryProject() *ProjectQuery {
-	query := (&ProjectClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) QueryProject() *ProjectQuery {
+	query := (&ProjectClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := gjq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := gjq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -107,20 +107,20 @@ func (gjq *GenerationJobQuery) QueryProject() *ProjectQuery {
 			sqlgraph.To(project.Table, project.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, generationjob.ProjectTable, generationjob.ProjectColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(gjq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryInputs chains the current query on the "inputs" edge.
-func (gjq *GenerationJobQuery) QueryInputs() *GenerationInputQuery {
-	query := (&GenerationInputClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) QueryInputs() *GenerationInputQuery {
+	query := (&GenerationInputClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := gjq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := gjq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -129,20 +129,20 @@ func (gjq *GenerationJobQuery) QueryInputs() *GenerationInputQuery {
 			sqlgraph.To(generationinput.Table, generationinput.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, generationjob.InputsTable, generationjob.InputsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(gjq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryOutputAssets chains the current query on the "output_assets" edge.
-func (gjq *GenerationJobQuery) QueryOutputAssets() *AssetQuery {
-	query := (&AssetClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) QueryOutputAssets() *AssetQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := gjq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := gjq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -151,7 +151,7 @@ func (gjq *GenerationJobQuery) QueryOutputAssets() *AssetQuery {
 			sqlgraph.To(asset.Table, asset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, generationjob.OutputAssetsTable, generationjob.OutputAssetsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(gjq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -159,8 +159,8 @@ func (gjq *GenerationJobQuery) QueryOutputAssets() *AssetQuery {
 
 // First returns the first GenerationJob entity from the query.
 // Returns a *NotFoundError when no GenerationJob was found.
-func (gjq *GenerationJobQuery) First(ctx context.Context) (*GenerationJob, error) {
-	nodes, err := gjq.Limit(1).All(setContextOp(ctx, gjq.ctx, ent.OpQueryFirst))
+func (_q *GenerationJobQuery) First(ctx context.Context) (*GenerationJob, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -171,8 +171,8 @@ func (gjq *GenerationJobQuery) First(ctx context.Context) (*GenerationJob, error
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (gjq *GenerationJobQuery) FirstX(ctx context.Context) *GenerationJob {
-	node, err := gjq.First(ctx)
+func (_q *GenerationJobQuery) FirstX(ctx context.Context) *GenerationJob {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -181,9 +181,9 @@ func (gjq *GenerationJobQuery) FirstX(ctx context.Context) *GenerationJob {
 
 // FirstID returns the first GenerationJob ID from the query.
 // Returns a *NotFoundError when no GenerationJob ID was found.
-func (gjq *GenerationJobQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *GenerationJobQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = gjq.Limit(1).IDs(setContextOp(ctx, gjq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -194,8 +194,8 @@ func (gjq *GenerationJobQuery) FirstID(ctx context.Context) (id int64, err error
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (gjq *GenerationJobQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := gjq.FirstID(ctx)
+func (_q *GenerationJobQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -205,8 +205,8 @@ func (gjq *GenerationJobQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single GenerationJob entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one GenerationJob entity is found.
 // Returns a *NotFoundError when no GenerationJob entities are found.
-func (gjq *GenerationJobQuery) Only(ctx context.Context) (*GenerationJob, error) {
-	nodes, err := gjq.Limit(2).All(setContextOp(ctx, gjq.ctx, ent.OpQueryOnly))
+func (_q *GenerationJobQuery) Only(ctx context.Context) (*GenerationJob, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -221,8 +221,8 @@ func (gjq *GenerationJobQuery) Only(ctx context.Context) (*GenerationJob, error)
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (gjq *GenerationJobQuery) OnlyX(ctx context.Context) *GenerationJob {
-	node, err := gjq.Only(ctx)
+func (_q *GenerationJobQuery) OnlyX(ctx context.Context) *GenerationJob {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -232,9 +232,9 @@ func (gjq *GenerationJobQuery) OnlyX(ctx context.Context) *GenerationJob {
 // OnlyID is like Only, but returns the only GenerationJob ID in the query.
 // Returns a *NotSingularError when more than one GenerationJob ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (gjq *GenerationJobQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *GenerationJobQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = gjq.Limit(2).IDs(setContextOp(ctx, gjq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -249,8 +249,8 @@ func (gjq *GenerationJobQuery) OnlyID(ctx context.Context) (id int64, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (gjq *GenerationJobQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := gjq.OnlyID(ctx)
+func (_q *GenerationJobQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -258,18 +258,18 @@ func (gjq *GenerationJobQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of GenerationJobs.
-func (gjq *GenerationJobQuery) All(ctx context.Context) ([]*GenerationJob, error) {
-	ctx = setContextOp(ctx, gjq.ctx, ent.OpQueryAll)
-	if err := gjq.prepareQuery(ctx); err != nil {
+func (_q *GenerationJobQuery) All(ctx context.Context) ([]*GenerationJob, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*GenerationJob, *GenerationJobQuery]()
-	return withInterceptors[[]*GenerationJob](ctx, gjq, qr, gjq.inters)
+	return withInterceptors[[]*GenerationJob](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (gjq *GenerationJobQuery) AllX(ctx context.Context) []*GenerationJob {
-	nodes, err := gjq.All(ctx)
+func (_q *GenerationJobQuery) AllX(ctx context.Context) []*GenerationJob {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -277,20 +277,20 @@ func (gjq *GenerationJobQuery) AllX(ctx context.Context) []*GenerationJob {
 }
 
 // IDs executes the query and returns a list of GenerationJob IDs.
-func (gjq *GenerationJobQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if gjq.ctx.Unique == nil && gjq.path != nil {
-		gjq.Unique(true)
+func (_q *GenerationJobQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, gjq.ctx, ent.OpQueryIDs)
-	if err = gjq.Select(generationjob.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(generationjob.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (gjq *GenerationJobQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := gjq.IDs(ctx)
+func (_q *GenerationJobQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -298,17 +298,17 @@ func (gjq *GenerationJobQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (gjq *GenerationJobQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, gjq.ctx, ent.OpQueryCount)
-	if err := gjq.prepareQuery(ctx); err != nil {
+func (_q *GenerationJobQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, gjq, querierCount[*GenerationJobQuery](), gjq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*GenerationJobQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (gjq *GenerationJobQuery) CountX(ctx context.Context) int {
-	count, err := gjq.Count(ctx)
+func (_q *GenerationJobQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -316,9 +316,9 @@ func (gjq *GenerationJobQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (gjq *GenerationJobQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, gjq.ctx, ent.OpQueryExist)
-	switch _, err := gjq.FirstID(ctx); {
+func (_q *GenerationJobQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -329,8 +329,8 @@ func (gjq *GenerationJobQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (gjq *GenerationJobQuery) ExistX(ctx context.Context) bool {
-	exist, err := gjq.Exist(ctx)
+func (_q *GenerationJobQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -339,68 +339,68 @@ func (gjq *GenerationJobQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the GenerationJobQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (gjq *GenerationJobQuery) Clone() *GenerationJobQuery {
-	if gjq == nil {
+func (_q *GenerationJobQuery) Clone() *GenerationJobQuery {
+	if _q == nil {
 		return nil
 	}
 	return &GenerationJobQuery{
-		config:           gjq.config,
-		ctx:              gjq.ctx.Clone(),
-		order:            append([]generationjob.OrderOption{}, gjq.order...),
-		inters:           append([]Interceptor{}, gjq.inters...),
-		predicates:       append([]predicate.GenerationJob{}, gjq.predicates...),
-		withUser:         gjq.withUser.Clone(),
-		withProject:      gjq.withProject.Clone(),
-		withInputs:       gjq.withInputs.Clone(),
-		withOutputAssets: gjq.withOutputAssets.Clone(),
+		config:           _q.config,
+		ctx:              _q.ctx.Clone(),
+		order:            append([]generationjob.OrderOption{}, _q.order...),
+		inters:           append([]Interceptor{}, _q.inters...),
+		predicates:       append([]predicate.GenerationJob{}, _q.predicates...),
+		withUser:         _q.withUser.Clone(),
+		withProject:      _q.withProject.Clone(),
+		withInputs:       _q.withInputs.Clone(),
+		withOutputAssets: _q.withOutputAssets.Clone(),
 		// clone intermediate query.
-		sql:  gjq.sql.Clone(),
-		path: gjq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
 // WithUser tells the query-builder to eager-load the nodes that are connected to
 // the "user" edge. The optional arguments are used to configure the query builder of the edge.
-func (gjq *GenerationJobQuery) WithUser(opts ...func(*UserQuery)) *GenerationJobQuery {
-	query := (&UserClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) WithUser(opts ...func(*UserQuery)) *GenerationJobQuery {
+	query := (&UserClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	gjq.withUser = query
-	return gjq
+	_q.withUser = query
+	return _q
 }
 
 // WithProject tells the query-builder to eager-load the nodes that are connected to
 // the "project" edge. The optional arguments are used to configure the query builder of the edge.
-func (gjq *GenerationJobQuery) WithProject(opts ...func(*ProjectQuery)) *GenerationJobQuery {
-	query := (&ProjectClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) WithProject(opts ...func(*ProjectQuery)) *GenerationJobQuery {
+	query := (&ProjectClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	gjq.withProject = query
-	return gjq
+	_q.withProject = query
+	return _q
 }
 
 // WithInputs tells the query-builder to eager-load the nodes that are connected to
 // the "inputs" edge. The optional arguments are used to configure the query builder of the edge.
-func (gjq *GenerationJobQuery) WithInputs(opts ...func(*GenerationInputQuery)) *GenerationJobQuery {
-	query := (&GenerationInputClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) WithInputs(opts ...func(*GenerationInputQuery)) *GenerationJobQuery {
+	query := (&GenerationInputClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	gjq.withInputs = query
-	return gjq
+	_q.withInputs = query
+	return _q
 }
 
 // WithOutputAssets tells the query-builder to eager-load the nodes that are connected to
 // the "output_assets" edge. The optional arguments are used to configure the query builder of the edge.
-func (gjq *GenerationJobQuery) WithOutputAssets(opts ...func(*AssetQuery)) *GenerationJobQuery {
-	query := (&AssetClient{config: gjq.config}).Query()
+func (_q *GenerationJobQuery) WithOutputAssets(opts ...func(*AssetQuery)) *GenerationJobQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	gjq.withOutputAssets = query
-	return gjq
+	_q.withOutputAssets = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -417,10 +417,10 @@ func (gjq *GenerationJobQuery) WithOutputAssets(opts ...func(*AssetQuery)) *Gene
 //		GroupBy(generationjob.FieldUserID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (gjq *GenerationJobQuery) GroupBy(field string, fields ...string) *GenerationJobGroupBy {
-	gjq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &GenerationJobGroupBy{build: gjq}
-	grbuild.flds = &gjq.ctx.Fields
+func (_q *GenerationJobQuery) GroupBy(field string, fields ...string) *GenerationJobGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &GenerationJobGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = generationjob.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -438,98 +438,98 @@ func (gjq *GenerationJobQuery) GroupBy(field string, fields ...string) *Generati
 //	client.GenerationJob.Query().
 //		Select(generationjob.FieldUserID).
 //		Scan(ctx, &v)
-func (gjq *GenerationJobQuery) Select(fields ...string) *GenerationJobSelect {
-	gjq.ctx.Fields = append(gjq.ctx.Fields, fields...)
-	sbuild := &GenerationJobSelect{GenerationJobQuery: gjq}
+func (_q *GenerationJobQuery) Select(fields ...string) *GenerationJobSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &GenerationJobSelect{GenerationJobQuery: _q}
 	sbuild.label = generationjob.Label
-	sbuild.flds, sbuild.scan = &gjq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a GenerationJobSelect configured with the given aggregations.
-func (gjq *GenerationJobQuery) Aggregate(fns ...AggregateFunc) *GenerationJobSelect {
-	return gjq.Select().Aggregate(fns...)
+func (_q *GenerationJobQuery) Aggregate(fns ...AggregateFunc) *GenerationJobSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (gjq *GenerationJobQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range gjq.inters {
+func (_q *GenerationJobQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, gjq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range gjq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !generationjob.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if gjq.path != nil {
-		prev, err := gjq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		gjq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (gjq *GenerationJobQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*GenerationJob, error) {
+func (_q *GenerationJobQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*GenerationJob, error) {
 	var (
 		nodes       = []*GenerationJob{}
-		_spec       = gjq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [4]bool{
-			gjq.withUser != nil,
-			gjq.withProject != nil,
-			gjq.withInputs != nil,
-			gjq.withOutputAssets != nil,
+			_q.withUser != nil,
+			_q.withProject != nil,
+			_q.withInputs != nil,
+			_q.withOutputAssets != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*GenerationJob).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &GenerationJob{config: gjq.config}
+		node := &GenerationJob{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(gjq.modifiers) > 0 {
-		_spec.Modifiers = gjq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, gjq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := gjq.withUser; query != nil {
-		if err := gjq.loadUser(ctx, query, nodes, nil,
+	if query := _q.withUser; query != nil {
+		if err := _q.loadUser(ctx, query, nodes, nil,
 			func(n *GenerationJob, e *User) { n.Edges.User = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := gjq.withProject; query != nil {
-		if err := gjq.loadProject(ctx, query, nodes, nil,
+	if query := _q.withProject; query != nil {
+		if err := _q.loadProject(ctx, query, nodes, nil,
 			func(n *GenerationJob, e *Project) { n.Edges.Project = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := gjq.withInputs; query != nil {
-		if err := gjq.loadInputs(ctx, query, nodes,
+	if query := _q.withInputs; query != nil {
+		if err := _q.loadInputs(ctx, query, nodes,
 			func(n *GenerationJob) { n.Edges.Inputs = []*GenerationInput{} },
 			func(n *GenerationJob, e *GenerationInput) { n.Edges.Inputs = append(n.Edges.Inputs, e) }); err != nil {
 			return nil, err
 		}
 	}
-	if query := gjq.withOutputAssets; query != nil {
-		if err := gjq.loadOutputAssets(ctx, query, nodes,
+	if query := _q.withOutputAssets; query != nil {
+		if err := _q.loadOutputAssets(ctx, query, nodes,
 			func(n *GenerationJob) { n.Edges.OutputAssets = []*Asset{} },
 			func(n *GenerationJob, e *Asset) { n.Edges.OutputAssets = append(n.Edges.OutputAssets, e) }); err != nil {
 			return nil, err
@@ -538,7 +538,7 @@ func (gjq *GenerationJobQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	return nodes, nil
 }
 
-func (gjq *GenerationJobQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *User)) error {
+func (_q *GenerationJobQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *User)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*GenerationJob)
 	for i := range nodes {
@@ -567,7 +567,7 @@ func (gjq *GenerationJobQuery) loadUser(ctx context.Context, query *UserQuery, n
 	}
 	return nil
 }
-func (gjq *GenerationJobQuery) loadProject(ctx context.Context, query *ProjectQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *Project)) error {
+func (_q *GenerationJobQuery) loadProject(ctx context.Context, query *ProjectQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *Project)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*GenerationJob)
 	for i := range nodes {
@@ -596,7 +596,7 @@ func (gjq *GenerationJobQuery) loadProject(ctx context.Context, query *ProjectQu
 	}
 	return nil
 }
-func (gjq *GenerationJobQuery) loadInputs(ctx context.Context, query *GenerationInputQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *GenerationInput)) error {
+func (_q *GenerationJobQuery) loadInputs(ctx context.Context, query *GenerationInputQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *GenerationInput)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[int64]*GenerationJob)
 	for i := range nodes {
@@ -626,7 +626,7 @@ func (gjq *GenerationJobQuery) loadInputs(ctx context.Context, query *Generation
 	}
 	return nil
 }
-func (gjq *GenerationJobQuery) loadOutputAssets(ctx context.Context, query *AssetQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *Asset)) error {
+func (_q *GenerationJobQuery) loadOutputAssets(ctx context.Context, query *AssetQuery, nodes []*GenerationJob, init func(*GenerationJob), assign func(*GenerationJob, *Asset)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[int64]*GenerationJob)
 	for i := range nodes {
@@ -658,27 +658,27 @@ func (gjq *GenerationJobQuery) loadOutputAssets(ctx context.Context, query *Asse
 	return nil
 }
 
-func (gjq *GenerationJobQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := gjq.querySpec()
-	if len(gjq.modifiers) > 0 {
-		_spec.Modifiers = gjq.modifiers
+func (_q *GenerationJobQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = gjq.ctx.Fields
-	if len(gjq.ctx.Fields) > 0 {
-		_spec.Unique = gjq.ctx.Unique != nil && *gjq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, gjq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (gjq *GenerationJobQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *GenerationJobQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(generationjob.Table, generationjob.Columns, sqlgraph.NewFieldSpec(generationjob.FieldID, field.TypeInt64))
-	_spec.From = gjq.sql
-	if unique := gjq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if gjq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := gjq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, generationjob.FieldID)
 		for i := range fields {
@@ -686,27 +686,27 @@ func (gjq *GenerationJobQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if gjq.withUser != nil {
+		if _q.withUser != nil {
 			_spec.Node.AddColumnOnce(generationjob.FieldUserID)
 		}
-		if gjq.withProject != nil {
+		if _q.withProject != nil {
 			_spec.Node.AddColumnOnce(generationjob.FieldProjectID)
 		}
 	}
-	if ps := gjq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := gjq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := gjq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := gjq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -716,36 +716,36 @@ func (gjq *GenerationJobQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (gjq *GenerationJobQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(gjq.driver.Dialect())
+func (_q *GenerationJobQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(generationjob.Table)
-	columns := gjq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = generationjob.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if gjq.sql != nil {
-		selector = gjq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if gjq.ctx.Unique != nil && *gjq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range gjq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range gjq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range gjq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := gjq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := gjq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -754,27 +754,27 @@ func (gjq *GenerationJobQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (gjq *GenerationJobQuery) ForUpdate(opts ...sql.LockOption) *GenerationJobQuery {
-	if gjq.driver.Dialect() == dialect.Postgres {
-		gjq.Unique(false)
+func (_q *GenerationJobQuery) ForUpdate(opts ...sql.LockOption) *GenerationJobQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	gjq.modifiers = append(gjq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return gjq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (gjq *GenerationJobQuery) ForShare(opts ...sql.LockOption) *GenerationJobQuery {
-	if gjq.driver.Dialect() == dialect.Postgres {
-		gjq.Unique(false)
+func (_q *GenerationJobQuery) ForShare(opts ...sql.LockOption) *GenerationJobQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	gjq.modifiers = append(gjq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return gjq
+	return _q
 }
 
 // GenerationJobGroupBy is the group-by builder for GenerationJob entities.
@@ -784,41 +784,41 @@ type GenerationJobGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (gjgb *GenerationJobGroupBy) Aggregate(fns ...AggregateFunc) *GenerationJobGroupBy {
-	gjgb.fns = append(gjgb.fns, fns...)
-	return gjgb
+func (_g *GenerationJobGroupBy) Aggregate(fns ...AggregateFunc) *GenerationJobGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (gjgb *GenerationJobGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, gjgb.build.ctx, ent.OpQueryGroupBy)
-	if err := gjgb.build.prepareQuery(ctx); err != nil {
+func (_g *GenerationJobGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*GenerationJobQuery, *GenerationJobGroupBy](ctx, gjgb.build, gjgb, gjgb.build.inters, v)
+	return scanWithInterceptors[*GenerationJobQuery, *GenerationJobGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (gjgb *GenerationJobGroupBy) sqlScan(ctx context.Context, root *GenerationJobQuery, v any) error {
+func (_g *GenerationJobGroupBy) sqlScan(ctx context.Context, root *GenerationJobQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(gjgb.fns))
-	for _, fn := range gjgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*gjgb.flds)+len(gjgb.fns))
-		for _, f := range *gjgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*gjgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := gjgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -832,27 +832,27 @@ type GenerationJobSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (gjs *GenerationJobSelect) Aggregate(fns ...AggregateFunc) *GenerationJobSelect {
-	gjs.fns = append(gjs.fns, fns...)
-	return gjs
+func (_s *GenerationJobSelect) Aggregate(fns ...AggregateFunc) *GenerationJobSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (gjs *GenerationJobSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, gjs.ctx, ent.OpQuerySelect)
-	if err := gjs.prepareQuery(ctx); err != nil {
+func (_s *GenerationJobSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*GenerationJobQuery, *GenerationJobSelect](ctx, gjs.GenerationJobQuery, gjs, gjs.inters, v)
+	return scanWithInterceptors[*GenerationJobQuery, *GenerationJobSelect](ctx, _s.GenerationJobQuery, _s, _s.inters, v)
 }
 
-func (gjs *GenerationJobSelect) sqlScan(ctx context.Context, root *GenerationJobQuery, v any) error {
+func (_s *GenerationJobSelect) sqlScan(ctx context.Context, root *GenerationJobQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(gjs.fns))
-	for _, fn := range gjs.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*gjs.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -860,7 +860,7 @@ func (gjs *GenerationJobSelect) sqlScan(ctx context.Context, root *GenerationJob
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := gjs.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

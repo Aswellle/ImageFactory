@@ -29,576 +29,576 @@ type AssetUpdate struct {
 }
 
 // Where appends a list predicates to the AssetUpdate builder.
-func (au *AssetUpdate) Where(ps ...predicate.Asset) *AssetUpdate {
-	au.mutation.Where(ps...)
-	return au
+func (_u *AssetUpdate) Where(ps ...predicate.Asset) *AssetUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (au *AssetUpdate) SetUserID(i int64) *AssetUpdate {
-	au.mutation.SetUserID(i)
-	return au
+func (_u *AssetUpdate) SetUserID(v int64) *AssetUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableUserID(i *int64) *AssetUpdate {
-	if i != nil {
-		au.SetUserID(*i)
+func (_u *AssetUpdate) SetNillableUserID(v *int64) *AssetUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return au
+	return _u
 }
 
 // SetProjectID sets the "project_id" field.
-func (au *AssetUpdate) SetProjectID(i int64) *AssetUpdate {
-	au.mutation.SetProjectID(i)
-	return au
+func (_u *AssetUpdate) SetProjectID(v int64) *AssetUpdate {
+	_u.mutation.SetProjectID(v)
+	return _u
 }
 
 // SetNillableProjectID sets the "project_id" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableProjectID(i *int64) *AssetUpdate {
-	if i != nil {
-		au.SetProjectID(*i)
+func (_u *AssetUpdate) SetNillableProjectID(v *int64) *AssetUpdate {
+	if v != nil {
+		_u.SetProjectID(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearProjectID clears the value of the "project_id" field.
-func (au *AssetUpdate) ClearProjectID() *AssetUpdate {
-	au.mutation.ClearProjectID()
-	return au
+func (_u *AssetUpdate) ClearProjectID() *AssetUpdate {
+	_u.mutation.ClearProjectID()
+	return _u
 }
 
 // SetGenerationJobID sets the "generation_job_id" field.
-func (au *AssetUpdate) SetGenerationJobID(i int64) *AssetUpdate {
-	au.mutation.SetGenerationJobID(i)
-	return au
+func (_u *AssetUpdate) SetGenerationJobID(v int64) *AssetUpdate {
+	_u.mutation.SetGenerationJobID(v)
+	return _u
 }
 
 // SetNillableGenerationJobID sets the "generation_job_id" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableGenerationJobID(i *int64) *AssetUpdate {
-	if i != nil {
-		au.SetGenerationJobID(*i)
+func (_u *AssetUpdate) SetNillableGenerationJobID(v *int64) *AssetUpdate {
+	if v != nil {
+		_u.SetGenerationJobID(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearGenerationJobID clears the value of the "generation_job_id" field.
-func (au *AssetUpdate) ClearGenerationJobID() *AssetUpdate {
-	au.mutation.ClearGenerationJobID()
-	return au
+func (_u *AssetUpdate) ClearGenerationJobID() *AssetUpdate {
+	_u.mutation.ClearGenerationJobID()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (au *AssetUpdate) SetStatus(a asset.Status) *AssetUpdate {
-	au.mutation.SetStatus(a)
-	return au
+func (_u *AssetUpdate) SetStatus(v asset.Status) *AssetUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableStatus(a *asset.Status) *AssetUpdate {
-	if a != nil {
-		au.SetStatus(*a)
+func (_u *AssetUpdate) SetNillableStatus(v *asset.Status) *AssetUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return au
+	return _u
 }
 
 // SetTitle sets the "title" field.
-func (au *AssetUpdate) SetTitle(s string) *AssetUpdate {
-	au.mutation.SetTitle(s)
-	return au
+func (_u *AssetUpdate) SetTitle(v string) *AssetUpdate {
+	_u.mutation.SetTitle(v)
+	return _u
 }
 
 // SetNillableTitle sets the "title" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableTitle(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetTitle(*s)
+func (_u *AssetUpdate) SetNillableTitle(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetTitle(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearTitle clears the value of the "title" field.
-func (au *AssetUpdate) ClearTitle() *AssetUpdate {
-	au.mutation.ClearTitle()
-	return au
+func (_u *AssetUpdate) ClearTitle() *AssetUpdate {
+	_u.mutation.ClearTitle()
+	return _u
 }
 
 // SetDescription sets the "description" field.
-func (au *AssetUpdate) SetDescription(s string) *AssetUpdate {
-	au.mutation.SetDescription(s)
-	return au
+func (_u *AssetUpdate) SetDescription(v string) *AssetUpdate {
+	_u.mutation.SetDescription(v)
+	return _u
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableDescription(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetDescription(*s)
+func (_u *AssetUpdate) SetNillableDescription(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetDescription(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearDescription clears the value of the "description" field.
-func (au *AssetUpdate) ClearDescription() *AssetUpdate {
-	au.mutation.ClearDescription()
-	return au
+func (_u *AssetUpdate) ClearDescription() *AssetUpdate {
+	_u.mutation.ClearDescription()
+	return _u
 }
 
 // SetPrompt sets the "prompt" field.
-func (au *AssetUpdate) SetPrompt(s string) *AssetUpdate {
-	au.mutation.SetPrompt(s)
-	return au
+func (_u *AssetUpdate) SetPrompt(v string) *AssetUpdate {
+	_u.mutation.SetPrompt(v)
+	return _u
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (au *AssetUpdate) SetNillablePrompt(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetPrompt(*s)
+func (_u *AssetUpdate) SetNillablePrompt(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetPrompt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (au *AssetUpdate) ClearPrompt() *AssetUpdate {
-	au.mutation.ClearPrompt()
-	return au
+func (_u *AssetUpdate) ClearPrompt() *AssetUpdate {
+	_u.mutation.ClearPrompt()
+	return _u
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (au *AssetUpdate) SetNegativePrompt(s string) *AssetUpdate {
-	au.mutation.SetNegativePrompt(s)
-	return au
+func (_u *AssetUpdate) SetNegativePrompt(v string) *AssetUpdate {
+	_u.mutation.SetNegativePrompt(v)
+	return _u
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableNegativePrompt(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetNegativePrompt(*s)
+func (_u *AssetUpdate) SetNillableNegativePrompt(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetNegativePrompt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (au *AssetUpdate) ClearNegativePrompt() *AssetUpdate {
-	au.mutation.ClearNegativePrompt()
-	return au
+func (_u *AssetUpdate) ClearNegativePrompt() *AssetUpdate {
+	_u.mutation.ClearNegativePrompt()
+	return _u
 }
 
 // SetModel sets the "model" field.
-func (au *AssetUpdate) SetModel(s string) *AssetUpdate {
-	au.mutation.SetModel(s)
-	return au
+func (_u *AssetUpdate) SetModel(v string) *AssetUpdate {
+	_u.mutation.SetModel(v)
+	return _u
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableModel(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetModel(*s)
+func (_u *AssetUpdate) SetNillableModel(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetModel(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearModel clears the value of the "model" field.
-func (au *AssetUpdate) ClearModel() *AssetUpdate {
-	au.mutation.ClearModel()
-	return au
+func (_u *AssetUpdate) ClearModel() *AssetUpdate {
+	_u.mutation.ClearModel()
+	return _u
 }
 
 // SetModelProvider sets the "model_provider" field.
-func (au *AssetUpdate) SetModelProvider(s string) *AssetUpdate {
-	au.mutation.SetModelProvider(s)
-	return au
+func (_u *AssetUpdate) SetModelProvider(v string) *AssetUpdate {
+	_u.mutation.SetModelProvider(v)
+	return _u
 }
 
 // SetNillableModelProvider sets the "model_provider" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableModelProvider(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetModelProvider(*s)
+func (_u *AssetUpdate) SetNillableModelProvider(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetModelProvider(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearModelProvider clears the value of the "model_provider" field.
-func (au *AssetUpdate) ClearModelProvider() *AssetUpdate {
-	au.mutation.ClearModelProvider()
-	return au
+func (_u *AssetUpdate) ClearModelProvider() *AssetUpdate {
+	_u.mutation.ClearModelProvider()
+	return _u
 }
 
 // SetWidth sets the "width" field.
-func (au *AssetUpdate) SetWidth(i int) *AssetUpdate {
-	au.mutation.ResetWidth()
-	au.mutation.SetWidth(i)
-	return au
+func (_u *AssetUpdate) SetWidth(v int) *AssetUpdate {
+	_u.mutation.ResetWidth()
+	_u.mutation.SetWidth(v)
+	return _u
 }
 
 // SetNillableWidth sets the "width" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableWidth(i *int) *AssetUpdate {
-	if i != nil {
-		au.SetWidth(*i)
+func (_u *AssetUpdate) SetNillableWidth(v *int) *AssetUpdate {
+	if v != nil {
+		_u.SetWidth(*v)
 	}
-	return au
+	return _u
 }
 
-// AddWidth adds i to the "width" field.
-func (au *AssetUpdate) AddWidth(i int) *AssetUpdate {
-	au.mutation.AddWidth(i)
-	return au
+// AddWidth adds value to the "width" field.
+func (_u *AssetUpdate) AddWidth(v int) *AssetUpdate {
+	_u.mutation.AddWidth(v)
+	return _u
 }
 
 // ClearWidth clears the value of the "width" field.
-func (au *AssetUpdate) ClearWidth() *AssetUpdate {
-	au.mutation.ClearWidth()
-	return au
+func (_u *AssetUpdate) ClearWidth() *AssetUpdate {
+	_u.mutation.ClearWidth()
+	return _u
 }
 
 // SetHeight sets the "height" field.
-func (au *AssetUpdate) SetHeight(i int) *AssetUpdate {
-	au.mutation.ResetHeight()
-	au.mutation.SetHeight(i)
-	return au
+func (_u *AssetUpdate) SetHeight(v int) *AssetUpdate {
+	_u.mutation.ResetHeight()
+	_u.mutation.SetHeight(v)
+	return _u
 }
 
 // SetNillableHeight sets the "height" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableHeight(i *int) *AssetUpdate {
-	if i != nil {
-		au.SetHeight(*i)
+func (_u *AssetUpdate) SetNillableHeight(v *int) *AssetUpdate {
+	if v != nil {
+		_u.SetHeight(*v)
 	}
-	return au
+	return _u
 }
 
-// AddHeight adds i to the "height" field.
-func (au *AssetUpdate) AddHeight(i int) *AssetUpdate {
-	au.mutation.AddHeight(i)
-	return au
+// AddHeight adds value to the "height" field.
+func (_u *AssetUpdate) AddHeight(v int) *AssetUpdate {
+	_u.mutation.AddHeight(v)
+	return _u
 }
 
 // ClearHeight clears the value of the "height" field.
-func (au *AssetUpdate) ClearHeight() *AssetUpdate {
-	au.mutation.ClearHeight()
-	return au
+func (_u *AssetUpdate) ClearHeight() *AssetUpdate {
+	_u.mutation.ClearHeight()
+	return _u
 }
 
 // SetAspectRatio sets the "aspect_ratio" field.
-func (au *AssetUpdate) SetAspectRatio(s string) *AssetUpdate {
-	au.mutation.SetAspectRatio(s)
-	return au
+func (_u *AssetUpdate) SetAspectRatio(v string) *AssetUpdate {
+	_u.mutation.SetAspectRatio(v)
+	return _u
 }
 
 // SetNillableAspectRatio sets the "aspect_ratio" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableAspectRatio(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetAspectRatio(*s)
+func (_u *AssetUpdate) SetNillableAspectRatio(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetAspectRatio(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearAspectRatio clears the value of the "aspect_ratio" field.
-func (au *AssetUpdate) ClearAspectRatio() *AssetUpdate {
-	au.mutation.ClearAspectRatio()
-	return au
+func (_u *AssetUpdate) ClearAspectRatio() *AssetUpdate {
+	_u.mutation.ClearAspectRatio()
+	return _u
 }
 
 // SetMimeType sets the "mime_type" field.
-func (au *AssetUpdate) SetMimeType(s string) *AssetUpdate {
-	au.mutation.SetMimeType(s)
-	return au
+func (_u *AssetUpdate) SetMimeType(v string) *AssetUpdate {
+	_u.mutation.SetMimeType(v)
+	return _u
 }
 
 // SetNillableMimeType sets the "mime_type" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableMimeType(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetMimeType(*s)
+func (_u *AssetUpdate) SetNillableMimeType(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetMimeType(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearMimeType clears the value of the "mime_type" field.
-func (au *AssetUpdate) ClearMimeType() *AssetUpdate {
-	au.mutation.ClearMimeType()
-	return au
+func (_u *AssetUpdate) ClearMimeType() *AssetUpdate {
+	_u.mutation.ClearMimeType()
+	return _u
 }
 
 // SetFileSize sets the "file_size" field.
-func (au *AssetUpdate) SetFileSize(i int64) *AssetUpdate {
-	au.mutation.ResetFileSize()
-	au.mutation.SetFileSize(i)
-	return au
+func (_u *AssetUpdate) SetFileSize(v int64) *AssetUpdate {
+	_u.mutation.ResetFileSize()
+	_u.mutation.SetFileSize(v)
+	return _u
 }
 
 // SetNillableFileSize sets the "file_size" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableFileSize(i *int64) *AssetUpdate {
-	if i != nil {
-		au.SetFileSize(*i)
+func (_u *AssetUpdate) SetNillableFileSize(v *int64) *AssetUpdate {
+	if v != nil {
+		_u.SetFileSize(*v)
 	}
-	return au
+	return _u
 }
 
-// AddFileSize adds i to the "file_size" field.
-func (au *AssetUpdate) AddFileSize(i int64) *AssetUpdate {
-	au.mutation.AddFileSize(i)
-	return au
+// AddFileSize adds value to the "file_size" field.
+func (_u *AssetUpdate) AddFileSize(v int64) *AssetUpdate {
+	_u.mutation.AddFileSize(v)
+	return _u
 }
 
 // ClearFileSize clears the value of the "file_size" field.
-func (au *AssetUpdate) ClearFileSize() *AssetUpdate {
-	au.mutation.ClearFileSize()
-	return au
+func (_u *AssetUpdate) ClearFileSize() *AssetUpdate {
+	_u.mutation.ClearFileSize()
+	return _u
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (au *AssetUpdate) SetStorageKey(s string) *AssetUpdate {
-	au.mutation.SetStorageKey(s)
-	return au
+func (_u *AssetUpdate) SetStorageKey(v string) *AssetUpdate {
+	_u.mutation.SetStorageKey(v)
+	return _u
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableStorageKey(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetStorageKey(*s)
+func (_u *AssetUpdate) SetNillableStorageKey(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetStorageKey(*v)
 	}
-	return au
+	return _u
 }
 
 // SetThumbnailKey sets the "thumbnail_key" field.
-func (au *AssetUpdate) SetThumbnailKey(s string) *AssetUpdate {
-	au.mutation.SetThumbnailKey(s)
-	return au
+func (_u *AssetUpdate) SetThumbnailKey(v string) *AssetUpdate {
+	_u.mutation.SetThumbnailKey(v)
+	return _u
 }
 
 // SetNillableThumbnailKey sets the "thumbnail_key" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableThumbnailKey(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetThumbnailKey(*s)
+func (_u *AssetUpdate) SetNillableThumbnailKey(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetThumbnailKey(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearThumbnailKey clears the value of the "thumbnail_key" field.
-func (au *AssetUpdate) ClearThumbnailKey() *AssetUpdate {
-	au.mutation.ClearThumbnailKey()
-	return au
+func (_u *AssetUpdate) ClearThumbnailKey() *AssetUpdate {
+	_u.mutation.ClearThumbnailKey()
+	return _u
 }
 
 // SetMediumKey sets the "medium_key" field.
-func (au *AssetUpdate) SetMediumKey(s string) *AssetUpdate {
-	au.mutation.SetMediumKey(s)
-	return au
+func (_u *AssetUpdate) SetMediumKey(v string) *AssetUpdate {
+	_u.mutation.SetMediumKey(v)
+	return _u
 }
 
 // SetNillableMediumKey sets the "medium_key" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableMediumKey(s *string) *AssetUpdate {
-	if s != nil {
-		au.SetMediumKey(*s)
+func (_u *AssetUpdate) SetNillableMediumKey(v *string) *AssetUpdate {
+	if v != nil {
+		_u.SetMediumKey(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearMediumKey clears the value of the "medium_key" field.
-func (au *AssetUpdate) ClearMediumKey() *AssetUpdate {
-	au.mutation.ClearMediumKey()
-	return au
+func (_u *AssetUpdate) ClearMediumKey() *AssetUpdate {
+	_u.mutation.ClearMediumKey()
+	return _u
 }
 
 // SetCurrentVersion sets the "current_version" field.
-func (au *AssetUpdate) SetCurrentVersion(i int) *AssetUpdate {
-	au.mutation.ResetCurrentVersion()
-	au.mutation.SetCurrentVersion(i)
-	return au
+func (_u *AssetUpdate) SetCurrentVersion(v int) *AssetUpdate {
+	_u.mutation.ResetCurrentVersion()
+	_u.mutation.SetCurrentVersion(v)
+	return _u
 }
 
 // SetNillableCurrentVersion sets the "current_version" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableCurrentVersion(i *int) *AssetUpdate {
-	if i != nil {
-		au.SetCurrentVersion(*i)
+func (_u *AssetUpdate) SetNillableCurrentVersion(v *int) *AssetUpdate {
+	if v != nil {
+		_u.SetCurrentVersion(*v)
 	}
-	return au
+	return _u
 }
 
-// AddCurrentVersion adds i to the "current_version" field.
-func (au *AssetUpdate) AddCurrentVersion(i int) *AssetUpdate {
-	au.mutation.AddCurrentVersion(i)
-	return au
+// AddCurrentVersion adds value to the "current_version" field.
+func (_u *AssetUpdate) AddCurrentVersion(v int) *AssetUpdate {
+	_u.mutation.AddCurrentVersion(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (au *AssetUpdate) SetUpdatedAt(t time.Time) *AssetUpdate {
-	au.mutation.SetUpdatedAt(t)
-	return au
+func (_u *AssetUpdate) SetUpdatedAt(v time.Time) *AssetUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (au *AssetUpdate) SetDeletedAt(t time.Time) *AssetUpdate {
-	au.mutation.SetDeletedAt(t)
-	return au
+func (_u *AssetUpdate) SetDeletedAt(v time.Time) *AssetUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (au *AssetUpdate) SetNillableDeletedAt(t *time.Time) *AssetUpdate {
-	if t != nil {
-		au.SetDeletedAt(*t)
+func (_u *AssetUpdate) SetNillableDeletedAt(v *time.Time) *AssetUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return au
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (au *AssetUpdate) ClearDeletedAt() *AssetUpdate {
-	au.mutation.ClearDeletedAt()
-	return au
+func (_u *AssetUpdate) ClearDeletedAt() *AssetUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (au *AssetUpdate) SetUser(u *User) *AssetUpdate {
-	return au.SetUserID(u.ID)
+func (_u *AssetUpdate) SetUser(v *User) *AssetUpdate {
+	return _u.SetUserID(v.ID)
 }
 
 // SetProject sets the "project" edge to the Project entity.
-func (au *AssetUpdate) SetProject(p *Project) *AssetUpdate {
-	return au.SetProjectID(p.ID)
+func (_u *AssetUpdate) SetProject(v *Project) *AssetUpdate {
+	return _u.SetProjectID(v.ID)
 }
 
 // SetGenerationJob sets the "generation_job" edge to the GenerationJob entity.
-func (au *AssetUpdate) SetGenerationJob(g *GenerationJob) *AssetUpdate {
-	return au.SetGenerationJobID(g.ID)
+func (_u *AssetUpdate) SetGenerationJob(v *GenerationJob) *AssetUpdate {
+	return _u.SetGenerationJobID(v.ID)
 }
 
 // AddVersionIDs adds the "versions" edge to the AssetVersion entity by IDs.
-func (au *AssetUpdate) AddVersionIDs(ids ...int64) *AssetUpdate {
-	au.mutation.AddVersionIDs(ids...)
-	return au
+func (_u *AssetUpdate) AddVersionIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.AddVersionIDs(ids...)
+	return _u
 }
 
 // AddVersions adds the "versions" edges to the AssetVersion entity.
-func (au *AssetUpdate) AddVersions(a ...*AssetVersion) *AssetUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdate) AddVersions(v ...*AssetVersion) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.AddVersionIDs(ids...)
+	return _u.AddVersionIDs(ids...)
 }
 
 // AddTagIDs adds the "tags" edge to the Tag entity by IDs.
-func (au *AssetUpdate) AddTagIDs(ids ...int64) *AssetUpdate {
-	au.mutation.AddTagIDs(ids...)
-	return au
+func (_u *AssetUpdate) AddTagIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.AddTagIDs(ids...)
+	return _u
 }
 
 // AddTags adds the "tags" edges to the Tag entity.
-func (au *AssetUpdate) AddTags(t ...*Tag) *AssetUpdate {
-	ids := make([]int64, len(t))
-	for i := range t {
-		ids[i] = t[i].ID
+func (_u *AssetUpdate) AddTags(v ...*Tag) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.AddTagIDs(ids...)
+	return _u.AddTagIDs(ids...)
 }
 
 // AddAssetTagIDs adds the "asset_tags" edge to the AssetTag entity by IDs.
-func (au *AssetUpdate) AddAssetTagIDs(ids ...int64) *AssetUpdate {
-	au.mutation.AddAssetTagIDs(ids...)
-	return au
+func (_u *AssetUpdate) AddAssetTagIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.AddAssetTagIDs(ids...)
+	return _u
 }
 
 // AddAssetTags adds the "asset_tags" edges to the AssetTag entity.
-func (au *AssetUpdate) AddAssetTags(a ...*AssetTag) *AssetUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdate) AddAssetTags(v ...*AssetTag) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.AddAssetTagIDs(ids...)
+	return _u.AddAssetTagIDs(ids...)
 }
 
 // Mutation returns the AssetMutation object of the builder.
-func (au *AssetUpdate) Mutation() *AssetMutation {
-	return au.mutation
+func (_u *AssetUpdate) Mutation() *AssetMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (au *AssetUpdate) ClearUser() *AssetUpdate {
-	au.mutation.ClearUser()
-	return au
+func (_u *AssetUpdate) ClearUser() *AssetUpdate {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearProject clears the "project" edge to the Project entity.
-func (au *AssetUpdate) ClearProject() *AssetUpdate {
-	au.mutation.ClearProject()
-	return au
+func (_u *AssetUpdate) ClearProject() *AssetUpdate {
+	_u.mutation.ClearProject()
+	return _u
 }
 
 // ClearGenerationJob clears the "generation_job" edge to the GenerationJob entity.
-func (au *AssetUpdate) ClearGenerationJob() *AssetUpdate {
-	au.mutation.ClearGenerationJob()
-	return au
+func (_u *AssetUpdate) ClearGenerationJob() *AssetUpdate {
+	_u.mutation.ClearGenerationJob()
+	return _u
 }
 
 // ClearVersions clears all "versions" edges to the AssetVersion entity.
-func (au *AssetUpdate) ClearVersions() *AssetUpdate {
-	au.mutation.ClearVersions()
-	return au
+func (_u *AssetUpdate) ClearVersions() *AssetUpdate {
+	_u.mutation.ClearVersions()
+	return _u
 }
 
 // RemoveVersionIDs removes the "versions" edge to AssetVersion entities by IDs.
-func (au *AssetUpdate) RemoveVersionIDs(ids ...int64) *AssetUpdate {
-	au.mutation.RemoveVersionIDs(ids...)
-	return au
+func (_u *AssetUpdate) RemoveVersionIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.RemoveVersionIDs(ids...)
+	return _u
 }
 
 // RemoveVersions removes "versions" edges to AssetVersion entities.
-func (au *AssetUpdate) RemoveVersions(a ...*AssetVersion) *AssetUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdate) RemoveVersions(v ...*AssetVersion) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.RemoveVersionIDs(ids...)
+	return _u.RemoveVersionIDs(ids...)
 }
 
 // ClearTags clears all "tags" edges to the Tag entity.
-func (au *AssetUpdate) ClearTags() *AssetUpdate {
-	au.mutation.ClearTags()
-	return au
+func (_u *AssetUpdate) ClearTags() *AssetUpdate {
+	_u.mutation.ClearTags()
+	return _u
 }
 
 // RemoveTagIDs removes the "tags" edge to Tag entities by IDs.
-func (au *AssetUpdate) RemoveTagIDs(ids ...int64) *AssetUpdate {
-	au.mutation.RemoveTagIDs(ids...)
-	return au
+func (_u *AssetUpdate) RemoveTagIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.RemoveTagIDs(ids...)
+	return _u
 }
 
 // RemoveTags removes "tags" edges to Tag entities.
-func (au *AssetUpdate) RemoveTags(t ...*Tag) *AssetUpdate {
-	ids := make([]int64, len(t))
-	for i := range t {
-		ids[i] = t[i].ID
+func (_u *AssetUpdate) RemoveTags(v ...*Tag) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.RemoveTagIDs(ids...)
+	return _u.RemoveTagIDs(ids...)
 }
 
 // ClearAssetTags clears all "asset_tags" edges to the AssetTag entity.
-func (au *AssetUpdate) ClearAssetTags() *AssetUpdate {
-	au.mutation.ClearAssetTags()
-	return au
+func (_u *AssetUpdate) ClearAssetTags() *AssetUpdate {
+	_u.mutation.ClearAssetTags()
+	return _u
 }
 
 // RemoveAssetTagIDs removes the "asset_tags" edge to AssetTag entities by IDs.
-func (au *AssetUpdate) RemoveAssetTagIDs(ids ...int64) *AssetUpdate {
-	au.mutation.RemoveAssetTagIDs(ids...)
-	return au
+func (_u *AssetUpdate) RemoveAssetTagIDs(ids ...int64) *AssetUpdate {
+	_u.mutation.RemoveAssetTagIDs(ids...)
+	return _u
 }
 
 // RemoveAssetTags removes "asset_tags" edges to AssetTag entities.
-func (au *AssetUpdate) RemoveAssetTags(a ...*AssetTag) *AssetUpdate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdate) RemoveAssetTags(v ...*AssetTag) *AssetUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return au.RemoveAssetTagIDs(ids...)
+	return _u.RemoveAssetTagIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (au *AssetUpdate) Save(ctx context.Context) (int, error) {
-	au.defaults()
-	return withHooks(ctx, au.sqlSave, au.mutation, au.hooks)
+func (_u *AssetUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (au *AssetUpdate) SaveX(ctx context.Context) int {
-	affected, err := au.Save(ctx)
+func (_u *AssetUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -606,165 +606,165 @@ func (au *AssetUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (au *AssetUpdate) Exec(ctx context.Context) error {
-	_, err := au.Save(ctx)
+func (_u *AssetUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (au *AssetUpdate) ExecX(ctx context.Context) {
-	if err := au.Exec(ctx); err != nil {
+func (_u *AssetUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (au *AssetUpdate) defaults() {
-	if _, ok := au.mutation.UpdatedAt(); !ok {
+func (_u *AssetUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := asset.UpdateDefaultUpdatedAt()
-		au.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (au *AssetUpdate) check() error {
-	if v, ok := au.mutation.Status(); ok {
+func (_u *AssetUpdate) check() error {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := asset.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Asset.status": %w`, err)}
 		}
 	}
-	if v, ok := au.mutation.StorageKey(); ok {
+	if v, ok := _u.mutation.StorageKey(); ok {
 		if err := asset.StorageKeyValidator(v); err != nil {
 			return &ValidationError{Name: "storage_key", err: fmt.Errorf(`ent: validator failed for field "Asset.storage_key": %w`, err)}
 		}
 	}
-	if au.mutation.UserCleared() && len(au.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "Asset.user"`)
 	}
 	return nil
 }
 
-func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := au.check(); err != nil {
-		return n, err
+func (_u *AssetUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(asset.Table, asset.Columns, sqlgraph.NewFieldSpec(asset.FieldID, field.TypeInt64))
-	if ps := au.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := au.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(asset.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := au.mutation.Title(); ok {
+	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(asset.FieldTitle, field.TypeString, value)
 	}
-	if au.mutation.TitleCleared() {
+	if _u.mutation.TitleCleared() {
 		_spec.ClearField(asset.FieldTitle, field.TypeString)
 	}
-	if value, ok := au.mutation.Description(); ok {
+	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(asset.FieldDescription, field.TypeString, value)
 	}
-	if au.mutation.DescriptionCleared() {
+	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(asset.FieldDescription, field.TypeString)
 	}
-	if value, ok := au.mutation.Prompt(); ok {
+	if value, ok := _u.mutation.Prompt(); ok {
 		_spec.SetField(asset.FieldPrompt, field.TypeString, value)
 	}
-	if au.mutation.PromptCleared() {
+	if _u.mutation.PromptCleared() {
 		_spec.ClearField(asset.FieldPrompt, field.TypeString)
 	}
-	if value, ok := au.mutation.NegativePrompt(); ok {
+	if value, ok := _u.mutation.NegativePrompt(); ok {
 		_spec.SetField(asset.FieldNegativePrompt, field.TypeString, value)
 	}
-	if au.mutation.NegativePromptCleared() {
+	if _u.mutation.NegativePromptCleared() {
 		_spec.ClearField(asset.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := au.mutation.Model(); ok {
+	if value, ok := _u.mutation.Model(); ok {
 		_spec.SetField(asset.FieldModel, field.TypeString, value)
 	}
-	if au.mutation.ModelCleared() {
+	if _u.mutation.ModelCleared() {
 		_spec.ClearField(asset.FieldModel, field.TypeString)
 	}
-	if value, ok := au.mutation.ModelProvider(); ok {
+	if value, ok := _u.mutation.ModelProvider(); ok {
 		_spec.SetField(asset.FieldModelProvider, field.TypeString, value)
 	}
-	if au.mutation.ModelProviderCleared() {
+	if _u.mutation.ModelProviderCleared() {
 		_spec.ClearField(asset.FieldModelProvider, field.TypeString)
 	}
-	if value, ok := au.mutation.Width(); ok {
+	if value, ok := _u.mutation.Width(); ok {
 		_spec.SetField(asset.FieldWidth, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.AddedWidth(); ok {
+	if value, ok := _u.mutation.AddedWidth(); ok {
 		_spec.AddField(asset.FieldWidth, field.TypeInt, value)
 	}
-	if au.mutation.WidthCleared() {
+	if _u.mutation.WidthCleared() {
 		_spec.ClearField(asset.FieldWidth, field.TypeInt)
 	}
-	if value, ok := au.mutation.Height(); ok {
+	if value, ok := _u.mutation.Height(); ok {
 		_spec.SetField(asset.FieldHeight, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.AddedHeight(); ok {
+	if value, ok := _u.mutation.AddedHeight(); ok {
 		_spec.AddField(asset.FieldHeight, field.TypeInt, value)
 	}
-	if au.mutation.HeightCleared() {
+	if _u.mutation.HeightCleared() {
 		_spec.ClearField(asset.FieldHeight, field.TypeInt)
 	}
-	if value, ok := au.mutation.AspectRatio(); ok {
+	if value, ok := _u.mutation.AspectRatio(); ok {
 		_spec.SetField(asset.FieldAspectRatio, field.TypeString, value)
 	}
-	if au.mutation.AspectRatioCleared() {
+	if _u.mutation.AspectRatioCleared() {
 		_spec.ClearField(asset.FieldAspectRatio, field.TypeString)
 	}
-	if value, ok := au.mutation.MimeType(); ok {
+	if value, ok := _u.mutation.MimeType(); ok {
 		_spec.SetField(asset.FieldMimeType, field.TypeString, value)
 	}
-	if au.mutation.MimeTypeCleared() {
+	if _u.mutation.MimeTypeCleared() {
 		_spec.ClearField(asset.FieldMimeType, field.TypeString)
 	}
-	if value, ok := au.mutation.FileSize(); ok {
+	if value, ok := _u.mutation.FileSize(); ok {
 		_spec.SetField(asset.FieldFileSize, field.TypeInt64, value)
 	}
-	if value, ok := au.mutation.AddedFileSize(); ok {
+	if value, ok := _u.mutation.AddedFileSize(); ok {
 		_spec.AddField(asset.FieldFileSize, field.TypeInt64, value)
 	}
-	if au.mutation.FileSizeCleared() {
+	if _u.mutation.FileSizeCleared() {
 		_spec.ClearField(asset.FieldFileSize, field.TypeInt64)
 	}
-	if value, ok := au.mutation.StorageKey(); ok {
+	if value, ok := _u.mutation.StorageKey(); ok {
 		_spec.SetField(asset.FieldStorageKey, field.TypeString, value)
 	}
-	if value, ok := au.mutation.ThumbnailKey(); ok {
+	if value, ok := _u.mutation.ThumbnailKey(); ok {
 		_spec.SetField(asset.FieldThumbnailKey, field.TypeString, value)
 	}
-	if au.mutation.ThumbnailKeyCleared() {
+	if _u.mutation.ThumbnailKeyCleared() {
 		_spec.ClearField(asset.FieldThumbnailKey, field.TypeString)
 	}
-	if value, ok := au.mutation.MediumKey(); ok {
+	if value, ok := _u.mutation.MediumKey(); ok {
 		_spec.SetField(asset.FieldMediumKey, field.TypeString, value)
 	}
-	if au.mutation.MediumKeyCleared() {
+	if _u.mutation.MediumKeyCleared() {
 		_spec.ClearField(asset.FieldMediumKey, field.TypeString)
 	}
-	if value, ok := au.mutation.CurrentVersion(); ok {
+	if value, ok := _u.mutation.CurrentVersion(); ok {
 		_spec.SetField(asset.FieldCurrentVersion, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.AddedCurrentVersion(); ok {
+	if value, ok := _u.mutation.AddedCurrentVersion(); ok {
 		_spec.AddField(asset.FieldCurrentVersion, field.TypeInt, value)
 	}
-	if value, ok := au.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(asset.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if value, ok := au.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(asset.FieldDeletedAt, field.TypeTime, value)
 	}
-	if au.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(asset.FieldDeletedAt, field.TypeTime)
 	}
-	if au.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -777,7 +777,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -793,7 +793,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if au.mutation.ProjectCleared() {
+	if _u.mutation.ProjectCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -806,7 +806,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.ProjectIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ProjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -822,7 +822,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if au.mutation.GenerationJobCleared() {
+	if _u.mutation.GenerationJobCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -835,7 +835,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.GenerationJobIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.GenerationJobIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -851,7 +851,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if au.mutation.VersionsCleared() {
+	if _u.mutation.VersionsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -864,7 +864,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.RemovedVersionsIDs(); len(nodes) > 0 && !au.mutation.VersionsCleared() {
+	if nodes := _u.mutation.RemovedVersionsIDs(); len(nodes) > 0 && !_u.mutation.VersionsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -880,7 +880,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.VersionsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.VersionsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -896,7 +896,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if au.mutation.TagsCleared() {
+	if _u.mutation.TagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -909,7 +909,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.RemovedTagsIDs(); len(nodes) > 0 && !au.mutation.TagsCleared() {
+	if nodes := _u.mutation.RemovedTagsIDs(); len(nodes) > 0 && !_u.mutation.TagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -925,7 +925,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.TagsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -941,7 +941,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if au.mutation.AssetTagsCleared() {
+	if _u.mutation.AssetTagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -954,7 +954,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.RemovedAssetTagsIDs(); len(nodes) > 0 && !au.mutation.AssetTagsCleared() {
+	if nodes := _u.mutation.RemovedAssetTagsIDs(); len(nodes) > 0 && !_u.mutation.AssetTagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -970,7 +970,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := au.mutation.AssetTagsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.AssetTagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -986,7 +986,7 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, au.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{asset.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -994,8 +994,8 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	au.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // AssetUpdateOne is the builder for updating a single Asset entity.
@@ -1007,583 +1007,583 @@ type AssetUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (auo *AssetUpdateOne) SetUserID(i int64) *AssetUpdateOne {
-	auo.mutation.SetUserID(i)
-	return auo
+func (_u *AssetUpdateOne) SetUserID(v int64) *AssetUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableUserID(i *int64) *AssetUpdateOne {
-	if i != nil {
-		auo.SetUserID(*i)
+func (_u *AssetUpdateOne) SetNillableUserID(v *int64) *AssetUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetProjectID sets the "project_id" field.
-func (auo *AssetUpdateOne) SetProjectID(i int64) *AssetUpdateOne {
-	auo.mutation.SetProjectID(i)
-	return auo
+func (_u *AssetUpdateOne) SetProjectID(v int64) *AssetUpdateOne {
+	_u.mutation.SetProjectID(v)
+	return _u
 }
 
 // SetNillableProjectID sets the "project_id" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableProjectID(i *int64) *AssetUpdateOne {
-	if i != nil {
-		auo.SetProjectID(*i)
+func (_u *AssetUpdateOne) SetNillableProjectID(v *int64) *AssetUpdateOne {
+	if v != nil {
+		_u.SetProjectID(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearProjectID clears the value of the "project_id" field.
-func (auo *AssetUpdateOne) ClearProjectID() *AssetUpdateOne {
-	auo.mutation.ClearProjectID()
-	return auo
+func (_u *AssetUpdateOne) ClearProjectID() *AssetUpdateOne {
+	_u.mutation.ClearProjectID()
+	return _u
 }
 
 // SetGenerationJobID sets the "generation_job_id" field.
-func (auo *AssetUpdateOne) SetGenerationJobID(i int64) *AssetUpdateOne {
-	auo.mutation.SetGenerationJobID(i)
-	return auo
+func (_u *AssetUpdateOne) SetGenerationJobID(v int64) *AssetUpdateOne {
+	_u.mutation.SetGenerationJobID(v)
+	return _u
 }
 
 // SetNillableGenerationJobID sets the "generation_job_id" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableGenerationJobID(i *int64) *AssetUpdateOne {
-	if i != nil {
-		auo.SetGenerationJobID(*i)
+func (_u *AssetUpdateOne) SetNillableGenerationJobID(v *int64) *AssetUpdateOne {
+	if v != nil {
+		_u.SetGenerationJobID(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearGenerationJobID clears the value of the "generation_job_id" field.
-func (auo *AssetUpdateOne) ClearGenerationJobID() *AssetUpdateOne {
-	auo.mutation.ClearGenerationJobID()
-	return auo
+func (_u *AssetUpdateOne) ClearGenerationJobID() *AssetUpdateOne {
+	_u.mutation.ClearGenerationJobID()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (auo *AssetUpdateOne) SetStatus(a asset.Status) *AssetUpdateOne {
-	auo.mutation.SetStatus(a)
-	return auo
+func (_u *AssetUpdateOne) SetStatus(v asset.Status) *AssetUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableStatus(a *asset.Status) *AssetUpdateOne {
-	if a != nil {
-		auo.SetStatus(*a)
+func (_u *AssetUpdateOne) SetNillableStatus(v *asset.Status) *AssetUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetTitle sets the "title" field.
-func (auo *AssetUpdateOne) SetTitle(s string) *AssetUpdateOne {
-	auo.mutation.SetTitle(s)
-	return auo
+func (_u *AssetUpdateOne) SetTitle(v string) *AssetUpdateOne {
+	_u.mutation.SetTitle(v)
+	return _u
 }
 
 // SetNillableTitle sets the "title" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableTitle(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetTitle(*s)
+func (_u *AssetUpdateOne) SetNillableTitle(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetTitle(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearTitle clears the value of the "title" field.
-func (auo *AssetUpdateOne) ClearTitle() *AssetUpdateOne {
-	auo.mutation.ClearTitle()
-	return auo
+func (_u *AssetUpdateOne) ClearTitle() *AssetUpdateOne {
+	_u.mutation.ClearTitle()
+	return _u
 }
 
 // SetDescription sets the "description" field.
-func (auo *AssetUpdateOne) SetDescription(s string) *AssetUpdateOne {
-	auo.mutation.SetDescription(s)
-	return auo
+func (_u *AssetUpdateOne) SetDescription(v string) *AssetUpdateOne {
+	_u.mutation.SetDescription(v)
+	return _u
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableDescription(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetDescription(*s)
+func (_u *AssetUpdateOne) SetNillableDescription(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetDescription(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearDescription clears the value of the "description" field.
-func (auo *AssetUpdateOne) ClearDescription() *AssetUpdateOne {
-	auo.mutation.ClearDescription()
-	return auo
+func (_u *AssetUpdateOne) ClearDescription() *AssetUpdateOne {
+	_u.mutation.ClearDescription()
+	return _u
 }
 
 // SetPrompt sets the "prompt" field.
-func (auo *AssetUpdateOne) SetPrompt(s string) *AssetUpdateOne {
-	auo.mutation.SetPrompt(s)
-	return auo
+func (_u *AssetUpdateOne) SetPrompt(v string) *AssetUpdateOne {
+	_u.mutation.SetPrompt(v)
+	return _u
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillablePrompt(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetPrompt(*s)
+func (_u *AssetUpdateOne) SetNillablePrompt(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetPrompt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearPrompt clears the value of the "prompt" field.
-func (auo *AssetUpdateOne) ClearPrompt() *AssetUpdateOne {
-	auo.mutation.ClearPrompt()
-	return auo
+func (_u *AssetUpdateOne) ClearPrompt() *AssetUpdateOne {
+	_u.mutation.ClearPrompt()
+	return _u
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (auo *AssetUpdateOne) SetNegativePrompt(s string) *AssetUpdateOne {
-	auo.mutation.SetNegativePrompt(s)
-	return auo
+func (_u *AssetUpdateOne) SetNegativePrompt(v string) *AssetUpdateOne {
+	_u.mutation.SetNegativePrompt(v)
+	return _u
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableNegativePrompt(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetNegativePrompt(*s)
+func (_u *AssetUpdateOne) SetNillableNegativePrompt(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetNegativePrompt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearNegativePrompt clears the value of the "negative_prompt" field.
-func (auo *AssetUpdateOne) ClearNegativePrompt() *AssetUpdateOne {
-	auo.mutation.ClearNegativePrompt()
-	return auo
+func (_u *AssetUpdateOne) ClearNegativePrompt() *AssetUpdateOne {
+	_u.mutation.ClearNegativePrompt()
+	return _u
 }
 
 // SetModel sets the "model" field.
-func (auo *AssetUpdateOne) SetModel(s string) *AssetUpdateOne {
-	auo.mutation.SetModel(s)
-	return auo
+func (_u *AssetUpdateOne) SetModel(v string) *AssetUpdateOne {
+	_u.mutation.SetModel(v)
+	return _u
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableModel(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetModel(*s)
+func (_u *AssetUpdateOne) SetNillableModel(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetModel(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearModel clears the value of the "model" field.
-func (auo *AssetUpdateOne) ClearModel() *AssetUpdateOne {
-	auo.mutation.ClearModel()
-	return auo
+func (_u *AssetUpdateOne) ClearModel() *AssetUpdateOne {
+	_u.mutation.ClearModel()
+	return _u
 }
 
 // SetModelProvider sets the "model_provider" field.
-func (auo *AssetUpdateOne) SetModelProvider(s string) *AssetUpdateOne {
-	auo.mutation.SetModelProvider(s)
-	return auo
+func (_u *AssetUpdateOne) SetModelProvider(v string) *AssetUpdateOne {
+	_u.mutation.SetModelProvider(v)
+	return _u
 }
 
 // SetNillableModelProvider sets the "model_provider" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableModelProvider(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetModelProvider(*s)
+func (_u *AssetUpdateOne) SetNillableModelProvider(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetModelProvider(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearModelProvider clears the value of the "model_provider" field.
-func (auo *AssetUpdateOne) ClearModelProvider() *AssetUpdateOne {
-	auo.mutation.ClearModelProvider()
-	return auo
+func (_u *AssetUpdateOne) ClearModelProvider() *AssetUpdateOne {
+	_u.mutation.ClearModelProvider()
+	return _u
 }
 
 // SetWidth sets the "width" field.
-func (auo *AssetUpdateOne) SetWidth(i int) *AssetUpdateOne {
-	auo.mutation.ResetWidth()
-	auo.mutation.SetWidth(i)
-	return auo
+func (_u *AssetUpdateOne) SetWidth(v int) *AssetUpdateOne {
+	_u.mutation.ResetWidth()
+	_u.mutation.SetWidth(v)
+	return _u
 }
 
 // SetNillableWidth sets the "width" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableWidth(i *int) *AssetUpdateOne {
-	if i != nil {
-		auo.SetWidth(*i)
+func (_u *AssetUpdateOne) SetNillableWidth(v *int) *AssetUpdateOne {
+	if v != nil {
+		_u.SetWidth(*v)
 	}
-	return auo
+	return _u
 }
 
-// AddWidth adds i to the "width" field.
-func (auo *AssetUpdateOne) AddWidth(i int) *AssetUpdateOne {
-	auo.mutation.AddWidth(i)
-	return auo
+// AddWidth adds value to the "width" field.
+func (_u *AssetUpdateOne) AddWidth(v int) *AssetUpdateOne {
+	_u.mutation.AddWidth(v)
+	return _u
 }
 
 // ClearWidth clears the value of the "width" field.
-func (auo *AssetUpdateOne) ClearWidth() *AssetUpdateOne {
-	auo.mutation.ClearWidth()
-	return auo
+func (_u *AssetUpdateOne) ClearWidth() *AssetUpdateOne {
+	_u.mutation.ClearWidth()
+	return _u
 }
 
 // SetHeight sets the "height" field.
-func (auo *AssetUpdateOne) SetHeight(i int) *AssetUpdateOne {
-	auo.mutation.ResetHeight()
-	auo.mutation.SetHeight(i)
-	return auo
+func (_u *AssetUpdateOne) SetHeight(v int) *AssetUpdateOne {
+	_u.mutation.ResetHeight()
+	_u.mutation.SetHeight(v)
+	return _u
 }
 
 // SetNillableHeight sets the "height" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableHeight(i *int) *AssetUpdateOne {
-	if i != nil {
-		auo.SetHeight(*i)
+func (_u *AssetUpdateOne) SetNillableHeight(v *int) *AssetUpdateOne {
+	if v != nil {
+		_u.SetHeight(*v)
 	}
-	return auo
+	return _u
 }
 
-// AddHeight adds i to the "height" field.
-func (auo *AssetUpdateOne) AddHeight(i int) *AssetUpdateOne {
-	auo.mutation.AddHeight(i)
-	return auo
+// AddHeight adds value to the "height" field.
+func (_u *AssetUpdateOne) AddHeight(v int) *AssetUpdateOne {
+	_u.mutation.AddHeight(v)
+	return _u
 }
 
 // ClearHeight clears the value of the "height" field.
-func (auo *AssetUpdateOne) ClearHeight() *AssetUpdateOne {
-	auo.mutation.ClearHeight()
-	return auo
+func (_u *AssetUpdateOne) ClearHeight() *AssetUpdateOne {
+	_u.mutation.ClearHeight()
+	return _u
 }
 
 // SetAspectRatio sets the "aspect_ratio" field.
-func (auo *AssetUpdateOne) SetAspectRatio(s string) *AssetUpdateOne {
-	auo.mutation.SetAspectRatio(s)
-	return auo
+func (_u *AssetUpdateOne) SetAspectRatio(v string) *AssetUpdateOne {
+	_u.mutation.SetAspectRatio(v)
+	return _u
 }
 
 // SetNillableAspectRatio sets the "aspect_ratio" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableAspectRatio(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetAspectRatio(*s)
+func (_u *AssetUpdateOne) SetNillableAspectRatio(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetAspectRatio(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearAspectRatio clears the value of the "aspect_ratio" field.
-func (auo *AssetUpdateOne) ClearAspectRatio() *AssetUpdateOne {
-	auo.mutation.ClearAspectRatio()
-	return auo
+func (_u *AssetUpdateOne) ClearAspectRatio() *AssetUpdateOne {
+	_u.mutation.ClearAspectRatio()
+	return _u
 }
 
 // SetMimeType sets the "mime_type" field.
-func (auo *AssetUpdateOne) SetMimeType(s string) *AssetUpdateOne {
-	auo.mutation.SetMimeType(s)
-	return auo
+func (_u *AssetUpdateOne) SetMimeType(v string) *AssetUpdateOne {
+	_u.mutation.SetMimeType(v)
+	return _u
 }
 
 // SetNillableMimeType sets the "mime_type" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableMimeType(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetMimeType(*s)
+func (_u *AssetUpdateOne) SetNillableMimeType(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetMimeType(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearMimeType clears the value of the "mime_type" field.
-func (auo *AssetUpdateOne) ClearMimeType() *AssetUpdateOne {
-	auo.mutation.ClearMimeType()
-	return auo
+func (_u *AssetUpdateOne) ClearMimeType() *AssetUpdateOne {
+	_u.mutation.ClearMimeType()
+	return _u
 }
 
 // SetFileSize sets the "file_size" field.
-func (auo *AssetUpdateOne) SetFileSize(i int64) *AssetUpdateOne {
-	auo.mutation.ResetFileSize()
-	auo.mutation.SetFileSize(i)
-	return auo
+func (_u *AssetUpdateOne) SetFileSize(v int64) *AssetUpdateOne {
+	_u.mutation.ResetFileSize()
+	_u.mutation.SetFileSize(v)
+	return _u
 }
 
 // SetNillableFileSize sets the "file_size" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableFileSize(i *int64) *AssetUpdateOne {
-	if i != nil {
-		auo.SetFileSize(*i)
+func (_u *AssetUpdateOne) SetNillableFileSize(v *int64) *AssetUpdateOne {
+	if v != nil {
+		_u.SetFileSize(*v)
 	}
-	return auo
+	return _u
 }
 
-// AddFileSize adds i to the "file_size" field.
-func (auo *AssetUpdateOne) AddFileSize(i int64) *AssetUpdateOne {
-	auo.mutation.AddFileSize(i)
-	return auo
+// AddFileSize adds value to the "file_size" field.
+func (_u *AssetUpdateOne) AddFileSize(v int64) *AssetUpdateOne {
+	_u.mutation.AddFileSize(v)
+	return _u
 }
 
 // ClearFileSize clears the value of the "file_size" field.
-func (auo *AssetUpdateOne) ClearFileSize() *AssetUpdateOne {
-	auo.mutation.ClearFileSize()
-	return auo
+func (_u *AssetUpdateOne) ClearFileSize() *AssetUpdateOne {
+	_u.mutation.ClearFileSize()
+	return _u
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (auo *AssetUpdateOne) SetStorageKey(s string) *AssetUpdateOne {
-	auo.mutation.SetStorageKey(s)
-	return auo
+func (_u *AssetUpdateOne) SetStorageKey(v string) *AssetUpdateOne {
+	_u.mutation.SetStorageKey(v)
+	return _u
 }
 
 // SetNillableStorageKey sets the "storage_key" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableStorageKey(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetStorageKey(*s)
+func (_u *AssetUpdateOne) SetNillableStorageKey(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetStorageKey(*v)
 	}
-	return auo
+	return _u
 }
 
 // SetThumbnailKey sets the "thumbnail_key" field.
-func (auo *AssetUpdateOne) SetThumbnailKey(s string) *AssetUpdateOne {
-	auo.mutation.SetThumbnailKey(s)
-	return auo
+func (_u *AssetUpdateOne) SetThumbnailKey(v string) *AssetUpdateOne {
+	_u.mutation.SetThumbnailKey(v)
+	return _u
 }
 
 // SetNillableThumbnailKey sets the "thumbnail_key" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableThumbnailKey(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetThumbnailKey(*s)
+func (_u *AssetUpdateOne) SetNillableThumbnailKey(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetThumbnailKey(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearThumbnailKey clears the value of the "thumbnail_key" field.
-func (auo *AssetUpdateOne) ClearThumbnailKey() *AssetUpdateOne {
-	auo.mutation.ClearThumbnailKey()
-	return auo
+func (_u *AssetUpdateOne) ClearThumbnailKey() *AssetUpdateOne {
+	_u.mutation.ClearThumbnailKey()
+	return _u
 }
 
 // SetMediumKey sets the "medium_key" field.
-func (auo *AssetUpdateOne) SetMediumKey(s string) *AssetUpdateOne {
-	auo.mutation.SetMediumKey(s)
-	return auo
+func (_u *AssetUpdateOne) SetMediumKey(v string) *AssetUpdateOne {
+	_u.mutation.SetMediumKey(v)
+	return _u
 }
 
 // SetNillableMediumKey sets the "medium_key" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableMediumKey(s *string) *AssetUpdateOne {
-	if s != nil {
-		auo.SetMediumKey(*s)
+func (_u *AssetUpdateOne) SetNillableMediumKey(v *string) *AssetUpdateOne {
+	if v != nil {
+		_u.SetMediumKey(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearMediumKey clears the value of the "medium_key" field.
-func (auo *AssetUpdateOne) ClearMediumKey() *AssetUpdateOne {
-	auo.mutation.ClearMediumKey()
-	return auo
+func (_u *AssetUpdateOne) ClearMediumKey() *AssetUpdateOne {
+	_u.mutation.ClearMediumKey()
+	return _u
 }
 
 // SetCurrentVersion sets the "current_version" field.
-func (auo *AssetUpdateOne) SetCurrentVersion(i int) *AssetUpdateOne {
-	auo.mutation.ResetCurrentVersion()
-	auo.mutation.SetCurrentVersion(i)
-	return auo
+func (_u *AssetUpdateOne) SetCurrentVersion(v int) *AssetUpdateOne {
+	_u.mutation.ResetCurrentVersion()
+	_u.mutation.SetCurrentVersion(v)
+	return _u
 }
 
 // SetNillableCurrentVersion sets the "current_version" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableCurrentVersion(i *int) *AssetUpdateOne {
-	if i != nil {
-		auo.SetCurrentVersion(*i)
+func (_u *AssetUpdateOne) SetNillableCurrentVersion(v *int) *AssetUpdateOne {
+	if v != nil {
+		_u.SetCurrentVersion(*v)
 	}
-	return auo
+	return _u
 }
 
-// AddCurrentVersion adds i to the "current_version" field.
-func (auo *AssetUpdateOne) AddCurrentVersion(i int) *AssetUpdateOne {
-	auo.mutation.AddCurrentVersion(i)
-	return auo
+// AddCurrentVersion adds value to the "current_version" field.
+func (_u *AssetUpdateOne) AddCurrentVersion(v int) *AssetUpdateOne {
+	_u.mutation.AddCurrentVersion(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (auo *AssetUpdateOne) SetUpdatedAt(t time.Time) *AssetUpdateOne {
-	auo.mutation.SetUpdatedAt(t)
-	return auo
+func (_u *AssetUpdateOne) SetUpdatedAt(v time.Time) *AssetUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (auo *AssetUpdateOne) SetDeletedAt(t time.Time) *AssetUpdateOne {
-	auo.mutation.SetDeletedAt(t)
-	return auo
+func (_u *AssetUpdateOne) SetDeletedAt(v time.Time) *AssetUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (auo *AssetUpdateOne) SetNillableDeletedAt(t *time.Time) *AssetUpdateOne {
-	if t != nil {
-		auo.SetDeletedAt(*t)
+func (_u *AssetUpdateOne) SetNillableDeletedAt(v *time.Time) *AssetUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return auo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (auo *AssetUpdateOne) ClearDeletedAt() *AssetUpdateOne {
-	auo.mutation.ClearDeletedAt()
-	return auo
+func (_u *AssetUpdateOne) ClearDeletedAt() *AssetUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (auo *AssetUpdateOne) SetUser(u *User) *AssetUpdateOne {
-	return auo.SetUserID(u.ID)
+func (_u *AssetUpdateOne) SetUser(v *User) *AssetUpdateOne {
+	return _u.SetUserID(v.ID)
 }
 
 // SetProject sets the "project" edge to the Project entity.
-func (auo *AssetUpdateOne) SetProject(p *Project) *AssetUpdateOne {
-	return auo.SetProjectID(p.ID)
+func (_u *AssetUpdateOne) SetProject(v *Project) *AssetUpdateOne {
+	return _u.SetProjectID(v.ID)
 }
 
 // SetGenerationJob sets the "generation_job" edge to the GenerationJob entity.
-func (auo *AssetUpdateOne) SetGenerationJob(g *GenerationJob) *AssetUpdateOne {
-	return auo.SetGenerationJobID(g.ID)
+func (_u *AssetUpdateOne) SetGenerationJob(v *GenerationJob) *AssetUpdateOne {
+	return _u.SetGenerationJobID(v.ID)
 }
 
 // AddVersionIDs adds the "versions" edge to the AssetVersion entity by IDs.
-func (auo *AssetUpdateOne) AddVersionIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.AddVersionIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) AddVersionIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.AddVersionIDs(ids...)
+	return _u
 }
 
 // AddVersions adds the "versions" edges to the AssetVersion entity.
-func (auo *AssetUpdateOne) AddVersions(a ...*AssetVersion) *AssetUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdateOne) AddVersions(v ...*AssetVersion) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.AddVersionIDs(ids...)
+	return _u.AddVersionIDs(ids...)
 }
 
 // AddTagIDs adds the "tags" edge to the Tag entity by IDs.
-func (auo *AssetUpdateOne) AddTagIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.AddTagIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) AddTagIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.AddTagIDs(ids...)
+	return _u
 }
 
 // AddTags adds the "tags" edges to the Tag entity.
-func (auo *AssetUpdateOne) AddTags(t ...*Tag) *AssetUpdateOne {
-	ids := make([]int64, len(t))
-	for i := range t {
-		ids[i] = t[i].ID
+func (_u *AssetUpdateOne) AddTags(v ...*Tag) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.AddTagIDs(ids...)
+	return _u.AddTagIDs(ids...)
 }
 
 // AddAssetTagIDs adds the "asset_tags" edge to the AssetTag entity by IDs.
-func (auo *AssetUpdateOne) AddAssetTagIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.AddAssetTagIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) AddAssetTagIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.AddAssetTagIDs(ids...)
+	return _u
 }
 
 // AddAssetTags adds the "asset_tags" edges to the AssetTag entity.
-func (auo *AssetUpdateOne) AddAssetTags(a ...*AssetTag) *AssetUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdateOne) AddAssetTags(v ...*AssetTag) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.AddAssetTagIDs(ids...)
+	return _u.AddAssetTagIDs(ids...)
 }
 
 // Mutation returns the AssetMutation object of the builder.
-func (auo *AssetUpdateOne) Mutation() *AssetMutation {
-	return auo.mutation
+func (_u *AssetUpdateOne) Mutation() *AssetMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (auo *AssetUpdateOne) ClearUser() *AssetUpdateOne {
-	auo.mutation.ClearUser()
-	return auo
+func (_u *AssetUpdateOne) ClearUser() *AssetUpdateOne {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // ClearProject clears the "project" edge to the Project entity.
-func (auo *AssetUpdateOne) ClearProject() *AssetUpdateOne {
-	auo.mutation.ClearProject()
-	return auo
+func (_u *AssetUpdateOne) ClearProject() *AssetUpdateOne {
+	_u.mutation.ClearProject()
+	return _u
 }
 
 // ClearGenerationJob clears the "generation_job" edge to the GenerationJob entity.
-func (auo *AssetUpdateOne) ClearGenerationJob() *AssetUpdateOne {
-	auo.mutation.ClearGenerationJob()
-	return auo
+func (_u *AssetUpdateOne) ClearGenerationJob() *AssetUpdateOne {
+	_u.mutation.ClearGenerationJob()
+	return _u
 }
 
 // ClearVersions clears all "versions" edges to the AssetVersion entity.
-func (auo *AssetUpdateOne) ClearVersions() *AssetUpdateOne {
-	auo.mutation.ClearVersions()
-	return auo
+func (_u *AssetUpdateOne) ClearVersions() *AssetUpdateOne {
+	_u.mutation.ClearVersions()
+	return _u
 }
 
 // RemoveVersionIDs removes the "versions" edge to AssetVersion entities by IDs.
-func (auo *AssetUpdateOne) RemoveVersionIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.RemoveVersionIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) RemoveVersionIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.RemoveVersionIDs(ids...)
+	return _u
 }
 
 // RemoveVersions removes "versions" edges to AssetVersion entities.
-func (auo *AssetUpdateOne) RemoveVersions(a ...*AssetVersion) *AssetUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdateOne) RemoveVersions(v ...*AssetVersion) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.RemoveVersionIDs(ids...)
+	return _u.RemoveVersionIDs(ids...)
 }
 
 // ClearTags clears all "tags" edges to the Tag entity.
-func (auo *AssetUpdateOne) ClearTags() *AssetUpdateOne {
-	auo.mutation.ClearTags()
-	return auo
+func (_u *AssetUpdateOne) ClearTags() *AssetUpdateOne {
+	_u.mutation.ClearTags()
+	return _u
 }
 
 // RemoveTagIDs removes the "tags" edge to Tag entities by IDs.
-func (auo *AssetUpdateOne) RemoveTagIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.RemoveTagIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) RemoveTagIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.RemoveTagIDs(ids...)
+	return _u
 }
 
 // RemoveTags removes "tags" edges to Tag entities.
-func (auo *AssetUpdateOne) RemoveTags(t ...*Tag) *AssetUpdateOne {
-	ids := make([]int64, len(t))
-	for i := range t {
-		ids[i] = t[i].ID
+func (_u *AssetUpdateOne) RemoveTags(v ...*Tag) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.RemoveTagIDs(ids...)
+	return _u.RemoveTagIDs(ids...)
 }
 
 // ClearAssetTags clears all "asset_tags" edges to the AssetTag entity.
-func (auo *AssetUpdateOne) ClearAssetTags() *AssetUpdateOne {
-	auo.mutation.ClearAssetTags()
-	return auo
+func (_u *AssetUpdateOne) ClearAssetTags() *AssetUpdateOne {
+	_u.mutation.ClearAssetTags()
+	return _u
 }
 
 // RemoveAssetTagIDs removes the "asset_tags" edge to AssetTag entities by IDs.
-func (auo *AssetUpdateOne) RemoveAssetTagIDs(ids ...int64) *AssetUpdateOne {
-	auo.mutation.RemoveAssetTagIDs(ids...)
-	return auo
+func (_u *AssetUpdateOne) RemoveAssetTagIDs(ids ...int64) *AssetUpdateOne {
+	_u.mutation.RemoveAssetTagIDs(ids...)
+	return _u
 }
 
 // RemoveAssetTags removes "asset_tags" edges to AssetTag entities.
-func (auo *AssetUpdateOne) RemoveAssetTags(a ...*AssetTag) *AssetUpdateOne {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_u *AssetUpdateOne) RemoveAssetTags(v ...*AssetTag) *AssetUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return auo.RemoveAssetTagIDs(ids...)
+	return _u.RemoveAssetTagIDs(ids...)
 }
 
 // Where appends a list predicates to the AssetUpdate builder.
-func (auo *AssetUpdateOne) Where(ps ...predicate.Asset) *AssetUpdateOne {
-	auo.mutation.Where(ps...)
-	return auo
+func (_u *AssetUpdateOne) Where(ps ...predicate.Asset) *AssetUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (auo *AssetUpdateOne) Select(field string, fields ...string) *AssetUpdateOne {
-	auo.fields = append([]string{field}, fields...)
-	return auo
+func (_u *AssetUpdateOne) Select(field string, fields ...string) *AssetUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated Asset entity.
-func (auo *AssetUpdateOne) Save(ctx context.Context) (*Asset, error) {
-	auo.defaults()
-	return withHooks(ctx, auo.sqlSave, auo.mutation, auo.hooks)
+func (_u *AssetUpdateOne) Save(ctx context.Context) (*Asset, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (auo *AssetUpdateOne) SaveX(ctx context.Context) *Asset {
-	node, err := auo.Save(ctx)
+func (_u *AssetUpdateOne) SaveX(ctx context.Context) *Asset {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1591,55 +1591,55 @@ func (auo *AssetUpdateOne) SaveX(ctx context.Context) *Asset {
 }
 
 // Exec executes the query on the entity.
-func (auo *AssetUpdateOne) Exec(ctx context.Context) error {
-	_, err := auo.Save(ctx)
+func (_u *AssetUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (auo *AssetUpdateOne) ExecX(ctx context.Context) {
-	if err := auo.Exec(ctx); err != nil {
+func (_u *AssetUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (auo *AssetUpdateOne) defaults() {
-	if _, ok := auo.mutation.UpdatedAt(); !ok {
+func (_u *AssetUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := asset.UpdateDefaultUpdatedAt()
-		auo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (auo *AssetUpdateOne) check() error {
-	if v, ok := auo.mutation.Status(); ok {
+func (_u *AssetUpdateOne) check() error {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := asset.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Asset.status": %w`, err)}
 		}
 	}
-	if v, ok := auo.mutation.StorageKey(); ok {
+	if v, ok := _u.mutation.StorageKey(); ok {
 		if err := asset.StorageKeyValidator(v); err != nil {
 			return &ValidationError{Name: "storage_key", err: fmt.Errorf(`ent: validator failed for field "Asset.storage_key": %w`, err)}
 		}
 	}
-	if auo.mutation.UserCleared() && len(auo.mutation.UserIDs()) > 0 {
+	if _u.mutation.UserCleared() && len(_u.mutation.UserIDs()) > 0 {
 		return errors.New(`ent: clearing a required unique edge "Asset.user"`)
 	}
 	return nil
 }
 
-func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error) {
-	if err := auo.check(); err != nil {
+func (_u *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(asset.Table, asset.Columns, sqlgraph.NewFieldSpec(asset.FieldID, field.TypeInt64))
-	id, ok := auo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Asset.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := auo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, asset.FieldID)
 		for _, f := range fields {
@@ -1651,122 +1651,122 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 			}
 		}
 	}
-	if ps := auo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := auo.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(asset.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := auo.mutation.Title(); ok {
+	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(asset.FieldTitle, field.TypeString, value)
 	}
-	if auo.mutation.TitleCleared() {
+	if _u.mutation.TitleCleared() {
 		_spec.ClearField(asset.FieldTitle, field.TypeString)
 	}
-	if value, ok := auo.mutation.Description(); ok {
+	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(asset.FieldDescription, field.TypeString, value)
 	}
-	if auo.mutation.DescriptionCleared() {
+	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(asset.FieldDescription, field.TypeString)
 	}
-	if value, ok := auo.mutation.Prompt(); ok {
+	if value, ok := _u.mutation.Prompt(); ok {
 		_spec.SetField(asset.FieldPrompt, field.TypeString, value)
 	}
-	if auo.mutation.PromptCleared() {
+	if _u.mutation.PromptCleared() {
 		_spec.ClearField(asset.FieldPrompt, field.TypeString)
 	}
-	if value, ok := auo.mutation.NegativePrompt(); ok {
+	if value, ok := _u.mutation.NegativePrompt(); ok {
 		_spec.SetField(asset.FieldNegativePrompt, field.TypeString, value)
 	}
-	if auo.mutation.NegativePromptCleared() {
+	if _u.mutation.NegativePromptCleared() {
 		_spec.ClearField(asset.FieldNegativePrompt, field.TypeString)
 	}
-	if value, ok := auo.mutation.Model(); ok {
+	if value, ok := _u.mutation.Model(); ok {
 		_spec.SetField(asset.FieldModel, field.TypeString, value)
 	}
-	if auo.mutation.ModelCleared() {
+	if _u.mutation.ModelCleared() {
 		_spec.ClearField(asset.FieldModel, field.TypeString)
 	}
-	if value, ok := auo.mutation.ModelProvider(); ok {
+	if value, ok := _u.mutation.ModelProvider(); ok {
 		_spec.SetField(asset.FieldModelProvider, field.TypeString, value)
 	}
-	if auo.mutation.ModelProviderCleared() {
+	if _u.mutation.ModelProviderCleared() {
 		_spec.ClearField(asset.FieldModelProvider, field.TypeString)
 	}
-	if value, ok := auo.mutation.Width(); ok {
+	if value, ok := _u.mutation.Width(); ok {
 		_spec.SetField(asset.FieldWidth, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.AddedWidth(); ok {
+	if value, ok := _u.mutation.AddedWidth(); ok {
 		_spec.AddField(asset.FieldWidth, field.TypeInt, value)
 	}
-	if auo.mutation.WidthCleared() {
+	if _u.mutation.WidthCleared() {
 		_spec.ClearField(asset.FieldWidth, field.TypeInt)
 	}
-	if value, ok := auo.mutation.Height(); ok {
+	if value, ok := _u.mutation.Height(); ok {
 		_spec.SetField(asset.FieldHeight, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.AddedHeight(); ok {
+	if value, ok := _u.mutation.AddedHeight(); ok {
 		_spec.AddField(asset.FieldHeight, field.TypeInt, value)
 	}
-	if auo.mutation.HeightCleared() {
+	if _u.mutation.HeightCleared() {
 		_spec.ClearField(asset.FieldHeight, field.TypeInt)
 	}
-	if value, ok := auo.mutation.AspectRatio(); ok {
+	if value, ok := _u.mutation.AspectRatio(); ok {
 		_spec.SetField(asset.FieldAspectRatio, field.TypeString, value)
 	}
-	if auo.mutation.AspectRatioCleared() {
+	if _u.mutation.AspectRatioCleared() {
 		_spec.ClearField(asset.FieldAspectRatio, field.TypeString)
 	}
-	if value, ok := auo.mutation.MimeType(); ok {
+	if value, ok := _u.mutation.MimeType(); ok {
 		_spec.SetField(asset.FieldMimeType, field.TypeString, value)
 	}
-	if auo.mutation.MimeTypeCleared() {
+	if _u.mutation.MimeTypeCleared() {
 		_spec.ClearField(asset.FieldMimeType, field.TypeString)
 	}
-	if value, ok := auo.mutation.FileSize(); ok {
+	if value, ok := _u.mutation.FileSize(); ok {
 		_spec.SetField(asset.FieldFileSize, field.TypeInt64, value)
 	}
-	if value, ok := auo.mutation.AddedFileSize(); ok {
+	if value, ok := _u.mutation.AddedFileSize(); ok {
 		_spec.AddField(asset.FieldFileSize, field.TypeInt64, value)
 	}
-	if auo.mutation.FileSizeCleared() {
+	if _u.mutation.FileSizeCleared() {
 		_spec.ClearField(asset.FieldFileSize, field.TypeInt64)
 	}
-	if value, ok := auo.mutation.StorageKey(); ok {
+	if value, ok := _u.mutation.StorageKey(); ok {
 		_spec.SetField(asset.FieldStorageKey, field.TypeString, value)
 	}
-	if value, ok := auo.mutation.ThumbnailKey(); ok {
+	if value, ok := _u.mutation.ThumbnailKey(); ok {
 		_spec.SetField(asset.FieldThumbnailKey, field.TypeString, value)
 	}
-	if auo.mutation.ThumbnailKeyCleared() {
+	if _u.mutation.ThumbnailKeyCleared() {
 		_spec.ClearField(asset.FieldThumbnailKey, field.TypeString)
 	}
-	if value, ok := auo.mutation.MediumKey(); ok {
+	if value, ok := _u.mutation.MediumKey(); ok {
 		_spec.SetField(asset.FieldMediumKey, field.TypeString, value)
 	}
-	if auo.mutation.MediumKeyCleared() {
+	if _u.mutation.MediumKeyCleared() {
 		_spec.ClearField(asset.FieldMediumKey, field.TypeString)
 	}
-	if value, ok := auo.mutation.CurrentVersion(); ok {
+	if value, ok := _u.mutation.CurrentVersion(); ok {
 		_spec.SetField(asset.FieldCurrentVersion, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.AddedCurrentVersion(); ok {
+	if value, ok := _u.mutation.AddedCurrentVersion(); ok {
 		_spec.AddField(asset.FieldCurrentVersion, field.TypeInt, value)
 	}
-	if value, ok := auo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(asset.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if value, ok := auo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(asset.FieldDeletedAt, field.TypeTime, value)
 	}
-	if auo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(asset.FieldDeletedAt, field.TypeTime)
 	}
-	if auo.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1779,7 +1779,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1795,7 +1795,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if auo.mutation.ProjectCleared() {
+	if _u.mutation.ProjectCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1808,7 +1808,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.ProjectIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ProjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1824,7 +1824,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if auo.mutation.GenerationJobCleared() {
+	if _u.mutation.GenerationJobCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1837,7 +1837,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.GenerationJobIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.GenerationJobIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1853,7 +1853,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if auo.mutation.VersionsCleared() {
+	if _u.mutation.VersionsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1866,7 +1866,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.RemovedVersionsIDs(); len(nodes) > 0 && !auo.mutation.VersionsCleared() {
+	if nodes := _u.mutation.RemovedVersionsIDs(); len(nodes) > 0 && !_u.mutation.VersionsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1882,7 +1882,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.VersionsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.VersionsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1898,7 +1898,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if auo.mutation.TagsCleared() {
+	if _u.mutation.TagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -1911,7 +1911,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.RemovedTagsIDs(); len(nodes) > 0 && !auo.mutation.TagsCleared() {
+	if nodes := _u.mutation.RemovedTagsIDs(); len(nodes) > 0 && !_u.mutation.TagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -1927,7 +1927,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.TagsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
@@ -1943,7 +1943,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if auo.mutation.AssetTagsCleared() {
+	if _u.mutation.AssetTagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1956,7 +1956,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.RemovedAssetTagsIDs(); len(nodes) > 0 && !auo.mutation.AssetTagsCleared() {
+	if nodes := _u.mutation.RemovedAssetTagsIDs(); len(nodes) > 0 && !_u.mutation.AssetTagsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1972,7 +1972,7 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := auo.mutation.AssetTagsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.AssetTagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1988,10 +1988,10 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &Asset{config: auo.config}
+	_node = &Asset{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, auo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{asset.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1999,6 +1999,6 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 		}
 		return nil, err
 	}
-	auo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

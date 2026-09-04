@@ -74,7 +74,7 @@ func (*GenerationInput) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the GenerationInput fields.
-func (gi *GenerationInput) assignValues(columns []string, values []any) error {
+func (_m *GenerationInput) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -85,39 +85,39 @@ func (gi *GenerationInput) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			gi.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case generationinput.FieldJobID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field job_id", values[i])
 			} else if value.Valid {
-				gi.JobID = value.Int64
+				_m.JobID = value.Int64
 			}
 		case generationinput.FieldSourceAssetID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field source_asset_id", values[i])
 			} else if value.Valid {
-				gi.SourceAssetID = value.Int64
+				_m.SourceAssetID = value.Int64
 			}
 		case generationinput.FieldStorageKey:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field storage_key", values[i])
 			} else if value.Valid {
-				gi.StorageKey = value.String
+				_m.StorageKey = value.String
 			}
 		case generationinput.FieldRole:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field role", values[i])
 			} else if value.Valid {
-				gi.Role = value.String
+				_m.Role = value.String
 			}
 		case generationinput.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				gi.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		default:
-			gi.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -125,52 +125,52 @@ func (gi *GenerationInput) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the GenerationInput.
 // This includes values selected through modifiers, order, etc.
-func (gi *GenerationInput) Value(name string) (ent.Value, error) {
-	return gi.selectValues.Get(name)
+func (_m *GenerationInput) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryJob queries the "job" edge of the GenerationInput entity.
-func (gi *GenerationInput) QueryJob() *GenerationJobQuery {
-	return NewGenerationInputClient(gi.config).QueryJob(gi)
+func (_m *GenerationInput) QueryJob() *GenerationJobQuery {
+	return NewGenerationInputClient(_m.config).QueryJob(_m)
 }
 
 // Update returns a builder for updating this GenerationInput.
 // Note that you need to call GenerationInput.Unwrap() before calling this method if this GenerationInput
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (gi *GenerationInput) Update() *GenerationInputUpdateOne {
-	return NewGenerationInputClient(gi.config).UpdateOne(gi)
+func (_m *GenerationInput) Update() *GenerationInputUpdateOne {
+	return NewGenerationInputClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the GenerationInput entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (gi *GenerationInput) Unwrap() *GenerationInput {
-	_tx, ok := gi.config.driver.(*txDriver)
+func (_m *GenerationInput) Unwrap() *GenerationInput {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: GenerationInput is not a transactional entity")
 	}
-	gi.config.driver = _tx.drv
-	return gi
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (gi *GenerationInput) String() string {
+func (_m *GenerationInput) String() string {
 	var builder strings.Builder
 	builder.WriteString("GenerationInput(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", gi.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("job_id=")
-	builder.WriteString(fmt.Sprintf("%v", gi.JobID))
+	builder.WriteString(fmt.Sprintf("%v", _m.JobID))
 	builder.WriteString(", ")
 	builder.WriteString("source_asset_id=")
-	builder.WriteString(fmt.Sprintf("%v", gi.SourceAssetID))
+	builder.WriteString(fmt.Sprintf("%v", _m.SourceAssetID))
 	builder.WriteString(", ")
 	builder.WriteString("storage_key=")
-	builder.WriteString(gi.StorageKey)
+	builder.WriteString(_m.StorageKey)
 	builder.WriteString(", ")
 	builder.WriteString("role=")
-	builder.WriteString(gi.Role)
+	builder.WriteString(_m.Role)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(gi.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

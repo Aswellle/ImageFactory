@@ -20,56 +20,56 @@ type GenerationInputDelete struct {
 }
 
 // Where appends a list predicates to the GenerationInputDelete builder.
-func (gid *GenerationInputDelete) Where(ps ...predicate.GenerationInput) *GenerationInputDelete {
-	gid.mutation.Where(ps...)
-	return gid
+func (_d *GenerationInputDelete) Where(ps ...predicate.GenerationInput) *GenerationInputDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (gid *GenerationInputDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, gid.sqlExec, gid.mutation, gid.hooks)
+func (_d *GenerationInputDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gid *GenerationInputDelete) ExecX(ctx context.Context) int {
-	n, err := gid.Exec(ctx)
+func (_d *GenerationInputDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (gid *GenerationInputDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *GenerationInputDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(generationinput.Table, sqlgraph.NewFieldSpec(generationinput.FieldID, field.TypeInt64))
-	if ps := gid.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, gid.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	gid.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // GenerationInputDeleteOne is the builder for deleting a single GenerationInput entity.
 type GenerationInputDeleteOne struct {
-	gid *GenerationInputDelete
+	_d *GenerationInputDelete
 }
 
 // Where appends a list predicates to the GenerationInputDelete builder.
-func (gido *GenerationInputDeleteOne) Where(ps ...predicate.GenerationInput) *GenerationInputDeleteOne {
-	gido.gid.mutation.Where(ps...)
-	return gido
+func (_d *GenerationInputDeleteOne) Where(ps ...predicate.GenerationInput) *GenerationInputDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (gido *GenerationInputDeleteOne) Exec(ctx context.Context) error {
-	n, err := gido.gid.Exec(ctx)
+func (_d *GenerationInputDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (gido *GenerationInputDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gido *GenerationInputDeleteOne) ExecX(ctx context.Context) {
-	if err := gido.Exec(ctx); err != nil {
+func (_d *GenerationInputDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

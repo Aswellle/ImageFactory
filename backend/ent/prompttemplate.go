@@ -80,7 +80,7 @@ func (*PromptTemplate) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the PromptTemplate fields.
-func (pt *PromptTemplate) assignValues(columns []string, values []any) error {
+func (_m *PromptTemplate) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -91,57 +91,57 @@ func (pt *PromptTemplate) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			pt.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case prompttemplate.FieldUserID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				pt.UserID = value.Int64
+				_m.UserID = value.Int64
 			}
 		case prompttemplate.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				pt.Name = value.String
+				_m.Name = value.String
 			}
 		case prompttemplate.FieldDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field description", values[i])
 			} else if value.Valid {
-				pt.Description = value.String
+				_m.Description = value.String
 			}
 		case prompttemplate.FieldContent:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field content", values[i])
 			} else if value.Valid {
-				pt.Content = value.String
+				_m.Content = value.String
 			}
 		case prompttemplate.FieldVariables:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field variables", values[i])
 			} else if value.Valid {
-				pt.Variables = value.String
+				_m.Variables = value.String
 			}
 		case prompttemplate.FieldCategory:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field category", values[i])
 			} else if value.Valid {
-				pt.Category = prompttemplate.Category(value.String)
+				_m.Category = prompttemplate.Category(value.String)
 			}
 		case prompttemplate.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				pt.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case prompttemplate.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				pt.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		default:
-			pt.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -149,61 +149,61 @@ func (pt *PromptTemplate) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the PromptTemplate.
 // This includes values selected through modifiers, order, etc.
-func (pt *PromptTemplate) Value(name string) (ent.Value, error) {
-	return pt.selectValues.Get(name)
+func (_m *PromptTemplate) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryUser queries the "user" edge of the PromptTemplate entity.
-func (pt *PromptTemplate) QueryUser() *UserQuery {
-	return NewPromptTemplateClient(pt.config).QueryUser(pt)
+func (_m *PromptTemplate) QueryUser() *UserQuery {
+	return NewPromptTemplateClient(_m.config).QueryUser(_m)
 }
 
 // Update returns a builder for updating this PromptTemplate.
 // Note that you need to call PromptTemplate.Unwrap() before calling this method if this PromptTemplate
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (pt *PromptTemplate) Update() *PromptTemplateUpdateOne {
-	return NewPromptTemplateClient(pt.config).UpdateOne(pt)
+func (_m *PromptTemplate) Update() *PromptTemplateUpdateOne {
+	return NewPromptTemplateClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the PromptTemplate entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (pt *PromptTemplate) Unwrap() *PromptTemplate {
-	_tx, ok := pt.config.driver.(*txDriver)
+func (_m *PromptTemplate) Unwrap() *PromptTemplate {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: PromptTemplate is not a transactional entity")
 	}
-	pt.config.driver = _tx.drv
-	return pt
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (pt *PromptTemplate) String() string {
+func (_m *PromptTemplate) String() string {
 	var builder strings.Builder
 	builder.WriteString("PromptTemplate(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", pt.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("user_id=")
-	builder.WriteString(fmt.Sprintf("%v", pt.UserID))
+	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(pt.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
 	builder.WriteString("description=")
-	builder.WriteString(pt.Description)
+	builder.WriteString(_m.Description)
 	builder.WriteString(", ")
 	builder.WriteString("content=")
-	builder.WriteString(pt.Content)
+	builder.WriteString(_m.Content)
 	builder.WriteString(", ")
 	builder.WriteString("variables=")
-	builder.WriteString(pt.Variables)
+	builder.WriteString(_m.Variables)
 	builder.WriteString(", ")
 	builder.WriteString("category=")
-	builder.WriteString(fmt.Sprintf("%v", pt.Category))
+	builder.WriteString(fmt.Sprintf("%v", _m.Category))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(pt.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(pt.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

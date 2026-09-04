@@ -23,129 +23,129 @@ type UsageRecordCreate struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (urc *UsageRecordCreate) SetUserID(i int64) *UsageRecordCreate {
-	urc.mutation.SetUserID(i)
-	return urc
+func (_c *UsageRecordCreate) SetUserID(v int64) *UsageRecordCreate {
+	_c.mutation.SetUserID(v)
+	return _c
 }
 
 // SetAPIKeyID sets the "api_key_id" field.
-func (urc *UsageRecordCreate) SetAPIKeyID(i int64) *UsageRecordCreate {
-	urc.mutation.SetAPIKeyID(i)
-	return urc
+func (_c *UsageRecordCreate) SetAPIKeyID(v int64) *UsageRecordCreate {
+	_c.mutation.SetAPIKeyID(v)
+	return _c
 }
 
 // SetNillableAPIKeyID sets the "api_key_id" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableAPIKeyID(i *int64) *UsageRecordCreate {
-	if i != nil {
-		urc.SetAPIKeyID(*i)
+func (_c *UsageRecordCreate) SetNillableAPIKeyID(v *int64) *UsageRecordCreate {
+	if v != nil {
+		_c.SetAPIKeyID(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetType sets the "type" field.
-func (urc *UsageRecordCreate) SetType(u usagerecord.Type) *UsageRecordCreate {
-	urc.mutation.SetType(u)
-	return urc
+func (_c *UsageRecordCreate) SetType(v usagerecord.Type) *UsageRecordCreate {
+	_c.mutation.SetType(v)
+	return _c
 }
 
 // SetModel sets the "model" field.
-func (urc *UsageRecordCreate) SetModel(s string) *UsageRecordCreate {
-	urc.mutation.SetModel(s)
-	return urc
+func (_c *UsageRecordCreate) SetModel(v string) *UsageRecordCreate {
+	_c.mutation.SetModel(v)
+	return _c
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableModel(s *string) *UsageRecordCreate {
-	if s != nil {
-		urc.SetModel(*s)
+func (_c *UsageRecordCreate) SetNillableModel(v *string) *UsageRecordCreate {
+	if v != nil {
+		_c.SetModel(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetImageCount sets the "image_count" field.
-func (urc *UsageRecordCreate) SetImageCount(i int) *UsageRecordCreate {
-	urc.mutation.SetImageCount(i)
-	return urc
+func (_c *UsageRecordCreate) SetImageCount(v int) *UsageRecordCreate {
+	_c.mutation.SetImageCount(v)
+	return _c
 }
 
 // SetNillableImageCount sets the "image_count" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableImageCount(i *int) *UsageRecordCreate {
-	if i != nil {
-		urc.SetImageCount(*i)
+func (_c *UsageRecordCreate) SetNillableImageCount(v *int) *UsageRecordCreate {
+	if v != nil {
+		_c.SetImageCount(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetTokens sets the "tokens" field.
-func (urc *UsageRecordCreate) SetTokens(i int) *UsageRecordCreate {
-	urc.mutation.SetTokens(i)
-	return urc
+func (_c *UsageRecordCreate) SetTokens(v int) *UsageRecordCreate {
+	_c.mutation.SetTokens(v)
+	return _c
 }
 
 // SetNillableTokens sets the "tokens" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableTokens(i *int) *UsageRecordCreate {
-	if i != nil {
-		urc.SetTokens(*i)
+func (_c *UsageRecordCreate) SetNillableTokens(v *int) *UsageRecordCreate {
+	if v != nil {
+		_c.SetTokens(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetCost sets the "cost" field.
-func (urc *UsageRecordCreate) SetCost(f float64) *UsageRecordCreate {
-	urc.mutation.SetCost(f)
-	return urc
+func (_c *UsageRecordCreate) SetCost(v float64) *UsageRecordCreate {
+	_c.mutation.SetCost(v)
+	return _c
 }
 
 // SetNillableCost sets the "cost" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableCost(f *float64) *UsageRecordCreate {
-	if f != nil {
-		urc.SetCost(*f)
+func (_c *UsageRecordCreate) SetNillableCost(v *float64) *UsageRecordCreate {
+	if v != nil {
+		_c.SetCost(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetRequestID sets the "request_id" field.
-func (urc *UsageRecordCreate) SetRequestID(s string) *UsageRecordCreate {
-	urc.mutation.SetRequestID(s)
-	return urc
+func (_c *UsageRecordCreate) SetRequestID(v string) *UsageRecordCreate {
+	_c.mutation.SetRequestID(v)
+	return _c
 }
 
 // SetNillableRequestID sets the "request_id" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableRequestID(s *string) *UsageRecordCreate {
-	if s != nil {
-		urc.SetRequestID(*s)
+func (_c *UsageRecordCreate) SetNillableRequestID(v *string) *UsageRecordCreate {
+	if v != nil {
+		_c.SetRequestID(*v)
 	}
-	return urc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (urc *UsageRecordCreate) SetCreatedAt(t time.Time) *UsageRecordCreate {
-	urc.mutation.SetCreatedAt(t)
-	return urc
+func (_c *UsageRecordCreate) SetCreatedAt(v time.Time) *UsageRecordCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (urc *UsageRecordCreate) SetNillableCreatedAt(t *time.Time) *UsageRecordCreate {
-	if t != nil {
-		urc.SetCreatedAt(*t)
+func (_c *UsageRecordCreate) SetNillableCreatedAt(v *time.Time) *UsageRecordCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return urc
+	return _c
 }
 
 // Mutation returns the UsageRecordMutation object of the builder.
-func (urc *UsageRecordCreate) Mutation() *UsageRecordMutation {
-	return urc.mutation
+func (_c *UsageRecordCreate) Mutation() *UsageRecordMutation {
+	return _c.mutation
 }
 
 // Save creates the UsageRecord in the database.
-func (urc *UsageRecordCreate) Save(ctx context.Context) (*UsageRecord, error) {
-	urc.defaults()
-	return withHooks(ctx, urc.sqlSave, urc.mutation, urc.hooks)
+func (_c *UsageRecordCreate) Save(ctx context.Context) (*UsageRecord, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (urc *UsageRecordCreate) SaveX(ctx context.Context) *UsageRecord {
-	v, err := urc.Save(ctx)
+func (_c *UsageRecordCreate) SaveX(ctx context.Context) *UsageRecord {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -153,65 +153,65 @@ func (urc *UsageRecordCreate) SaveX(ctx context.Context) *UsageRecord {
 }
 
 // Exec executes the query.
-func (urc *UsageRecordCreate) Exec(ctx context.Context) error {
-	_, err := urc.Save(ctx)
+func (_c *UsageRecordCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (urc *UsageRecordCreate) ExecX(ctx context.Context) {
-	if err := urc.Exec(ctx); err != nil {
+func (_c *UsageRecordCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (urc *UsageRecordCreate) defaults() {
-	if _, ok := urc.mutation.ImageCount(); !ok {
+func (_c *UsageRecordCreate) defaults() {
+	if _, ok := _c.mutation.ImageCount(); !ok {
 		v := usagerecord.DefaultImageCount
-		urc.mutation.SetImageCount(v)
+		_c.mutation.SetImageCount(v)
 	}
-	if _, ok := urc.mutation.Cost(); !ok {
+	if _, ok := _c.mutation.Cost(); !ok {
 		v := usagerecord.DefaultCost
-		urc.mutation.SetCost(v)
+		_c.mutation.SetCost(v)
 	}
-	if _, ok := urc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := usagerecord.DefaultCreatedAt()
-		urc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (urc *UsageRecordCreate) check() error {
-	if _, ok := urc.mutation.UserID(); !ok {
+func (_c *UsageRecordCreate) check() error {
+	if _, ok := _c.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "UsageRecord.user_id"`)}
 	}
-	if _, ok := urc.mutation.GetType(); !ok {
+	if _, ok := _c.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "UsageRecord.type"`)}
 	}
-	if v, ok := urc.mutation.GetType(); ok {
+	if v, ok := _c.mutation.GetType(); ok {
 		if err := usagerecord.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "UsageRecord.type": %w`, err)}
 		}
 	}
-	if _, ok := urc.mutation.ImageCount(); !ok {
+	if _, ok := _c.mutation.ImageCount(); !ok {
 		return &ValidationError{Name: "image_count", err: errors.New(`ent: missing required field "UsageRecord.image_count"`)}
 	}
-	if _, ok := urc.mutation.Cost(); !ok {
+	if _, ok := _c.mutation.Cost(); !ok {
 		return &ValidationError{Name: "cost", err: errors.New(`ent: missing required field "UsageRecord.cost"`)}
 	}
-	if _, ok := urc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "UsageRecord.created_at"`)}
 	}
 	return nil
 }
 
-func (urc *UsageRecordCreate) sqlSave(ctx context.Context) (*UsageRecord, error) {
-	if err := urc.check(); err != nil {
+func (_c *UsageRecordCreate) sqlSave(ctx context.Context) (*UsageRecord, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := urc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, urc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -219,50 +219,50 @@ func (urc *UsageRecordCreate) sqlSave(ctx context.Context) (*UsageRecord, error)
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	urc.mutation.id = &_node.ID
-	urc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (urc *UsageRecordCreate) createSpec() (*UsageRecord, *sqlgraph.CreateSpec) {
+func (_c *UsageRecordCreate) createSpec() (*UsageRecord, *sqlgraph.CreateSpec) {
 	var (
-		_node = &UsageRecord{config: urc.config}
+		_node = &UsageRecord{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(usagerecord.Table, sqlgraph.NewFieldSpec(usagerecord.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = urc.conflict
-	if value, ok := urc.mutation.UserID(); ok {
+	_spec.OnConflict = _c.conflict
+	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(usagerecord.FieldUserID, field.TypeInt64, value)
 		_node.UserID = value
 	}
-	if value, ok := urc.mutation.APIKeyID(); ok {
+	if value, ok := _c.mutation.APIKeyID(); ok {
 		_spec.SetField(usagerecord.FieldAPIKeyID, field.TypeInt64, value)
 		_node.APIKeyID = value
 	}
-	if value, ok := urc.mutation.GetType(); ok {
+	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(usagerecord.FieldType, field.TypeEnum, value)
 		_node.Type = value
 	}
-	if value, ok := urc.mutation.Model(); ok {
+	if value, ok := _c.mutation.Model(); ok {
 		_spec.SetField(usagerecord.FieldModel, field.TypeString, value)
 		_node.Model = value
 	}
-	if value, ok := urc.mutation.ImageCount(); ok {
+	if value, ok := _c.mutation.ImageCount(); ok {
 		_spec.SetField(usagerecord.FieldImageCount, field.TypeInt, value)
 		_node.ImageCount = value
 	}
-	if value, ok := urc.mutation.Tokens(); ok {
+	if value, ok := _c.mutation.Tokens(); ok {
 		_spec.SetField(usagerecord.FieldTokens, field.TypeInt, value)
 		_node.Tokens = value
 	}
-	if value, ok := urc.mutation.Cost(); ok {
+	if value, ok := _c.mutation.Cost(); ok {
 		_spec.SetField(usagerecord.FieldCost, field.TypeFloat64, value)
 		_node.Cost = value
 	}
-	if value, ok := urc.mutation.RequestID(); ok {
+	if value, ok := _c.mutation.RequestID(); ok {
 		_spec.SetField(usagerecord.FieldRequestID, field.TypeString, value)
 		_node.RequestID = value
 	}
-	if value, ok := urc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(usagerecord.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
@@ -285,10 +285,10 @@ func (urc *UsageRecordCreate) createSpec() (*UsageRecord, *sqlgraph.CreateSpec) 
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (urc *UsageRecordCreate) OnConflict(opts ...sql.ConflictOption) *UsageRecordUpsertOne {
-	urc.conflict = opts
+func (_c *UsageRecordCreate) OnConflict(opts ...sql.ConflictOption) *UsageRecordUpsertOne {
+	_c.conflict = opts
 	return &UsageRecordUpsertOne{
-		create: urc,
+		create: _c,
 	}
 }
 
@@ -298,10 +298,10 @@ func (urc *UsageRecordCreate) OnConflict(opts ...sql.ConflictOption) *UsageRecor
 //	client.UsageRecord.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (urc *UsageRecordCreate) OnConflictColumns(columns ...string) *UsageRecordUpsertOne {
-	urc.conflict = append(urc.conflict, sql.ConflictColumns(columns...))
+func (_c *UsageRecordCreate) OnConflictColumns(columns ...string) *UsageRecordUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &UsageRecordUpsertOne{
-		create: urc,
+		create: _c,
 	}
 }
 
@@ -730,16 +730,16 @@ type UsageRecordCreateBulk struct {
 }
 
 // Save creates the UsageRecord entities in the database.
-func (urcb *UsageRecordCreateBulk) Save(ctx context.Context) ([]*UsageRecord, error) {
-	if urcb.err != nil {
-		return nil, urcb.err
+func (_c *UsageRecordCreateBulk) Save(ctx context.Context) ([]*UsageRecord, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(urcb.builders))
-	nodes := make([]*UsageRecord, len(urcb.builders))
-	mutators := make([]Mutator, len(urcb.builders))
-	for i := range urcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*UsageRecord, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := urcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*UsageRecordMutation)
@@ -753,12 +753,12 @@ func (urcb *UsageRecordCreateBulk) Save(ctx context.Context) ([]*UsageRecord, er
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, urcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = urcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, urcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -782,7 +782,7 @@ func (urcb *UsageRecordCreateBulk) Save(ctx context.Context) ([]*UsageRecord, er
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, urcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -790,8 +790,8 @@ func (urcb *UsageRecordCreateBulk) Save(ctx context.Context) ([]*UsageRecord, er
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (urcb *UsageRecordCreateBulk) SaveX(ctx context.Context) []*UsageRecord {
-	v, err := urcb.Save(ctx)
+func (_c *UsageRecordCreateBulk) SaveX(ctx context.Context) []*UsageRecord {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -799,14 +799,14 @@ func (urcb *UsageRecordCreateBulk) SaveX(ctx context.Context) []*UsageRecord {
 }
 
 // Exec executes the query.
-func (urcb *UsageRecordCreateBulk) Exec(ctx context.Context) error {
-	_, err := urcb.Save(ctx)
+func (_c *UsageRecordCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (urcb *UsageRecordCreateBulk) ExecX(ctx context.Context) {
-	if err := urcb.Exec(ctx); err != nil {
+func (_c *UsageRecordCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -826,10 +826,10 @@ func (urcb *UsageRecordCreateBulk) ExecX(ctx context.Context) {
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (urcb *UsageRecordCreateBulk) OnConflict(opts ...sql.ConflictOption) *UsageRecordUpsertBulk {
-	urcb.conflict = opts
+func (_c *UsageRecordCreateBulk) OnConflict(opts ...sql.ConflictOption) *UsageRecordUpsertBulk {
+	_c.conflict = opts
 	return &UsageRecordUpsertBulk{
-		create: urcb,
+		create: _c,
 	}
 }
 
@@ -839,10 +839,10 @@ func (urcb *UsageRecordCreateBulk) OnConflict(opts ...sql.ConflictOption) *Usage
 //	client.UsageRecord.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (urcb *UsageRecordCreateBulk) OnConflictColumns(columns ...string) *UsageRecordUpsertBulk {
-	urcb.conflict = append(urcb.conflict, sql.ConflictColumns(columns...))
+func (_c *UsageRecordCreateBulk) OnConflictColumns(columns ...string) *UsageRecordUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &UsageRecordUpsertBulk{
-		create: urcb,
+		create: _c,
 	}
 }
 

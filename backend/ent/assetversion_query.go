@@ -32,44 +32,44 @@ type AssetVersionQuery struct {
 }
 
 // Where adds a new predicate for the AssetVersionQuery builder.
-func (avq *AssetVersionQuery) Where(ps ...predicate.AssetVersion) *AssetVersionQuery {
-	avq.predicates = append(avq.predicates, ps...)
-	return avq
+func (_q *AssetVersionQuery) Where(ps ...predicate.AssetVersion) *AssetVersionQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (avq *AssetVersionQuery) Limit(limit int) *AssetVersionQuery {
-	avq.ctx.Limit = &limit
-	return avq
+func (_q *AssetVersionQuery) Limit(limit int) *AssetVersionQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (avq *AssetVersionQuery) Offset(offset int) *AssetVersionQuery {
-	avq.ctx.Offset = &offset
-	return avq
+func (_q *AssetVersionQuery) Offset(offset int) *AssetVersionQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (avq *AssetVersionQuery) Unique(unique bool) *AssetVersionQuery {
-	avq.ctx.Unique = &unique
-	return avq
+func (_q *AssetVersionQuery) Unique(unique bool) *AssetVersionQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (avq *AssetVersionQuery) Order(o ...assetversion.OrderOption) *AssetVersionQuery {
-	avq.order = append(avq.order, o...)
-	return avq
+func (_q *AssetVersionQuery) Order(o ...assetversion.OrderOption) *AssetVersionQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryAsset chains the current query on the "asset" edge.
-func (avq *AssetVersionQuery) QueryAsset() *AssetQuery {
-	query := (&AssetClient{config: avq.config}).Query()
+func (_q *AssetVersionQuery) QueryAsset() *AssetQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := avq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := avq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -78,7 +78,7 @@ func (avq *AssetVersionQuery) QueryAsset() *AssetQuery {
 			sqlgraph.To(asset.Table, asset.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, assetversion.AssetTable, assetversion.AssetColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(avq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -86,8 +86,8 @@ func (avq *AssetVersionQuery) QueryAsset() *AssetQuery {
 
 // First returns the first AssetVersion entity from the query.
 // Returns a *NotFoundError when no AssetVersion was found.
-func (avq *AssetVersionQuery) First(ctx context.Context) (*AssetVersion, error) {
-	nodes, err := avq.Limit(1).All(setContextOp(ctx, avq.ctx, ent.OpQueryFirst))
+func (_q *AssetVersionQuery) First(ctx context.Context) (*AssetVersion, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +98,8 @@ func (avq *AssetVersionQuery) First(ctx context.Context) (*AssetVersion, error) 
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (avq *AssetVersionQuery) FirstX(ctx context.Context) *AssetVersion {
-	node, err := avq.First(ctx)
+func (_q *AssetVersionQuery) FirstX(ctx context.Context) *AssetVersion {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,9 +108,9 @@ func (avq *AssetVersionQuery) FirstX(ctx context.Context) *AssetVersion {
 
 // FirstID returns the first AssetVersion ID from the query.
 // Returns a *NotFoundError when no AssetVersion ID was found.
-func (avq *AssetVersionQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *AssetVersionQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = avq.Limit(1).IDs(setContextOp(ctx, avq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -121,8 +121,8 @@ func (avq *AssetVersionQuery) FirstID(ctx context.Context) (id int64, err error)
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (avq *AssetVersionQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := avq.FirstID(ctx)
+func (_q *AssetVersionQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,8 +132,8 @@ func (avq *AssetVersionQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single AssetVersion entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one AssetVersion entity is found.
 // Returns a *NotFoundError when no AssetVersion entities are found.
-func (avq *AssetVersionQuery) Only(ctx context.Context) (*AssetVersion, error) {
-	nodes, err := avq.Limit(2).All(setContextOp(ctx, avq.ctx, ent.OpQueryOnly))
+func (_q *AssetVersionQuery) Only(ctx context.Context) (*AssetVersion, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ func (avq *AssetVersionQuery) Only(ctx context.Context) (*AssetVersion, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (avq *AssetVersionQuery) OnlyX(ctx context.Context) *AssetVersion {
-	node, err := avq.Only(ctx)
+func (_q *AssetVersionQuery) OnlyX(ctx context.Context) *AssetVersion {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -159,9 +159,9 @@ func (avq *AssetVersionQuery) OnlyX(ctx context.Context) *AssetVersion {
 // OnlyID is like Only, but returns the only AssetVersion ID in the query.
 // Returns a *NotSingularError when more than one AssetVersion ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (avq *AssetVersionQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *AssetVersionQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = avq.Limit(2).IDs(setContextOp(ctx, avq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -176,8 +176,8 @@ func (avq *AssetVersionQuery) OnlyID(ctx context.Context) (id int64, err error) 
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (avq *AssetVersionQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := avq.OnlyID(ctx)
+func (_q *AssetVersionQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -185,18 +185,18 @@ func (avq *AssetVersionQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of AssetVersions.
-func (avq *AssetVersionQuery) All(ctx context.Context) ([]*AssetVersion, error) {
-	ctx = setContextOp(ctx, avq.ctx, ent.OpQueryAll)
-	if err := avq.prepareQuery(ctx); err != nil {
+func (_q *AssetVersionQuery) All(ctx context.Context) ([]*AssetVersion, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*AssetVersion, *AssetVersionQuery]()
-	return withInterceptors[[]*AssetVersion](ctx, avq, qr, avq.inters)
+	return withInterceptors[[]*AssetVersion](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (avq *AssetVersionQuery) AllX(ctx context.Context) []*AssetVersion {
-	nodes, err := avq.All(ctx)
+func (_q *AssetVersionQuery) AllX(ctx context.Context) []*AssetVersion {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,20 +204,20 @@ func (avq *AssetVersionQuery) AllX(ctx context.Context) []*AssetVersion {
 }
 
 // IDs executes the query and returns a list of AssetVersion IDs.
-func (avq *AssetVersionQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if avq.ctx.Unique == nil && avq.path != nil {
-		avq.Unique(true)
+func (_q *AssetVersionQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, avq.ctx, ent.OpQueryIDs)
-	if err = avq.Select(assetversion.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(assetversion.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (avq *AssetVersionQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := avq.IDs(ctx)
+func (_q *AssetVersionQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -225,17 +225,17 @@ func (avq *AssetVersionQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (avq *AssetVersionQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, avq.ctx, ent.OpQueryCount)
-	if err := avq.prepareQuery(ctx); err != nil {
+func (_q *AssetVersionQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, avq, querierCount[*AssetVersionQuery](), avq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*AssetVersionQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (avq *AssetVersionQuery) CountX(ctx context.Context) int {
-	count, err := avq.Count(ctx)
+func (_q *AssetVersionQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -243,9 +243,9 @@ func (avq *AssetVersionQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (avq *AssetVersionQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, avq.ctx, ent.OpQueryExist)
-	switch _, err := avq.FirstID(ctx); {
+func (_q *AssetVersionQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -256,8 +256,8 @@ func (avq *AssetVersionQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (avq *AssetVersionQuery) ExistX(ctx context.Context) bool {
-	exist, err := avq.Exist(ctx)
+func (_q *AssetVersionQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -266,32 +266,32 @@ func (avq *AssetVersionQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the AssetVersionQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (avq *AssetVersionQuery) Clone() *AssetVersionQuery {
-	if avq == nil {
+func (_q *AssetVersionQuery) Clone() *AssetVersionQuery {
+	if _q == nil {
 		return nil
 	}
 	return &AssetVersionQuery{
-		config:     avq.config,
-		ctx:        avq.ctx.Clone(),
-		order:      append([]assetversion.OrderOption{}, avq.order...),
-		inters:     append([]Interceptor{}, avq.inters...),
-		predicates: append([]predicate.AssetVersion{}, avq.predicates...),
-		withAsset:  avq.withAsset.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]assetversion.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.AssetVersion{}, _q.predicates...),
+		withAsset:  _q.withAsset.Clone(),
 		// clone intermediate query.
-		sql:  avq.sql.Clone(),
-		path: avq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
 // WithAsset tells the query-builder to eager-load the nodes that are connected to
 // the "asset" edge. The optional arguments are used to configure the query builder of the edge.
-func (avq *AssetVersionQuery) WithAsset(opts ...func(*AssetQuery)) *AssetVersionQuery {
-	query := (&AssetClient{config: avq.config}).Query()
+func (_q *AssetVersionQuery) WithAsset(opts ...func(*AssetQuery)) *AssetVersionQuery {
+	query := (&AssetClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	avq.withAsset = query
-	return avq
+	_q.withAsset = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -308,10 +308,10 @@ func (avq *AssetVersionQuery) WithAsset(opts ...func(*AssetQuery)) *AssetVersion
 //		GroupBy(assetversion.FieldAssetID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (avq *AssetVersionQuery) GroupBy(field string, fields ...string) *AssetVersionGroupBy {
-	avq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &AssetVersionGroupBy{build: avq}
-	grbuild.flds = &avq.ctx.Fields
+func (_q *AssetVersionQuery) GroupBy(field string, fields ...string) *AssetVersionGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &AssetVersionGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = assetversion.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -329,76 +329,76 @@ func (avq *AssetVersionQuery) GroupBy(field string, fields ...string) *AssetVers
 //	client.AssetVersion.Query().
 //		Select(assetversion.FieldAssetID).
 //		Scan(ctx, &v)
-func (avq *AssetVersionQuery) Select(fields ...string) *AssetVersionSelect {
-	avq.ctx.Fields = append(avq.ctx.Fields, fields...)
-	sbuild := &AssetVersionSelect{AssetVersionQuery: avq}
+func (_q *AssetVersionQuery) Select(fields ...string) *AssetVersionSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &AssetVersionSelect{AssetVersionQuery: _q}
 	sbuild.label = assetversion.Label
-	sbuild.flds, sbuild.scan = &avq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a AssetVersionSelect configured with the given aggregations.
-func (avq *AssetVersionQuery) Aggregate(fns ...AggregateFunc) *AssetVersionSelect {
-	return avq.Select().Aggregate(fns...)
+func (_q *AssetVersionQuery) Aggregate(fns ...AggregateFunc) *AssetVersionSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (avq *AssetVersionQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range avq.inters {
+func (_q *AssetVersionQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, avq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range avq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !assetversion.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if avq.path != nil {
-		prev, err := avq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		avq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (avq *AssetVersionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*AssetVersion, error) {
+func (_q *AssetVersionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*AssetVersion, error) {
 	var (
 		nodes       = []*AssetVersion{}
-		_spec       = avq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [1]bool{
-			avq.withAsset != nil,
+			_q.withAsset != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*AssetVersion).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &AssetVersion{config: avq.config}
+		node := &AssetVersion{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(avq.modifiers) > 0 {
-		_spec.Modifiers = avq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, avq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := avq.withAsset; query != nil {
-		if err := avq.loadAsset(ctx, query, nodes, nil,
+	if query := _q.withAsset; query != nil {
+		if err := _q.loadAsset(ctx, query, nodes, nil,
 			func(n *AssetVersion, e *Asset) { n.Edges.Asset = e }); err != nil {
 			return nil, err
 		}
@@ -406,7 +406,7 @@ func (avq *AssetVersionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	return nodes, nil
 }
 
-func (avq *AssetVersionQuery) loadAsset(ctx context.Context, query *AssetQuery, nodes []*AssetVersion, init func(*AssetVersion), assign func(*AssetVersion, *Asset)) error {
+func (_q *AssetVersionQuery) loadAsset(ctx context.Context, query *AssetQuery, nodes []*AssetVersion, init func(*AssetVersion), assign func(*AssetVersion, *Asset)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*AssetVersion)
 	for i := range nodes {
@@ -436,27 +436,27 @@ func (avq *AssetVersionQuery) loadAsset(ctx context.Context, query *AssetQuery, 
 	return nil
 }
 
-func (avq *AssetVersionQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := avq.querySpec()
-	if len(avq.modifiers) > 0 {
-		_spec.Modifiers = avq.modifiers
+func (_q *AssetVersionQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = avq.ctx.Fields
-	if len(avq.ctx.Fields) > 0 {
-		_spec.Unique = avq.ctx.Unique != nil && *avq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, avq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (avq *AssetVersionQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *AssetVersionQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(assetversion.Table, assetversion.Columns, sqlgraph.NewFieldSpec(assetversion.FieldID, field.TypeInt64))
-	_spec.From = avq.sql
-	if unique := avq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if avq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := avq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, assetversion.FieldID)
 		for i := range fields {
@@ -464,24 +464,24 @@ func (avq *AssetVersionQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if avq.withAsset != nil {
+		if _q.withAsset != nil {
 			_spec.Node.AddColumnOnce(assetversion.FieldAssetID)
 		}
 	}
-	if ps := avq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := avq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := avq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := avq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -491,36 +491,36 @@ func (avq *AssetVersionQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (avq *AssetVersionQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(avq.driver.Dialect())
+func (_q *AssetVersionQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(assetversion.Table)
-	columns := avq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = assetversion.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if avq.sql != nil {
-		selector = avq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if avq.ctx.Unique != nil && *avq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range avq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range avq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range avq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := avq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := avq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -529,27 +529,27 @@ func (avq *AssetVersionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (avq *AssetVersionQuery) ForUpdate(opts ...sql.LockOption) *AssetVersionQuery {
-	if avq.driver.Dialect() == dialect.Postgres {
-		avq.Unique(false)
+func (_q *AssetVersionQuery) ForUpdate(opts ...sql.LockOption) *AssetVersionQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	avq.modifiers = append(avq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return avq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (avq *AssetVersionQuery) ForShare(opts ...sql.LockOption) *AssetVersionQuery {
-	if avq.driver.Dialect() == dialect.Postgres {
-		avq.Unique(false)
+func (_q *AssetVersionQuery) ForShare(opts ...sql.LockOption) *AssetVersionQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	avq.modifiers = append(avq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return avq
+	return _q
 }
 
 // AssetVersionGroupBy is the group-by builder for AssetVersion entities.
@@ -559,41 +559,41 @@ type AssetVersionGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (avgb *AssetVersionGroupBy) Aggregate(fns ...AggregateFunc) *AssetVersionGroupBy {
-	avgb.fns = append(avgb.fns, fns...)
-	return avgb
+func (_g *AssetVersionGroupBy) Aggregate(fns ...AggregateFunc) *AssetVersionGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (avgb *AssetVersionGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, avgb.build.ctx, ent.OpQueryGroupBy)
-	if err := avgb.build.prepareQuery(ctx); err != nil {
+func (_g *AssetVersionGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetVersionQuery, *AssetVersionGroupBy](ctx, avgb.build, avgb, avgb.build.inters, v)
+	return scanWithInterceptors[*AssetVersionQuery, *AssetVersionGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (avgb *AssetVersionGroupBy) sqlScan(ctx context.Context, root *AssetVersionQuery, v any) error {
+func (_g *AssetVersionGroupBy) sqlScan(ctx context.Context, root *AssetVersionQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(avgb.fns))
-	for _, fn := range avgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*avgb.flds)+len(avgb.fns))
-		for _, f := range *avgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*avgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := avgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -607,27 +607,27 @@ type AssetVersionSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (avs *AssetVersionSelect) Aggregate(fns ...AggregateFunc) *AssetVersionSelect {
-	avs.fns = append(avs.fns, fns...)
-	return avs
+func (_s *AssetVersionSelect) Aggregate(fns ...AggregateFunc) *AssetVersionSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (avs *AssetVersionSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, avs.ctx, ent.OpQuerySelect)
-	if err := avs.prepareQuery(ctx); err != nil {
+func (_s *AssetVersionSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*AssetVersionQuery, *AssetVersionSelect](ctx, avs.AssetVersionQuery, avs, avs.inters, v)
+	return scanWithInterceptors[*AssetVersionQuery, *AssetVersionSelect](ctx, _s.AssetVersionQuery, _s, _s.inters, v)
 }
 
-func (avs *AssetVersionSelect) sqlScan(ctx context.Context, root *AssetVersionQuery, v any) error {
+func (_s *AssetVersionSelect) sqlScan(ctx context.Context, root *AssetVersionQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(avs.fns))
-	for _, fn := range avs.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*avs.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -635,7 +635,7 @@ func (avs *AssetVersionSelect) sqlScan(ctx context.Context, root *AssetVersionQu
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := avs.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

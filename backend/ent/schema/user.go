@@ -22,6 +22,7 @@ func (User) Fields() []ent.Field {
 		field.String("name").Optional(),
 		field.Enum("role").Values("user", "admin").Default("user"),
 		field.Enum("status").Values("active", "suspended", "deleted").Default("active"),
+		field.Int("token_version").Default(0),
 		field.Time("last_login_at").Optional().Nillable(),
 		field.Time("created_at").Default(time.Now).Immutable(),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),

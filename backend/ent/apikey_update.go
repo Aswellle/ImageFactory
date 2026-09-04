@@ -24,178 +24,178 @@ type APIKeyUpdate struct {
 }
 
 // Where appends a list predicates to the APIKeyUpdate builder.
-func (aku *APIKeyUpdate) Where(ps ...predicate.APIKey) *APIKeyUpdate {
-	aku.mutation.Where(ps...)
-	return aku
+func (_u *APIKeyUpdate) Where(ps ...predicate.APIKey) *APIKeyUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (aku *APIKeyUpdate) SetUserID(i int64) *APIKeyUpdate {
-	aku.mutation.SetUserID(i)
-	return aku
+func (_u *APIKeyUpdate) SetUserID(v int64) *APIKeyUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableUserID(i *int64) *APIKeyUpdate {
-	if i != nil {
-		aku.SetUserID(*i)
+func (_u *APIKeyUpdate) SetNillableUserID(v *int64) *APIKeyUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return aku
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (aku *APIKeyUpdate) ClearUserID() *APIKeyUpdate {
-	aku.mutation.ClearUserID()
-	return aku
+func (_u *APIKeyUpdate) ClearUserID() *APIKeyUpdate {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetKeyHash sets the "key_hash" field.
-func (aku *APIKeyUpdate) SetKeyHash(s string) *APIKeyUpdate {
-	aku.mutation.SetKeyHash(s)
-	return aku
+func (_u *APIKeyUpdate) SetKeyHash(v string) *APIKeyUpdate {
+	_u.mutation.SetKeyHash(v)
+	return _u
 }
 
 // SetNillableKeyHash sets the "key_hash" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableKeyHash(s *string) *APIKeyUpdate {
-	if s != nil {
-		aku.SetKeyHash(*s)
+func (_u *APIKeyUpdate) SetNillableKeyHash(v *string) *APIKeyUpdate {
+	if v != nil {
+		_u.SetKeyHash(*v)
 	}
-	return aku
+	return _u
 }
 
 // SetKeyPrefix sets the "key_prefix" field.
-func (aku *APIKeyUpdate) SetKeyPrefix(s string) *APIKeyUpdate {
-	aku.mutation.SetKeyPrefix(s)
-	return aku
+func (_u *APIKeyUpdate) SetKeyPrefix(v string) *APIKeyUpdate {
+	_u.mutation.SetKeyPrefix(v)
+	return _u
 }
 
 // SetNillableKeyPrefix sets the "key_prefix" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableKeyPrefix(s *string) *APIKeyUpdate {
-	if s != nil {
-		aku.SetKeyPrefix(*s)
+func (_u *APIKeyUpdate) SetNillableKeyPrefix(v *string) *APIKeyUpdate {
+	if v != nil {
+		_u.SetKeyPrefix(*v)
 	}
-	return aku
+	return _u
 }
 
 // SetName sets the "name" field.
-func (aku *APIKeyUpdate) SetName(s string) *APIKeyUpdate {
-	aku.mutation.SetName(s)
-	return aku
+func (_u *APIKeyUpdate) SetName(v string) *APIKeyUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableName(s *string) *APIKeyUpdate {
-	if s != nil {
-		aku.SetName(*s)
+func (_u *APIKeyUpdate) SetNillableName(v *string) *APIKeyUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return aku
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (aku *APIKeyUpdate) ClearName() *APIKeyUpdate {
-	aku.mutation.ClearName()
-	return aku
+func (_u *APIKeyUpdate) ClearName() *APIKeyUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (aku *APIKeyUpdate) SetStatus(a apikey.Status) *APIKeyUpdate {
-	aku.mutation.SetStatus(a)
-	return aku
+func (_u *APIKeyUpdate) SetStatus(v apikey.Status) *APIKeyUpdate {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableStatus(a *apikey.Status) *APIKeyUpdate {
-	if a != nil {
-		aku.SetStatus(*a)
+func (_u *APIKeyUpdate) SetNillableStatus(v *apikey.Status) *APIKeyUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return aku
+	return _u
 }
 
 // SetPermissions sets the "permissions" field.
-func (aku *APIKeyUpdate) SetPermissions(i int) *APIKeyUpdate {
-	aku.mutation.ResetPermissions()
-	aku.mutation.SetPermissions(i)
-	return aku
+func (_u *APIKeyUpdate) SetPermissions(v int) *APIKeyUpdate {
+	_u.mutation.ResetPermissions()
+	_u.mutation.SetPermissions(v)
+	return _u
 }
 
 // SetNillablePermissions sets the "permissions" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillablePermissions(i *int) *APIKeyUpdate {
-	if i != nil {
-		aku.SetPermissions(*i)
+func (_u *APIKeyUpdate) SetNillablePermissions(v *int) *APIKeyUpdate {
+	if v != nil {
+		_u.SetPermissions(*v)
 	}
-	return aku
+	return _u
 }
 
-// AddPermissions adds i to the "permissions" field.
-func (aku *APIKeyUpdate) AddPermissions(i int) *APIKeyUpdate {
-	aku.mutation.AddPermissions(i)
-	return aku
+// AddPermissions adds value to the "permissions" field.
+func (_u *APIKeyUpdate) AddPermissions(v int) *APIKeyUpdate {
+	_u.mutation.AddPermissions(v)
+	return _u
 }
 
 // SetLastUsedAt sets the "last_used_at" field.
-func (aku *APIKeyUpdate) SetLastUsedAt(t time.Time) *APIKeyUpdate {
-	aku.mutation.SetLastUsedAt(t)
-	return aku
+func (_u *APIKeyUpdate) SetLastUsedAt(v time.Time) *APIKeyUpdate {
+	_u.mutation.SetLastUsedAt(v)
+	return _u
 }
 
 // SetNillableLastUsedAt sets the "last_used_at" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableLastUsedAt(t *time.Time) *APIKeyUpdate {
-	if t != nil {
-		aku.SetLastUsedAt(*t)
+func (_u *APIKeyUpdate) SetNillableLastUsedAt(v *time.Time) *APIKeyUpdate {
+	if v != nil {
+		_u.SetLastUsedAt(*v)
 	}
-	return aku
+	return _u
 }
 
 // ClearLastUsedAt clears the value of the "last_used_at" field.
-func (aku *APIKeyUpdate) ClearLastUsedAt() *APIKeyUpdate {
-	aku.mutation.ClearLastUsedAt()
-	return aku
+func (_u *APIKeyUpdate) ClearLastUsedAt() *APIKeyUpdate {
+	_u.mutation.ClearLastUsedAt()
+	return _u
 }
 
 // SetExpiresAt sets the "expires_at" field.
-func (aku *APIKeyUpdate) SetExpiresAt(t time.Time) *APIKeyUpdate {
-	aku.mutation.SetExpiresAt(t)
-	return aku
+func (_u *APIKeyUpdate) SetExpiresAt(v time.Time) *APIKeyUpdate {
+	_u.mutation.SetExpiresAt(v)
+	return _u
 }
 
 // SetNillableExpiresAt sets the "expires_at" field if the given value is not nil.
-func (aku *APIKeyUpdate) SetNillableExpiresAt(t *time.Time) *APIKeyUpdate {
-	if t != nil {
-		aku.SetExpiresAt(*t)
+func (_u *APIKeyUpdate) SetNillableExpiresAt(v *time.Time) *APIKeyUpdate {
+	if v != nil {
+		_u.SetExpiresAt(*v)
 	}
-	return aku
+	return _u
 }
 
 // ClearExpiresAt clears the value of the "expires_at" field.
-func (aku *APIKeyUpdate) ClearExpiresAt() *APIKeyUpdate {
-	aku.mutation.ClearExpiresAt()
-	return aku
+func (_u *APIKeyUpdate) ClearExpiresAt() *APIKeyUpdate {
+	_u.mutation.ClearExpiresAt()
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (aku *APIKeyUpdate) SetUser(u *User) *APIKeyUpdate {
-	return aku.SetUserID(u.ID)
+func (_u *APIKeyUpdate) SetUser(v *User) *APIKeyUpdate {
+	return _u.SetUserID(v.ID)
 }
 
 // Mutation returns the APIKeyMutation object of the builder.
-func (aku *APIKeyUpdate) Mutation() *APIKeyMutation {
-	return aku.mutation
+func (_u *APIKeyUpdate) Mutation() *APIKeyMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (aku *APIKeyUpdate) ClearUser() *APIKeyUpdate {
-	aku.mutation.ClearUser()
-	return aku
+func (_u *APIKeyUpdate) ClearUser() *APIKeyUpdate {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (aku *APIKeyUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks(ctx, aku.sqlSave, aku.mutation, aku.hooks)
+func (_u *APIKeyUpdate) Save(ctx context.Context) (int, error) {
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (aku *APIKeyUpdate) SaveX(ctx context.Context) int {
-	affected, err := aku.Save(ctx)
+func (_u *APIKeyUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -203,31 +203,31 @@ func (aku *APIKeyUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (aku *APIKeyUpdate) Exec(ctx context.Context) error {
-	_, err := aku.Save(ctx)
+func (_u *APIKeyUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (aku *APIKeyUpdate) ExecX(ctx context.Context) {
-	if err := aku.Exec(ctx); err != nil {
+func (_u *APIKeyUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (aku *APIKeyUpdate) check() error {
-	if v, ok := aku.mutation.KeyHash(); ok {
+func (_u *APIKeyUpdate) check() error {
+	if v, ok := _u.mutation.KeyHash(); ok {
 		if err := apikey.KeyHashValidator(v); err != nil {
 			return &ValidationError{Name: "key_hash", err: fmt.Errorf(`ent: validator failed for field "APIKey.key_hash": %w`, err)}
 		}
 	}
-	if v, ok := aku.mutation.KeyPrefix(); ok {
+	if v, ok := _u.mutation.KeyPrefix(); ok {
 		if err := apikey.KeyPrefixValidator(v); err != nil {
 			return &ValidationError{Name: "key_prefix", err: fmt.Errorf(`ent: validator failed for field "APIKey.key_prefix": %w`, err)}
 		}
 	}
-	if v, ok := aku.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := apikey.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "APIKey.status": %w`, err)}
 		}
@@ -235,52 +235,52 @@ func (aku *APIKeyUpdate) check() error {
 	return nil
 }
 
-func (aku *APIKeyUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := aku.check(); err != nil {
-		return n, err
+func (_u *APIKeyUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(apikey.Table, apikey.Columns, sqlgraph.NewFieldSpec(apikey.FieldID, field.TypeInt64))
-	if ps := aku.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := aku.mutation.KeyHash(); ok {
+	if value, ok := _u.mutation.KeyHash(); ok {
 		_spec.SetField(apikey.FieldKeyHash, field.TypeString, value)
 	}
-	if value, ok := aku.mutation.KeyPrefix(); ok {
+	if value, ok := _u.mutation.KeyPrefix(); ok {
 		_spec.SetField(apikey.FieldKeyPrefix, field.TypeString, value)
 	}
-	if value, ok := aku.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(apikey.FieldName, field.TypeString, value)
 	}
-	if aku.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(apikey.FieldName, field.TypeString)
 	}
-	if value, ok := aku.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(apikey.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := aku.mutation.Permissions(); ok {
+	if value, ok := _u.mutation.Permissions(); ok {
 		_spec.SetField(apikey.FieldPermissions, field.TypeInt, value)
 	}
-	if value, ok := aku.mutation.AddedPermissions(); ok {
+	if value, ok := _u.mutation.AddedPermissions(); ok {
 		_spec.AddField(apikey.FieldPermissions, field.TypeInt, value)
 	}
-	if value, ok := aku.mutation.LastUsedAt(); ok {
+	if value, ok := _u.mutation.LastUsedAt(); ok {
 		_spec.SetField(apikey.FieldLastUsedAt, field.TypeTime, value)
 	}
-	if aku.mutation.LastUsedAtCleared() {
+	if _u.mutation.LastUsedAtCleared() {
 		_spec.ClearField(apikey.FieldLastUsedAt, field.TypeTime)
 	}
-	if value, ok := aku.mutation.ExpiresAt(); ok {
+	if value, ok := _u.mutation.ExpiresAt(); ok {
 		_spec.SetField(apikey.FieldExpiresAt, field.TypeTime, value)
 	}
-	if aku.mutation.ExpiresAtCleared() {
+	if _u.mutation.ExpiresAtCleared() {
 		_spec.ClearField(apikey.FieldExpiresAt, field.TypeTime)
 	}
-	if aku.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -293,7 +293,7 @@ func (aku *APIKeyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := aku.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -309,7 +309,7 @@ func (aku *APIKeyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, aku.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{apikey.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -317,8 +317,8 @@ func (aku *APIKeyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	aku.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // APIKeyUpdateOne is the builder for updating a single APIKey entity.
@@ -330,185 +330,185 @@ type APIKeyUpdateOne struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (akuo *APIKeyUpdateOne) SetUserID(i int64) *APIKeyUpdateOne {
-	akuo.mutation.SetUserID(i)
-	return akuo
+func (_u *APIKeyUpdateOne) SetUserID(v int64) *APIKeyUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableUserID(i *int64) *APIKeyUpdateOne {
-	if i != nil {
-		akuo.SetUserID(*i)
+func (_u *APIKeyUpdateOne) SetNillableUserID(v *int64) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return akuo
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (akuo *APIKeyUpdateOne) ClearUserID() *APIKeyUpdateOne {
-	akuo.mutation.ClearUserID()
-	return akuo
+func (_u *APIKeyUpdateOne) ClearUserID() *APIKeyUpdateOne {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetKeyHash sets the "key_hash" field.
-func (akuo *APIKeyUpdateOne) SetKeyHash(s string) *APIKeyUpdateOne {
-	akuo.mutation.SetKeyHash(s)
-	return akuo
+func (_u *APIKeyUpdateOne) SetKeyHash(v string) *APIKeyUpdateOne {
+	_u.mutation.SetKeyHash(v)
+	return _u
 }
 
 // SetNillableKeyHash sets the "key_hash" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableKeyHash(s *string) *APIKeyUpdateOne {
-	if s != nil {
-		akuo.SetKeyHash(*s)
+func (_u *APIKeyUpdateOne) SetNillableKeyHash(v *string) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetKeyHash(*v)
 	}
-	return akuo
+	return _u
 }
 
 // SetKeyPrefix sets the "key_prefix" field.
-func (akuo *APIKeyUpdateOne) SetKeyPrefix(s string) *APIKeyUpdateOne {
-	akuo.mutation.SetKeyPrefix(s)
-	return akuo
+func (_u *APIKeyUpdateOne) SetKeyPrefix(v string) *APIKeyUpdateOne {
+	_u.mutation.SetKeyPrefix(v)
+	return _u
 }
 
 // SetNillableKeyPrefix sets the "key_prefix" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableKeyPrefix(s *string) *APIKeyUpdateOne {
-	if s != nil {
-		akuo.SetKeyPrefix(*s)
+func (_u *APIKeyUpdateOne) SetNillableKeyPrefix(v *string) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetKeyPrefix(*v)
 	}
-	return akuo
+	return _u
 }
 
 // SetName sets the "name" field.
-func (akuo *APIKeyUpdateOne) SetName(s string) *APIKeyUpdateOne {
-	akuo.mutation.SetName(s)
-	return akuo
+func (_u *APIKeyUpdateOne) SetName(v string) *APIKeyUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableName(s *string) *APIKeyUpdateOne {
-	if s != nil {
-		akuo.SetName(*s)
+func (_u *APIKeyUpdateOne) SetNillableName(v *string) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return akuo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (akuo *APIKeyUpdateOne) ClearName() *APIKeyUpdateOne {
-	akuo.mutation.ClearName()
-	return akuo
+func (_u *APIKeyUpdateOne) ClearName() *APIKeyUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetStatus sets the "status" field.
-func (akuo *APIKeyUpdateOne) SetStatus(a apikey.Status) *APIKeyUpdateOne {
-	akuo.mutation.SetStatus(a)
-	return akuo
+func (_u *APIKeyUpdateOne) SetStatus(v apikey.Status) *APIKeyUpdateOne {
+	_u.mutation.SetStatus(v)
+	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableStatus(a *apikey.Status) *APIKeyUpdateOne {
-	if a != nil {
-		akuo.SetStatus(*a)
+func (_u *APIKeyUpdateOne) SetNillableStatus(v *apikey.Status) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
 	}
-	return akuo
+	return _u
 }
 
 // SetPermissions sets the "permissions" field.
-func (akuo *APIKeyUpdateOne) SetPermissions(i int) *APIKeyUpdateOne {
-	akuo.mutation.ResetPermissions()
-	akuo.mutation.SetPermissions(i)
-	return akuo
+func (_u *APIKeyUpdateOne) SetPermissions(v int) *APIKeyUpdateOne {
+	_u.mutation.ResetPermissions()
+	_u.mutation.SetPermissions(v)
+	return _u
 }
 
 // SetNillablePermissions sets the "permissions" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillablePermissions(i *int) *APIKeyUpdateOne {
-	if i != nil {
-		akuo.SetPermissions(*i)
+func (_u *APIKeyUpdateOne) SetNillablePermissions(v *int) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetPermissions(*v)
 	}
-	return akuo
+	return _u
 }
 
-// AddPermissions adds i to the "permissions" field.
-func (akuo *APIKeyUpdateOne) AddPermissions(i int) *APIKeyUpdateOne {
-	akuo.mutation.AddPermissions(i)
-	return akuo
+// AddPermissions adds value to the "permissions" field.
+func (_u *APIKeyUpdateOne) AddPermissions(v int) *APIKeyUpdateOne {
+	_u.mutation.AddPermissions(v)
+	return _u
 }
 
 // SetLastUsedAt sets the "last_used_at" field.
-func (akuo *APIKeyUpdateOne) SetLastUsedAt(t time.Time) *APIKeyUpdateOne {
-	akuo.mutation.SetLastUsedAt(t)
-	return akuo
+func (_u *APIKeyUpdateOne) SetLastUsedAt(v time.Time) *APIKeyUpdateOne {
+	_u.mutation.SetLastUsedAt(v)
+	return _u
 }
 
 // SetNillableLastUsedAt sets the "last_used_at" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableLastUsedAt(t *time.Time) *APIKeyUpdateOne {
-	if t != nil {
-		akuo.SetLastUsedAt(*t)
+func (_u *APIKeyUpdateOne) SetNillableLastUsedAt(v *time.Time) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetLastUsedAt(*v)
 	}
-	return akuo
+	return _u
 }
 
 // ClearLastUsedAt clears the value of the "last_used_at" field.
-func (akuo *APIKeyUpdateOne) ClearLastUsedAt() *APIKeyUpdateOne {
-	akuo.mutation.ClearLastUsedAt()
-	return akuo
+func (_u *APIKeyUpdateOne) ClearLastUsedAt() *APIKeyUpdateOne {
+	_u.mutation.ClearLastUsedAt()
+	return _u
 }
 
 // SetExpiresAt sets the "expires_at" field.
-func (akuo *APIKeyUpdateOne) SetExpiresAt(t time.Time) *APIKeyUpdateOne {
-	akuo.mutation.SetExpiresAt(t)
-	return akuo
+func (_u *APIKeyUpdateOne) SetExpiresAt(v time.Time) *APIKeyUpdateOne {
+	_u.mutation.SetExpiresAt(v)
+	return _u
 }
 
 // SetNillableExpiresAt sets the "expires_at" field if the given value is not nil.
-func (akuo *APIKeyUpdateOne) SetNillableExpiresAt(t *time.Time) *APIKeyUpdateOne {
-	if t != nil {
-		akuo.SetExpiresAt(*t)
+func (_u *APIKeyUpdateOne) SetNillableExpiresAt(v *time.Time) *APIKeyUpdateOne {
+	if v != nil {
+		_u.SetExpiresAt(*v)
 	}
-	return akuo
+	return _u
 }
 
 // ClearExpiresAt clears the value of the "expires_at" field.
-func (akuo *APIKeyUpdateOne) ClearExpiresAt() *APIKeyUpdateOne {
-	akuo.mutation.ClearExpiresAt()
-	return akuo
+func (_u *APIKeyUpdateOne) ClearExpiresAt() *APIKeyUpdateOne {
+	_u.mutation.ClearExpiresAt()
+	return _u
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (akuo *APIKeyUpdateOne) SetUser(u *User) *APIKeyUpdateOne {
-	return akuo.SetUserID(u.ID)
+func (_u *APIKeyUpdateOne) SetUser(v *User) *APIKeyUpdateOne {
+	return _u.SetUserID(v.ID)
 }
 
 // Mutation returns the APIKeyMutation object of the builder.
-func (akuo *APIKeyUpdateOne) Mutation() *APIKeyMutation {
-	return akuo.mutation
+func (_u *APIKeyUpdateOne) Mutation() *APIKeyMutation {
+	return _u.mutation
 }
 
 // ClearUser clears the "user" edge to the User entity.
-func (akuo *APIKeyUpdateOne) ClearUser() *APIKeyUpdateOne {
-	akuo.mutation.ClearUser()
-	return akuo
+func (_u *APIKeyUpdateOne) ClearUser() *APIKeyUpdateOne {
+	_u.mutation.ClearUser()
+	return _u
 }
 
 // Where appends a list predicates to the APIKeyUpdate builder.
-func (akuo *APIKeyUpdateOne) Where(ps ...predicate.APIKey) *APIKeyUpdateOne {
-	akuo.mutation.Where(ps...)
-	return akuo
+func (_u *APIKeyUpdateOne) Where(ps ...predicate.APIKey) *APIKeyUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (akuo *APIKeyUpdateOne) Select(field string, fields ...string) *APIKeyUpdateOne {
-	akuo.fields = append([]string{field}, fields...)
-	return akuo
+func (_u *APIKeyUpdateOne) Select(field string, fields ...string) *APIKeyUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated APIKey entity.
-func (akuo *APIKeyUpdateOne) Save(ctx context.Context) (*APIKey, error) {
-	return withHooks(ctx, akuo.sqlSave, akuo.mutation, akuo.hooks)
+func (_u *APIKeyUpdateOne) Save(ctx context.Context) (*APIKey, error) {
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (akuo *APIKeyUpdateOne) SaveX(ctx context.Context) *APIKey {
-	node, err := akuo.Save(ctx)
+func (_u *APIKeyUpdateOne) SaveX(ctx context.Context) *APIKey {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -516,31 +516,31 @@ func (akuo *APIKeyUpdateOne) SaveX(ctx context.Context) *APIKey {
 }
 
 // Exec executes the query on the entity.
-func (akuo *APIKeyUpdateOne) Exec(ctx context.Context) error {
-	_, err := akuo.Save(ctx)
+func (_u *APIKeyUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (akuo *APIKeyUpdateOne) ExecX(ctx context.Context) {
-	if err := akuo.Exec(ctx); err != nil {
+func (_u *APIKeyUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (akuo *APIKeyUpdateOne) check() error {
-	if v, ok := akuo.mutation.KeyHash(); ok {
+func (_u *APIKeyUpdateOne) check() error {
+	if v, ok := _u.mutation.KeyHash(); ok {
 		if err := apikey.KeyHashValidator(v); err != nil {
 			return &ValidationError{Name: "key_hash", err: fmt.Errorf(`ent: validator failed for field "APIKey.key_hash": %w`, err)}
 		}
 	}
-	if v, ok := akuo.mutation.KeyPrefix(); ok {
+	if v, ok := _u.mutation.KeyPrefix(); ok {
 		if err := apikey.KeyPrefixValidator(v); err != nil {
 			return &ValidationError{Name: "key_prefix", err: fmt.Errorf(`ent: validator failed for field "APIKey.key_prefix": %w`, err)}
 		}
 	}
-	if v, ok := akuo.mutation.Status(); ok {
+	if v, ok := _u.mutation.Status(); ok {
 		if err := apikey.StatusValidator(v); err != nil {
 			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "APIKey.status": %w`, err)}
 		}
@@ -548,17 +548,17 @@ func (akuo *APIKeyUpdateOne) check() error {
 	return nil
 }
 
-func (akuo *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err error) {
-	if err := akuo.check(); err != nil {
+func (_u *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(apikey.Table, apikey.Columns, sqlgraph.NewFieldSpec(apikey.FieldID, field.TypeInt64))
-	id, ok := akuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "APIKey.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := akuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, apikey.FieldID)
 		for _, f := range fields {
@@ -570,47 +570,47 @@ func (akuo *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err er
 			}
 		}
 	}
-	if ps := akuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := akuo.mutation.KeyHash(); ok {
+	if value, ok := _u.mutation.KeyHash(); ok {
 		_spec.SetField(apikey.FieldKeyHash, field.TypeString, value)
 	}
-	if value, ok := akuo.mutation.KeyPrefix(); ok {
+	if value, ok := _u.mutation.KeyPrefix(); ok {
 		_spec.SetField(apikey.FieldKeyPrefix, field.TypeString, value)
 	}
-	if value, ok := akuo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(apikey.FieldName, field.TypeString, value)
 	}
-	if akuo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(apikey.FieldName, field.TypeString)
 	}
-	if value, ok := akuo.mutation.Status(); ok {
+	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(apikey.FieldStatus, field.TypeEnum, value)
 	}
-	if value, ok := akuo.mutation.Permissions(); ok {
+	if value, ok := _u.mutation.Permissions(); ok {
 		_spec.SetField(apikey.FieldPermissions, field.TypeInt, value)
 	}
-	if value, ok := akuo.mutation.AddedPermissions(); ok {
+	if value, ok := _u.mutation.AddedPermissions(); ok {
 		_spec.AddField(apikey.FieldPermissions, field.TypeInt, value)
 	}
-	if value, ok := akuo.mutation.LastUsedAt(); ok {
+	if value, ok := _u.mutation.LastUsedAt(); ok {
 		_spec.SetField(apikey.FieldLastUsedAt, field.TypeTime, value)
 	}
-	if akuo.mutation.LastUsedAtCleared() {
+	if _u.mutation.LastUsedAtCleared() {
 		_spec.ClearField(apikey.FieldLastUsedAt, field.TypeTime)
 	}
-	if value, ok := akuo.mutation.ExpiresAt(); ok {
+	if value, ok := _u.mutation.ExpiresAt(); ok {
 		_spec.SetField(apikey.FieldExpiresAt, field.TypeTime, value)
 	}
-	if akuo.mutation.ExpiresAtCleared() {
+	if _u.mutation.ExpiresAtCleared() {
 		_spec.ClearField(apikey.FieldExpiresAt, field.TypeTime)
 	}
-	if akuo.mutation.UserCleared() {
+	if _u.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -623,7 +623,7 @@ func (akuo *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := akuo.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -639,10 +639,10 @@ func (akuo *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &APIKey{config: akuo.config}
+	_node = &APIKey{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, akuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{apikey.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -650,6 +650,6 @@ func (akuo *APIKeyUpdateOne) sqlSave(ctx context.Context) (_node *APIKey, err er
 		}
 		return nil, err
 	}
-	akuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

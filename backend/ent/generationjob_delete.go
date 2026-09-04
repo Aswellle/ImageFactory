@@ -20,56 +20,56 @@ type GenerationJobDelete struct {
 }
 
 // Where appends a list predicates to the GenerationJobDelete builder.
-func (gjd *GenerationJobDelete) Where(ps ...predicate.GenerationJob) *GenerationJobDelete {
-	gjd.mutation.Where(ps...)
-	return gjd
+func (_d *GenerationJobDelete) Where(ps ...predicate.GenerationJob) *GenerationJobDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (gjd *GenerationJobDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, gjd.sqlExec, gjd.mutation, gjd.hooks)
+func (_d *GenerationJobDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gjd *GenerationJobDelete) ExecX(ctx context.Context) int {
-	n, err := gjd.Exec(ctx)
+func (_d *GenerationJobDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (gjd *GenerationJobDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *GenerationJobDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(generationjob.Table, sqlgraph.NewFieldSpec(generationjob.FieldID, field.TypeInt64))
-	if ps := gjd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, gjd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	gjd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // GenerationJobDeleteOne is the builder for deleting a single GenerationJob entity.
 type GenerationJobDeleteOne struct {
-	gjd *GenerationJobDelete
+	_d *GenerationJobDelete
 }
 
 // Where appends a list predicates to the GenerationJobDelete builder.
-func (gjdo *GenerationJobDeleteOne) Where(ps ...predicate.GenerationJob) *GenerationJobDeleteOne {
-	gjdo.gjd.mutation.Where(ps...)
-	return gjdo
+func (_d *GenerationJobDeleteOne) Where(ps ...predicate.GenerationJob) *GenerationJobDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (gjdo *GenerationJobDeleteOne) Exec(ctx context.Context) error {
-	n, err := gjdo.gjd.Exec(ctx)
+func (_d *GenerationJobDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (gjdo *GenerationJobDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gjdo *GenerationJobDeleteOne) ExecX(ctx context.Context) {
-	if err := gjdo.Exec(ctx); err != nil {
+func (_d *GenerationJobDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

@@ -24,182 +24,182 @@ type AssetVersionCreate struct {
 }
 
 // SetAssetID sets the "asset_id" field.
-func (avc *AssetVersionCreate) SetAssetID(i int64) *AssetVersionCreate {
-	avc.mutation.SetAssetID(i)
-	return avc
+func (_c *AssetVersionCreate) SetAssetID(v int64) *AssetVersionCreate {
+	_c.mutation.SetAssetID(v)
+	return _c
 }
 
 // SetVersion sets the "version" field.
-func (avc *AssetVersionCreate) SetVersion(i int) *AssetVersionCreate {
-	avc.mutation.SetVersion(i)
-	return avc
+func (_c *AssetVersionCreate) SetVersion(v int) *AssetVersionCreate {
+	_c.mutation.SetVersion(v)
+	return _c
 }
 
 // SetEditJobID sets the "edit_job_id" field.
-func (avc *AssetVersionCreate) SetEditJobID(i int64) *AssetVersionCreate {
-	avc.mutation.SetEditJobID(i)
-	return avc
+func (_c *AssetVersionCreate) SetEditJobID(v int64) *AssetVersionCreate {
+	_c.mutation.SetEditJobID(v)
+	return _c
 }
 
 // SetNillableEditJobID sets the "edit_job_id" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableEditJobID(i *int64) *AssetVersionCreate {
-	if i != nil {
-		avc.SetEditJobID(*i)
+func (_c *AssetVersionCreate) SetNillableEditJobID(v *int64) *AssetVersionCreate {
+	if v != nil {
+		_c.SetEditJobID(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetPrompt sets the "prompt" field.
-func (avc *AssetVersionCreate) SetPrompt(s string) *AssetVersionCreate {
-	avc.mutation.SetPrompt(s)
-	return avc
+func (_c *AssetVersionCreate) SetPrompt(v string) *AssetVersionCreate {
+	_c.mutation.SetPrompt(v)
+	return _c
 }
 
 // SetNillablePrompt sets the "prompt" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillablePrompt(s *string) *AssetVersionCreate {
-	if s != nil {
-		avc.SetPrompt(*s)
+func (_c *AssetVersionCreate) SetNillablePrompt(v *string) *AssetVersionCreate {
+	if v != nil {
+		_c.SetPrompt(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetNegativePrompt sets the "negative_prompt" field.
-func (avc *AssetVersionCreate) SetNegativePrompt(s string) *AssetVersionCreate {
-	avc.mutation.SetNegativePrompt(s)
-	return avc
+func (_c *AssetVersionCreate) SetNegativePrompt(v string) *AssetVersionCreate {
+	_c.mutation.SetNegativePrompt(v)
+	return _c
 }
 
 // SetNillableNegativePrompt sets the "negative_prompt" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableNegativePrompt(s *string) *AssetVersionCreate {
-	if s != nil {
-		avc.SetNegativePrompt(*s)
+func (_c *AssetVersionCreate) SetNillableNegativePrompt(v *string) *AssetVersionCreate {
+	if v != nil {
+		_c.SetNegativePrompt(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetModel sets the "model" field.
-func (avc *AssetVersionCreate) SetModel(s string) *AssetVersionCreate {
-	avc.mutation.SetModel(s)
-	return avc
+func (_c *AssetVersionCreate) SetModel(v string) *AssetVersionCreate {
+	_c.mutation.SetModel(v)
+	return _c
 }
 
 // SetNillableModel sets the "model" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableModel(s *string) *AssetVersionCreate {
-	if s != nil {
-		avc.SetModel(*s)
+func (_c *AssetVersionCreate) SetNillableModel(v *string) *AssetVersionCreate {
+	if v != nil {
+		_c.SetModel(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetWidth sets the "width" field.
-func (avc *AssetVersionCreate) SetWidth(i int) *AssetVersionCreate {
-	avc.mutation.SetWidth(i)
-	return avc
+func (_c *AssetVersionCreate) SetWidth(v int) *AssetVersionCreate {
+	_c.mutation.SetWidth(v)
+	return _c
 }
 
 // SetNillableWidth sets the "width" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableWidth(i *int) *AssetVersionCreate {
-	if i != nil {
-		avc.SetWidth(*i)
+func (_c *AssetVersionCreate) SetNillableWidth(v *int) *AssetVersionCreate {
+	if v != nil {
+		_c.SetWidth(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetHeight sets the "height" field.
-func (avc *AssetVersionCreate) SetHeight(i int) *AssetVersionCreate {
-	avc.mutation.SetHeight(i)
-	return avc
+func (_c *AssetVersionCreate) SetHeight(v int) *AssetVersionCreate {
+	_c.mutation.SetHeight(v)
+	return _c
 }
 
 // SetNillableHeight sets the "height" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableHeight(i *int) *AssetVersionCreate {
-	if i != nil {
-		avc.SetHeight(*i)
+func (_c *AssetVersionCreate) SetNillableHeight(v *int) *AssetVersionCreate {
+	if v != nil {
+		_c.SetHeight(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetMimeType sets the "mime_type" field.
-func (avc *AssetVersionCreate) SetMimeType(s string) *AssetVersionCreate {
-	avc.mutation.SetMimeType(s)
-	return avc
+func (_c *AssetVersionCreate) SetMimeType(v string) *AssetVersionCreate {
+	_c.mutation.SetMimeType(v)
+	return _c
 }
 
 // SetNillableMimeType sets the "mime_type" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableMimeType(s *string) *AssetVersionCreate {
-	if s != nil {
-		avc.SetMimeType(*s)
+func (_c *AssetVersionCreate) SetNillableMimeType(v *string) *AssetVersionCreate {
+	if v != nil {
+		_c.SetMimeType(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetFileSize sets the "file_size" field.
-func (avc *AssetVersionCreate) SetFileSize(i int64) *AssetVersionCreate {
-	avc.mutation.SetFileSize(i)
-	return avc
+func (_c *AssetVersionCreate) SetFileSize(v int64) *AssetVersionCreate {
+	_c.mutation.SetFileSize(v)
+	return _c
 }
 
 // SetNillableFileSize sets the "file_size" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableFileSize(i *int64) *AssetVersionCreate {
-	if i != nil {
-		avc.SetFileSize(*i)
+func (_c *AssetVersionCreate) SetNillableFileSize(v *int64) *AssetVersionCreate {
+	if v != nil {
+		_c.SetFileSize(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetStorageKey sets the "storage_key" field.
-func (avc *AssetVersionCreate) SetStorageKey(s string) *AssetVersionCreate {
-	avc.mutation.SetStorageKey(s)
-	return avc
+func (_c *AssetVersionCreate) SetStorageKey(v string) *AssetVersionCreate {
+	_c.mutation.SetStorageKey(v)
+	return _c
 }
 
 // SetThumbnailKey sets the "thumbnail_key" field.
-func (avc *AssetVersionCreate) SetThumbnailKey(s string) *AssetVersionCreate {
-	avc.mutation.SetThumbnailKey(s)
-	return avc
+func (_c *AssetVersionCreate) SetThumbnailKey(v string) *AssetVersionCreate {
+	_c.mutation.SetThumbnailKey(v)
+	return _c
 }
 
 // SetNillableThumbnailKey sets the "thumbnail_key" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableThumbnailKey(s *string) *AssetVersionCreate {
-	if s != nil {
-		avc.SetThumbnailKey(*s)
+func (_c *AssetVersionCreate) SetNillableThumbnailKey(v *string) *AssetVersionCreate {
+	if v != nil {
+		_c.SetThumbnailKey(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (avc *AssetVersionCreate) SetCreatedAt(t time.Time) *AssetVersionCreate {
-	avc.mutation.SetCreatedAt(t)
-	return avc
+func (_c *AssetVersionCreate) SetCreatedAt(v time.Time) *AssetVersionCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (avc *AssetVersionCreate) SetNillableCreatedAt(t *time.Time) *AssetVersionCreate {
-	if t != nil {
-		avc.SetCreatedAt(*t)
+func (_c *AssetVersionCreate) SetNillableCreatedAt(v *time.Time) *AssetVersionCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return avc
+	return _c
 }
 
 // SetAsset sets the "asset" edge to the Asset entity.
-func (avc *AssetVersionCreate) SetAsset(a *Asset) *AssetVersionCreate {
-	return avc.SetAssetID(a.ID)
+func (_c *AssetVersionCreate) SetAsset(v *Asset) *AssetVersionCreate {
+	return _c.SetAssetID(v.ID)
 }
 
 // Mutation returns the AssetVersionMutation object of the builder.
-func (avc *AssetVersionCreate) Mutation() *AssetVersionMutation {
-	return avc.mutation
+func (_c *AssetVersionCreate) Mutation() *AssetVersionMutation {
+	return _c.mutation
 }
 
 // Save creates the AssetVersion in the database.
-func (avc *AssetVersionCreate) Save(ctx context.Context) (*AssetVersion, error) {
-	avc.defaults()
-	return withHooks(ctx, avc.sqlSave, avc.mutation, avc.hooks)
+func (_c *AssetVersionCreate) Save(ctx context.Context) (*AssetVersion, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (avc *AssetVersionCreate) SaveX(ctx context.Context) *AssetVersion {
-	v, err := avc.Save(ctx)
+func (_c *AssetVersionCreate) SaveX(ctx context.Context) *AssetVersion {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -207,62 +207,62 @@ func (avc *AssetVersionCreate) SaveX(ctx context.Context) *AssetVersion {
 }
 
 // Exec executes the query.
-func (avc *AssetVersionCreate) Exec(ctx context.Context) error {
-	_, err := avc.Save(ctx)
+func (_c *AssetVersionCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (avc *AssetVersionCreate) ExecX(ctx context.Context) {
-	if err := avc.Exec(ctx); err != nil {
+func (_c *AssetVersionCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (avc *AssetVersionCreate) defaults() {
-	if _, ok := avc.mutation.CreatedAt(); !ok {
+func (_c *AssetVersionCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := assetversion.DefaultCreatedAt()
-		avc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (avc *AssetVersionCreate) check() error {
-	if _, ok := avc.mutation.AssetID(); !ok {
+func (_c *AssetVersionCreate) check() error {
+	if _, ok := _c.mutation.AssetID(); !ok {
 		return &ValidationError{Name: "asset_id", err: errors.New(`ent: missing required field "AssetVersion.asset_id"`)}
 	}
-	if _, ok := avc.mutation.Version(); !ok {
+	if _, ok := _c.mutation.Version(); !ok {
 		return &ValidationError{Name: "version", err: errors.New(`ent: missing required field "AssetVersion.version"`)}
 	}
-	if v, ok := avc.mutation.Version(); ok {
+	if v, ok := _c.mutation.Version(); ok {
 		if err := assetversion.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.version": %w`, err)}
 		}
 	}
-	if _, ok := avc.mutation.StorageKey(); !ok {
+	if _, ok := _c.mutation.StorageKey(); !ok {
 		return &ValidationError{Name: "storage_key", err: errors.New(`ent: missing required field "AssetVersion.storage_key"`)}
 	}
-	if v, ok := avc.mutation.StorageKey(); ok {
+	if v, ok := _c.mutation.StorageKey(); ok {
 		if err := assetversion.StorageKeyValidator(v); err != nil {
 			return &ValidationError{Name: "storage_key", err: fmt.Errorf(`ent: validator failed for field "AssetVersion.storage_key": %w`, err)}
 		}
 	}
-	if _, ok := avc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "AssetVersion.created_at"`)}
 	}
-	if len(avc.mutation.AssetIDs()) == 0 {
+	if len(_c.mutation.AssetIDs()) == 0 {
 		return &ValidationError{Name: "asset", err: errors.New(`ent: missing required edge "AssetVersion.asset"`)}
 	}
 	return nil
 }
 
-func (avc *AssetVersionCreate) sqlSave(ctx context.Context) (*AssetVersion, error) {
-	if err := avc.check(); err != nil {
+func (_c *AssetVersionCreate) sqlSave(ctx context.Context) (*AssetVersion, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := avc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, avc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -270,66 +270,66 @@ func (avc *AssetVersionCreate) sqlSave(ctx context.Context) (*AssetVersion, erro
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	avc.mutation.id = &_node.ID
-	avc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (avc *AssetVersionCreate) createSpec() (*AssetVersion, *sqlgraph.CreateSpec) {
+func (_c *AssetVersionCreate) createSpec() (*AssetVersion, *sqlgraph.CreateSpec) {
 	var (
-		_node = &AssetVersion{config: avc.config}
+		_node = &AssetVersion{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(assetversion.Table, sqlgraph.NewFieldSpec(assetversion.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = avc.conflict
-	if value, ok := avc.mutation.Version(); ok {
+	_spec.OnConflict = _c.conflict
+	if value, ok := _c.mutation.Version(); ok {
 		_spec.SetField(assetversion.FieldVersion, field.TypeInt, value)
 		_node.Version = value
 	}
-	if value, ok := avc.mutation.EditJobID(); ok {
+	if value, ok := _c.mutation.EditJobID(); ok {
 		_spec.SetField(assetversion.FieldEditJobID, field.TypeInt64, value)
 		_node.EditJobID = value
 	}
-	if value, ok := avc.mutation.Prompt(); ok {
+	if value, ok := _c.mutation.Prompt(); ok {
 		_spec.SetField(assetversion.FieldPrompt, field.TypeString, value)
 		_node.Prompt = value
 	}
-	if value, ok := avc.mutation.NegativePrompt(); ok {
+	if value, ok := _c.mutation.NegativePrompt(); ok {
 		_spec.SetField(assetversion.FieldNegativePrompt, field.TypeString, value)
 		_node.NegativePrompt = value
 	}
-	if value, ok := avc.mutation.Model(); ok {
+	if value, ok := _c.mutation.Model(); ok {
 		_spec.SetField(assetversion.FieldModel, field.TypeString, value)
 		_node.Model = value
 	}
-	if value, ok := avc.mutation.Width(); ok {
+	if value, ok := _c.mutation.Width(); ok {
 		_spec.SetField(assetversion.FieldWidth, field.TypeInt, value)
 		_node.Width = value
 	}
-	if value, ok := avc.mutation.Height(); ok {
+	if value, ok := _c.mutation.Height(); ok {
 		_spec.SetField(assetversion.FieldHeight, field.TypeInt, value)
 		_node.Height = value
 	}
-	if value, ok := avc.mutation.MimeType(); ok {
+	if value, ok := _c.mutation.MimeType(); ok {
 		_spec.SetField(assetversion.FieldMimeType, field.TypeString, value)
 		_node.MimeType = value
 	}
-	if value, ok := avc.mutation.FileSize(); ok {
+	if value, ok := _c.mutation.FileSize(); ok {
 		_spec.SetField(assetversion.FieldFileSize, field.TypeInt64, value)
 		_node.FileSize = value
 	}
-	if value, ok := avc.mutation.StorageKey(); ok {
+	if value, ok := _c.mutation.StorageKey(); ok {
 		_spec.SetField(assetversion.FieldStorageKey, field.TypeString, value)
 		_node.StorageKey = value
 	}
-	if value, ok := avc.mutation.ThumbnailKey(); ok {
+	if value, ok := _c.mutation.ThumbnailKey(); ok {
 		_spec.SetField(assetversion.FieldThumbnailKey, field.TypeString, value)
 		_node.ThumbnailKey = value
 	}
-	if value, ok := avc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(assetversion.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if nodes := avc.mutation.AssetIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.AssetIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -365,10 +365,10 @@ func (avc *AssetVersionCreate) createSpec() (*AssetVersion, *sqlgraph.CreateSpec
 //			SetAssetID(v+v).
 //		}).
 //		Exec(ctx)
-func (avc *AssetVersionCreate) OnConflict(opts ...sql.ConflictOption) *AssetVersionUpsertOne {
-	avc.conflict = opts
+func (_c *AssetVersionCreate) OnConflict(opts ...sql.ConflictOption) *AssetVersionUpsertOne {
+	_c.conflict = opts
 	return &AssetVersionUpsertOne{
-		create: avc,
+		create: _c,
 	}
 }
 
@@ -378,10 +378,10 @@ func (avc *AssetVersionCreate) OnConflict(opts ...sql.ConflictOption) *AssetVers
 //	client.AssetVersion.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (avc *AssetVersionCreate) OnConflictColumns(columns ...string) *AssetVersionUpsertOne {
-	avc.conflict = append(avc.conflict, sql.ConflictColumns(columns...))
+func (_c *AssetVersionCreate) OnConflictColumns(columns ...string) *AssetVersionUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AssetVersionUpsertOne{
-		create: avc,
+		create: _c,
 	}
 }
 
@@ -979,16 +979,16 @@ type AssetVersionCreateBulk struct {
 }
 
 // Save creates the AssetVersion entities in the database.
-func (avcb *AssetVersionCreateBulk) Save(ctx context.Context) ([]*AssetVersion, error) {
-	if avcb.err != nil {
-		return nil, avcb.err
+func (_c *AssetVersionCreateBulk) Save(ctx context.Context) ([]*AssetVersion, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(avcb.builders))
-	nodes := make([]*AssetVersion, len(avcb.builders))
-	mutators := make([]Mutator, len(avcb.builders))
-	for i := range avcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*AssetVersion, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := avcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*AssetVersionMutation)
@@ -1002,12 +1002,12 @@ func (avcb *AssetVersionCreateBulk) Save(ctx context.Context) ([]*AssetVersion, 
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, avcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = avcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, avcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1031,7 +1031,7 @@ func (avcb *AssetVersionCreateBulk) Save(ctx context.Context) ([]*AssetVersion, 
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, avcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1039,8 +1039,8 @@ func (avcb *AssetVersionCreateBulk) Save(ctx context.Context) ([]*AssetVersion, 
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (avcb *AssetVersionCreateBulk) SaveX(ctx context.Context) []*AssetVersion {
-	v, err := avcb.Save(ctx)
+func (_c *AssetVersionCreateBulk) SaveX(ctx context.Context) []*AssetVersion {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1048,14 +1048,14 @@ func (avcb *AssetVersionCreateBulk) SaveX(ctx context.Context) []*AssetVersion {
 }
 
 // Exec executes the query.
-func (avcb *AssetVersionCreateBulk) Exec(ctx context.Context) error {
-	_, err := avcb.Save(ctx)
+func (_c *AssetVersionCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (avcb *AssetVersionCreateBulk) ExecX(ctx context.Context) {
-	if err := avcb.Exec(ctx); err != nil {
+func (_c *AssetVersionCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1075,10 +1075,10 @@ func (avcb *AssetVersionCreateBulk) ExecX(ctx context.Context) {
 //			SetAssetID(v+v).
 //		}).
 //		Exec(ctx)
-func (avcb *AssetVersionCreateBulk) OnConflict(opts ...sql.ConflictOption) *AssetVersionUpsertBulk {
-	avcb.conflict = opts
+func (_c *AssetVersionCreateBulk) OnConflict(opts ...sql.ConflictOption) *AssetVersionUpsertBulk {
+	_c.conflict = opts
 	return &AssetVersionUpsertBulk{
-		create: avcb,
+		create: _c,
 	}
 }
 
@@ -1088,10 +1088,10 @@ func (avcb *AssetVersionCreateBulk) OnConflict(opts ...sql.ConflictOption) *Asse
 //	client.AssetVersion.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (avcb *AssetVersionCreateBulk) OnConflictColumns(columns ...string) *AssetVersionUpsertBulk {
-	avcb.conflict = append(avcb.conflict, sql.ConflictColumns(columns...))
+func (_c *AssetVersionCreateBulk) OnConflictColumns(columns ...string) *AssetVersionUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &AssetVersionUpsertBulk{
-		create: avcb,
+		create: _c,
 	}
 }
 

@@ -25,79 +25,79 @@ type CollectionCreate struct {
 }
 
 // SetUserID sets the "user_id" field.
-func (cc *CollectionCreate) SetUserID(i int64) *CollectionCreate {
-	cc.mutation.SetUserID(i)
-	return cc
+func (_c *CollectionCreate) SetUserID(v int64) *CollectionCreate {
+	_c.mutation.SetUserID(v)
+	return _c
 }
 
 // SetName sets the "name" field.
-func (cc *CollectionCreate) SetName(s string) *CollectionCreate {
-	cc.mutation.SetName(s)
-	return cc
+func (_c *CollectionCreate) SetName(v string) *CollectionCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetDescription sets the "description" field.
-func (cc *CollectionCreate) SetDescription(s string) *CollectionCreate {
-	cc.mutation.SetDescription(s)
-	return cc
+func (_c *CollectionCreate) SetDescription(v string) *CollectionCreate {
+	_c.mutation.SetDescription(v)
+	return _c
 }
 
 // SetNillableDescription sets the "description" field if the given value is not nil.
-func (cc *CollectionCreate) SetNillableDescription(s *string) *CollectionCreate {
-	if s != nil {
-		cc.SetDescription(*s)
+func (_c *CollectionCreate) SetNillableDescription(v *string) *CollectionCreate {
+	if v != nil {
+		_c.SetDescription(*v)
 	}
-	return cc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (cc *CollectionCreate) SetCreatedAt(t time.Time) *CollectionCreate {
-	cc.mutation.SetCreatedAt(t)
-	return cc
+func (_c *CollectionCreate) SetCreatedAt(v time.Time) *CollectionCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (cc *CollectionCreate) SetNillableCreatedAt(t *time.Time) *CollectionCreate {
-	if t != nil {
-		cc.SetCreatedAt(*t)
+func (_c *CollectionCreate) SetNillableCreatedAt(v *time.Time) *CollectionCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return cc
+	return _c
 }
 
 // SetUser sets the "user" edge to the User entity.
-func (cc *CollectionCreate) SetUser(u *User) *CollectionCreate {
-	return cc.SetUserID(u.ID)
+func (_c *CollectionCreate) SetUser(v *User) *CollectionCreate {
+	return _c.SetUserID(v.ID)
 }
 
 // AddAssetIDs adds the "assets" edge to the Asset entity by IDs.
-func (cc *CollectionCreate) AddAssetIDs(ids ...int64) *CollectionCreate {
-	cc.mutation.AddAssetIDs(ids...)
-	return cc
+func (_c *CollectionCreate) AddAssetIDs(ids ...int64) *CollectionCreate {
+	_c.mutation.AddAssetIDs(ids...)
+	return _c
 }
 
 // AddAssets adds the "assets" edges to the Asset entity.
-func (cc *CollectionCreate) AddAssets(a ...*Asset) *CollectionCreate {
-	ids := make([]int64, len(a))
-	for i := range a {
-		ids[i] = a[i].ID
+func (_c *CollectionCreate) AddAssets(v ...*Asset) *CollectionCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return cc.AddAssetIDs(ids...)
+	return _c.AddAssetIDs(ids...)
 }
 
 // Mutation returns the CollectionMutation object of the builder.
-func (cc *CollectionCreate) Mutation() *CollectionMutation {
-	return cc.mutation
+func (_c *CollectionCreate) Mutation() *CollectionMutation {
+	return _c.mutation
 }
 
 // Save creates the Collection in the database.
-func (cc *CollectionCreate) Save(ctx context.Context) (*Collection, error) {
-	cc.defaults()
-	return withHooks(ctx, cc.sqlSave, cc.mutation, cc.hooks)
+func (_c *CollectionCreate) Save(ctx context.Context) (*Collection, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (cc *CollectionCreate) SaveX(ctx context.Context) *Collection {
-	v, err := cc.Save(ctx)
+func (_c *CollectionCreate) SaveX(ctx context.Context) *Collection {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -105,54 +105,54 @@ func (cc *CollectionCreate) SaveX(ctx context.Context) *Collection {
 }
 
 // Exec executes the query.
-func (cc *CollectionCreate) Exec(ctx context.Context) error {
-	_, err := cc.Save(ctx)
+func (_c *CollectionCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (cc *CollectionCreate) ExecX(ctx context.Context) {
-	if err := cc.Exec(ctx); err != nil {
+func (_c *CollectionCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (cc *CollectionCreate) defaults() {
-	if _, ok := cc.mutation.CreatedAt(); !ok {
+func (_c *CollectionCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := collection.DefaultCreatedAt()
-		cc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (cc *CollectionCreate) check() error {
-	if _, ok := cc.mutation.UserID(); !ok {
+func (_c *CollectionCreate) check() error {
+	if _, ok := _c.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "Collection.user_id"`)}
 	}
-	if _, ok := cc.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Collection.name"`)}
 	}
-	if v, ok := cc.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := collection.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Collection.name": %w`, err)}
 		}
 	}
-	if _, ok := cc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Collection.created_at"`)}
 	}
-	if len(cc.mutation.UserIDs()) == 0 {
+	if len(_c.mutation.UserIDs()) == 0 {
 		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "Collection.user"`)}
 	}
 	return nil
 }
 
-func (cc *CollectionCreate) sqlSave(ctx context.Context) (*Collection, error) {
-	if err := cc.check(); err != nil {
+func (_c *CollectionCreate) sqlSave(ctx context.Context) (*Collection, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := cc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, cc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -160,30 +160,30 @@ func (cc *CollectionCreate) sqlSave(ctx context.Context) (*Collection, error) {
 	}
 	id := _spec.ID.Value.(int64)
 	_node.ID = int64(id)
-	cc.mutation.id = &_node.ID
-	cc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (cc *CollectionCreate) createSpec() (*Collection, *sqlgraph.CreateSpec) {
+func (_c *CollectionCreate) createSpec() (*Collection, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Collection{config: cc.config}
+		_node = &Collection{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(collection.Table, sqlgraph.NewFieldSpec(collection.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = cc.conflict
-	if value, ok := cc.mutation.Name(); ok {
+	_spec.OnConflict = _c.conflict
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(collection.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := cc.mutation.Description(); ok {
+	if value, ok := _c.mutation.Description(); ok {
 		_spec.SetField(collection.FieldDescription, field.TypeString, value)
 		_node.Description = value
 	}
-	if value, ok := cc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(collection.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if nodes := cc.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -200,7 +200,7 @@ func (cc *CollectionCreate) createSpec() (*Collection, *sqlgraph.CreateSpec) {
 		_node.UserID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := cc.mutation.AssetsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.AssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -235,10 +235,10 @@ func (cc *CollectionCreate) createSpec() (*Collection, *sqlgraph.CreateSpec) {
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (cc *CollectionCreate) OnConflict(opts ...sql.ConflictOption) *CollectionUpsertOne {
-	cc.conflict = opts
+func (_c *CollectionCreate) OnConflict(opts ...sql.ConflictOption) *CollectionUpsertOne {
+	_c.conflict = opts
 	return &CollectionUpsertOne{
-		create: cc,
+		create: _c,
 	}
 }
 
@@ -248,10 +248,10 @@ func (cc *CollectionCreate) OnConflict(opts ...sql.ConflictOption) *CollectionUp
 //	client.Collection.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (cc *CollectionCreate) OnConflictColumns(columns ...string) *CollectionUpsertOne {
-	cc.conflict = append(cc.conflict, sql.ConflictColumns(columns...))
+func (_c *CollectionCreate) OnConflictColumns(columns ...string) *CollectionUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &CollectionUpsertOne{
-		create: cc,
+		create: _c,
 	}
 }
 
@@ -446,16 +446,16 @@ type CollectionCreateBulk struct {
 }
 
 // Save creates the Collection entities in the database.
-func (ccb *CollectionCreateBulk) Save(ctx context.Context) ([]*Collection, error) {
-	if ccb.err != nil {
-		return nil, ccb.err
+func (_c *CollectionCreateBulk) Save(ctx context.Context) ([]*Collection, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(ccb.builders))
-	nodes := make([]*Collection, len(ccb.builders))
-	mutators := make([]Mutator, len(ccb.builders))
-	for i := range ccb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*Collection, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := ccb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*CollectionMutation)
@@ -469,12 +469,12 @@ func (ccb *CollectionCreateBulk) Save(ctx context.Context) ([]*Collection, error
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, ccb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = ccb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, ccb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -498,7 +498,7 @@ func (ccb *CollectionCreateBulk) Save(ctx context.Context) ([]*Collection, error
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, ccb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -506,8 +506,8 @@ func (ccb *CollectionCreateBulk) Save(ctx context.Context) ([]*Collection, error
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (ccb *CollectionCreateBulk) SaveX(ctx context.Context) []*Collection {
-	v, err := ccb.Save(ctx)
+func (_c *CollectionCreateBulk) SaveX(ctx context.Context) []*Collection {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -515,14 +515,14 @@ func (ccb *CollectionCreateBulk) SaveX(ctx context.Context) []*Collection {
 }
 
 // Exec executes the query.
-func (ccb *CollectionCreateBulk) Exec(ctx context.Context) error {
-	_, err := ccb.Save(ctx)
+func (_c *CollectionCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ccb *CollectionCreateBulk) ExecX(ctx context.Context) {
-	if err := ccb.Exec(ctx); err != nil {
+func (_c *CollectionCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -542,10 +542,10 @@ func (ccb *CollectionCreateBulk) ExecX(ctx context.Context) {
 //			SetUserID(v+v).
 //		}).
 //		Exec(ctx)
-func (ccb *CollectionCreateBulk) OnConflict(opts ...sql.ConflictOption) *CollectionUpsertBulk {
-	ccb.conflict = opts
+func (_c *CollectionCreateBulk) OnConflict(opts ...sql.ConflictOption) *CollectionUpsertBulk {
+	_c.conflict = opts
 	return &CollectionUpsertBulk{
-		create: ccb,
+		create: _c,
 	}
 }
 
@@ -555,10 +555,10 @@ func (ccb *CollectionCreateBulk) OnConflict(opts ...sql.ConflictOption) *Collect
 //	client.Collection.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (ccb *CollectionCreateBulk) OnConflictColumns(columns ...string) *CollectionUpsertBulk {
-	ccb.conflict = append(ccb.conflict, sql.ConflictColumns(columns...))
+func (_c *CollectionCreateBulk) OnConflictColumns(columns ...string) *CollectionUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &CollectionUpsertBulk{
-		create: ccb,
+		create: _c,
 	}
 }
 
