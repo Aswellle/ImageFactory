@@ -24,8 +24,8 @@
 	# auto_https disable_redirects
 }
 
-# ---- 生产域名（替换为你的域名）----
-imageforge.example.com {
+# ---- 生产域名 (通过 IF_CADDY_HOST 环境变量注入) ----
+{env.IF_CADDY_HOST} {
 	# TLS：Caddy 自动申请并续期 Let's Encrypt 证书。
 	# 如需自定义证书，替换为：
 	#   tls /path/to/cert.pem /path/to/key.pem
@@ -136,7 +136,7 @@ imageforge.example.com {
 	}
 }
 
-# ---- 兜底：直接访问 IP 或非标准域名时也可服务 ----
+# ---- 兜底：直接访问 IP 或非标准域名时重定向到主域名 ----
 :80 {
-	redir https://imageforge.example.com{uri} permanent
+	redir https://{env.IF_CADDY_HOST}{uri} permanent
 }

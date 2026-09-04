@@ -9,7 +9,7 @@
 #   BUILD_FRONTEND=false  skip the frontend stage (backend-only/dev image)
 #   GOLANG_IMAGE / ALPINE_IMAGE / NODE_IMAGE  pin base images
 
-ARG GOLANG_IMAGE=golang:1.22-alpine
+ARG GOLANG_IMAGE=golang:1.26-alpine
 ARG ALPINE_IMAGE=alpine:3.21
 ARG NODE_IMAGE=node:22-alpine
 
@@ -40,6 +40,10 @@ RUN apk add --no-cache ca-certificates git
 
 WORKDIR /src/backend
 
+# Copy Go workspace file (if exists at root level for local development).
+# The workspace links to sub2api for ent types.
+COPY go.work* ./
+
 # Layer-cache module download.
 COPY backend/go.mod backend/go.sum ./
 RUN go mod download
@@ -64,7 +68,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build \
 # =============================================================================
 FROM ${ALPINE_IMAGE} AS runtime
 
-RUN apk add --no-cache ca-certificates tzdata postgresql16-client
+# Install: ca-certificates (HTTPS), tzdata (timezone), postgresql16-client (db CLI), wget (healthcheck)
+RUN apk add --no-cache ca-certificates tzdata postgresql16-client wget
 
 # Unprivileged runtime user.
 RUN addgroup -S iforge && adduser -S iforge -G iforge
