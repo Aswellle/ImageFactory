@@ -4,7 +4,6 @@ linters:
   default: none
   enable:
     - errcheck        # unchecked errors
-    - gosimple        # code simplification
     - govet           # suspicious constructs
     - ineffassign     # unused assignments
     - staticcheck     # static analysis
