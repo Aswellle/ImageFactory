@@ -9,17 +9,12 @@ linters:
     - ineffassign     # unused assignments
     - staticcheck     # static analysis
     - unused          # unused code
-    - gofmt           # formatting
-    - goimports       # import formatting
     - misspell        # typos
     - revive          # style
     - gosec           # security
     - wrapcheck       # error wrapping
 
   settings:
-    goimports:
-      local-prefixes:
-        - github.com/imageforge/imageforge
     revive:
       rules:
         - name: exported
