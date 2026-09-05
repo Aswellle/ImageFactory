@@ -1,11 +1,7 @@
-run:
-  timeout: 5m
-  go: '1.26'
-
-output:
-  format: colored-line-number
+version: "2"
 
 linters:
+  default: none
   enable:
     - errcheck        # unchecked errors
     - gosimple        # code simplification
@@ -20,34 +16,48 @@ linters:
     - gosec           # security
     - wrapcheck       # error wrapping
 
-linters-settings:
-  goimports:
-    local-prefixes: github.com/imageforge/imageforge
-  revive:
-    rules:
-      - name: exported
-        arguments:
-          - checkPrivateReceivers
-          - disableStutteringCheck
-      - name: package-comments
-        severity: warning
-        disabled: true
-  gosec:
-    excludes:
-      - G115 # integer conversion overflow (common in ORM/DB code)
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/imageforge/imageforge
+    revive:
+      rules:
+        - name: exported
+          arguments:
+            - checkPrivateReceivers
+            - disableStutteringCheck
+        - name: package-comments
+          disabled: true
+    gosec:
+      excludes:
+        - G115 # integer conversion overflow (common in ORM/DB code)
 
-issues:
-  exclude-use-default: false
-  max-issues-per-linter: 0
-  max-same-issues: 0
-  exclude-dirs:
-    - ent          # generated code
-    - migrations   # SQL files
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - gosec
-        - errcheck
-    - path: cmd/
-      linters:
-        - gosec
+  exclusions:
+    paths:
+      - ent          # generated code
+      - migrations   # SQL files
+    rules:
+      - path: _test\.go
+        linters:
+          - gosec
+          - errcheck
+      - path: cmd/
+        linters:
+          - gosec
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      rewrite-rules:
+        - pattern: 'interface{}'
+          replacement: 'any'
+    goimports:
+      local-prefixes:
+        - github.com/imageforge/imageforge
+
+output:
+  formats:
+    - format: colored-line-number
