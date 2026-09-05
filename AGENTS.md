@@ -621,23 +621,25 @@ Stop and reassess immediately when:
 14. Returning raw upstream errors to users
  15. Ignoring the Go workspace's ability to import ent directly
  
-## Commit Message Rules
-
-**NEVER include gstack skill metadata in commit messages.** The following blocks
-are internal skill artifacts and must never appear in git commits:
-
-- `[gstack-context]` ... `[/gstack-context]`
-- `Decisions:`, `Remaining:`, `Tried:`, `Skill:` (gstack-context fields)
-- Any other gstack-internal tagging or metadata
-
-Commit messages must contain only information relevant to the code change:
-what changed, why, and any relevant context for future readers.
-
-If a gstack skill generates commit message text that includes metadata blocks,
-strip them before committing. The skill's internal tracking stays in the skill
+ ## Commit Message Rules
+ 
+ **提交信息使用中文。** 所有 commit message 必须用中文撰写（type 前缀除外，
+ 如 `fix:`、`feat:`、`chore:` 等保持英文）。正文描述、说明文字均用中文。
+ 
+ **NEVER include gstack skill metadata in commit messages.** The following blocks
+ are internal skill artifacts and must never appear in git commits:
+ 
+ - `[gstack-context]` ... `[/gstack-context]`
+ - `Decisions:`, `Remaining:`, `Tried:`, `Skill:` (gstack-context fields)
+ - Any other gstack-internal tagging or metadata
+ 
+ Commit messages must contain only information relevant to the code change:
+ what changed, why, and any relevant context for future readers.
+ 
+ If a gstack skill generates commit message text that includes metadata blocks,
+ strip them before committing. The skill's internal tracking stays in the skill
  output — not in git history.
  
-## Documentation
-- `docs/项目总体定义prd.md` — Product requirements (Chinese)
+ ## Documentation
 - `docs/RULES.md` — Non-negotiable stop conditions (Chinese)
 - `README.md` — Stack overview, quick start, repository layout
