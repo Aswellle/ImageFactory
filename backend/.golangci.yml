@@ -57,7 +57,3 @@ formatters:
     goimports:
       local-prefixes:
         - github.com/imageforge/imageforge
-
-output:
-  formats:
-    - format: colored-line-number
