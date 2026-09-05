@@ -3,7 +3,9 @@ package server
 import (
 	"context"
 	"fmt"
+	"net"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +19,6 @@ import (
 	"github.com/imageforge/imageforge/internal/server/routes"
 	"github.com/imageforge/imageforge/internal/service"
 	"github.com/imageforge/imageforge/internal/storage"
-	"github.com/imageforge/imageforge/internal/pkg/response"
 	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -71,7 +72,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		engine.SetTrustedProxies(nil)
 	}
 
-
 	// --- Global middleware (order matters) ---
 	engine.Use(middleware.RequestID())
 	engine.Use(middleware.CORS(cfg.Server.AllowedOrigins))
@@ -91,7 +91,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		return nil, fmt.Errorf("init storage: %w", err)
 	}
 
-
 	// --- Job queue + worker ---
 	queue := job.NewMemoryQueue(256, log)
 	processor := job.NewProcessor(queue, 4)
@@ -104,7 +103,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	var rdb *redis.Client
 	if cfg.Redis.Host != "" {
 		rdb = redis.NewClient(&redis.Options{
-			Addr:     fmt.Sprintf("%s:%d", cfg.Redis.Host, cfg.Redis.Port),
+			Addr:     net.JoinHostPort(cfg.Redis.Host, strconv.Itoa(cfg.Redis.Port)),
 			Password: cfg.Redis.Password,
 			DB:       cfg.Redis.DB,
 		})
@@ -132,6 +131,9 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	resetSvc := service.NewPasswordResetService(users, resetCodes, emailSvc, password, rateLimiter)
 	resetHandler := handler.NewPasswordResetHandler(resetSvc)
 
+	// --- Health handler (liveness + readiness) ---
+	healthHandler := handler.NewHealthHandler(db, rdb)
+
 	// --- Account management (Sub2API integration) ---
 	accountRepo := repository.NewAccountRepository(db)
 	accountSvc := service.NewAccountService(accountRepo)
@@ -146,23 +148,28 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	assetHandler := handler.NewAssetHandler(assetSvc)
 
 	usageSvc := service.NewUsageService(db)
-	genService := service.NewGenerationService(db, batchSvc, store, queue, assetSvc, usageSvc, accountResolver)
+	genService := service.NewGenerationService(service.GenerationConfig{
+		DB:              db,
+		Batch:           batchSvc,
+		Store:           store,
+		Queue:           queue,
+		Assets:          assetSvc,
+		Usage:           usageSvc,
+		AccountResolver: accountResolver,
+	})
 	genHandler := handler.NewGenerationHandler(genService)
 	imageGW := handler.NewOpenAIImagesHandler(handler.NewOpenAIImagesService())
 
 	editSvc := service.NewImageEditService(db, batchSvc, store, queue, accountResolver)
 	editHandler := handler.NewImageEditHandler(editSvc)
 
-
 	apiKeySvc := service.NewAPIKeyService(db)
 	apiKeyHandler := handler.NewAPIKeyHandler(apiKeySvc)
- 	usageHandler := handler.NewUsageHandler(usageSvc)
-
+	usageHandler := handler.NewUsageHandler(usageSvc)
 
 	promptTemplateSvc := service.NewPromptTemplateService(db)
 	promptTemplateHandler := handler.NewPromptTemplateHandler(promptTemplateSvc)
 	apiKeyMW := middleware.APIKeyAuth(apiKeySvc)
-
 
 	asyncImageHandler := handler.NewAsyncImageHandler(
 		service.NewImageTaskService(repository.NewRedisImageTaskStore(rdb)),
@@ -182,41 +189,21 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	// --- Public routes ---
 	v1 := engine.Group("/v1")
 	{
-		// Health endpoint. ?deep=true runs dependency checks (DB/Redis/storage).
-		// Caddy uses the shallow check (liveness); monitoring uses deep (readiness).
+		// Liveness probe — always returns 200 if the process is alive.
+		// Load balancers use this to verify the process is running.
+		v1.GET("/healthz", healthHandler.Liveness)
+
+		// Readiness probe — returns 200 only if DB/Redis are reachable.
+		// Orchestrators use this to decide whether to route traffic.
+		v1.GET("/ready", healthHandler.Readiness)
+
+		// Legacy health endpoint (backward-compatible). ?deep=true runs dependency checks.
 		v1.GET("/health", func(c *gin.Context) {
 			if c.Query("deep") == "true" {
-				checks := gin.H{}
-				healthy := true
-
-				dbCtx, dbCancel := context.WithTimeout(c.Request.Context(), 3*time.Second)
-				defer dbCancel()
-				if _, err := db.User.Query().Count(dbCtx); err != nil {
-					checks["database"] = "unavailable: " + err.Error()
-					healthy = false
-				} else {
-					checks["database"] = "ok"
-				}
-
-
-				if rdb != nil {
-					if err := rdb.Ping(c.Request.Context()).Err(); err != nil {
-						checks["redis"] = "unavailable: " + err.Error()
-						healthy = false
-					} else {
-						checks["redis"] = "ok"
-					}
-				}
-
-				checks["storage"] = "ok" // storage is lazily verified on first use
-				if healthy {
-					response.OK(c, gin.H{"status": "ok", "checks": checks})
-				} else {
-					c.JSON(503, gin.H{"data": gin.H{"status": "degraded", "checks": checks}})
-				}
+				healthHandler.Readiness(c)
 				return
 			}
-			response.OK(c, gin.H{"status": "ok"})
+			healthHandler.Liveness(c)
 		})
 
 		auth := v1.Group("/auth")
@@ -227,9 +214,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 			auth.POST("/reset-password", resetHandler.ResetPassword)
 		}
 
-
 		v1.GET("/models", imageGW.Models)
-
 
 		// OpenAI-compatible image endpoints (public for SDK access).
 		v1.POST("/images/generations", imageGW.Generations)
@@ -239,71 +224,53 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	authorized := v1.Group("")
 	authorized.Use(authMW.Require())
 	{
-		// Image generation. NOTE: POST /images/generations is intentionally
-		// duplicated here AND in the public group above. Gin uses first-match
-		// routing, so the public OpenAI-compatible endpoint (line ~144) wins.
-		// This JWT-protected copy exists as documentation of the intended
-		// auth model; it is unreachable but kept for clarity.
 		authorized.POST("/images/generations", genHandler.Create)
 		authorized.POST("/images/edits", editHandler.Edit)
 		authorized.GET("/images/jobs", genHandler.List)
 		authorized.GET("/images/jobs/:id", genHandler.Get)
 
-
-		// Projects.
 		authorized.POST("/projects", projectHandler.Create)
 		authorized.GET("/projects", projectHandler.List)
 		authorized.GET("/projects/:id", projectHandler.Get)
 
-		// Assets.
 		authorized.GET("/assets", assetHandler.List)
 		authorized.GET("/assets/:id", assetHandler.Get)
 		authorized.DELETE("/assets/:id", assetHandler.Delete)
 
-		// Asset versioning + content serving.
 		authorized.GET("/assets/:id/content", assetHandler.Content)
 		authorized.GET("/assets/:id/versions", assetHandler.Versions)
 		authorized.GET("/assets/:id/versions/:vid", assetHandler.GetVersion)
 
-		// API Keys.
 		authorized.POST("/api-keys", apiKeyHandler.Create)
 		authorized.GET("/api-keys", apiKeyHandler.List)
 		authorized.DELETE("/api-keys/:id", apiKeyHandler.Revoke)
 
-		// Usage.
 		authorized.GET("/usage", usageHandler.Get)
-	authorized.GET("/usage/history", usageHandler.History)
+		authorized.GET("/usage/history", usageHandler.History)
 
-	// Async image tasks (submit-then-poll).
-	authorized.POST("/images/tasks", asyncImageHandler.Submit)
-	authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
+		authorized.POST("/images/tasks", asyncImageHandler.Submit)
+		authorized.GET("/images/tasks/:id", asyncImageHandler.Get)
 
-	// Prompt templates.
-	authorized.POST("/prompt-templates", promptTemplateHandler.Create)
-	authorized.GET("/prompt-templates", promptTemplateHandler.List)
-	authorized.GET("/prompt-templates/:id", promptTemplateHandler.Get)
-	authorized.PUT("/prompt-templates/:id", promptTemplateHandler.Update)
-	authorized.DELETE("/prompt-templates/:id", promptTemplateHandler.Delete)
-	authorized.POST("/prompt-templates/:id/apply", promptTemplateHandler.Apply)
+		authorized.POST("/prompt-templates", promptTemplateHandler.Create)
+		authorized.GET("/prompt-templates", promptTemplateHandler.List)
+		authorized.GET("/prompt-templates/:id", promptTemplateHandler.Get)
+		authorized.PUT("/prompt-templates/:id", promptTemplateHandler.Update)
+		authorized.DELETE("/prompt-templates/:id", promptTemplateHandler.Delete)
+		authorized.POST("/prompt-templates/:id/apply", promptTemplateHandler.Apply)
+	}
+
+	// --- API-key-authed routes (no JWT required) ---
+	apiKeyOnly := v1.Group("")
+	apiKeyOnly.Use(apiKeyMW)
+	{
+		apiKeyOnly.POST("/images/generate", genHandler.Create)
+	}
+
+	// --- Admin routes (adminAuth enforced at group level) ---
+	routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
+
+	return &Router{Engine: engine, db: db, rdb: rdb, processor: processor}, nil
 }
-
-// --- API-key-authed routes (no JWT required) ---
-apiKeyOnly := v1.Group("")
-apiKeyOnly.Use(apiKeyMW)
-{
-	// API-key-authed generation endpoint for programmatic access.
-	// Uses /images/generate (not /images/generations) to avoid conflict
-	// with the public OpenAI-compatible endpoint.
-	apiKeyOnly.POST("/images/generate", genHandler.Create)
-}
-
-// --- Admin routes (adminAuth enforced at group level) ---
-routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
-
-return &Router{Engine: engine, db: db, rdb: rdb, processor: processor}, nil
-}
-
-
 
 // requestLogger logs method, path, status, duration, and request ID. It never
 // logs request bodies or headers (which may carry secrets).

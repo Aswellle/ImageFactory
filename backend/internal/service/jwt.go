@@ -1,15 +1,16 @@
 package service
 
-import (
-	"errors"
-	"fmt"
-	"strconv"
+ import (
+	"crypto/rand"
+	"encoding/base64"
+ 	"errors"
+ 	"fmt"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/imageforge/imageforge/internal/config"
-	"github.com/imageforge/imageforge/internal/domain"
-)
+ 	"github.com/golang-jwt/jwt/v5"
+ 	"github.com/imageforge/imageforge/internal/config"
+ 	"github.com/imageforge/imageforge/internal/domain"
+ )
 
 // Claims is the ImageForge JWT payload. Minimal: user id + role + token version. No PII, no secrets.
 type Claims struct {
@@ -37,9 +38,14 @@ func NewJWTService(cfg config.AuthConfig, mode string) (*JWTService, error) {
 		if mode == "release" || mode == "production" {
 			return nil, fmt.Errorf("JWTSecret must be configured in production mode")
 		}
-		// Only use auto-generated secret in debug/test mode
-		secret = "imageforge-dev-secret-change-in-production-" + strconv.FormatInt(time.Now().UnixNano(), 36)
-	}
+		// Only use auto-generated secret in debug/test mode.
+		// 32 crypto-random bytes, base64-encoded. Not for production.
+		buf := make([]byte, 32)
+		if _, err := rand.Read(buf); err != nil {
+			return nil, fmt.Errorf("failed to generate debug JWT secret: %w", err)
+		}
+		secret = base64.RawURLEncoding.EncodeToString(buf)
+ 	}
 	return &JWTService{secret: []byte(secret), ttl: ttl}, nil
 }
 

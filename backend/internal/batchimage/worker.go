@@ -2,8 +2,9 @@ package batchimage
 
 import (
 	"context"
-	"log"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 // Worker polls provider status and drives job transitions.
@@ -11,14 +12,18 @@ import (
 type Worker struct {
 	registry *BatchImageProviderRegistry
 	settle   *SettlementService
+	log      *zap.Logger
 	interval time.Duration
 }
 
-// NewWorker builds a Worker.
-func NewWorker(registry *BatchImageProviderRegistry, settle *SettlementService) *Worker {
+func NewWorker(registry *BatchImageProviderRegistry, settle *SettlementService, log *zap.Logger) *Worker {
+	if log == nil {
+		log = zap.NewNop()
+	}
 	return &Worker{
 		registry: registry,
 		settle:   settle,
+		log:      log,
 		interval: 5 * time.Second,
 	}
 }
@@ -46,17 +51,16 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 		return nil
 	}
 	job.RUnlock()
-	provider, ok := w.registry.Get(job.Provider)
-	if !ok {
-		log.Printf("batchimage: unknown provider %s for job %s", job.Provider, job.BatchID)
-		return nil
-	}
+ provider, ok := w.registry.Get(job.Provider)
+ if !ok {
+	w.log.Info("batchimage: unknown provider for job", zap.String("provider", job.Provider), zap.String("batch_id", job.BatchID))
+	return nil
+}
 
-	status, err := provider.Get(ctx, job, nil)
-	if err != nil {
-		log.Printf("batchimage: poll error for job %s: %v", job.BatchID, err)
-		return nil // Don't fail the whole batch on single poll error
-	}
+ status, err := provider.Get(ctx, job, nil)
+ if err != nil {
+	w.log.Warn("batchimage: poll error", zap.String("batch_id", job.BatchID), zap.Error(err))
+ }
 
 	// Map provider state to job status
 	job.Lock()

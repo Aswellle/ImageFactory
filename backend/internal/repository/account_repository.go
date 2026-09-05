@@ -57,6 +57,33 @@ func (r *AccountRepository) ListByPlatform(ctx context.Context, platform string)
 		All(ctx)
 }
 
+// ListAvailableByPlatform returns accounts that are ready to accept work:
+// active, schedulable, not rate-limited, not overloaded, not expired.
+// All filtering happens at the database level — no in-memory post-filtering.
+func (r *AccountRepository) ListAvailableByPlatform(ctx context.Context, platform string) ([]*ent.Account, error) {
+	now := time.Now()
+	return r.db.Account.Query().
+		Where(
+			account.Platform(platform),
+			account.Schedulable(true),
+			account.StatusEQ(account.StatusActive),
+			account.Or(
+				account.RateLimitResetAtIsNil(),
+				account.RateLimitResetAtLTE(now),
+			),
+			account.Or(
+				account.OverloadUntilIsNil(),
+				account.OverloadUntilLTE(now),
+			),
+			account.Or(
+				account.ExpiresAtIsNil(),
+				account.ExpiresAtGT(now),
+			),
+		).
+		Order(ent.Asc(account.FieldPriority)).
+		All(ctx)
+}
+
 // Update 更新账号。
 func (r *AccountRepository) Update(ctx context.Context, id int64, updater func(tx *ent.AccountUpdateOne) *ent.AccountUpdateOne) (*ent.Account, error) {
 	acc, err := r.GetByID(ctx, id)

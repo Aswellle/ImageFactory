@@ -29,11 +29,21 @@ type GenerationService struct {
 	accountResolver  AccountResolverInterface
 	log              *zap.Logger
 }
-
-// NewGenerationService builds a GenerationService.
-func NewGenerationService(db *ent.Client, batch *batchimage.PublicService, store storage.Storage, queue job.Queue, assets *AssetService, usage *UsageService, accountResolver AccountResolverInterface) *GenerationService {
-	return &GenerationService{db: db, batch: batch, store: store, queue: queue, assets: assets, usage: usage, accountResolver: accountResolver, log: zap.NewNop()}
+// GenerationConfig holds all dependencies for GenerationService.
+type GenerationConfig struct {
+	DB              *ent.Client
+	Batch           *batchimage.PublicService
+	Store           storage.Storage
+	Queue           job.Queue
+	Assets          *AssetService
+	Usage           *UsageService
+	AccountResolver AccountResolverInterface
 }
+
+// NewGenerationService builds a GenerationService from a config.
+func NewGenerationService(cfg GenerationConfig) *GenerationService {
+	return &GenerationService{db: cfg.DB, batch: cfg.Batch, store: cfg.Store, queue: cfg.Queue, assets: cfg.Assets, usage: cfg.Usage, accountResolver: cfg.AccountResolver, log: zap.NewNop()}
+ }
 
 type SubmitRequest struct {
 	UserID         int64

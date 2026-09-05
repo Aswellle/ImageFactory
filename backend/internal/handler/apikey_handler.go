@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"regexp"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -26,12 +27,21 @@ type createKeyRequest struct {
 	ExpiresIn string `json:"expires_in"` // e.g. "30d", "1y", "" = never
 }
 
+// expiresInPattern matches duration strings like "30d", "1y", "365d".
+var expiresInPattern = regexp.MustCompile(`^[0-9]+[dmy]$`)
+
 // Create handles POST /v1/api-keys.
 func (h *APIKeyHandler) Create(c *gin.Context) {
 	var req createKeyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		response.Error(c, http.StatusBadRequest, string(errors.ErrorCodeInvalidRequest), "invalid request", requestID(c))
 		return
+	}
+	if req.ExpiresIn != "" {
+		if !expiresInPattern.MatchString(req.ExpiresIn) {
+			response.Error(c, http.StatusBadRequest, string(errors.ErrorCodeInvalidRequest), "invalid expires_in format: use e.g. \"30d\", \"1y\", or \"\" for never", requestID(c))
+			return
+		}
 	}
 	uid, ok := userID(c)
 	if !ok {
@@ -95,4 +105,3 @@ func (h *APIKeyHandler) Revoke(c *gin.Context) {
 	}
 	response.NoContent(c)
 }
-
