@@ -61,7 +61,8 @@ func (h *AccountHandler) List(c *gin.Context) {
 		end = total
 	}
 
-	response.Paginated(c, filtered[start:end], total, page, pageSize)
+	paged := filtered[start:end]
+	response.Paginated(c, paged, total, page, pageSize)
 }
 
 // Get returns a single account by ID.
@@ -240,4 +241,3 @@ func sanitizeAccount(acc *ent.Account) map[string]any {
 		"updated_at":    acc.UpdatedAt,
 	}
 }
-

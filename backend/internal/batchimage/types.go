@@ -363,22 +363,4 @@ type BatchImagePublicBatch struct {
 // Shared helpers (ported from Sub2API service helpers).
 // ---------------------------------------------------------------------------
 
-func derefString(s *string) string {
-	if s == nil {
-		return ""
-	}
-	return *s
-}
 
-func truncateBatchImageMessage(s string, maxLen int) string {
-	if maxLen <= 0 {
-		return s
-	}
-	if len(s) <= maxLen {
-		return s
-	}
-	if maxLen <= 3 {
-		return s[:maxLen]
-	}
-	return s[:maxLen-3] + "..."
-}

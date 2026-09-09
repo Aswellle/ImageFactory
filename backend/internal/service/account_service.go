@@ -13,7 +13,6 @@ import (
 	"github.com/imageforge/imageforge/internal/repository"
 )
 
-
 // AccountService manages AI provider accounts and selects which account to use
 // for each generation request.
 //
@@ -73,7 +72,6 @@ func (s *AccountService) Update(ctx context.Context, id int64, name string, cred
 		return tx.SetName(name).SetCredentials(encrypted).SetPriority(priority)
 	})
 }
-
 
 // Delete removes an account.
 func (s *AccountService) Delete(ctx context.Context, id int64) error {

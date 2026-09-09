@@ -66,14 +66,8 @@ const openAICodexAutoPauseStaleAfter = 6 * 30 * 24 * time.Hour // ~6 months
 
 // Cooldown durations for various error conditions.
 const (
-	upstreamModelNotFoundCooldown  = 30 * time.Minute
-	upstreamCodexPlanGatedCooldown = 30 * time.Minute
-	tempUnschedBodyMaxBytes        = 64 << 10 // 64 KiB
-	tempUnschedMessageMaxBytes     = 2048
 )
 
 // Reason strings for temp-unschedulable states.
 const (
-	upstreamModelNotFoundReason       = "upstream_404_model_not_found"
-	upstreamCodexPlanGatedModelReason = "upstream_400_codex_plan_gated_model"
 )

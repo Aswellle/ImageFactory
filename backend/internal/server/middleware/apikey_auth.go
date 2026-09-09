@@ -52,4 +52,3 @@ func extractAPIKey(c *gin.Context) string {
 	}
 	return ""
 }
-

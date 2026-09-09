@@ -21,9 +21,6 @@ func NewFavoriteHandler(favorites *service.FavoriteService) *FavoriteHandler {
 }
 
 // assetIDQuery is the query param for asset-based endpoints.
-type favoriteAssetQuery struct {
-	AssetID string `form:"asset_id" binding:"required"`
-}
 
 // Create handles POST /v1/favorites?asset_id=N.
 func (h *FavoriteHandler) Create(c *gin.Context) {

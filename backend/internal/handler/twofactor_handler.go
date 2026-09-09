@@ -24,7 +24,6 @@ func NewTwoFactorHandler(totp *service.TOTPService, users *repository.UserReposi
 	return &TwoFactorHandler{totp: totp, users: users}
 }
 
-
 // SetupResponse 返回设置信息。
 type SetupResponse struct {
 	Secret      string   `json:"secret"`

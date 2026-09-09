@@ -91,20 +91,6 @@ func parseExtraFloat64(v any) float64 {
 	return 0
 }
 
-// resolveAccountExtraNumber finds the first matching key in an extra map and returns its float64 value.
-// Mirrors Sub2API's openai_gateway_scheduling.go resolveAccountExtraNumber.
-func resolveAccountExtraNumber(extra map[string]any, keys ...string) (float64, bool) {
-	if len(extra) == 0 {
-		return 0, false
-	}
-	for _, key := range keys {
-		if raw, ok := extra[key]; ok {
-			v := parseExtraFloat64(raw)
-			return v, true
-		}
-	}
-	return 0, false
-}
 
 // openAIQuotaWindowReset reports whether the Codex usage window's reset time has
 // already passed relative to now. It prefers the absolute codex_<window>_reset_at
@@ -154,12 +140,3 @@ func openAICodexSnapshotStaleForPause(extra map[string]any, now time.Time) bool 
 	return now.Sub(updatedAt) >= openAICodexAutoPauseStaleAfter
 }
 
-// openAIQuotaWindowResetAny reports whether any of the given windows have reset.
-func openAIQuotaWindowResetAny(extra map[string]any, now time.Time, windows ...string) bool {
-	for _, window := range windows {
-		if openAIQuotaWindowReset(extra, window, now) {
-			return true
-		}
-	}
-	return false
-}

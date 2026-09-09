@@ -78,16 +78,17 @@ func TestParseAnthropicResetTimestamp(t *testing.T) {
 	}
 
 	unixSec := future.Unix()
-	ts, ok = parseAnthropicResetTimestamp(strconv.FormatInt(unixSec, 10), now, 8*24*time.Hour)
+	_, ok = parseAnthropicResetTimestamp(strconv.FormatInt(unixSec, 10), now, 8*24*time.Hour)
 	if !ok {
 		t.Error("should parse unix seconds timestamp")
 	}
 
 	unixMs := future.UnixNano() / 1e6
-	ts, ok = parseAnthropicResetTimestamp(strconv.FormatInt(unixMs, 10), now, 8*24*time.Hour)
+	_, ok = parseAnthropicResetTimestamp(strconv.FormatInt(unixMs, 10), now, 8*24*time.Hour)
 	if !ok {
 		t.Error("should parse unix milliseconds timestamp")
 	}
+
 
 	_, ok = parseAnthropicResetTimestamp("", now, 8*24*time.Hour)
 	if ok {

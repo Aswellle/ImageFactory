@@ -260,17 +260,3 @@ func joinVariables(vars []string) string {
 	return strings.Join(out, ",")
 }
 
-// splitVariables is a small helper kept for callers that need the parsed list.
-func splitVariables(s string) []string {
-	if s == "" {
-		return nil
-	}
-	parts := strings.Split(s, ",")
-	out := make([]string, 0, len(parts))
-	for _, p := range parts {
-		if trimmed := strings.TrimSpace(p); trimmed != "" {
-			out = append(out, trimmed)
-		}
-	}
-	return out
-}

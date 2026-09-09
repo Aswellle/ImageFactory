@@ -63,8 +63,7 @@ func (rl *RateLimiter) Allow() bool {
 }
 
 // GlobalRateLimiter 全局限流器实例（惰性初始化）。
-var (
-)
+var ()
 
 // SetGlobalRateLimiter 设置全局限流器（应在启动时调用）。
 func SetGlobalRateLimiter(rate float64, burst int) {

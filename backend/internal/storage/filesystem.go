@@ -42,8 +42,6 @@ func (f *Filesystem) Put(ctx context.Context, in PutInput) (string, error) {
 	}
 	defer file.Close() //nolint:errcheck
 
-
-
 	if _, err := io.Copy(file, in.Body); err != nil {
 		return "", fmt.Errorf("write %s: %w", path, err)
 	}

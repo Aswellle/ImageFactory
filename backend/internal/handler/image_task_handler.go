@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -107,12 +106,6 @@ func (h *AsyncImageHandler) executeGeneration(ctx context.Context, body []byte) 
 	return errPayload, http.StatusNotImplemented
 }
 
-// failTask marks a task as failed.
-func (h *AsyncImageHandler) failTask(taskID string, statusCode int, taskErr json.RawMessage) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	_ = h.tasks.Fail(ctx, taskID, statusCode, taskErr)
-}
 
 // extractImageTaskError extracts an error payload from an upstream response.
 func extractImageTaskError(body []byte) json.RawMessage {

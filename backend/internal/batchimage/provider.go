@@ -252,26 +252,3 @@ func IsTerminalBatchImageJobStatus(status string) bool {
 	}
 }
 
-// batchImageJobToPublic converts an internal job to its public view.
-func batchImageJobToPublic(job *BatchImageJob) *BatchImagePublicBatch {
-	if job == nil {
-		return nil
-	}
-	pub := &BatchImagePublicBatch{
-		Object:       "batch",
-		BatchID:      job.BatchID,
-		Status:       job.Status,
-		Model:        job.Model,
-		Provider:     job.Provider,
-		TaskName:     job.TaskName,
-		ItemCount:    job.ItemCount,
-		SuccessCount: job.SuccessCount,
-		FailCount:    job.FailCount,
-		CreatedAt:    job.CreatedAt,
-		StartedAt:    job.StartedAt,
-	}
-	if job.Status == BatchImageJobStatusCompleted {
-		pub.CompletedAt = job.FinishedAt
-	}
-	return pub
-}
