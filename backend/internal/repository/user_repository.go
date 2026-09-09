@@ -66,3 +66,44 @@ func (r *UserRepository) IncrementTokenVersion(ctx context.Context, id int64) er
 	_, err := r.db.User.UpdateOneID(id).AddTokenVersion(1).SetUpdatedAt(time.Now()).Save(ctx)
 	return err
 }
+
+// EnableTOTP 启用 2FA。
+func (r *UserRepository) EnableTOTP(ctx context.Context, id int64, secret string) error {
+	_, err := r.db.User.UpdateOneID(id).
+		SetTotpSecret(secret).
+		SetTotpEnabled(true).
+		SetUpdatedAt(time.Now()).
+		Save(ctx)
+	return err
+}
+
+// DisableTOTP 禁用 2FA。
+func (r *UserRepository) DisableTOTP(ctx context.Context, id int64) error {
+	_, err := r.db.User.UpdateOneID(id).
+		ClearTotpSecret().
+		SetTotpEnabled(false).
+		SetUpdatedAt(time.Now()).
+		Save(ctx)
+	return err
+}
+
+// UpdateLoginInfo 更新登录信息（IP、时间、清除失败计数）。
+func (r *UserRepository) UpdateLoginInfo(ctx context.Context, id int64, ip string) error {
+	_, err := r.db.User.UpdateOneID(id).
+		SetLastLoginIP(ip).
+		SetLastLoginAt(time.Now()).
+		SetFailedLoginCount(0).
+		SetUpdatedAt(time.Now()).
+		Save(ctx)
+	return err
+}
+
+// IncrementFailedLogin 增加失败登录计数。
+func (r *UserRepository) IncrementFailedLogin(ctx context.Context, id int64) error {
+	_, err := r.db.User.UpdateOneID(id).
+		AddFailedLoginCount(1).
+		SetUpdatedAt(time.Now()).
+		Save(ctx)
+	return err
+}
+

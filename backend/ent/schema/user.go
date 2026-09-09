@@ -23,7 +23,15 @@ func (User) Fields() []ent.Field {
 		field.Enum("role").Values("user", "admin").Default("user"),
 		field.Enum("status").Values("active", "suspended", "deleted").Default("active"),
 		field.Int("token_version").Default(0),
+		// 2FA / TOTP
+		field.String("totp_secret").Optional().Sensitive(), // 加密存储的 TOTP 密钥
+		field.Bool("totp_enabled").Default(false),
+		field.String("totp_backup_codes").Optional().Sensitive(), // 备用恢复码（JSON 数组）
+		// 登录异常检测
+		field.String("last_login_ip").Optional(),
+		field.String("last_login_country").Optional(),
 		field.Time("last_login_at").Optional().Nillable(),
+		field.Int("failed_login_count").Default(0),
 		field.Time("created_at").Default(time.Now).Immutable(),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
 	}

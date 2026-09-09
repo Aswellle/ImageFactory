@@ -14073,7 +14073,14 @@ type UserMutation struct {
 	status                  *user.Status
 	token_version           *int
 	addtoken_version        *int
+	totp_secret             *string
+	totp_enabled            *bool
+	totp_backup_codes       *string
+	last_login_ip           *string
+	last_login_country      *string
 	last_login_at           *time.Time
+	failed_login_count      *int
+	addfailed_login_count   *int
 	created_at              *time.Time
 	updated_at              *time.Time
 	clearedFields           map[string]struct{}
@@ -14453,6 +14460,238 @@ func (m *UserMutation) ResetTokenVersion() {
 	m.addtoken_version = nil
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (m *UserMutation) SetTotpSecret(s string) {
+	m.totp_secret = &s
+}
+
+// TotpSecret returns the value of the "totp_secret" field in the mutation.
+func (m *UserMutation) TotpSecret() (r string, exists bool) {
+	v := m.totp_secret
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTotpSecret returns the old "totp_secret" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldTotpSecret(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTotpSecret is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTotpSecret requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTotpSecret: %w", err)
+	}
+	return oldValue.TotpSecret, nil
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (m *UserMutation) ClearTotpSecret() {
+	m.totp_secret = nil
+	m.clearedFields[user.FieldTotpSecret] = struct{}{}
+}
+
+// TotpSecretCleared returns if the "totp_secret" field was cleared in this mutation.
+func (m *UserMutation) TotpSecretCleared() bool {
+	_, ok := m.clearedFields[user.FieldTotpSecret]
+	return ok
+}
+
+// ResetTotpSecret resets all changes to the "totp_secret" field.
+func (m *UserMutation) ResetTotpSecret() {
+	m.totp_secret = nil
+	delete(m.clearedFields, user.FieldTotpSecret)
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (m *UserMutation) SetTotpEnabled(b bool) {
+	m.totp_enabled = &b
+}
+
+// TotpEnabled returns the value of the "totp_enabled" field in the mutation.
+func (m *UserMutation) TotpEnabled() (r bool, exists bool) {
+	v := m.totp_enabled
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTotpEnabled returns the old "totp_enabled" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldTotpEnabled(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTotpEnabled is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTotpEnabled requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTotpEnabled: %w", err)
+	}
+	return oldValue.TotpEnabled, nil
+}
+
+// ResetTotpEnabled resets all changes to the "totp_enabled" field.
+func (m *UserMutation) ResetTotpEnabled() {
+	m.totp_enabled = nil
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (m *UserMutation) SetTotpBackupCodes(s string) {
+	m.totp_backup_codes = &s
+}
+
+// TotpBackupCodes returns the value of the "totp_backup_codes" field in the mutation.
+func (m *UserMutation) TotpBackupCodes() (r string, exists bool) {
+	v := m.totp_backup_codes
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTotpBackupCodes returns the old "totp_backup_codes" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldTotpBackupCodes(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTotpBackupCodes is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTotpBackupCodes requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTotpBackupCodes: %w", err)
+	}
+	return oldValue.TotpBackupCodes, nil
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (m *UserMutation) ClearTotpBackupCodes() {
+	m.totp_backup_codes = nil
+	m.clearedFields[user.FieldTotpBackupCodes] = struct{}{}
+}
+
+// TotpBackupCodesCleared returns if the "totp_backup_codes" field was cleared in this mutation.
+func (m *UserMutation) TotpBackupCodesCleared() bool {
+	_, ok := m.clearedFields[user.FieldTotpBackupCodes]
+	return ok
+}
+
+// ResetTotpBackupCodes resets all changes to the "totp_backup_codes" field.
+func (m *UserMutation) ResetTotpBackupCodes() {
+	m.totp_backup_codes = nil
+	delete(m.clearedFields, user.FieldTotpBackupCodes)
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (m *UserMutation) SetLastLoginIP(s string) {
+	m.last_login_ip = &s
+}
+
+// LastLoginIP returns the value of the "last_login_ip" field in the mutation.
+func (m *UserMutation) LastLoginIP() (r string, exists bool) {
+	v := m.last_login_ip
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLastLoginIP returns the old "last_login_ip" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldLastLoginIP(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLastLoginIP is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLastLoginIP requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLastLoginIP: %w", err)
+	}
+	return oldValue.LastLoginIP, nil
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (m *UserMutation) ClearLastLoginIP() {
+	m.last_login_ip = nil
+	m.clearedFields[user.FieldLastLoginIP] = struct{}{}
+}
+
+// LastLoginIPCleared returns if the "last_login_ip" field was cleared in this mutation.
+func (m *UserMutation) LastLoginIPCleared() bool {
+	_, ok := m.clearedFields[user.FieldLastLoginIP]
+	return ok
+}
+
+// ResetLastLoginIP resets all changes to the "last_login_ip" field.
+func (m *UserMutation) ResetLastLoginIP() {
+	m.last_login_ip = nil
+	delete(m.clearedFields, user.FieldLastLoginIP)
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (m *UserMutation) SetLastLoginCountry(s string) {
+	m.last_login_country = &s
+}
+
+// LastLoginCountry returns the value of the "last_login_country" field in the mutation.
+func (m *UserMutation) LastLoginCountry() (r string, exists bool) {
+	v := m.last_login_country
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLastLoginCountry returns the old "last_login_country" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldLastLoginCountry(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLastLoginCountry is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLastLoginCountry requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLastLoginCountry: %w", err)
+	}
+	return oldValue.LastLoginCountry, nil
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (m *UserMutation) ClearLastLoginCountry() {
+	m.last_login_country = nil
+	m.clearedFields[user.FieldLastLoginCountry] = struct{}{}
+}
+
+// LastLoginCountryCleared returns if the "last_login_country" field was cleared in this mutation.
+func (m *UserMutation) LastLoginCountryCleared() bool {
+	_, ok := m.clearedFields[user.FieldLastLoginCountry]
+	return ok
+}
+
+// ResetLastLoginCountry resets all changes to the "last_login_country" field.
+func (m *UserMutation) ResetLastLoginCountry() {
+	m.last_login_country = nil
+	delete(m.clearedFields, user.FieldLastLoginCountry)
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (m *UserMutation) SetLastLoginAt(t time.Time) {
 	m.last_login_at = &t
@@ -14500,6 +14739,62 @@ func (m *UserMutation) LastLoginAtCleared() bool {
 func (m *UserMutation) ResetLastLoginAt() {
 	m.last_login_at = nil
 	delete(m.clearedFields, user.FieldLastLoginAt)
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (m *UserMutation) SetFailedLoginCount(i int) {
+	m.failed_login_count = &i
+	m.addfailed_login_count = nil
+}
+
+// FailedLoginCount returns the value of the "failed_login_count" field in the mutation.
+func (m *UserMutation) FailedLoginCount() (r int, exists bool) {
+	v := m.failed_login_count
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFailedLoginCount returns the old "failed_login_count" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldFailedLoginCount(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFailedLoginCount is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFailedLoginCount requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFailedLoginCount: %w", err)
+	}
+	return oldValue.FailedLoginCount, nil
+}
+
+// AddFailedLoginCount adds i to the "failed_login_count" field.
+func (m *UserMutation) AddFailedLoginCount(i int) {
+	if m.addfailed_login_count != nil {
+		*m.addfailed_login_count += i
+	} else {
+		m.addfailed_login_count = &i
+	}
+}
+
+// AddedFailedLoginCount returns the value that was added to the "failed_login_count" field in this mutation.
+func (m *UserMutation) AddedFailedLoginCount() (r int, exists bool) {
+	v := m.addfailed_login_count
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetFailedLoginCount resets all changes to the "failed_login_count" field.
+func (m *UserMutation) ResetFailedLoginCount() {
+	m.failed_login_count = nil
+	m.addfailed_login_count = nil
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -15040,7 +15335,7 @@ func (m *UserMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *UserMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 15)
 	if m.email != nil {
 		fields = append(fields, user.FieldEmail)
 	}
@@ -15059,8 +15354,26 @@ func (m *UserMutation) Fields() []string {
 	if m.token_version != nil {
 		fields = append(fields, user.FieldTokenVersion)
 	}
+	if m.totp_secret != nil {
+		fields = append(fields, user.FieldTotpSecret)
+	}
+	if m.totp_enabled != nil {
+		fields = append(fields, user.FieldTotpEnabled)
+	}
+	if m.totp_backup_codes != nil {
+		fields = append(fields, user.FieldTotpBackupCodes)
+	}
+	if m.last_login_ip != nil {
+		fields = append(fields, user.FieldLastLoginIP)
+	}
+	if m.last_login_country != nil {
+		fields = append(fields, user.FieldLastLoginCountry)
+	}
 	if m.last_login_at != nil {
 		fields = append(fields, user.FieldLastLoginAt)
+	}
+	if m.failed_login_count != nil {
+		fields = append(fields, user.FieldFailedLoginCount)
 	}
 	if m.created_at != nil {
 		fields = append(fields, user.FieldCreatedAt)
@@ -15088,8 +15401,20 @@ func (m *UserMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case user.FieldTokenVersion:
 		return m.TokenVersion()
+	case user.FieldTotpSecret:
+		return m.TotpSecret()
+	case user.FieldTotpEnabled:
+		return m.TotpEnabled()
+	case user.FieldTotpBackupCodes:
+		return m.TotpBackupCodes()
+	case user.FieldLastLoginIP:
+		return m.LastLoginIP()
+	case user.FieldLastLoginCountry:
+		return m.LastLoginCountry()
 	case user.FieldLastLoginAt:
 		return m.LastLoginAt()
+	case user.FieldFailedLoginCount:
+		return m.FailedLoginCount()
 	case user.FieldCreatedAt:
 		return m.CreatedAt()
 	case user.FieldUpdatedAt:
@@ -15115,8 +15440,20 @@ func (m *UserMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldStatus(ctx)
 	case user.FieldTokenVersion:
 		return m.OldTokenVersion(ctx)
+	case user.FieldTotpSecret:
+		return m.OldTotpSecret(ctx)
+	case user.FieldTotpEnabled:
+		return m.OldTotpEnabled(ctx)
+	case user.FieldTotpBackupCodes:
+		return m.OldTotpBackupCodes(ctx)
+	case user.FieldLastLoginIP:
+		return m.OldLastLoginIP(ctx)
+	case user.FieldLastLoginCountry:
+		return m.OldLastLoginCountry(ctx)
 	case user.FieldLastLoginAt:
 		return m.OldLastLoginAt(ctx)
+	case user.FieldFailedLoginCount:
+		return m.OldFailedLoginCount(ctx)
 	case user.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case user.FieldUpdatedAt:
@@ -15172,12 +15509,54 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTokenVersion(v)
 		return nil
+	case user.FieldTotpSecret:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTotpSecret(v)
+		return nil
+	case user.FieldTotpEnabled:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTotpEnabled(v)
+		return nil
+	case user.FieldTotpBackupCodes:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTotpBackupCodes(v)
+		return nil
+	case user.FieldLastLoginIP:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLastLoginIP(v)
+		return nil
+	case user.FieldLastLoginCountry:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLastLoginCountry(v)
+		return nil
 	case user.FieldLastLoginAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetLastLoginAt(v)
+		return nil
+	case user.FieldFailedLoginCount:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFailedLoginCount(v)
 		return nil
 	case user.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -15204,6 +15583,9 @@ func (m *UserMutation) AddedFields() []string {
 	if m.addtoken_version != nil {
 		fields = append(fields, user.FieldTokenVersion)
 	}
+	if m.addfailed_login_count != nil {
+		fields = append(fields, user.FieldFailedLoginCount)
+	}
 	return fields
 }
 
@@ -15214,6 +15596,8 @@ func (m *UserMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case user.FieldTokenVersion:
 		return m.AddedTokenVersion()
+	case user.FieldFailedLoginCount:
+		return m.AddedFailedLoginCount()
 	}
 	return nil, false
 }
@@ -15230,6 +15614,13 @@ func (m *UserMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddTokenVersion(v)
 		return nil
+	case user.FieldFailedLoginCount:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddFailedLoginCount(v)
+		return nil
 	}
 	return fmt.Errorf("unknown User numeric field %s", name)
 }
@@ -15240,6 +15631,18 @@ func (m *UserMutation) ClearedFields() []string {
 	var fields []string
 	if m.FieldCleared(user.FieldName) {
 		fields = append(fields, user.FieldName)
+	}
+	if m.FieldCleared(user.FieldTotpSecret) {
+		fields = append(fields, user.FieldTotpSecret)
+	}
+	if m.FieldCleared(user.FieldTotpBackupCodes) {
+		fields = append(fields, user.FieldTotpBackupCodes)
+	}
+	if m.FieldCleared(user.FieldLastLoginIP) {
+		fields = append(fields, user.FieldLastLoginIP)
+	}
+	if m.FieldCleared(user.FieldLastLoginCountry) {
+		fields = append(fields, user.FieldLastLoginCountry)
 	}
 	if m.FieldCleared(user.FieldLastLoginAt) {
 		fields = append(fields, user.FieldLastLoginAt)
@@ -15260,6 +15663,18 @@ func (m *UserMutation) ClearField(name string) error {
 	switch name {
 	case user.FieldName:
 		m.ClearName()
+		return nil
+	case user.FieldTotpSecret:
+		m.ClearTotpSecret()
+		return nil
+	case user.FieldTotpBackupCodes:
+		m.ClearTotpBackupCodes()
+		return nil
+	case user.FieldLastLoginIP:
+		m.ClearLastLoginIP()
+		return nil
+	case user.FieldLastLoginCountry:
+		m.ClearLastLoginCountry()
 		return nil
 	case user.FieldLastLoginAt:
 		m.ClearLastLoginAt()
@@ -15290,8 +15705,26 @@ func (m *UserMutation) ResetField(name string) error {
 	case user.FieldTokenVersion:
 		m.ResetTokenVersion()
 		return nil
+	case user.FieldTotpSecret:
+		m.ResetTotpSecret()
+		return nil
+	case user.FieldTotpEnabled:
+		m.ResetTotpEnabled()
+		return nil
+	case user.FieldTotpBackupCodes:
+		m.ResetTotpBackupCodes()
+		return nil
+	case user.FieldLastLoginIP:
+		m.ResetLastLoginIP()
+		return nil
+	case user.FieldLastLoginCountry:
+		m.ResetLastLoginCountry()
+		return nil
 	case user.FieldLastLoginAt:
 		m.ResetLastLoginAt()
+		return nil
+	case user.FieldFailedLoginCount:
+		m.ResetFailedLoginCount()
 		return nil
 	case user.FieldCreatedAt:
 		m.ResetCreatedAt()

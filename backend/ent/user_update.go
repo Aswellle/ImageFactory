@@ -133,6 +133,100 @@ func (_u *UserUpdate) AddTokenVersion(v int) *UserUpdate {
 	return _u
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (_u *UserUpdate) SetTotpSecret(v string) *UserUpdate {
+	_u.mutation.SetTotpSecret(v)
+	return _u
+}
+
+// SetNillableTotpSecret sets the "totp_secret" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableTotpSecret(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetTotpSecret(*v)
+	}
+	return _u
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (_u *UserUpdate) ClearTotpSecret() *UserUpdate {
+	_u.mutation.ClearTotpSecret()
+	return _u
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (_u *UserUpdate) SetTotpEnabled(v bool) *UserUpdate {
+	_u.mutation.SetTotpEnabled(v)
+	return _u
+}
+
+// SetNillableTotpEnabled sets the "totp_enabled" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableTotpEnabled(v *bool) *UserUpdate {
+	if v != nil {
+		_u.SetTotpEnabled(*v)
+	}
+	return _u
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (_u *UserUpdate) SetTotpBackupCodes(v string) *UserUpdate {
+	_u.mutation.SetTotpBackupCodes(v)
+	return _u
+}
+
+// SetNillableTotpBackupCodes sets the "totp_backup_codes" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableTotpBackupCodes(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetTotpBackupCodes(*v)
+	}
+	return _u
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (_u *UserUpdate) ClearTotpBackupCodes() *UserUpdate {
+	_u.mutation.ClearTotpBackupCodes()
+	return _u
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (_u *UserUpdate) SetLastLoginIP(v string) *UserUpdate {
+	_u.mutation.SetLastLoginIP(v)
+	return _u
+}
+
+// SetNillableLastLoginIP sets the "last_login_ip" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableLastLoginIP(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetLastLoginIP(*v)
+	}
+	return _u
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (_u *UserUpdate) ClearLastLoginIP() *UserUpdate {
+	_u.mutation.ClearLastLoginIP()
+	return _u
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (_u *UserUpdate) SetLastLoginCountry(v string) *UserUpdate {
+	_u.mutation.SetLastLoginCountry(v)
+	return _u
+}
+
+// SetNillableLastLoginCountry sets the "last_login_country" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableLastLoginCountry(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetLastLoginCountry(*v)
+	}
+	return _u
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (_u *UserUpdate) ClearLastLoginCountry() *UserUpdate {
+	_u.mutation.ClearLastLoginCountry()
+	return _u
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (_u *UserUpdate) SetLastLoginAt(v time.Time) *UserUpdate {
 	_u.mutation.SetLastLoginAt(v)
@@ -150,6 +244,27 @@ func (_u *UserUpdate) SetNillableLastLoginAt(v *time.Time) *UserUpdate {
 // ClearLastLoginAt clears the value of the "last_login_at" field.
 func (_u *UserUpdate) ClearLastLoginAt() *UserUpdate {
 	_u.mutation.ClearLastLoginAt()
+	return _u
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (_u *UserUpdate) SetFailedLoginCount(v int) *UserUpdate {
+	_u.mutation.ResetFailedLoginCount()
+	_u.mutation.SetFailedLoginCount(v)
+	return _u
+}
+
+// SetNillableFailedLoginCount sets the "failed_login_count" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableFailedLoginCount(v *int) *UserUpdate {
+	if v != nil {
+		_u.SetFailedLoginCount(*v)
+	}
+	return _u
+}
+
+// AddFailedLoginCount adds value to the "failed_login_count" field.
+func (_u *UserUpdate) AddFailedLoginCount(v int) *UserUpdate {
+	_u.mutation.AddFailedLoginCount(v)
 	return _u
 }
 
@@ -549,11 +664,44 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.AddedTokenVersion(); ok {
 		_spec.AddField(user.FieldTokenVersion, field.TypeInt, value)
 	}
+	if value, ok := _u.mutation.TotpSecret(); ok {
+		_spec.SetField(user.FieldTotpSecret, field.TypeString, value)
+	}
+	if _u.mutation.TotpSecretCleared() {
+		_spec.ClearField(user.FieldTotpSecret, field.TypeString)
+	}
+	if value, ok := _u.mutation.TotpEnabled(); ok {
+		_spec.SetField(user.FieldTotpEnabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.TotpBackupCodes(); ok {
+		_spec.SetField(user.FieldTotpBackupCodes, field.TypeString, value)
+	}
+	if _u.mutation.TotpBackupCodesCleared() {
+		_spec.ClearField(user.FieldTotpBackupCodes, field.TypeString)
+	}
+	if value, ok := _u.mutation.LastLoginIP(); ok {
+		_spec.SetField(user.FieldLastLoginIP, field.TypeString, value)
+	}
+	if _u.mutation.LastLoginIPCleared() {
+		_spec.ClearField(user.FieldLastLoginIP, field.TypeString)
+	}
+	if value, ok := _u.mutation.LastLoginCountry(); ok {
+		_spec.SetField(user.FieldLastLoginCountry, field.TypeString, value)
+	}
+	if _u.mutation.LastLoginCountryCleared() {
+		_spec.ClearField(user.FieldLastLoginCountry, field.TypeString)
+	}
 	if value, ok := _u.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
 	}
 	if _u.mutation.LastLoginAtCleared() {
 		_spec.ClearField(user.FieldLastLoginAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.FailedLoginCount(); ok {
+		_spec.SetField(user.FieldFailedLoginCount, field.TypeInt, value)
+	}
+	if value, ok := _u.mutation.AddedFailedLoginCount(); ok {
+		_spec.AddField(user.FieldFailedLoginCount, field.TypeInt, value)
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
@@ -1035,6 +1183,100 @@ func (_u *UserUpdateOne) AddTokenVersion(v int) *UserUpdateOne {
 	return _u
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (_u *UserUpdateOne) SetTotpSecret(v string) *UserUpdateOne {
+	_u.mutation.SetTotpSecret(v)
+	return _u
+}
+
+// SetNillableTotpSecret sets the "totp_secret" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableTotpSecret(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetTotpSecret(*v)
+	}
+	return _u
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (_u *UserUpdateOne) ClearTotpSecret() *UserUpdateOne {
+	_u.mutation.ClearTotpSecret()
+	return _u
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (_u *UserUpdateOne) SetTotpEnabled(v bool) *UserUpdateOne {
+	_u.mutation.SetTotpEnabled(v)
+	return _u
+}
+
+// SetNillableTotpEnabled sets the "totp_enabled" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableTotpEnabled(v *bool) *UserUpdateOne {
+	if v != nil {
+		_u.SetTotpEnabled(*v)
+	}
+	return _u
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (_u *UserUpdateOne) SetTotpBackupCodes(v string) *UserUpdateOne {
+	_u.mutation.SetTotpBackupCodes(v)
+	return _u
+}
+
+// SetNillableTotpBackupCodes sets the "totp_backup_codes" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableTotpBackupCodes(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetTotpBackupCodes(*v)
+	}
+	return _u
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (_u *UserUpdateOne) ClearTotpBackupCodes() *UserUpdateOne {
+	_u.mutation.ClearTotpBackupCodes()
+	return _u
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (_u *UserUpdateOne) SetLastLoginIP(v string) *UserUpdateOne {
+	_u.mutation.SetLastLoginIP(v)
+	return _u
+}
+
+// SetNillableLastLoginIP sets the "last_login_ip" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableLastLoginIP(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetLastLoginIP(*v)
+	}
+	return _u
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (_u *UserUpdateOne) ClearLastLoginIP() *UserUpdateOne {
+	_u.mutation.ClearLastLoginIP()
+	return _u
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (_u *UserUpdateOne) SetLastLoginCountry(v string) *UserUpdateOne {
+	_u.mutation.SetLastLoginCountry(v)
+	return _u
+}
+
+// SetNillableLastLoginCountry sets the "last_login_country" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableLastLoginCountry(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetLastLoginCountry(*v)
+	}
+	return _u
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (_u *UserUpdateOne) ClearLastLoginCountry() *UserUpdateOne {
+	_u.mutation.ClearLastLoginCountry()
+	return _u
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (_u *UserUpdateOne) SetLastLoginAt(v time.Time) *UserUpdateOne {
 	_u.mutation.SetLastLoginAt(v)
@@ -1052,6 +1294,27 @@ func (_u *UserUpdateOne) SetNillableLastLoginAt(v *time.Time) *UserUpdateOne {
 // ClearLastLoginAt clears the value of the "last_login_at" field.
 func (_u *UserUpdateOne) ClearLastLoginAt() *UserUpdateOne {
 	_u.mutation.ClearLastLoginAt()
+	return _u
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (_u *UserUpdateOne) SetFailedLoginCount(v int) *UserUpdateOne {
+	_u.mutation.ResetFailedLoginCount()
+	_u.mutation.SetFailedLoginCount(v)
+	return _u
+}
+
+// SetNillableFailedLoginCount sets the "failed_login_count" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableFailedLoginCount(v *int) *UserUpdateOne {
+	if v != nil {
+		_u.SetFailedLoginCount(*v)
+	}
+	return _u
+}
+
+// AddFailedLoginCount adds value to the "failed_login_count" field.
+func (_u *UserUpdateOne) AddFailedLoginCount(v int) *UserUpdateOne {
+	_u.mutation.AddFailedLoginCount(v)
 	return _u
 }
 
@@ -1481,11 +1744,44 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if value, ok := _u.mutation.AddedTokenVersion(); ok {
 		_spec.AddField(user.FieldTokenVersion, field.TypeInt, value)
 	}
+	if value, ok := _u.mutation.TotpSecret(); ok {
+		_spec.SetField(user.FieldTotpSecret, field.TypeString, value)
+	}
+	if _u.mutation.TotpSecretCleared() {
+		_spec.ClearField(user.FieldTotpSecret, field.TypeString)
+	}
+	if value, ok := _u.mutation.TotpEnabled(); ok {
+		_spec.SetField(user.FieldTotpEnabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.TotpBackupCodes(); ok {
+		_spec.SetField(user.FieldTotpBackupCodes, field.TypeString, value)
+	}
+	if _u.mutation.TotpBackupCodesCleared() {
+		_spec.ClearField(user.FieldTotpBackupCodes, field.TypeString)
+	}
+	if value, ok := _u.mutation.LastLoginIP(); ok {
+		_spec.SetField(user.FieldLastLoginIP, field.TypeString, value)
+	}
+	if _u.mutation.LastLoginIPCleared() {
+		_spec.ClearField(user.FieldLastLoginIP, field.TypeString)
+	}
+	if value, ok := _u.mutation.LastLoginCountry(); ok {
+		_spec.SetField(user.FieldLastLoginCountry, field.TypeString, value)
+	}
+	if _u.mutation.LastLoginCountryCleared() {
+		_spec.ClearField(user.FieldLastLoginCountry, field.TypeString)
+	}
 	if value, ok := _u.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
 	}
 	if _u.mutation.LastLoginAtCleared() {
 		_spec.ClearField(user.FieldLastLoginAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.FailedLoginCount(); ok {
+		_spec.SetField(user.FieldFailedLoginCount, field.TypeInt, value)
+	}
+	if value, ok := _u.mutation.AddedFailedLoginCount(); ok {
+		_spec.AddField(user.FieldFailedLoginCount, field.TypeInt, value)
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)

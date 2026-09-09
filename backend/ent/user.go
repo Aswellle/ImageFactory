@@ -29,8 +29,20 @@ type User struct {
 	Status user.Status `json:"status,omitempty"`
 	// TokenVersion holds the value of the "token_version" field.
 	TokenVersion int `json:"token_version,omitempty"`
+	// TotpSecret holds the value of the "totp_secret" field.
+	TotpSecret string `json:"-"`
+	// TotpEnabled holds the value of the "totp_enabled" field.
+	TotpEnabled bool `json:"totp_enabled,omitempty"`
+	// TotpBackupCodes holds the value of the "totp_backup_codes" field.
+	TotpBackupCodes string `json:"-"`
+	// LastLoginIP holds the value of the "last_login_ip" field.
+	LastLoginIP string `json:"last_login_ip,omitempty"`
+	// LastLoginCountry holds the value of the "last_login_country" field.
+	LastLoginCountry string `json:"last_login_country,omitempty"`
 	// LastLoginAt holds the value of the "last_login_at" field.
 	LastLoginAt *time.Time `json:"last_login_at,omitempty"`
+	// FailedLoginCount holds the value of the "failed_login_count" field.
+	FailedLoginCount int `json:"failed_login_count,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -141,9 +153,11 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldTokenVersion:
+		case user.FieldTotpEnabled:
+			values[i] = new(sql.NullBool)
+		case user.FieldID, user.FieldTokenVersion, user.FieldFailedLoginCount:
 			values[i] = new(sql.NullInt64)
-		case user.FieldEmail, user.FieldPasswordHash, user.FieldName, user.FieldRole, user.FieldStatus:
+		case user.FieldEmail, user.FieldPasswordHash, user.FieldName, user.FieldRole, user.FieldStatus, user.FieldTotpSecret, user.FieldTotpBackupCodes, user.FieldLastLoginIP, user.FieldLastLoginCountry:
 			values[i] = new(sql.NullString)
 		case user.FieldLastLoginAt, user.FieldCreatedAt, user.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -204,12 +218,48 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.TokenVersion = int(value.Int64)
 			}
+		case user.FieldTotpSecret:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field totp_secret", values[i])
+			} else if value.Valid {
+				_m.TotpSecret = value.String
+			}
+		case user.FieldTotpEnabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field totp_enabled", values[i])
+			} else if value.Valid {
+				_m.TotpEnabled = value.Bool
+			}
+		case user.FieldTotpBackupCodes:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field totp_backup_codes", values[i])
+			} else if value.Valid {
+				_m.TotpBackupCodes = value.String
+			}
+		case user.FieldLastLoginIP:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field last_login_ip", values[i])
+			} else if value.Valid {
+				_m.LastLoginIP = value.String
+			}
+		case user.FieldLastLoginCountry:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field last_login_country", values[i])
+			} else if value.Valid {
+				_m.LastLoginCountry = value.String
+			}
 		case user.FieldLastLoginAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_login_at", values[i])
 			} else if value.Valid {
 				_m.LastLoginAt = new(time.Time)
 				*_m.LastLoginAt = value.Time
+			}
+		case user.FieldFailedLoginCount:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field failed_login_count", values[i])
+			} else if value.Valid {
+				_m.FailedLoginCount = int(value.Int64)
 			}
 		case user.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -316,10 +366,26 @@ func (_m *User) String() string {
 	builder.WriteString("token_version=")
 	builder.WriteString(fmt.Sprintf("%v", _m.TokenVersion))
 	builder.WriteString(", ")
+	builder.WriteString("totp_secret=<sensitive>")
+	builder.WriteString(", ")
+	builder.WriteString("totp_enabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.TotpEnabled))
+	builder.WriteString(", ")
+	builder.WriteString("totp_backup_codes=<sensitive>")
+	builder.WriteString(", ")
+	builder.WriteString("last_login_ip=")
+	builder.WriteString(_m.LastLoginIP)
+	builder.WriteString(", ")
+	builder.WriteString("last_login_country=")
+	builder.WriteString(_m.LastLoginCountry)
+	builder.WriteString(", ")
 	if v := _m.LastLoginAt; v != nil {
 		builder.WriteString("last_login_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
+	builder.WriteString(", ")
+	builder.WriteString("failed_login_count=")
+	builder.WriteString(fmt.Sprintf("%v", _m.FailedLoginCount))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

@@ -573,7 +573,13 @@ var (
 		{Name: "role", Type: field.TypeEnum, Enums: []string{"user", "admin"}, Default: "user"},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"active", "suspended", "deleted"}, Default: "active"},
 		{Name: "token_version", Type: field.TypeInt, Default: 0},
+		{Name: "totp_secret", Type: field.TypeString, Nullable: true},
+		{Name: "totp_enabled", Type: field.TypeBool, Default: false},
+		{Name: "totp_backup_codes", Type: field.TypeString, Nullable: true},
+		{Name: "last_login_ip", Type: field.TypeString, Nullable: true},
+		{Name: "last_login_country", Type: field.TypeString, Nullable: true},
 		{Name: "last_login_at", Type: field.TypeTime, Nullable: true},
+		{Name: "failed_login_count", Type: field.TypeInt, Default: 0},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}

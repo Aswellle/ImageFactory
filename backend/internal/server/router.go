@@ -223,7 +223,12 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		service.NewImageTaskService(repository.NewRedisImageTaskStore(rdb)),
 	)
 
+	// --- 2FA ---
+	totpService := service.NewTOTPService("ImageForge")
+	twoFactorHandler := handler.NewTwoFactorHandler(totpService, users)
+
 	// --- Admin ---
+
 	adminSvc := service.NewAdminService(db)
 
 	adminAuth := middleware.NewAdminAuth(authMW)
@@ -279,7 +284,13 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	authorized := v1.Group("")
 	authorized.Use(authMW.Require())
 	{
+		// 2FA 管理
+		authorized.POST("/auth/2fa/setup", twoFactorHandler.Setup)
+		authorized.POST("/auth/2fa/enable", twoFactorHandler.Enable)
+		authorized.POST("/auth/2fa/disable", twoFactorHandler.Disable)
+		authorized.GET("/auth/2fa/status", twoFactorHandler.Status)
 		authorized.POST("/images/generations", genHandler.Create)
+
 		authorized.POST("/images/edits", editHandler.Edit)
 		authorized.GET("/images/jobs", genHandler.List)
 		authorized.GET("/images/jobs/:id", genHandler.Get)

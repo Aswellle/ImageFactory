@@ -98,6 +98,76 @@ func (_c *UserCreate) SetNillableTokenVersion(v *int) *UserCreate {
 	return _c
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (_c *UserCreate) SetTotpSecret(v string) *UserCreate {
+	_c.mutation.SetTotpSecret(v)
+	return _c
+}
+
+// SetNillableTotpSecret sets the "totp_secret" field if the given value is not nil.
+func (_c *UserCreate) SetNillableTotpSecret(v *string) *UserCreate {
+	if v != nil {
+		_c.SetTotpSecret(*v)
+	}
+	return _c
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (_c *UserCreate) SetTotpEnabled(v bool) *UserCreate {
+	_c.mutation.SetTotpEnabled(v)
+	return _c
+}
+
+// SetNillableTotpEnabled sets the "totp_enabled" field if the given value is not nil.
+func (_c *UserCreate) SetNillableTotpEnabled(v *bool) *UserCreate {
+	if v != nil {
+		_c.SetTotpEnabled(*v)
+	}
+	return _c
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (_c *UserCreate) SetTotpBackupCodes(v string) *UserCreate {
+	_c.mutation.SetTotpBackupCodes(v)
+	return _c
+}
+
+// SetNillableTotpBackupCodes sets the "totp_backup_codes" field if the given value is not nil.
+func (_c *UserCreate) SetNillableTotpBackupCodes(v *string) *UserCreate {
+	if v != nil {
+		_c.SetTotpBackupCodes(*v)
+	}
+	return _c
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (_c *UserCreate) SetLastLoginIP(v string) *UserCreate {
+	_c.mutation.SetLastLoginIP(v)
+	return _c
+}
+
+// SetNillableLastLoginIP sets the "last_login_ip" field if the given value is not nil.
+func (_c *UserCreate) SetNillableLastLoginIP(v *string) *UserCreate {
+	if v != nil {
+		_c.SetLastLoginIP(*v)
+	}
+	return _c
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (_c *UserCreate) SetLastLoginCountry(v string) *UserCreate {
+	_c.mutation.SetLastLoginCountry(v)
+	return _c
+}
+
+// SetNillableLastLoginCountry sets the "last_login_country" field if the given value is not nil.
+func (_c *UserCreate) SetNillableLastLoginCountry(v *string) *UserCreate {
+	if v != nil {
+		_c.SetLastLoginCountry(*v)
+	}
+	return _c
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (_c *UserCreate) SetLastLoginAt(v time.Time) *UserCreate {
 	_c.mutation.SetLastLoginAt(v)
@@ -108,6 +178,20 @@ func (_c *UserCreate) SetLastLoginAt(v time.Time) *UserCreate {
 func (_c *UserCreate) SetNillableLastLoginAt(v *time.Time) *UserCreate {
 	if v != nil {
 		_c.SetLastLoginAt(*v)
+	}
+	return _c
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (_c *UserCreate) SetFailedLoginCount(v int) *UserCreate {
+	_c.mutation.SetFailedLoginCount(v)
+	return _c
+}
+
+// SetNillableFailedLoginCount sets the "failed_login_count" field if the given value is not nil.
+func (_c *UserCreate) SetNillableFailedLoginCount(v *int) *UserCreate {
+	if v != nil {
+		_c.SetFailedLoginCount(*v)
 	}
 	return _c
 }
@@ -307,6 +391,14 @@ func (_c *UserCreate) defaults() {
 		v := user.DefaultTokenVersion
 		_c.mutation.SetTokenVersion(v)
 	}
+	if _, ok := _c.mutation.TotpEnabled(); !ok {
+		v := user.DefaultTotpEnabled
+		_c.mutation.SetTotpEnabled(v)
+	}
+	if _, ok := _c.mutation.FailedLoginCount(); !ok {
+		v := user.DefaultFailedLoginCount
+		_c.mutation.SetFailedLoginCount(v)
+	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := user.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -353,6 +445,12 @@ func (_c *UserCreate) check() error {
 	}
 	if _, ok := _c.mutation.TokenVersion(); !ok {
 		return &ValidationError{Name: "token_version", err: errors.New(`ent: missing required field "User.token_version"`)}
+	}
+	if _, ok := _c.mutation.TotpEnabled(); !ok {
+		return &ValidationError{Name: "totp_enabled", err: errors.New(`ent: missing required field "User.totp_enabled"`)}
+	}
+	if _, ok := _c.mutation.FailedLoginCount(); !ok {
+		return &ValidationError{Name: "failed_login_count", err: errors.New(`ent: missing required field "User.failed_login_count"`)}
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
@@ -411,9 +509,33 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldTokenVersion, field.TypeInt, value)
 		_node.TokenVersion = value
 	}
+	if value, ok := _c.mutation.TotpSecret(); ok {
+		_spec.SetField(user.FieldTotpSecret, field.TypeString, value)
+		_node.TotpSecret = value
+	}
+	if value, ok := _c.mutation.TotpEnabled(); ok {
+		_spec.SetField(user.FieldTotpEnabled, field.TypeBool, value)
+		_node.TotpEnabled = value
+	}
+	if value, ok := _c.mutation.TotpBackupCodes(); ok {
+		_spec.SetField(user.FieldTotpBackupCodes, field.TypeString, value)
+		_node.TotpBackupCodes = value
+	}
+	if value, ok := _c.mutation.LastLoginIP(); ok {
+		_spec.SetField(user.FieldLastLoginIP, field.TypeString, value)
+		_node.LastLoginIP = value
+	}
+	if value, ok := _c.mutation.LastLoginCountry(); ok {
+		_spec.SetField(user.FieldLastLoginCountry, field.TypeString, value)
+		_node.LastLoginCountry = value
+	}
 	if value, ok := _c.mutation.LastLoginAt(); ok {
 		_spec.SetField(user.FieldLastLoginAt, field.TypeTime, value)
 		_node.LastLoginAt = &value
+	}
+	if value, ok := _c.mutation.FailedLoginCount(); ok {
+		_spec.SetField(user.FieldFailedLoginCount, field.TypeInt, value)
+		_node.FailedLoginCount = value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)
@@ -687,6 +809,90 @@ func (u *UserUpsert) AddTokenVersion(v int) *UserUpsert {
 	return u
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (u *UserUpsert) SetTotpSecret(v string) *UserUpsert {
+	u.Set(user.FieldTotpSecret, v)
+	return u
+}
+
+// UpdateTotpSecret sets the "totp_secret" field to the value that was provided on create.
+func (u *UserUpsert) UpdateTotpSecret() *UserUpsert {
+	u.SetExcluded(user.FieldTotpSecret)
+	return u
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (u *UserUpsert) ClearTotpSecret() *UserUpsert {
+	u.SetNull(user.FieldTotpSecret)
+	return u
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (u *UserUpsert) SetTotpEnabled(v bool) *UserUpsert {
+	u.Set(user.FieldTotpEnabled, v)
+	return u
+}
+
+// UpdateTotpEnabled sets the "totp_enabled" field to the value that was provided on create.
+func (u *UserUpsert) UpdateTotpEnabled() *UserUpsert {
+	u.SetExcluded(user.FieldTotpEnabled)
+	return u
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (u *UserUpsert) SetTotpBackupCodes(v string) *UserUpsert {
+	u.Set(user.FieldTotpBackupCodes, v)
+	return u
+}
+
+// UpdateTotpBackupCodes sets the "totp_backup_codes" field to the value that was provided on create.
+func (u *UserUpsert) UpdateTotpBackupCodes() *UserUpsert {
+	u.SetExcluded(user.FieldTotpBackupCodes)
+	return u
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (u *UserUpsert) ClearTotpBackupCodes() *UserUpsert {
+	u.SetNull(user.FieldTotpBackupCodes)
+	return u
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (u *UserUpsert) SetLastLoginIP(v string) *UserUpsert {
+	u.Set(user.FieldLastLoginIP, v)
+	return u
+}
+
+// UpdateLastLoginIP sets the "last_login_ip" field to the value that was provided on create.
+func (u *UserUpsert) UpdateLastLoginIP() *UserUpsert {
+	u.SetExcluded(user.FieldLastLoginIP)
+	return u
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (u *UserUpsert) ClearLastLoginIP() *UserUpsert {
+	u.SetNull(user.FieldLastLoginIP)
+	return u
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (u *UserUpsert) SetLastLoginCountry(v string) *UserUpsert {
+	u.Set(user.FieldLastLoginCountry, v)
+	return u
+}
+
+// UpdateLastLoginCountry sets the "last_login_country" field to the value that was provided on create.
+func (u *UserUpsert) UpdateLastLoginCountry() *UserUpsert {
+	u.SetExcluded(user.FieldLastLoginCountry)
+	return u
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (u *UserUpsert) ClearLastLoginCountry() *UserUpsert {
+	u.SetNull(user.FieldLastLoginCountry)
+	return u
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (u *UserUpsert) SetLastLoginAt(v time.Time) *UserUpsert {
 	u.Set(user.FieldLastLoginAt, v)
@@ -702,6 +908,24 @@ func (u *UserUpsert) UpdateLastLoginAt() *UserUpsert {
 // ClearLastLoginAt clears the value of the "last_login_at" field.
 func (u *UserUpsert) ClearLastLoginAt() *UserUpsert {
 	u.SetNull(user.FieldLastLoginAt)
+	return u
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (u *UserUpsert) SetFailedLoginCount(v int) *UserUpsert {
+	u.Set(user.FieldFailedLoginCount, v)
+	return u
+}
+
+// UpdateFailedLoginCount sets the "failed_login_count" field to the value that was provided on create.
+func (u *UserUpsert) UpdateFailedLoginCount() *UserUpsert {
+	u.SetExcluded(user.FieldFailedLoginCount)
+	return u
+}
+
+// AddFailedLoginCount adds v to the "failed_login_count" field.
+func (u *UserUpsert) AddFailedLoginCount(v int) *UserUpsert {
+	u.Add(user.FieldFailedLoginCount, v)
 	return u
 }
 
@@ -860,6 +1084,104 @@ func (u *UserUpsertOne) UpdateTokenVersion() *UserUpsertOne {
 	})
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (u *UserUpsertOne) SetTotpSecret(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpSecret(v)
+	})
+}
+
+// UpdateTotpSecret sets the "totp_secret" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateTotpSecret() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpSecret()
+	})
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (u *UserUpsertOne) ClearTotpSecret() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearTotpSecret()
+	})
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (u *UserUpsertOne) SetTotpEnabled(v bool) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpEnabled(v)
+	})
+}
+
+// UpdateTotpEnabled sets the "totp_enabled" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateTotpEnabled() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpEnabled()
+	})
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (u *UserUpsertOne) SetTotpBackupCodes(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpBackupCodes(v)
+	})
+}
+
+// UpdateTotpBackupCodes sets the "totp_backup_codes" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateTotpBackupCodes() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpBackupCodes()
+	})
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (u *UserUpsertOne) ClearTotpBackupCodes() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearTotpBackupCodes()
+	})
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (u *UserUpsertOne) SetLastLoginIP(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetLastLoginIP(v)
+	})
+}
+
+// UpdateLastLoginIP sets the "last_login_ip" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateLastLoginIP() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateLastLoginIP()
+	})
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (u *UserUpsertOne) ClearLastLoginIP() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearLastLoginIP()
+	})
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (u *UserUpsertOne) SetLastLoginCountry(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetLastLoginCountry(v)
+	})
+}
+
+// UpdateLastLoginCountry sets the "last_login_country" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateLastLoginCountry() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateLastLoginCountry()
+	})
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (u *UserUpsertOne) ClearLastLoginCountry() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearLastLoginCountry()
+	})
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (u *UserUpsertOne) SetLastLoginAt(v time.Time) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
@@ -878,6 +1200,27 @@ func (u *UserUpsertOne) UpdateLastLoginAt() *UserUpsertOne {
 func (u *UserUpsertOne) ClearLastLoginAt() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearLastLoginAt()
+	})
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (u *UserUpsertOne) SetFailedLoginCount(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetFailedLoginCount(v)
+	})
+}
+
+// AddFailedLoginCount adds v to the "failed_login_count" field.
+func (u *UserUpsertOne) AddFailedLoginCount(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.AddFailedLoginCount(v)
+	})
+}
+
+// UpdateFailedLoginCount sets the "failed_login_count" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateFailedLoginCount() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateFailedLoginCount()
 	})
 }
 
@@ -1204,6 +1547,104 @@ func (u *UserUpsertBulk) UpdateTokenVersion() *UserUpsertBulk {
 	})
 }
 
+// SetTotpSecret sets the "totp_secret" field.
+func (u *UserUpsertBulk) SetTotpSecret(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpSecret(v)
+	})
+}
+
+// UpdateTotpSecret sets the "totp_secret" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateTotpSecret() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpSecret()
+	})
+}
+
+// ClearTotpSecret clears the value of the "totp_secret" field.
+func (u *UserUpsertBulk) ClearTotpSecret() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearTotpSecret()
+	})
+}
+
+// SetTotpEnabled sets the "totp_enabled" field.
+func (u *UserUpsertBulk) SetTotpEnabled(v bool) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpEnabled(v)
+	})
+}
+
+// UpdateTotpEnabled sets the "totp_enabled" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateTotpEnabled() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpEnabled()
+	})
+}
+
+// SetTotpBackupCodes sets the "totp_backup_codes" field.
+func (u *UserUpsertBulk) SetTotpBackupCodes(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetTotpBackupCodes(v)
+	})
+}
+
+// UpdateTotpBackupCodes sets the "totp_backup_codes" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateTotpBackupCodes() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateTotpBackupCodes()
+	})
+}
+
+// ClearTotpBackupCodes clears the value of the "totp_backup_codes" field.
+func (u *UserUpsertBulk) ClearTotpBackupCodes() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearTotpBackupCodes()
+	})
+}
+
+// SetLastLoginIP sets the "last_login_ip" field.
+func (u *UserUpsertBulk) SetLastLoginIP(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetLastLoginIP(v)
+	})
+}
+
+// UpdateLastLoginIP sets the "last_login_ip" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateLastLoginIP() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateLastLoginIP()
+	})
+}
+
+// ClearLastLoginIP clears the value of the "last_login_ip" field.
+func (u *UserUpsertBulk) ClearLastLoginIP() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearLastLoginIP()
+	})
+}
+
+// SetLastLoginCountry sets the "last_login_country" field.
+func (u *UserUpsertBulk) SetLastLoginCountry(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetLastLoginCountry(v)
+	})
+}
+
+// UpdateLastLoginCountry sets the "last_login_country" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateLastLoginCountry() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateLastLoginCountry()
+	})
+}
+
+// ClearLastLoginCountry clears the value of the "last_login_country" field.
+func (u *UserUpsertBulk) ClearLastLoginCountry() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearLastLoginCountry()
+	})
+}
+
 // SetLastLoginAt sets the "last_login_at" field.
 func (u *UserUpsertBulk) SetLastLoginAt(v time.Time) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
@@ -1222,6 +1663,27 @@ func (u *UserUpsertBulk) UpdateLastLoginAt() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearLastLoginAt() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearLastLoginAt()
+	})
+}
+
+// SetFailedLoginCount sets the "failed_login_count" field.
+func (u *UserUpsertBulk) SetFailedLoginCount(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetFailedLoginCount(v)
+	})
+}
+
+// AddFailedLoginCount adds v to the "failed_login_count" field.
+func (u *UserUpsertBulk) AddFailedLoginCount(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.AddFailedLoginCount(v)
+	})
+}
+
+// UpdateFailedLoginCount sets the "failed_login_count" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateFailedLoginCount() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateFailedLoginCount()
 	})
 }
 

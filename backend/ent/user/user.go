@@ -27,8 +27,20 @@ const (
 	FieldStatus = "status"
 	// FieldTokenVersion holds the string denoting the token_version field in the database.
 	FieldTokenVersion = "token_version"
+	// FieldTotpSecret holds the string denoting the totp_secret field in the database.
+	FieldTotpSecret = "totp_secret"
+	// FieldTotpEnabled holds the string denoting the totp_enabled field in the database.
+	FieldTotpEnabled = "totp_enabled"
+	// FieldTotpBackupCodes holds the string denoting the totp_backup_codes field in the database.
+	FieldTotpBackupCodes = "totp_backup_codes"
+	// FieldLastLoginIP holds the string denoting the last_login_ip field in the database.
+	FieldLastLoginIP = "last_login_ip"
+	// FieldLastLoginCountry holds the string denoting the last_login_country field in the database.
+	FieldLastLoginCountry = "last_login_country"
 	// FieldLastLoginAt holds the string denoting the last_login_at field in the database.
 	FieldLastLoginAt = "last_login_at"
+	// FieldFailedLoginCount holds the string denoting the failed_login_count field in the database.
+	FieldFailedLoginCount = "failed_login_count"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -118,7 +130,13 @@ var Columns = []string{
 	FieldRole,
 	FieldStatus,
 	FieldTokenVersion,
+	FieldTotpSecret,
+	FieldTotpEnabled,
+	FieldTotpBackupCodes,
+	FieldLastLoginIP,
+	FieldLastLoginCountry,
 	FieldLastLoginAt,
+	FieldFailedLoginCount,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -140,6 +158,10 @@ var (
 	PasswordHashValidator func(string) error
 	// DefaultTokenVersion holds the default value on creation for the "token_version" field.
 	DefaultTokenVersion int
+	// DefaultTotpEnabled holds the default value on creation for the "totp_enabled" field.
+	DefaultTotpEnabled bool
+	// DefaultFailedLoginCount holds the default value on creation for the "failed_login_count" field.
+	DefaultFailedLoginCount int
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -239,9 +261,39 @@ func ByTokenVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTokenVersion, opts...).ToFunc()
 }
 
+// ByTotpSecret orders the results by the totp_secret field.
+func ByTotpSecret(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTotpSecret, opts...).ToFunc()
+}
+
+// ByTotpEnabled orders the results by the totp_enabled field.
+func ByTotpEnabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTotpEnabled, opts...).ToFunc()
+}
+
+// ByTotpBackupCodes orders the results by the totp_backup_codes field.
+func ByTotpBackupCodes(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTotpBackupCodes, opts...).ToFunc()
+}
+
+// ByLastLoginIP orders the results by the last_login_ip field.
+func ByLastLoginIP(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLastLoginIP, opts...).ToFunc()
+}
+
+// ByLastLoginCountry orders the results by the last_login_country field.
+func ByLastLoginCountry(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLastLoginCountry, opts...).ToFunc()
+}
+
 // ByLastLoginAt orders the results by the last_login_at field.
 func ByLastLoginAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLastLoginAt, opts...).ToFunc()
+}
+
+// ByFailedLoginCount orders the results by the failed_login_count field.
+func ByFailedLoginCount(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFailedLoginCount, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
