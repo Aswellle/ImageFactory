@@ -28,10 +28,14 @@ type ResetCodeStore struct {
 	mem map[string]*memCodeEntry
 }
 
+// maxResetAttempts is the maximum number of failed attempts before a code is invalidated.
+const maxResetAttempts = 5
+
 // memCodeEntry is an in-memory verification code with expiry.
 type memCodeEntry struct {
 	code      string
 	expiresAt time.Time
+	attempts  int
 }
 
 // NewResetCodeStore builds a ResetCodeStore.
@@ -97,11 +101,18 @@ func (s *ResetCodeStore) Verify(email, code string) (bool, error) {
 	if !ok || time.Now().After(entry.expiresAt) {
 		return false, nil
 	}
-	valid := entry.code == code
-	if valid {
-		delete(s.mem, email) // one-time use
+	// Check attempt count to prevent brute force
+	if entry.attempts >= maxResetAttempts {
+		delete(s.mem, email)
+		return false, nil
 	}
-	return valid, nil
+	if entry.code != code {
+		entry.attempts++
+		s.mem[email] = entry
+		return false, nil
+	}
+	delete(s.mem, email) // one-time use
+	return true, nil
 }
 
 // Invalidate removes any existing code for the email (e.g. on password change).

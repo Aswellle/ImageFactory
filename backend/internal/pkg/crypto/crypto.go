@@ -76,6 +76,9 @@ func GenerateKey() (string, error) {
 // ErrCryptoDisabled 在加密未启用时返回的错误。
 var ErrCryptoDisabled = fmt.Errorf("crypto is disabled: set IF_CREDENTIAL_KEY to enable encryption")
 
+// Key version prefix for key rotation support.
+const keyVersionPrefix = "v1:"
+
 // Encrypt 加密明文数据，返回 base64 编码的密文。
 // 如果加密未启用，返回 ErrCryptoDisabled 错误。
 func Encrypt(plaintext []byte) (string, error) {
@@ -103,7 +106,7 @@ func Encrypt(plaintext []byte) (string, error) {
 	}
 
 	ciphertext := gcm.Seal(nonce, nonce, plaintext, nil)
-	return base64.StdEncoding.EncodeToString(ciphertext), nil
+	return keyVersionPrefix + base64.StdEncoding.EncodeToString(ciphertext), nil
 }
 
 // Decrypt 解密 base64 编码的密文，返回明文。
@@ -111,6 +114,11 @@ func Encrypt(plaintext []byte) (string, error) {
 func Decrypt(encoded string) ([]byte, error) {
 	if !IsEnabled() {
 		return nil, ErrCryptoDisabled
+	}
+
+	// Strip version prefix if present
+	if len(encoded) > len(keyVersionPrefix) && encoded[:len(keyVersionPrefix)] == keyVersionPrefix {
+		encoded = encoded[len(keyVersionPrefix):]
 	}
 
 	mu.RLock()

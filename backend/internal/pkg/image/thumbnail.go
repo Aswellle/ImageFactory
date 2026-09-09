@@ -13,6 +13,7 @@ package image
 
 import (
 	"bytes"
+	"fmt"
 	"image"
 	"image/gif"
 	"image/jpeg"
@@ -42,6 +43,9 @@ func MimeType(data []byte) string {
 	return http.DetectContentType(data)
 }
 
+// MaxImageSize is the maximum allowed image size in bytes (10 MB).
+const MaxImageSize = 10 << 20
+
 // Resize decodes image data, scales it to fit within width×height while
 // preserving aspect ratio (never upscaling), and re-encodes it in the same
 // format as the input. The returned bytes are suitable for storage.
@@ -52,6 +56,10 @@ func MimeType(data []byte) string {
 func Resize(data []byte, width, height int) ([]byte, error) {
 	if width <= 0 || height <= 0 {
 		return data, nil
+	}
+
+	if len(data) > MaxImageSize {
+		return data, fmt.Errorf("image too large: %d bytes (max %d)", len(data), MaxImageSize)
 	}
 
 	src, format, err := image.Decode(bytes.NewReader(data))

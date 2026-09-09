@@ -113,7 +113,9 @@ func (s *PromptTemplateService) List(ctx context.Context, userID int64) ([]*ent.
 
 // Update modifies a template. Pointers distinguish "leave unchanged" from "set to empty".
 func (s *PromptTemplateService) Update(ctx context.Context, templateID, userID int64, input TemplateUpdateInput) (*ent.PromptTemplate, error) {
-	builder := s.db.PromptTemplate.UpdateOneID(templateID)
+	// Filter by UserID to enforce ownership atomically (prevents TOCTOU race)
+	builder := s.db.PromptTemplate.UpdateOneID(templateID).
+		Where(prompttemplate.UserID(userID))
 
 	if input.Name != nil {
 		builder = builder.SetName(*input.Name)
@@ -137,17 +139,18 @@ func (s *PromptTemplateService) Update(ctx context.Context, templateID, userID i
 		builder = builder.SetCategory(c)
 	}
 
-	t, err := builder.Save(ctx)
-
+	_, err := builder.Save(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.New(errors.ErrNotFound, "prompt template not found")
 		}
 		return nil, errors.Wrap(errors.ErrInternal, "failed to update prompt template", err)
 	}
-	// Enforce ownership: the update above did not filter by user, so verify.
-	if t.UserID != userID {
-		return nil, errors.New(errors.ErrNotFound, "prompt template not found")
+
+	// Fetch and return the updated template
+	t, err := s.db.PromptTemplate.Get(ctx, templateID)
+	if err != nil {
+		return nil, errors.Wrap(errors.ErrInternal, "failed to fetch updated template", err)
 	}
 	return t, nil
 }

@@ -204,6 +204,44 @@ func (s *AssetService) GetContent(ctx context.Context, assetID int64, userID int
 	return data, mimeType, nil
 }
 
+// GetContentReader returns a reader for the asset content.
+// The caller is responsible for closing the returned reader.
+// This is more memory-efficient for large files than GetContent.
+func (s *AssetService) GetContentReader(ctx context.Context, assetID int64, userID int64, version *int) (io.ReadCloser, string, error) {
+	a, err := s.Get(ctx, assetID, userID)
+	if err != nil {
+		return nil, "", err
+	}
+
+	storageKey := a.StorageKey
+	mimeType := a.MimeType
+	if version != nil {
+		ver, err := s.db.AssetVersion.Query().
+			Where(assetversion.AssetIDEQ(assetID), assetversion.VersionEQ(*version)).
+			Only(ctx)
+		if err != nil {
+			if ent.IsNotFound(err) {
+				return nil, "", errors.New(errors.ErrNotFound, "version not found")
+			}
+			return nil, "", errors.Wrap(errors.ErrInternal, "failed to fetch version", err)
+		}
+		storageKey = ver.StorageKey
+		if ver.MimeType != "" {
+			mimeType = ver.MimeType
+		}
+	}
+
+	if storageKey == "" {
+		return nil, "", errors.New(errors.ErrNotFound, "no content available for asset")
+	}
+
+	rc, err := s.store.Get(ctx, storageKey)
+	if err != nil {
+		return nil, "", errors.Wrap(errors.ErrInternal, "failed to read content from storage", err)
+	}
+	return rc, mimeType, nil
+}
+
 // ListVersions returns the version history of an asset (oldest first) after
 // enforcing ownership.
 func (s *AssetService) ListVersions(ctx context.Context, assetID int64, userID int64) ([]*ent.AssetVersion, error) {

@@ -100,6 +100,11 @@ func (r *RateLimiter) allowMemory(email string) error {
 
 	now := time.Now()
 
+	// Periodic cleanup of stale entries (every 100 calls)
+	if len(r.memLimit) > 1000 {
+		r.cleanupStaleEntries(now)
+	}
+
 	// Check rate limit (60 seconds between requests)
 	if last, ok := r.memLimit[email]; ok {
 		if now.Sub(last) < resetCodeRateLimit {
@@ -120,4 +125,19 @@ func (r *RateLimiter) allowMemory(email string) error {
 	r.memDaily[dailyKey]++
 
 	return nil
+}
+
+// cleanupStaleEntries removes expired entries to prevent memory leaks.
+func (r *RateLimiter) cleanupStaleEntries(now time.Time) {
+	for email, last := range r.memLimit {
+		if now.Sub(last) > 24*time.Hour {
+			delete(r.memLimit, email)
+		}
+	}
+	today := now.Format("2006-01-02")
+	for key := range r.memDaily {
+		if len(key) > 10 && key[len(key)-10:] != today {
+			delete(r.memDaily, key)
+		}
+	}
 }

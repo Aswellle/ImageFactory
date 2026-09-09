@@ -8,6 +8,7 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"github.com/imageforge/imageforge/internal/pkg/image"
 	"github.com/imageforge/imageforge/internal/storage"
@@ -122,17 +123,46 @@ func (s *thumbnailService) Generate(ctx context.Context, storageKey, contentType
 	return result, nil
 }
 
-// GenerateBatch implements ThumbnailService.
+// GenerateBatch implements ThumbnailService with concurrent processing.
 func (s *thumbnailService) GenerateBatch(ctx context.Context, storageKeys []string) []ThumbnailResult {
-	results := make([]ThumbnailResult, 0, len(storageKeys))
-	for _, key := range storageKeys {
-		res, err := s.Generate(ctx, key, "")
-		if err != nil {
-			results = append(results, ThumbnailResult{StorageKey: key, Err: err})
-			continue
-		}
-		results = append(results, *res)
+	if len(storageKeys) == 0 {
+		return nil
 	}
+
+	// Use a worker pool to limit concurrency
+	const maxWorkers = 4
+	nWorkers := min(maxWorkers, len(storageKeys))
+
+	type item struct {
+		key   string
+		index int
+	}
+
+	jobs := make(chan item, len(storageKeys))
+	results := make([]ThumbnailResult, len(storageKeys))
+
+	var wg sync.WaitGroup
+	for i := 0; i < nWorkers; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for j := range jobs {
+				res, err := s.Generate(ctx, j.key, "")
+				if err != nil {
+					results[j.index] = ThumbnailResult{StorageKey: j.key, Err: err}
+				} else {
+					results[j.index] = *res
+				}
+			}
+		}()
+	}
+
+	for i, key := range storageKeys {
+		jobs <- item{key: key, index: i}
+	}
+	close(jobs)
+	wg.Wait()
+
 	return results
 }
 

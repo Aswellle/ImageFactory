@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/spf13/viper"
 )
@@ -106,26 +107,20 @@ func (d DatabaseConfig) DSN() string {
 	return u.String()
 }
 
+// itoa converts an integer to a string. Returns "" for 0 to preserve
+// the original behavior where empty values are omitted from DSN.
 func itoa(n int) string {
 	if n == 0 {
 		return ""
 	}
-	neg := n < 0
-	if neg {
-		n = -n
-	}
-	var b [20]byte
-	i := len(b)
-	for n > 0 {
-		i--
-		b[i] = byte('0' + n%10)
-		n /= 10
-	}
-	if neg {
-		i--
-		b[i] = '-'
-	}
-	return string(b[i:])
+	return strconv.Itoa(n)
+}
+
+// String returns a redacted string representation of the config with secrets masked.
+func (c *Config) String() string {
+	return fmt.Sprintf("{Server:%+v Database:{Host:%s Port:%d User:%s Password:**** Name:%s} Redis:{Host:%s Port:%d Password:****} Auth:{JWTSecret:****} Storage:{Provider:%s Bucket:%s}}",
+		c.Server, c.Database.Host, c.Database.Port, c.Database.User, c.Database.Name,
+		c.Redis.Host, c.Redis.Port, c.Storage.Provider, c.Storage.Bucket)
 }
 
 // Load reads configuration from file + environment (IF_ prefix).

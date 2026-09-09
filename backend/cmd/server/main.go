@@ -46,6 +46,10 @@ func main() {
 	}
 
 	// 判断是否启用 TLS（生产环境通常在 Caddy 终止 TLS）
+	// Validate TLS configuration: both cert and key must be provided together
+	if (cfg.Server.TLSCertFile != "") != (cfg.Server.TLSKeyFile != "") {
+		log.Fatal("TLS configuration incomplete: both TLSCertFile and TLSKeyFile must be provided together")
+	}
 	useTLS := cfg.Server.TLSCertFile != "" && cfg.Server.TLSKeyFile != ""
 
 	addr := net.JoinHostPort(cfg.Server.Host, strconv.Itoa(cfg.Server.Port))
