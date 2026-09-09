@@ -9,12 +9,14 @@ import (
 
 // AdminHandlers groups the admin sub-handlers for route registration.
 type AdminHandlers struct {
-	Dashboard *admin.DashboardHandler
-	User      *admin.UserHandler
-	Job       *admin.JobHandler
-	APIKey    *admin.APIKeyHandler
-	Account   *admin.AccountHandler
+	Dashboard  *admin.DashboardHandler
+	User       *admin.UserHandler
+	Job        *admin.JobHandler
+	APIKey     *admin.APIKeyHandler
+	Account    *admin.AccountHandler
+	Scheduling *admin.SchedulingHandler
 }
+
 
 // RegisterAdminRoutes mounts all admin routes under /v1/admin with the
 // adminAuth middleware applied to the whole group.
@@ -31,6 +33,15 @@ func RegisterAdminRoutes(
 		registerJobRoutes(adminGroup, h)
 		registerAPIKeyRoutes(adminGroup, h)
 		registerAccountRoutes(adminGroup, h)
+		registerSchedulingRoutes(adminGroup, h)
+	}
+}
+
+func registerSchedulingRoutes(admin *gin.RouterGroup, h *AdminHandlers) {
+	s := admin.Group("/scheduling")
+	{
+		s.GET("/thresholds", h.Scheduling.GetThresholds)
+		s.POST("/thresholds", h.Scheduling.SetThresholds)
 	}
 }
 

@@ -43,6 +43,12 @@ func (GenerationJob) Fields() []ent.Field {
 		field.String("error_message").Optional(),
 		field.Int("retry_count").Default(0),
 
+		// Batch image state — JSONB snapshot of the batch-image job/item state
+		// for persistence across restarts. Null for non-batch jobs.
+		field.JSON("batch_image_state", map[string]any{}).
+			Optional().
+			Default(map[string]any{}),
+
 		// Timing.
 		field.Time("started_at").Optional().Nillable(),
 		field.Time("completed_at").Optional().Nillable(),

@@ -2,11 +2,15 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/ent/account"
+	"github.com/imageforge/imageforge/internal/pkg/crypto"
 )
+
+
 
 // AccountRepository 定义账号数据访问接口。
 // 封装 Ent 操作，提供领域语义明确的方法。
@@ -18,36 +22,46 @@ type AccountRepository struct {
 func NewAccountRepository(db *ent.Client) *AccountRepository {
 	return &AccountRepository{db: db}
 }
-
-// Create 创建新账号。
+// Create 创建新账号。敏感凭证字段在存储前自动加密。
 func (r *AccountRepository) Create(ctx context.Context, name, platform, typ string, credentials map[string]any, priority int) (*ent.Account, error) {
+	encrypted, err := crypto.EncryptCredentials(credentials)
+	if err != nil {
+		return nil, fmt.Errorf("encrypt credentials: %w", err)
+	}
 	return r.db.Account.Create().
 		SetName(name).
 		SetPlatform(platform).
 		SetType(typ).
-		SetCredentials(credentials).
+		SetCredentials(encrypted).
 		SetPriority(priority).
 		SetStatus("active").
 		SetSchedulable(true).
 		Save(ctx)
 }
 
-// GetByID 根据 ID 获取账号。
+// GetByID 根据 ID 获取账号。敏感凭证自动解密。
 func (r *AccountRepository) GetByID(ctx context.Context, id int64) (*ent.Account, error) {
-	return r.db.Account.Query().Where(account.ID(id)).Only(ctx)
+	acc, err := r.db.Account.Query().Where(account.ID(id)).Only(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r.decryptAccount(acc)
 }
 
-// List 获取所有账号。
+// List 获取所有账号。敏感凭证自动解密。
 func (r *AccountRepository) List(ctx context.Context) ([]*ent.Account, error) {
-	return r.db.Account.Query().
+	accounts, err := r.db.Account.Query().
 		Order(ent.Asc(account.FieldPriority)).
 		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r.decryptAccounts(accounts)
 }
 
-// ListByPlatform 按平台查询可调度账号。
-// 这是调度器最常用的查询：获取指定平台下所有可用账号。
+// ListByPlatform 按平台查询可调度账号。敏感凭证自动解密。
 func (r *AccountRepository) ListByPlatform(ctx context.Context, platform string) ([]*ent.Account, error) {
-	return r.db.Account.Query().
+	accounts, err := r.db.Account.Query().
 		Where(
 			account.Platform(platform),
 			account.Schedulable(true),
@@ -55,14 +69,17 @@ func (r *AccountRepository) ListByPlatform(ctx context.Context, platform string)
 		).
 		Order(ent.Asc(account.FieldPriority)).
 		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r.decryptAccounts(accounts)
 }
 
-// ListAvailableByPlatform returns accounts that are ready to accept work:
-// active, schedulable, not rate-limited, not overloaded, not expired.
-// All filtering happens at the database level — no in-memory post-filtering.
+// ListAvailableByPlatform returns accounts that are ready to accept work.
+// 敏感凭证自动解密。
 func (r *AccountRepository) ListAvailableByPlatform(ctx context.Context, platform string) ([]*ent.Account, error) {
 	now := time.Now()
-	return r.db.Account.Query().
+	accounts, err := r.db.Account.Query().
 		Where(
 			account.Platform(platform),
 			account.Schedulable(true),
@@ -76,13 +93,50 @@ func (r *AccountRepository) ListAvailableByPlatform(ctx context.Context, platfor
 				account.OverloadUntilLTE(now),
 			),
 			account.Or(
+				account.TempUnschedulableUntilIsNil(),
+				account.TempUnschedulableUntilLTE(now),
+			),
+			account.Or(
 				account.ExpiresAtIsNil(),
 				account.ExpiresAtGT(now),
 			),
 		).
 		Order(ent.Asc(account.FieldPriority)).
 		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r.decryptAccounts(accounts)
 }
+
+// decryptAccount 解密单个账号的敏感凭证。
+func (r *AccountRepository) decryptAccount(acc *ent.Account) (*ent.Account, error) {
+	if acc == nil || len(acc.Credentials) == 0 {
+		return acc, nil
+	}
+	decrypted, err := crypto.DecryptCredentials(acc.Credentials)
+	if err != nil {
+		return nil, fmt.Errorf("decrypt credentials for account %d: %w", acc.ID, err)
+	}
+	acc.Credentials = decrypted
+	return acc, nil
+}
+
+// decryptAccounts 解密多个账号的敏感凭证。
+func (r *AccountRepository) decryptAccounts(accounts []*ent.Account) ([]*ent.Account, error) {
+	if len(accounts) == 0 {
+		return accounts, nil
+	}
+	for i, acc := range accounts {
+		decrypted, err := r.decryptAccount(acc)
+		if err != nil {
+			return nil, err
+		}
+		accounts[i] = decrypted
+	}
+	return accounts, nil
+}
+
 
 // Update 更新账号。
 func (r *AccountRepository) Update(ctx context.Context, id int64, updater func(tx *ent.AccountUpdateOne) *ent.AccountUpdateOne) (*ent.Account, error) {
@@ -99,30 +153,50 @@ func (r *AccountRepository) Delete(ctx context.Context, id int64) error {
 }
 
 // MarkRateLimited 标记账号被速率限制。
+// 使用事务确保状态一致性。
 func (r *AccountRepository) MarkRateLimited(ctx context.Context, id int64, resetAt time.Time) error {
-	_, err := r.db.Account.UpdateOneID(id).
-		SetRateLimitedAt(time.Now()).
-		SetRateLimitResetAt(resetAt).
-		Save(ctx)
-	return err
+	return r.withTx(ctx, func(tx *ent.Tx) error {
+		return tx.Account.UpdateOneID(id).
+			SetRateLimitedAt(time.Now()).
+			SetRateLimitResetAt(resetAt).
+			Exec(ctx)
+	})
 }
 
 // MarkOverloaded 标记账号过载。
+// 使用事务确保状态一致性。
 func (r *AccountRepository) MarkOverloaded(ctx context.Context, id int64, until time.Time) error {
-	_, err := r.db.Account.UpdateOneID(id).
-		SetOverloadUntil(until).
-		Save(ctx)
-	return err
+	return r.withTx(ctx, func(tx *ent.Tx) error {
+		return tx.Account.UpdateOneID(id).
+			SetOverloadUntil(until).
+			Exec(ctx)
+	})
 }
 
 // MarkError 标记账号错误。
+// 使用事务确保状态一致性。
 func (r *AccountRepository) MarkError(ctx context.Context, id int64, errMsg string) error {
-	_, err := r.db.Account.UpdateOneID(id).
-		SetStatus(account.StatusError).
-		SetErrorMessage(errMsg).
-		Save(ctx)
-	return err
+	return r.withTx(ctx, func(tx *ent.Tx) error {
+		return tx.Account.UpdateOneID(id).
+			SetStatus(account.StatusError).
+			SetErrorMessage(errMsg).
+			Exec(ctx)
+	})
 }
+
+// withTx 在事务中执行操作，失败时自动回滚。
+func (r *AccountRepository) withTx(ctx context.Context, fn func(tx *ent.Tx) error) error {
+	tx, err := r.db.Tx(ctx)
+	if err != nil {
+		return err
+	}
+	if err := fn(tx); err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+	return tx.Commit()
+}
+
 
 // ClearError 清除账号错误状态。
 func (r *AccountRepository) ClearError(ctx context.Context, id int64) error {

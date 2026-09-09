@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -15,6 +16,7 @@ import (
 	"github.com/imageforge/imageforge/internal/config"
 	"github.com/imageforge/imageforge/internal/handler"
 	"github.com/imageforge/imageforge/internal/job"
+	"github.com/imageforge/imageforge/internal/pkg/crypto"
 	"github.com/imageforge/imageforge/internal/repository"
 	"github.com/imageforge/imageforge/internal/server/middleware"
 	"github.com/imageforge/imageforge/internal/server/routes"
@@ -22,11 +24,11 @@ import (
 	"github.com/imageforge/imageforge/internal/storage"
 	"github.com/imageforge/imageforge/internal/web"
 	"github.com/imageforge/imageforge/migrations"
-
 	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
+
 
 
 // Router wraps a Gin engine and its runtime dependencies.
@@ -80,9 +82,12 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	// --- Global middleware (order matters) ---
 	engine.Use(middleware.RequestID())
 	engine.Use(middleware.CORS(cfg.Server.AllowedOrigins))
-	engine.Use(middleware.MaxRequestBodySize(1 << 20)) // 1 MB limit
-	engine.Use(gin.Recovery())
+	engine.Use(middleware.MaxRequestBodySize(8 << 20)) // 8 MB limit (image edits w/ base64 can exceed 1MB)
+
 	engine.Use(requestLogger(log))
+	// 全局限流：按 IP 限制请求速率，防止暴力破解和 DoS。
+	engine.Use(middleware.RateLimitByIP(10, 20)) // 10 req/s per IP, burst 20
+
 
 	// --- Infrastructure ---
 	db, err := repository.NewEntClient(cfg.Database.DSN(), cfg.Database.AutoMigrate)
@@ -104,8 +109,21 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		return nil, fmt.Errorf("init storage: %w", err)
 	}
 
+	// --- Credential encryption (optional) ---
+	// 从环境变量 IF_CREDENTIAL_KEY 加载加密密钥。
+	// 未设置时凭证以明文存储（开发模式）。
+	if err := crypto.SetKey(os.Getenv("IF_CREDENTIAL_KEY")); err != nil {
+		return nil, fmt.Errorf("init credential encryption: %w", err)
+	}
+	if crypto.IsEnabled() {
+		log.Info("credential encryption enabled (AES-256-GCM)")
+	} else {
+		log.Warn("credential encryption DISABLED — credentials stored in plaintext")
+	}
+
 
 	// --- Job queue + worker ---
+
 	queue := job.NewMemoryQueue(256, log)
 	processor := job.NewProcessor(queue, 4)
 	if err := processor.Start(context.Background()); err != nil {
@@ -152,9 +170,17 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	accountRepo := repository.NewAccountRepository(db)
 	accountSvc := service.NewAccountService(accountRepo)
 	schedulingSvc := service.NewSchedulingService(accountRepo)
+	schedulingSvc.SetThresholds(map[string]int{
+		"openai":    80,
+		"anthropic": 80,
+		"grok":      80,
+		"kimi":      80,
+		"zhipu":     80,
+	})
 	accountResolver := service.NewAccountResolver(accountRepo, accountSvc, schedulingSvc)
 
-	batchSvc := batchimage.NewPublicService(cfg.Sub2API.GeminiAPIKey)
+	// --- Batch image service (with DB persistence) ---
+	batchSvc := batchimage.NewPublicServiceWithDB(cfg.Sub2API.GeminiAPIKey, db)
 
 	projectSvc := service.NewProjectService(db)
 	assetSvc := service.NewAssetService(db, store)
@@ -191,6 +217,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 	// --- Admin ---
 	adminSvc := service.NewAdminService(db)
+
 	adminAuth := middleware.NewAdminAuth(authMW)
 	adminHandlers := &routes.AdminHandlers{
 		Dashboard: admin.NewDashboardHandler(adminSvc),
@@ -198,7 +225,9 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		Job:       admin.NewJobHandler(adminSvc),
 		APIKey:    admin.NewAPIKeyHandler(adminSvc),
 		Account:   admin.NewAccountHandler(accountSvc),
+		Scheduling: admin.NewSchedulingHandler(schedulingSvc),
 	}
+
 
 	// --- Public routes ---
 	v1 := engine.Group("/v1")

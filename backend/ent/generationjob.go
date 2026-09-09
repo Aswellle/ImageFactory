@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -51,6 +52,8 @@ type GenerationJob struct {
 	ErrorMessage string `json:"error_message,omitempty"`
 	// RetryCount holds the value of the "retry_count" field.
 	RetryCount int `json:"retry_count,omitempty"`
+	// BatchImageState holds the value of the "batch_image_state" field.
+	BatchImageState map[string]interface{} `json:"batch_image_state,omitempty"`
 	// StartedAt holds the value of the "started_at" field.
 	StartedAt *time.Time `json:"started_at,omitempty"`
 	// CompletedAt holds the value of the "completed_at" field.
@@ -125,6 +128,8 @@ func (*GenerationJob) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case generationjob.FieldBatchImageState:
+			values[i] = new([]byte)
 		case generationjob.FieldID, generationjob.FieldUserID, generationjob.FieldProjectID, generationjob.FieldImageCount, generationjob.FieldRetryCount:
 			values[i] = new(sql.NullInt64)
 		case generationjob.FieldExternalID, generationjob.FieldType, generationjob.FieldStatus, generationjob.FieldProvider, generationjob.FieldModel, generationjob.FieldSub2apiTaskID, generationjob.FieldPrompt, generationjob.FieldNegativePrompt, generationjob.FieldAspectRatio, generationjob.FieldOutputFormat, generationjob.FieldErrorCode, generationjob.FieldErrorMessage:
@@ -247,6 +252,14 @@ func (_m *GenerationJob) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field retry_count", values[i])
 			} else if value.Valid {
 				_m.RetryCount = int(value.Int64)
+			}
+		case generationjob.FieldBatchImageState:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field batch_image_state", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.BatchImageState); err != nil {
+					return fmt.Errorf("unmarshal field batch_image_state: %w", err)
+				}
 			}
 		case generationjob.FieldStartedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -377,6 +390,9 @@ func (_m *GenerationJob) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("retry_count=")
 	builder.WriteString(fmt.Sprintf("%v", _m.RetryCount))
+	builder.WriteString(", ")
+	builder.WriteString("batch_image_state=")
+	builder.WriteString(fmt.Sprintf("%v", _m.BatchImageState))
 	builder.WriteString(", ")
 	if v := _m.StartedAt; v != nil {
 		builder.WriteString("started_at=")

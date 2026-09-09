@@ -1065,6 +1065,16 @@ func RetryCountLTE(v int) predicate.GenerationJob {
 	return predicate.GenerationJob(sql.FieldLTE(FieldRetryCount, v))
 }
 
+// BatchImageStateIsNil applies the IsNil predicate on the "batch_image_state" field.
+func BatchImageStateIsNil() predicate.GenerationJob {
+	return predicate.GenerationJob(sql.FieldIsNull(FieldBatchImageState))
+}
+
+// BatchImageStateNotNil applies the NotNil predicate on the "batch_image_state" field.
+func BatchImageStateNotNil() predicate.GenerationJob {
+	return predicate.GenerationJob(sql.FieldNotNull(FieldBatchImageState))
+}
+
 // StartedAtEQ applies the EQ predicate on the "started_at" field.
 func StartedAtEQ(v time.Time) predicate.GenerationJob {
 	return predicate.GenerationJob(sql.FieldEQ(FieldStartedAt, v))

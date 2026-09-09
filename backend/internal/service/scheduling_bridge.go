@@ -35,6 +35,16 @@ func (s *SchedulingService) SetThresholds(thresholds map[string]int) {
 	s.thresholds = thresholds
 }
 
+// GetThresholds returns the current per-platform scheduling thresholds.
+func (s *SchedulingService) GetThresholds() map[string]int {
+	result := make(map[string]int, len(s.thresholds))
+	for k, v := range s.thresholds {
+		result[k] = v
+	}
+	return result
+}
+
+
 // EvaluateThreshold evaluates whether an account should be paused based on
 // its platform's scheduling threshold.
 //

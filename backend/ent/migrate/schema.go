@@ -376,6 +376,7 @@ var (
 		{Name: "error_code", Type: field.TypeString, Nullable: true},
 		{Name: "error_message", Type: field.TypeString, Nullable: true},
 		{Name: "retry_count", Type: field.TypeInt, Default: 0},
+		{Name: "batch_image_state", Type: field.TypeJSON, Nullable: true},
 		{Name: "started_at", Type: field.TypeTime, Nullable: true},
 		{Name: "completed_at", Type: field.TypeTime, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
@@ -391,13 +392,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "generation_jobs_projects_generation_jobs",
-				Columns:    []*schema.Column{GenerationJobsColumns[19]},
+				Columns:    []*schema.Column{GenerationJobsColumns[20]},
 				RefColumns: []*schema.Column{ProjectsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "generation_jobs_users_generation_jobs",
-				Columns:    []*schema.Column{GenerationJobsColumns[20]},
+				Columns:    []*schema.Column{GenerationJobsColumns[21]},
 				RefColumns: []*schema.Column{UsersColumns[0]},
 				OnDelete:   schema.NoAction,
 			},
@@ -406,12 +407,12 @@ var (
 			{
 				Name:    "generationjob_user_id_status",
 				Unique:  false,
-				Columns: []*schema.Column{GenerationJobsColumns[20], GenerationJobsColumns[3]},
+				Columns: []*schema.Column{GenerationJobsColumns[21], GenerationJobsColumns[3]},
 			},
 			{
 				Name:    "generationjob_status_created_at",
 				Unique:  false,
-				Columns: []*schema.Column{GenerationJobsColumns[3], GenerationJobsColumns[17]},
+				Columns: []*schema.Column{GenerationJobsColumns[3], GenerationJobsColumns[18]},
 			},
 			{
 				Name:    "generationjob_sub2api_task_id",

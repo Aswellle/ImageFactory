@@ -47,6 +47,8 @@ const (
 	FieldErrorMessage = "error_message"
 	// FieldRetryCount holds the string denoting the retry_count field in the database.
 	FieldRetryCount = "retry_count"
+	// FieldBatchImageState holds the string denoting the batch_image_state field in the database.
+	FieldBatchImageState = "batch_image_state"
 	// FieldStartedAt holds the string denoting the started_at field in the database.
 	FieldStartedAt = "started_at"
 	// FieldCompletedAt holds the string denoting the completed_at field in the database.
@@ -114,6 +116,7 @@ var Columns = []string{
 	FieldErrorCode,
 	FieldErrorMessage,
 	FieldRetryCount,
+	FieldBatchImageState,
 	FieldStartedAt,
 	FieldCompletedAt,
 	FieldCreatedAt,
@@ -135,6 +138,8 @@ var (
 	DefaultImageCount int
 	// DefaultRetryCount holds the default value on creation for the "retry_count" field.
 	DefaultRetryCount int
+	// DefaultBatchImageState holds the default value on creation for the "batch_image_state" field.
+	DefaultBatchImageState map[string]interface{}
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

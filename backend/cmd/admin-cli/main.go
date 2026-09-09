@@ -8,6 +8,7 @@ import (
 
 	"github.com/imageforge/imageforge/ent/user"
 	"github.com/imageforge/imageforge/internal/config"
+	"github.com/imageforge/imageforge/internal/pkg/crypto"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -43,50 +44,52 @@ func main() {
 	switch command {
 	case "promote":
 		if len(os.Args) < 3 {
-			fmt.Fprintln(os.Stderr, "usage: admin-cli promote <email>")
+			fmt.Println("Usage: admin-cli promote <email>")
 			os.Exit(1)
 		}
 		if err := promoteUser(ctx, db, os.Args[2]); err != nil {
-			fmt.Fprintf(os.Stderr, "failed to promote user: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 			os.Exit(1)
 		}
 	case "demote":
 		if len(os.Args) < 3 {
-			fmt.Fprintln(os.Stderr, "usage: admin-cli demote <email>")
+			fmt.Println("Usage: admin-cli demote <email>")
 			os.Exit(1)
 		}
 		if err := demoteUser(ctx, db, os.Args[2]); err != nil {
-			fmt.Fprintf(os.Stderr, "failed to demote user: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 			os.Exit(1)
 		}
 	case "list":
 		if err := listAdmins(ctx, db); err != nil {
-			fmt.Fprintf(os.Stderr, "failed to list admins: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 			os.Exit(1)
 		}
+	case "gen-key":
+		// Generate a new AES-256 key for IF_CREDENTIAL_KEY.
+		key, err := crypto.GenerateKey()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(key)
 	default:
-		fmt.Fprintf(os.Stderr, "unknown command: %s\n", command)
 		printUsage()
 		os.Exit(1)
 	}
 }
 
+// printUsage prints CLI usage information.
 func printUsage() {
-	fmt.Println(`Admin CLI - Manage ImageForge admin users
-
-Usage:
-  admin-cli <command> [args]
-
-Commands:
-  promote <email>   Promote a user to admin
-  demote <email>    Demote an admin to user
-  list              List all admin users
-
-Examples:
-  admin-cli promote user@example.com
-  admin-cli demote admin@example.com
-  admin-cli list`)
+	fmt.Println("ImageForge Admin CLI")
+	fmt.Println("")
+	fmt.Println("Usage:")
+	fmt.Println("  admin-cli promote <email>   Promote a user to admin")
+	fmt.Println("  admin-cli demote <email>    Demote an admin to user")
+	fmt.Println("  admin-cli list              List all admins")
+	fmt.Println("  admin-cli gen-key           Generate AES-256 key for IF_CREDENTIAL_KEY")
 }
+
 
 // dbClient is a simple database client for the CLI tool.
 type dbClient struct {

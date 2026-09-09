@@ -191,12 +191,16 @@ func init() {
 	generationjobDescRetryCount := generationjobFields[15].Descriptor()
 	// generationjob.DefaultRetryCount holds the default value on creation for the retry_count field.
 	generationjob.DefaultRetryCount = generationjobDescRetryCount.Default.(int)
+	// generationjobDescBatchImageState is the schema descriptor for batch_image_state field.
+	generationjobDescBatchImageState := generationjobFields[16].Descriptor()
+	// generationjob.DefaultBatchImageState holds the default value on creation for the batch_image_state field.
+	generationjob.DefaultBatchImageState = generationjobDescBatchImageState.Default.(map[string]interface{})
 	// generationjobDescCreatedAt is the schema descriptor for created_at field.
-	generationjobDescCreatedAt := generationjobFields[18].Descriptor()
+	generationjobDescCreatedAt := generationjobFields[19].Descriptor()
 	// generationjob.DefaultCreatedAt holds the default value on creation for the created_at field.
 	generationjob.DefaultCreatedAt = generationjobDescCreatedAt.Default.(func() time.Time)
 	// generationjobDescUpdatedAt is the schema descriptor for updated_at field.
-	generationjobDescUpdatedAt := generationjobFields[19].Descriptor()
+	generationjobDescUpdatedAt := generationjobFields[20].Descriptor()
 	// generationjob.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	generationjob.DefaultUpdatedAt = generationjobDescUpdatedAt.Default.(func() time.Time)
 	// generationjob.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

@@ -234,6 +234,12 @@ func (_c *GenerationJobCreate) SetNillableRetryCount(v *int) *GenerationJobCreat
 	return _c
 }
 
+// SetBatchImageState sets the "batch_image_state" field.
+func (_c *GenerationJobCreate) SetBatchImageState(v map[string]interface{}) *GenerationJobCreate {
+	_c.mutation.SetBatchImageState(v)
+	return _c
+}
+
 // SetStartedAt sets the "started_at" field.
 func (_c *GenerationJobCreate) SetStartedAt(v time.Time) *GenerationJobCreate {
 	_c.mutation.SetStartedAt(v)
@@ -377,6 +383,10 @@ func (_c *GenerationJobCreate) defaults() {
 		v := generationjob.DefaultRetryCount
 		_c.mutation.SetRetryCount(v)
 	}
+	if _, ok := _c.mutation.BatchImageState(); !ok {
+		v := generationjob.DefaultBatchImageState
+		_c.mutation.SetBatchImageState(v)
+	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := generationjob.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -505,6 +515,10 @@ func (_c *GenerationJobCreate) createSpec() (*GenerationJob, *sqlgraph.CreateSpe
 	if value, ok := _c.mutation.RetryCount(); ok {
 		_spec.SetField(generationjob.FieldRetryCount, field.TypeInt, value)
 		_node.RetryCount = value
+	}
+	if value, ok := _c.mutation.BatchImageState(); ok {
+		_spec.SetField(generationjob.FieldBatchImageState, field.TypeJSON, value)
+		_node.BatchImageState = value
 	}
 	if value, ok := _c.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)
@@ -895,6 +909,24 @@ func (u *GenerationJobUpsert) UpdateRetryCount() *GenerationJobUpsert {
 // AddRetryCount adds v to the "retry_count" field.
 func (u *GenerationJobUpsert) AddRetryCount(v int) *GenerationJobUpsert {
 	u.Add(generationjob.FieldRetryCount, v)
+	return u
+}
+
+// SetBatchImageState sets the "batch_image_state" field.
+func (u *GenerationJobUpsert) SetBatchImageState(v map[string]interface{}) *GenerationJobUpsert {
+	u.Set(generationjob.FieldBatchImageState, v)
+	return u
+}
+
+// UpdateBatchImageState sets the "batch_image_state" field to the value that was provided on create.
+func (u *GenerationJobUpsert) UpdateBatchImageState() *GenerationJobUpsert {
+	u.SetExcluded(generationjob.FieldBatchImageState)
+	return u
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (u *GenerationJobUpsert) ClearBatchImageState() *GenerationJobUpsert {
+	u.SetNull(generationjob.FieldBatchImageState)
 	return u
 }
 
@@ -1292,6 +1324,27 @@ func (u *GenerationJobUpsertOne) AddRetryCount(v int) *GenerationJobUpsertOne {
 func (u *GenerationJobUpsertOne) UpdateRetryCount() *GenerationJobUpsertOne {
 	return u.Update(func(s *GenerationJobUpsert) {
 		s.UpdateRetryCount()
+	})
+}
+
+// SetBatchImageState sets the "batch_image_state" field.
+func (u *GenerationJobUpsertOne) SetBatchImageState(v map[string]interface{}) *GenerationJobUpsertOne {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.SetBatchImageState(v)
+	})
+}
+
+// UpdateBatchImageState sets the "batch_image_state" field to the value that was provided on create.
+func (u *GenerationJobUpsertOne) UpdateBatchImageState() *GenerationJobUpsertOne {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.UpdateBatchImageState()
+	})
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (u *GenerationJobUpsertOne) ClearBatchImageState() *GenerationJobUpsertOne {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.ClearBatchImageState()
 	})
 }
 
@@ -1863,6 +1916,27 @@ func (u *GenerationJobUpsertBulk) AddRetryCount(v int) *GenerationJobUpsertBulk 
 func (u *GenerationJobUpsertBulk) UpdateRetryCount() *GenerationJobUpsertBulk {
 	return u.Update(func(s *GenerationJobUpsert) {
 		s.UpdateRetryCount()
+	})
+}
+
+// SetBatchImageState sets the "batch_image_state" field.
+func (u *GenerationJobUpsertBulk) SetBatchImageState(v map[string]interface{}) *GenerationJobUpsertBulk {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.SetBatchImageState(v)
+	})
+}
+
+// UpdateBatchImageState sets the "batch_image_state" field to the value that was provided on create.
+func (u *GenerationJobUpsertBulk) UpdateBatchImageState() *GenerationJobUpsertBulk {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.UpdateBatchImageState()
+	})
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (u *GenerationJobUpsertBulk) ClearBatchImageState() *GenerationJobUpsertBulk {
+	return u.Update(func(s *GenerationJobUpsert) {
+		s.ClearBatchImageState()
 	})
 }
 

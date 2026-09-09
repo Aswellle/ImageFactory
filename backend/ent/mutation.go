@@ -8683,6 +8683,7 @@ type GenerationJobMutation struct {
 	error_message        *string
 	retry_count          *int
 	addretry_count       *int
+	batch_image_state    *map[string]interface{}
 	started_at           *time.Time
 	completed_at         *time.Time
 	created_at           *time.Time
@@ -9560,6 +9561,55 @@ func (m *GenerationJobMutation) ResetRetryCount() {
 	m.addretry_count = nil
 }
 
+// SetBatchImageState sets the "batch_image_state" field.
+func (m *GenerationJobMutation) SetBatchImageState(value map[string]interface{}) {
+	m.batch_image_state = &value
+}
+
+// BatchImageState returns the value of the "batch_image_state" field in the mutation.
+func (m *GenerationJobMutation) BatchImageState() (r map[string]interface{}, exists bool) {
+	v := m.batch_image_state
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBatchImageState returns the old "batch_image_state" field's value of the GenerationJob entity.
+// If the GenerationJob object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GenerationJobMutation) OldBatchImageState(ctx context.Context) (v map[string]interface{}, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBatchImageState is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBatchImageState requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBatchImageState: %w", err)
+	}
+	return oldValue.BatchImageState, nil
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (m *GenerationJobMutation) ClearBatchImageState() {
+	m.batch_image_state = nil
+	m.clearedFields[generationjob.FieldBatchImageState] = struct{}{}
+}
+
+// BatchImageStateCleared returns if the "batch_image_state" field was cleared in this mutation.
+func (m *GenerationJobMutation) BatchImageStateCleared() bool {
+	_, ok := m.clearedFields[generationjob.FieldBatchImageState]
+	return ok
+}
+
+// ResetBatchImageState resets all changes to the "batch_image_state" field.
+func (m *GenerationJobMutation) ResetBatchImageState() {
+	m.batch_image_state = nil
+	delete(m.clearedFields, generationjob.FieldBatchImageState)
+}
+
 // SetStartedAt sets the "started_at" field.
 func (m *GenerationJobMutation) SetStartedAt(t time.Time) {
 	m.started_at = &t
@@ -9926,7 +9976,7 @@ func (m *GenerationJobMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GenerationJobMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
 	if m.user != nil {
 		fields = append(fields, generationjob.FieldUserID)
 	}
@@ -9974,6 +10024,9 @@ func (m *GenerationJobMutation) Fields() []string {
 	}
 	if m.retry_count != nil {
 		fields = append(fields, generationjob.FieldRetryCount)
+	}
+	if m.batch_image_state != nil {
+		fields = append(fields, generationjob.FieldBatchImageState)
 	}
 	if m.started_at != nil {
 		fields = append(fields, generationjob.FieldStartedAt)
@@ -10027,6 +10080,8 @@ func (m *GenerationJobMutation) Field(name string) (ent.Value, bool) {
 		return m.ErrorMessage()
 	case generationjob.FieldRetryCount:
 		return m.RetryCount()
+	case generationjob.FieldBatchImageState:
+		return m.BatchImageState()
 	case generationjob.FieldStartedAt:
 		return m.StartedAt()
 	case generationjob.FieldCompletedAt:
@@ -10076,6 +10131,8 @@ func (m *GenerationJobMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldErrorMessage(ctx)
 	case generationjob.FieldRetryCount:
 		return m.OldRetryCount(ctx)
+	case generationjob.FieldBatchImageState:
+		return m.OldBatchImageState(ctx)
 	case generationjob.FieldStartedAt:
 		return m.OldStartedAt(ctx)
 	case generationjob.FieldCompletedAt:
@@ -10205,6 +10262,13 @@ func (m *GenerationJobMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetRetryCount(v)
 		return nil
+	case generationjob.FieldBatchImageState:
+		v, ok := value.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBatchImageState(v)
+		return nil
 	case generationjob.FieldStartedAt:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -10323,6 +10387,9 @@ func (m *GenerationJobMutation) ClearedFields() []string {
 	if m.FieldCleared(generationjob.FieldErrorMessage) {
 		fields = append(fields, generationjob.FieldErrorMessage)
 	}
+	if m.FieldCleared(generationjob.FieldBatchImageState) {
+		fields = append(fields, generationjob.FieldBatchImageState)
+	}
 	if m.FieldCleared(generationjob.FieldStartedAt) {
 		fields = append(fields, generationjob.FieldStartedAt)
 	}
@@ -10375,6 +10442,9 @@ func (m *GenerationJobMutation) ClearField(name string) error {
 		return nil
 	case generationjob.FieldErrorMessage:
 		m.ClearErrorMessage()
+		return nil
+	case generationjob.FieldBatchImageState:
+		m.ClearBatchImageState()
 		return nil
 	case generationjob.FieldStartedAt:
 		m.ClearStartedAt()
@@ -10437,6 +10507,9 @@ func (m *GenerationJobMutation) ResetField(name string) error {
 		return nil
 	case generationjob.FieldRetryCount:
 		m.ResetRetryCount()
+		return nil
+	case generationjob.FieldBatchImageState:
+		m.ResetBatchImageState()
 		return nil
 	case generationjob.FieldStartedAt:
 		m.ResetStartedAt()

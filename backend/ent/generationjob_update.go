@@ -322,6 +322,18 @@ func (_u *GenerationJobUpdate) AddRetryCount(v int) *GenerationJobUpdate {
 	return _u
 }
 
+// SetBatchImageState sets the "batch_image_state" field.
+func (_u *GenerationJobUpdate) SetBatchImageState(v map[string]interface{}) *GenerationJobUpdate {
+	_u.mutation.SetBatchImageState(v)
+	return _u
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (_u *GenerationJobUpdate) ClearBatchImageState() *GenerationJobUpdate {
+	_u.mutation.ClearBatchImageState()
+	return _u
+}
+
 // SetStartedAt sets the "started_at" field.
 func (_u *GenerationJobUpdate) SetStartedAt(v time.Time) *GenerationJobUpdate {
 	_u.mutation.SetStartedAt(v)
@@ -602,6 +614,12 @@ func (_u *GenerationJobUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	}
 	if value, ok := _u.mutation.AddedRetryCount(); ok {
 		_spec.AddField(generationjob.FieldRetryCount, field.TypeInt, value)
+	}
+	if value, ok := _u.mutation.BatchImageState(); ok {
+		_spec.SetField(generationjob.FieldBatchImageState, field.TypeJSON, value)
+	}
+	if _u.mutation.BatchImageStateCleared() {
+		_spec.ClearField(generationjob.FieldBatchImageState, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)
@@ -1076,6 +1094,18 @@ func (_u *GenerationJobUpdateOne) AddRetryCount(v int) *GenerationJobUpdateOne {
 	return _u
 }
 
+// SetBatchImageState sets the "batch_image_state" field.
+func (_u *GenerationJobUpdateOne) SetBatchImageState(v map[string]interface{}) *GenerationJobUpdateOne {
+	_u.mutation.SetBatchImageState(v)
+	return _u
+}
+
+// ClearBatchImageState clears the value of the "batch_image_state" field.
+func (_u *GenerationJobUpdateOne) ClearBatchImageState() *GenerationJobUpdateOne {
+	_u.mutation.ClearBatchImageState()
+	return _u
+}
+
 // SetStartedAt sets the "started_at" field.
 func (_u *GenerationJobUpdateOne) SetStartedAt(v time.Time) *GenerationJobUpdateOne {
 	_u.mutation.SetStartedAt(v)
@@ -1386,6 +1416,12 @@ func (_u *GenerationJobUpdateOne) sqlSave(ctx context.Context) (_node *Generatio
 	}
 	if value, ok := _u.mutation.AddedRetryCount(); ok {
 		_spec.AddField(generationjob.FieldRetryCount, field.TypeInt, value)
+	}
+	if value, ok := _u.mutation.BatchImageState(); ok {
+		_spec.SetField(generationjob.FieldBatchImageState, field.TypeJSON, value)
+	}
+	if _u.mutation.BatchImageStateCleared() {
+		_spec.ClearField(generationjob.FieldBatchImageState, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.StartedAt(); ok {
 		_spec.SetField(generationjob.FieldStartedAt, field.TypeTime, value)

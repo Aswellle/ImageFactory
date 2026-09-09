@@ -2,14 +2,17 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"math/rand/v2"
 	"time"
 
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/ent/account"
+	"github.com/imageforge/imageforge/internal/pkg/crypto"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 	"github.com/imageforge/imageforge/internal/repository"
 )
+
 
 // AccountService manages AI provider accounts and selects which account to use
 // for each generation request.
@@ -62,10 +65,15 @@ func (s *AccountService) List(ctx context.Context) ([]*ent.Account, error) {
 
 // Update modifies an account.
 func (s *AccountService) Update(ctx context.Context, id int64, name string, credentials map[string]any, priority int) (*ent.Account, error) {
+	encrypted, err := crypto.EncryptCredentials(credentials)
+	if err != nil {
+		return nil, fmt.Errorf("encrypt credentials: %w", err)
+	}
 	return s.repo.Update(ctx, id, func(tx *ent.AccountUpdateOne) *ent.AccountUpdateOne {
-		return tx.SetName(name).SetCredentials(credentials).SetPriority(priority)
+		return tx.SetName(name).SetCredentials(encrypted).SetPriority(priority)
 	})
 }
+
 
 // Delete removes an account.
 func (s *AccountService) Delete(ctx context.Context, id int64) error {
