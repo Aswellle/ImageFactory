@@ -7,16 +7,20 @@ import (
 	"go.uber.org/zap"
 )
 
-// MemoryQueue is a channel-backed queue for single-instance Phase 1.
 // It is NOT for production: jobs are lost on restart and not shared across
 // instances. Phase 2 replaces this with a Redis-backed queue.
 type MemoryQueue struct {
-	ch     chan *Task
-	logger *zap.Logger
+	ch        chan *Task
+	logger    *zap.Logger
+	mu        sync.RWMutex
+	isStopped bool
 }
 
 // NewMemoryQueue builds a bounded in-memory queue.
 func NewMemoryQueue(capacity int, logger *zap.Logger) *MemoryQueue {
+	if capacity <= 0 {
+		capacity = 1000
+	}
 	return &MemoryQueue{
 		ch:     make(chan *Task, capacity),
 		logger: logger,
@@ -25,6 +29,13 @@ func NewMemoryQueue(capacity int, logger *zap.Logger) *MemoryQueue {
 
 // Submit enqueues a task. Returns error if the queue is closed or context done.
 func (q *MemoryQueue) Submit(ctx context.Context, t *Task) error {
+	q.mu.RLock()
+	if q.isStopped {
+		q.mu.RUnlock()
+		return ErrQueueStopped
+	}
+	q.mu.RUnlock()
+
 	select {
 	case q.ch <- t:
 		return nil
@@ -35,7 +46,12 @@ func (q *MemoryQueue) Submit(ctx context.Context, t *Task) error {
 
 // Stop closes the queue channel.
 func (q *MemoryQueue) Stop() error {
-	close(q.ch)
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	if !q.isStopped {
+		q.isStopped = true
+		close(q.ch)
+	}
 	return nil
 }
 
@@ -48,7 +64,6 @@ func (q *MemoryQueue) Tasks() <-chan *Task {
 type QueueProcessor struct {
 	queue   *MemoryQueue
 	workers int
-	cancel  context.CancelFunc
 	wg      sync.WaitGroup
 }
 
@@ -61,9 +76,10 @@ func NewProcessor(queue *MemoryQueue, workers int) Processor {
 
 // Start launches worker goroutines.
 func (p *QueueProcessor) Start(ctx context.Context) error {
-	ctx, cancel := context.WithCancel(ctx)
-	p.cancel = cancel
-	for range p.workers {
+	if p.workers <= 0 {
+		p.workers = 1
+	}
+	for i := 0; i < p.workers; i++ {
 		p.wg.Add(1)
 		go p.worker(ctx)
 	}
@@ -72,9 +88,6 @@ func (p *QueueProcessor) Start(ctx context.Context) error {
 
 // Stop signals workers to finish and waits.
 func (p *QueueProcessor) Stop() error {
-	if p.cancel != nil {
-		p.cancel()
-	}
 	p.wg.Wait()
 	return nil
 }
@@ -95,6 +108,20 @@ func (p *QueueProcessor) worker(ctx context.Context) {
 }
 
 func (p *QueueProcessor) runTask(ctx context.Context, t *Task) {
+	defer func() {
+		if r := recover(); r != nil {
+			p.queue.logger.Error("task panicked",
+				zap.Any("panic", r),
+				zap.String("job_id", func() string {
+					if t != nil && t.Job != nil {
+						return t.Job.ID
+					}
+					return "unknown"
+				}()),
+			)
+		}
+	}()
+
 	if t == nil || t.Run == nil {
 		return
 	}
@@ -106,3 +133,6 @@ func (p *QueueProcessor) runTask(ctx context.Context, t *Task) {
 		)
 	}
 }
+
+// ErrQueueStopped is returned when submitting to a stopped queue.
+var ErrQueueStopped = context.DeadlineExceeded

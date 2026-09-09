@@ -2,12 +2,14 @@ package service
 
 import (
 	"context"
+	"sync"
 	"time"
 
 	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/internal/repository"
 	"github.com/imageforge/imageforge/internal/service/scheduling"
 )
+
 
 // SchedulingService bridges the pure scheduling algorithms (package scheduling)
 // to ImageForge's Ent-based persistence layer.
@@ -19,8 +21,10 @@ import (
 // combined with the scheduler's runtime state management.
 type SchedulingService struct {
 	accountRepo *repository.AccountRepository
+	mu          sync.RWMutex
 	thresholds  map[string]int
 }
+
 
 // NewSchedulingService creates a SchedulingService.
 func NewSchedulingService(accountRepo *repository.AccountRepository) *SchedulingService {
@@ -29,14 +33,17 @@ func NewSchedulingService(accountRepo *repository.AccountRepository) *Scheduling
 		thresholds:  make(map[string]int),
 	}
 }
-
 // SetThresholds configures the per-platform scheduling thresholds.
 func (s *SchedulingService) SetThresholds(thresholds map[string]int) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	s.thresholds = thresholds
 }
 
 // GetThresholds returns the current per-platform scheduling thresholds.
 func (s *SchedulingService) GetThresholds() map[string]int {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
 	result := make(map[string]int, len(s.thresholds))
 	for k, v := range s.thresholds {
 		result[k] = v

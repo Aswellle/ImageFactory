@@ -10,6 +10,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/imageforge/imageforge/internal/config"
 	"github.com/imageforge/imageforge/internal/domain"
+	"go.uber.org/zap"
 )
 
 // Claims is the ImageForge JWT payload. Minimal: user id + role + token version. No PII, no secrets.
@@ -45,6 +46,9 @@ func NewJWTService(cfg config.AuthConfig, mode string) (*JWTService, error) {
 			return nil, fmt.Errorf("failed to generate debug JWT secret: %w", err)
 		}
 		secret = base64.RawURLEncoding.EncodeToString(buf)
+		zap.L().Warn("JWT secret auto-generated for debug mode; set IF_JWT_SECRET for production",
+			zap.String("mode", mode),
+		)
 	}
 	return &JWTService{secret: []byte(secret), ttl: ttl}, nil
 }

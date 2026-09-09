@@ -39,9 +39,11 @@ func newError(httpStatus int, code, message string) *Error {
 }
 
 func (e *Error) withCause(err error) *Error {
-	e.cause = err
-	return e
+	clone := *e
+	clone.cause = err
+	return &clone
 }
+
 
 var (
 	ErrBatchImageJobNotFound                     = newError(http.StatusNotFound, "BATCH_IMAGE_JOB_NOT_FOUND", "batch image job not found")

@@ -524,6 +524,9 @@ func (s *ImageEditService) createEditVersion(ctx context.Context, sourceAsset *e
 	if s.store == nil {
 		return nil, errors.New(errors.ErrorCodeInternal, "storage is not configured")
 	}
+	if s.batch == nil {
+		return nil, errors.New(errors.ErrorCodeImageEdit, "image edit provider is not configured")
+	}
 
 	// Persist the edited output. The primary source bytes stand in for the
 	// model's edited result until a real edit provider is wired in.

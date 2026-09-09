@@ -8,7 +8,6 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"sync"
 	"time"
@@ -16,15 +15,22 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
+
 // RefreshTokenStore 管理 Refresh Token 的存储和吊销。
 type RefreshTokenStore struct {
 	rdb *redis.Client
+	ctx context.Context
 }
 
 // NewRefreshTokenStore 创建 Refresh Token 存储。
 // 如果 rdb 为 nil，使用内存存储（重启丢失，仅开发用）。
 func NewRefreshTokenStore(rdb *redis.Client) *RefreshTokenStore {
-	return &RefreshTokenStore{rdb: rdb}
+	return &RefreshTokenStore{rdb: rdb, ctx: context.Background()}
+}
+
+// NewRefreshTokenStoreWithContext 创建带上下文的 Refresh Token 存储。
+func NewRefreshTokenStoreWithContext(rdb *redis.Client, ctx context.Context) *RefreshTokenStore {
+	return &RefreshTokenStore{rdb: rdb, ctx: ctx}
 }
 
 // refreshTokenRecord 存储在 Redis 中的记录。
@@ -63,12 +69,12 @@ func (s *RefreshTokenStore) Generate(userID int64, role string, tokenVersion int
 	if s.rdb != nil {
 		// Redis 存储
 		data, _ := jsonMarshal(record)
-		if err = s.rdb.Set(ctx(), key, data, ttl).Err(); err != nil {
+		if err = s.rdb.Set(s.ctx, key, data, ttl).Err(); err != nil {
 			return "", "", fmt.Errorf("store refresh token: %w", err)
 		}
 		// 同时存储反向索引（用户 -> token 列表），便于吊销
-		s.rdb.SAdd(ctx(), userTokensKey(userID), token)
-		s.rdb.Expire(ctx(), userTokensKey(userID), ttl)
+		s.rdb.SAdd(s.ctx, userTokensKey(userID), token)
+		s.rdb.Expire(s.ctx, userTokensKey(userID), ttl)
 	} else {
 		// 内存存储
 		memoryStore.mu.Lock()
@@ -83,33 +89,24 @@ func (s *RefreshTokenStore) Generate(userID int64, role string, tokenVersion int
 // 返回关联的用户信息和家族 ID。
 func (s *RefreshTokenStore) Validate(token string) (userID int64, role string, tokenVersion int, familyID string, err error) {
 	key := refreshTokenKey(token)
-
-	var record refreshTokenRecord
 	if s.rdb != nil {
-		data, e := s.rdb.Get(ctx(), key).Result()
-		if e == redis.Nil {
-			return 0, "", 0, "", errors.New("refresh token not found or expired")
-		} else if e != nil {
-			return 0, "", 0, "", fmt.Errorf("get refresh token: %w", e)
+		data, err := s.rdb.Get(s.ctx, key).Result()
+		if err != nil {
+			return 0, "", 0, "", fmt.Errorf("refresh token not found")
 		}
-		if e := jsonUnmarshal([]byte(data), &record); e != nil {
-			return 0, "", 0, "", fmt.Errorf("decode refresh token: %w", e)
+		var record refreshTokenRecord
+		if err := jsonUnmarshal([]byte(data), &record); err != nil {
+			return 0, "", 0, "", fmt.Errorf("invalid token record")
 		}
-	} else {
-		memoryStore.mu.RLock()
-		rec, ok := memoryStore.tokens[key]
-		memoryStore.mu.RUnlock()
-		if !ok {
-			return 0, "", 0, "", errors.New("refresh token not found or expired")
-		}
-		record = rec
+		return record.UserID, record.Role, record.TokenVersion, record.FamilyID, nil
 	}
-
-	if time.Now().After(record.ExpiresAt) {
-		s.Revoke(token) // 清理过期 token
-		return 0, "", 0, "", errors.New("refresh token expired")
+	// 内存模式
+	memoryStore.mu.RLock()
+	record, ok := memoryStore.tokens[key]
+	memoryStore.mu.RUnlock()
+	if !ok {
+		return 0, "", 0, "", fmt.Errorf("refresh token not found")
 	}
-
 	return record.UserID, record.Role, record.TokenVersion, record.FamilyID, nil
 }
 
@@ -118,14 +115,14 @@ func (s *RefreshTokenStore) Revoke(token string) error {
 	key := refreshTokenKey(token)
 	if s.rdb != nil {
 		// 获取用户 ID 以清理反向索引
-		data, _ := s.rdb.Get(ctx(), key).Result()
+		data, _ := s.rdb.Get(s.ctx, key).Result()
 		if data != "" {
 			var record refreshTokenRecord
 			if err := jsonUnmarshal([]byte(data), &record); err == nil {
-				s.rdb.SRem(ctx(), userTokensKey(record.UserID), token)
+				s.rdb.SRem(s.ctx, userTokensKey(record.UserID), token)
 			}
 		}
-		return s.rdb.Del(ctx(), key).Err()
+		return s.rdb.Del(s.ctx, key).Err()
 	}
 	memoryStore.mu.Lock()
 	delete(memoryStore.tokens, key)
@@ -136,14 +133,14 @@ func (s *RefreshTokenStore) Revoke(token string) error {
 // RevokeAllUserTokens 吊销用户的所有 Refresh Token（密码重置时调用）。
 func (s *RefreshTokenStore) RevokeAllUserTokens(userID int64) error {
 	if s.rdb != nil {
-		tokens, err := s.rdb.SMembers(ctx(), userTokensKey(userID)).Result()
+		tokens, err := s.rdb.SMembers(s.ctx, userTokensKey(userID)).Result()
 		if err != nil {
 			return err
 		}
 		for _, token := range tokens {
-			s.rdb.Del(ctx(), refreshTokenKey(token))
+			s.rdb.Del(s.ctx, refreshTokenKey(token))
 		}
-		return s.rdb.Del(ctx(), userTokensKey(userID)).Err()
+		return s.rdb.Del(s.ctx, userTokensKey(userID)).Err()
 	}
 	// 内存模式：遍历清理
 	memoryStore.mu.Lock()
@@ -164,10 +161,6 @@ func refreshTokenKey(token string) string {
 
 func userTokensKey(userID int64) string {
 	return fmt.Sprintf("user_refresh_tokens:%d", userID)
-}
-
-func ctx() context.Context {
-	return context.Background()
 }
 
 // 内存存储（开发用）

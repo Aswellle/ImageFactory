@@ -253,7 +253,7 @@ func (s *PublicService) Cancel(ctx context.Context, batchID string, account *Acc
 	job.Status = BatchImageJobStatusCancelled
 	job.UpdatedAt = time.Now()
 	s.jobs[batchID] = job
-	s.persistState(batchID)
+	s.persistStateLocked(batchID)
 	return nil
 }
 
@@ -321,20 +321,26 @@ func (s *PublicService) markItemStatus(batchID, status string) {
 		items[i].Status = status
 	}
 	s.items[batchID] = items
-	s.persistState(batchID)
+	s.persistStateLocked(batchID)
 }
 
 // --- Persistence helpers ---
 
-// persistState 将作业和条目状态持久化到数据库。
+// persistState 将作业和条目状态持久化到数据库（线程安全）。
 func (s *PublicService) persistState(batchID string) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	s.persistStateLocked(batchID)
+}
+
+// persistStateLocked 将作业和条目状态持久化到数据库。
+// 调用方必须持有写锁（s.mu.Lock）。
+func (s *PublicService) persistStateLocked(batchID string) {
 	if s.db == nil {
 		return
 	}
-	s.mu.RLock()
 	job := s.jobs[batchID]
 	items := s.items[batchID]
-	s.mu.RUnlock()
 
 	if job == nil {
 		return
@@ -434,5 +440,5 @@ func (s *PublicService) UpdateJobStatus(batchID, status string) {
 		job.FinishedAt = &now
 	}
 	s.jobs[batchID] = job
-	s.persistState(batchID)
+	s.persistStateLocked(batchID)
 }
