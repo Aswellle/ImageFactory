@@ -21,9 +21,14 @@ type ServerConfig struct {
 	Port            int      `mapstructure:"port"`
 	Mode            string   `mapstructure:"mode"` // debug, release, test
 	Timeout         int      `mapstructure:"timeout_seconds"`
-	AllowedOrigins  []string `mapstructure:"allowed_origins"` // CORS allowed origins (empty = localhost defaults)
-	TrustedProxies  []string `mapstructure:"trusted_proxies"` // trusted proxy IPs/networks for X-Forwarded-For
+	AllowedOrigins  []string `mapstructure:"allowed_origins"`
+	TrustedProxies  []string `mapstructure:"trusted_proxies"`
+	// TLS 可选配置。设置 TLSCertFile + TLSKeyFile 后启用 HTTPS。
+	// 生产环境通常在 Caddy 终止 TLS，后端保持 HTTP。
+	TLSCertFile     string   `mapstructure:"tls_cert_file"`
+	TLSKeyFile      string   `mapstructure:"tls_key_file"`
 }
+
 
 
 type DatabaseConfig struct {

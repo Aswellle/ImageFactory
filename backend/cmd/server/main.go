@@ -45,6 +45,9 @@ func main() {
 		defer cleanup()
 	}
 
+	// 判断是否启用 TLS（生产环境通常在 Caddy 终止 TLS）
+	useTLS := cfg.Server.TLSCertFile != "" && cfg.Server.TLSKeyFile != ""
+
 	addr := net.JoinHostPort(cfg.Server.Host, strconv.Itoa(cfg.Server.Port))
 	srv := &http.Server{
 		Addr:              addr,
@@ -55,11 +58,21 @@ func main() {
 	}
 
 	go func() {
-		log.Info("ImageForge server starting", zapcore.String("addr", addr))
-		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Info("ImageForge server starting",
+			zapcore.String("addr", addr),
+			zapcore.Bool("tls", useTLS),
+		)
+		var err error
+		if useTLS {
+			err = srv.ListenAndServeTLS(cfg.Server.TLSCertFile, cfg.Server.TLSKeyFile)
+		} else {
+			err = srv.ListenAndServe()
+		}
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal("server listen failed", zapcore.String("error", err.Error()))
 		}
 	}()
+
 
 	// Graceful shutdown on SIGINT / SIGTERM.
 	quit := make(chan os.Signal, 1)

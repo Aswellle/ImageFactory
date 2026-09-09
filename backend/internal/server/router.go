@@ -87,9 +87,11 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	engine.Use(requestLogger(log))
 	// 全局限流：按 IP 限制请求速率，防止暴力破解和 DoS。
 	engine.Use(middleware.RateLimitByIP(10, 20)) // 10 req/s per IP, burst 20
+	// 安全响应头（CSP、HSTS、X-Frame-Options 等）
+	engine.Use(middleware.SecurityHeaders())
+	// Prometheus 指标收集
+	engine.Use(middleware.Metrics())
 
-
-	// --- Infrastructure ---
 	db, err := repository.NewEntClient(cfg.Database.DSN(), cfg.Database.AutoMigrate)
 	if err != nil {
 		return nil, fmt.Errorf("connect database: %w", err)
@@ -152,9 +154,14 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	}
 	password := service.NewPassword(cfg.Auth)
 	users := repository.NewUserRepository(db)
-	authService := service.NewAuthService(users, jwt, password)
-	authHandler := handler.NewAuthHandler(authService)
+	// Refresh Token 存储（Redis 可选，nil 时使用内存存储）
+	refreshStore := service.NewRefreshTokenStore(rdb)
+	loginTracker := middleware.NewLoginAttemptTracker(rdb, 5, 15*time.Minute, 15*time.Minute)
+	authService := service.NewAuthService(users, jwt, password, service.WithRefreshTokenStore(refreshStore))
+	authHandler := handler.NewAuthHandler(authService, handler.WithLoginTracker(loginTracker))
 	authMW := middleware.NewAuth(jwt)
+	refreshHandler := handler.NewRefreshHandler(jwt, refreshStore)
+
 
 	// --- Email & password reset ---
 	emailSvc := service.NewEmailService(cfg.Email, log)
@@ -164,6 +171,7 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	resetHandler := handler.NewPasswordResetHandler(resetSvc)
 
 	// --- Health handler (liveness + readiness) ---
+
 	healthHandler := handler.NewHealthHandler(db, rdb)
 
 	// --- Account management (Sub2API integration) ---
@@ -248,14 +256,18 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 			}
 			healthHandler.Liveness(c)
 		})
-
+		// Prometheus 指标端点（可经内部网络暴露给监控系统）
+		v1.GET("/metrics", middleware.MetricsHandler())
 		auth := v1.Group("/auth")
 		{
 			auth.POST("/register", authHandler.Register)
 			auth.POST("/login", authHandler.Login)
+			auth.POST("/refresh", refreshHandler.Refresh)
+			auth.POST("/logout", refreshHandler.Logout)
 			auth.POST("/send-reset-code", resetHandler.SendResetCode)
 			auth.POST("/reset-password", resetHandler.ResetPassword)
 		}
+
 
 		v1.GET("/models", imageGW.Models)
 
