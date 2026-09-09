@@ -95,7 +95,7 @@ type dbClient struct {
 	pool *pgxpool.Pool
 }
 
-func (d *dbClient) queryOne(ctx context.Context, sql string, args ...interface{}) (map[string]interface{}, error) {
+func (d *dbClient) queryOne(ctx context.Context, sql string, args ...any) (map[string]any, error) {
 	rows, err := d.pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
@@ -112,28 +112,28 @@ func (d *dbClient) queryOne(ctx context.Context, sql string, args ...interface{}
 	}
 
 	fields := rows.FieldDescriptions()
-	result := make(map[string]interface{})
+	result := make(map[string]any)
 	for i, f := range fields {
 		result[f.Name] = values[i]
 	}
 	return result, nil
 }
 
-func (d *dbClient) queryAll(ctx context.Context, sql string, args ...interface{}) ([]map[string]interface{}, error) {
+func (d *dbClient) queryAll(ctx context.Context, sql string, args ...any) ([]map[string]any, error) {
 	rows, err := d.pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var results []map[string]interface{}
+	var results []map[string]any
 	for rows.Next() {
 		values, err := rows.Values()
 		if err != nil {
 			return nil, err
 		}
 		fields := rows.FieldDescriptions()
-		result := make(map[string]interface{})
+		result := make(map[string]any)
 		for i, f := range fields {
 			result[f.Name] = values[i]
 		}
@@ -142,7 +142,7 @@ func (d *dbClient) queryAll(ctx context.Context, sql string, args ...interface{}
 	return results, rows.Err()
 }
 
-func (d *dbClient) exec(ctx context.Context, sql string, args ...interface{}) error {
+func (d *dbClient) exec(ctx context.Context, sql string, args ...any) error {
 	_, err := d.pool.Exec(ctx, sql, args...)
 	return err
 }

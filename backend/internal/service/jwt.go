@@ -71,7 +71,7 @@ func (s *JWTService) Generate(userID int64, role string, tokenVersion int) (stri
 
 // Parse validates a token and returns its claims.
 func (s *JWTService) Parse(tokenString string) (*Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(t *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(t *jwt.Token) (any, error) {
 		if t.Method != jwt.SigningMethodHS256 {
 			return nil, errors.New("unexpected signing method: " + t.Method.Alg())
 		}

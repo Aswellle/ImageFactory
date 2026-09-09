@@ -129,7 +129,7 @@ func (t *LoginAttemptTracker) RecordSuccess(key string) {
 func lockKey(key string) string     { return "login_lock:" + key }
 func attemptsKey(key string) string { return "login_attempts:" + key }
 
-func mustMarshal(v interface{}) string {
+func mustMarshal(v any) string {
 	data, _ := json.Marshal(v)
 	return string(data)
 }

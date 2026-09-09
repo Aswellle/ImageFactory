@@ -6,12 +6,12 @@ import (
 )
 
 // OK returns a standard success envelope.
-func OK(c *gin.Context, data interface{}) {
+func OK(c *gin.Context, data any) {
 	c.JSON(200, gin.H{"data": data})
 }
 
 // Created returns a 201 success envelope.
-func Created(c *gin.Context, data interface{}) {
+func Created(c *gin.Context, data any) {
 	c.JSON(201, gin.H{"data": data})
 }
 
@@ -36,7 +36,7 @@ func Error(c *gin.Context, status int, code, message, requestID string) {
 }
 
 // Paginated returns a paginated list envelope.
-func Paginated(c *gin.Context, items interface{}, total, page, pageSize int) {
+func Paginated(c *gin.Context, items any, total, page, pageSize int) {
 	c.JSON(200, gin.H{
 		"data": items,
 		"pagination": gin.H{

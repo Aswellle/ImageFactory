@@ -181,10 +181,10 @@ func init() {
 }
 
 // JSON 辅助（避免循环导入 encoding/json）
-func jsonMarshal(v interface{}) ([]byte, error) {
+func jsonMarshal(v any) ([]byte, error) {
 	return json.Marshal(v)
 }
 
-func jsonUnmarshal(data []byte, v interface{}) error {
+func jsonUnmarshal(data []byte, v any) error {
 	return json.Unmarshal(data, v)
 }
