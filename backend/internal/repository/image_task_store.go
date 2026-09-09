@@ -84,7 +84,9 @@ func (s *RedisImageTaskStore) Get(id string) (*image_task.Record, error) {
 	if !ok || time.Now().After(entry.expiresAt) {
 		return nil, errTaskNotFound
 	}
-	return entry.task, nil
+	// Return a copy to prevent callers from mutating internal state
+	copy := *entry.task
+	return &copy, nil
 }
 
 func imageTaskKey(id string) string {

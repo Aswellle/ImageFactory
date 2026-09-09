@@ -3,6 +3,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
@@ -225,10 +226,18 @@ func (s *adminServiceImpl) UserList(ctx context.Context, page, pageSize int, sta
 func (s *adminServiceImpl) UpdateUser(ctx context.Context, userID int64, input UpdateUserInput) (*AdminUser, error) {
 	up := s.db.User.UpdateOneID(userID)
 	if input.Role != nil {
-		up.SetRole(user.Role(*input.Role))
+		role := user.Role(*input.Role)
+		if role != "admin" && role != "user" {
+			return nil, fmt.Errorf("invalid role: %q (must be %q or %q)", *input.Role, "admin", "user")
+		}
+		up.SetRole(role)
 	}
 	if input.Status != nil {
-		up.SetStatus(user.Status(*input.Status))
+		st := user.Status(*input.Status)
+		if st != "active" && st != "suspended" {
+			return nil, fmt.Errorf("invalid status: %q (must be %q or %q)", *input.Status, "active", "suspended")
+		}
+		up.SetStatus(st)
 	}
 	if input.Name != nil {
 		up.SetName(*input.Name)
@@ -250,8 +259,8 @@ func (s *adminServiceImpl) UpdateUser(ctx context.Context, userID int64, input U
 
 func (s *adminServiceImpl) SetUserStatus(ctx context.Context, userID int64, status string) error {
 	st := user.Status(status)
-	if st != user.StatusActive && st != "suspended" {
-		st = "suspended"
+	if st != "active" && st != "suspended" {
+		return fmt.Errorf("invalid user status: %q (must be %q or %q)", status, "active", "suspended")
 	}
 	_, err := s.db.User.UpdateOneID(userID).
 		SetStatus(st).

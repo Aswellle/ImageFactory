@@ -7,6 +7,7 @@ package batchimage
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"sync"
 	"time"
 
@@ -179,7 +180,7 @@ func (s *PublicService) Get(ctx context.Context, batchID string, account *Accoun
 
 	status, err := provider.Get(ctx, job, account)
 	if err != nil {
-		return job, nil
+		return nil, fmt.Errorf("failed to poll provider status: %w", err)
 	}
 
 	switch status.InternalState {

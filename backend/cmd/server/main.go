@@ -53,6 +53,7 @@ func main() {
 		Addr:              addr,
 		Handler:           app.Router,
 		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:       30 * time.Second,
 		WriteTimeout:      time.Duration(cfg.Server.Timeout) * time.Second,
 		IdleTimeout:       60 * time.Second,
 	}

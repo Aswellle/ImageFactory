@@ -2,6 +2,7 @@ package batchimage
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"go.uber.org/zap"
@@ -60,6 +61,7 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 	status, err := provider.Get(ctx, job, nil)
 	if err != nil {
 		w.log.Warn("batchimage: poll error", zap.String("batch_id", job.BatchID), zap.Error(err))
+		return fmt.Errorf("poll failed for job %s: %w", job.BatchID, err)
 	}
 
 	// Map provider state to job status

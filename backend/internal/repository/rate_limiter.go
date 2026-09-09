@@ -45,36 +45,53 @@ func (r *RateLimiter) AllowResetCode(ctx context.Context, email string) error {
 	return r.allowMemory(email)
 }
 
+// resetCodeScript atomically checks and updates rate limits in Redis.
+// Returns: 0 = allowed, 1 = rate limited, 2 = daily limit exceeded.
+const resetCodeScript = `
+local limit_key = KEYS[1]
+local daily_key = KEYS[2]
+local limit_ttl = tonumber(ARGV[1])
+local daily_ttl = tonumber(ARGV[2])
+local daily_max = tonumber(ARGV[3])
+
+-- Check rate limit
+if redis.call('EXISTS', limit_key) == 1 then
+  return 1
+end
+
+-- Check and increment daily limit
+local count = redis.call('INCR', daily_key)
+if count == 1 then
+  redis.call('EXPIRE', daily_key, daily_ttl)
+end
+if count > daily_max then
+  return 2
+end
+
+-- Set rate limit key
+redis.call('SET', limit_key, '1', 'EX', limit_ttl)
+return 0
+`
+
 func (r *RateLimiter) allowRedis(ctx context.Context, email string) error {
-	// Check rate limit (60 seconds between requests)
 	limitKey := fmt.Sprintf("pwdreset:limit:%s", email)
-	exists, err := r.rdb.Exists(ctx, limitKey).Result()
+	dailyKey := fmt.Sprintf("pwdreset:daily:%s:%s", email, time.Now().Format("2006-01-02"))
+	
+	result, err := r.rdb.Eval(ctx, resetCodeScript, []string{limitKey, dailyKey}, 
+		int(resetCodeRateLimit.Seconds()), int(24*time.Hour.Seconds()), resetCodeDailyLimit).Int64()
 	if err != nil {
 		return fmt.Errorf("redis error: %w", err)
 	}
-	if exists > 0 {
+	
+	switch result {
+	case 1:
 		ttl, _ := r.rdb.TTL(ctx, limitKey).Result()
 		return fmt.Errorf("please wait %d seconds before requesting another code", int(ttl.Seconds())+1)
-	}
-
-	// Check daily limit (5 per day)
-	dailyKey := fmt.Sprintf("pwdreset:daily:%s:%s", email, time.Now().Format("2006-01-02"))
-	count, err := r.rdb.Incr(ctx, dailyKey).Result()
-	if err != nil {
-		return fmt.Errorf("redis error: %w", err)
-	}
-	if count == 1 {
-		// Set expiry at end of day
-		r.rdb.Expire(ctx, dailyKey, 24*time.Hour)
-	}
-	if count > int64(resetCodeDailyLimit) {
+	case 2:
 		return fmt.Errorf("daily limit exceeded, please try again tomorrow")
+	default:
+		return nil
 	}
-
-	// Set rate limit key
-	r.rdb.Set(ctx, limitKey, "1", resetCodeRateLimit)
-
-	return nil
 }
 
 func (r *RateLimiter) allowMemory(email string) error {

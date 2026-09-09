@@ -1,6 +1,9 @@
 package config
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/spf13/viper"
 )
 
@@ -89,14 +92,18 @@ type Sub2APIConfig struct {
 	TimeoutSeconds int    `mapstructure:"timeout_seconds"`
 }
 
-// DSN returns the PostgreSQL connection string.
+// DSN returns the PostgreSQL connection string with proper URL encoding.
 func (d DatabaseConfig) DSN() string {
-	return "host=" + d.Host +
-		" port=" + itoa(d.Port) +
-		" user=" + d.User +
-		" password=" + d.Password +
-		" dbname=" + d.Name +
-		" sslmode=" + d.SSLMode
+	u := url.URL{
+		Scheme: "postgres",
+		User:   url.UserPassword(d.User, d.Password),
+		Host:   fmt.Sprintf("%s:%d", d.Host, d.Port),
+		Path:   "/" + d.Name,
+	}
+	q := u.Query()
+	q.Set("sslmode", d.SSLMode)
+	u.RawQuery = q.Encode()
+	return u.String()
 }
 
 func itoa(n int) string {

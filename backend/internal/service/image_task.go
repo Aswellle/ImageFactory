@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"math/rand/v2"
 	"time"
 
 	"github.com/imageforge/imageforge/internal/domain/image_task"
 )
+
 
 const (
 	defaultImageTaskTTL              = 30 * time.Minute
@@ -119,10 +121,11 @@ func randomString(n int) string {
 	const letters = "abcdefghijklmnopqrstuvwxyz0123456789"
 	b := make([]byte, n)
 	for i := range b {
-		b[i] = letters[time.Now().UnixNano()%int64(len(letters))]
+		b[i] = letters[rand.N(len(letters))]
 	}
 	return string(b)
 }
+
 
 // ImageTask is an alias to the domain type for handler convenience.
 type ImageTask = imagetask.Task

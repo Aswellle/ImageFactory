@@ -162,8 +162,14 @@ func mapGeminiState(batch *GeminiBatchJob) *BatchProviderStatus {
 		status.InternalState = BatchProviderStateSucceeded
 		status.Done = true
 		if batch.Response != nil {
-			status.ProviderOutputRef = batch.Response.ResponsesFile
+			// Gemini API returns responses_file (snake_case); fall back to camelCase for older responses
+			ref := batch.Response.ResponsesFileSnake
+			if ref == "" {
+				ref = batch.Response.ResponsesFile
+			}
+			status.ProviderOutputRef = ref
 		}
+
 	case "FAILED", "STATE_FAILED":
 		status.InternalState = BatchProviderStateFailed
 		status.Done = true

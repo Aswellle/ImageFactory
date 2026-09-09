@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"math/rand/v2"
 	"time"
 
 	"github.com/imageforge/imageforge/ent"
@@ -172,7 +173,7 @@ func (r *AccountResolver) pickByPriority(accounts []*ent.Account) *ent.Account {
 		return bestTier[0]
 	}
 
-	return bestTier[time.Now().UnixNano()%int64(len(bestTier))]
+	return bestTier[rand.N(len(bestTier))]
 }
 
 // toBatchImageAccount 将 Ent Account 转换为 batchimage.Account。

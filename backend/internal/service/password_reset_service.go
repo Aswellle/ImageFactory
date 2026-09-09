@@ -116,6 +116,13 @@ func (s *PasswordResetService) ResetPassword(ctx context.Context, in ResetPasswo
 		return errors.New(errors.ErrNotFound, "user not found")
 	}
 
+	// Increment token version FIRST to invalidate all existing tokens.
+	// This must succeed before password change to prevent the window where
+	// password is changed but old tokens remain valid.
+	if err := s.users.IncrementTokenVersion(ctx, user.ID); err != nil {
+		return errors.Wrap(errors.ErrInternal, "failed to invalidate existing tokens", err)
+	}
+
 	// Hash and update the password.
 	hash, err := s.password.Hash(in.NewPassword)
 	if err != nil {
@@ -127,9 +134,6 @@ func (s *PasswordResetService) ResetPassword(ctx context.Context, in ResetPasswo
 	}
 
 	// Invalidate any remaining codes for this email.
-
-	// Increment token version to invalidate all existing tokens.
-	_ = s.users.IncrementTokenVersion(ctx, user.ID)
 	_ = s.codes.Invalidate(email)
 
 	return nil

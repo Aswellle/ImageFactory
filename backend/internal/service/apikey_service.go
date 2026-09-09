@@ -142,15 +142,9 @@ func (s *APIKeyService) Validate(ctx context.Context, plaintext string) (int64, 
 }
 
 // GetUsage returns usage statistics for a user.
+// Note: currently not implemented; returns ErrNotImplemented.
 func (s *APIKeyService) GetUsage(ctx context.Context, userID int64) (*UsageStats, error) {
-	// Placeholder: full implementation queries usage_records.
-	return &UsageStats{
-		TotalRequests: 0,
-		TotalImages:   0,
-		TotalTokens:   0,
-		PeriodStart:   time.Now().AddDate(0, 0, -30).Format("2006-01-02"),
-		PeriodEnd:     time.Now().Format("2006-01-02"),
-	}, nil
+	return nil, errors.New(errors.ErrInternal, "API key usage statistics not yet implemented")
 }
 
 // UsageStats holds usage statistics.

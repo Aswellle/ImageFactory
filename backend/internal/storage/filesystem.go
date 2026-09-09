@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -27,7 +28,23 @@ func NewFilesystem(root string) (*Filesystem, error) {
 }
 
 func (f *Filesystem) resolve(key string) string {
-	return filepath.Join(f.root, filepath.FromSlash(key))
+	// Clean the key to prevent path traversal (e.g., "../../../etc/passwd")
+	cleanKey := filepath.Clean("/" + key)
+	resolved := filepath.Join(f.root, cleanKey)
+	
+	// Ensure the resolved path is within the root directory
+	absResolved, err := filepath.Abs(resolved)
+	if err != nil {
+		return ""
+	}
+	absRoot, err := filepath.Abs(f.root)
+	if err != nil {
+		return ""
+	}
+	if !strings.HasPrefix(absResolved, absRoot+string(filepath.Separator)) && absResolved != absRoot {
+		return ""
+	}
+	return absResolved
 }
 
 func (f *Filesystem) Put(ctx context.Context, in PutInput) (string, error) {
