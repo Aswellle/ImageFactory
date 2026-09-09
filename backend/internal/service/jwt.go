@@ -1,22 +1,22 @@
 package service
 
- import (
+import (
 	"crypto/rand"
 	"encoding/base64"
- 	"errors"
- 	"fmt"
+	"errors"
+	"fmt"
 	"time"
 
- 	"github.com/golang-jwt/jwt/v5"
- 	"github.com/imageforge/imageforge/internal/config"
- 	"github.com/imageforge/imageforge/internal/domain"
- )
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/imageforge/imageforge/internal/config"
+	"github.com/imageforge/imageforge/internal/domain"
+)
 
 // Claims is the ImageForge JWT payload. Minimal: user id + role + token version. No PII, no secrets.
 type Claims struct {
-	UserID        int64  `json:"uid"`
-	Role          string `json:"role"`
-	TokenVersion  int    `json:"tv"` // Token version - incremented on password change
+	UserID       int64  `json:"uid"`
+	Role         string `json:"role"`
+	TokenVersion int    `json:"tv"` // Token version - incremented on password change
 	jwt.RegisteredClaims
 }
 
@@ -45,7 +45,7 @@ func NewJWTService(cfg config.AuthConfig, mode string) (*JWTService, error) {
 			return nil, fmt.Errorf("failed to generate debug JWT secret: %w", err)
 		}
 		secret = base64.RawURLEncoding.EncodeToString(buf)
- 	}
+	}
 	return &JWTService{secret: []byte(secret), ttl: ttl}, nil
 }
 

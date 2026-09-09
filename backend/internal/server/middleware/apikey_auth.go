@@ -47,16 +47,9 @@ func extractAPIKey(c *gin.Context) string {
 		return ""
 	}
 	parts := strings.SplitN(header, " ", 2)
-if len(parts) == 2 && strings.EqualFold(parts[0], "Bearer") {
-	return parts[1]
-}
-return ""
-}
-
-func ridFromAPIKey(c *gin.Context) string {
-	v, _ := c.Get("if.request_id")
-	if s, ok := v.(string); ok {
-		return s
+	if len(parts) == 2 && strings.EqualFold(parts[0], "Bearer") {
+		return parts[1]
 	}
 	return ""
 }
+

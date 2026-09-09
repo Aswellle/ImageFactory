@@ -8,6 +8,7 @@ import (
 	"github.com/imageforge/imageforge/ent/prompttemplate"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 )
+
 type PromptTemplateService struct {
 	db *ent.Client
 }
@@ -40,13 +41,13 @@ type TemplateUpdateInput struct {
 
 // BuiltInTemplate is a system-provided template not bound to any user.
 type BuiltInTemplate struct {
-	ID          int64                          `json:"id"`
-	Name        string                         `json:"name"`
-	Description string                         `json:"description"`
-	Content     string                         `json:"content"`
-	Variables   []string                       `json:"variables"`
-	Category    string                         `json:"category"`
-	Examples    map[string]map[string]string   `json:"examples,omitempty"`
+	ID          int64                        `json:"id"`
+	Name        string                       `json:"name"`
+	Description string                       `json:"description"`
+	Content     string                       `json:"content"`
+	Variables   []string                     `json:"variables"`
+	Category    string                       `json:"category"`
+	Examples    map[string]map[string]string `json:"examples,omitempty"`
 }
 
 // Create persists a new prompt template.
@@ -197,9 +198,9 @@ func GetBuiltIn() []BuiltInTemplate {
 			Category:    "product",
 			Examples: map[string]map[string]string{
 				"perfume": {
-					"product":     "a minimalist glass perfume bottle with gold cap",
-					"style":       "luxury commercial",
-					"lighting":    "soft diffused key light with gentle rim light",
+					"product":      "a minimalist glass perfume bottle with gold cap",
+					"style":        "luxury commercial",
+					"lighting":     "soft diffused key light with gentle rim light",
 					"requirements": "shallow depth of field, reflective surface, high-end catalog look",
 				},
 			},
@@ -273,5 +274,3 @@ func splitVariables(s string) []string {
 	}
 	return out
 }
-
-

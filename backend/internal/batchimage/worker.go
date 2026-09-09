@@ -51,16 +51,16 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 		return nil
 	}
 	job.RUnlock()
- provider, ok := w.registry.Get(job.Provider)
- if !ok {
-	w.log.Info("batchimage: unknown provider for job", zap.String("provider", job.Provider), zap.String("batch_id", job.BatchID))
-	return nil
-}
+	provider, ok := w.registry.Get(job.Provider)
+	if !ok {
+		w.log.Info("batchimage: unknown provider for job", zap.String("provider", job.Provider), zap.String("batch_id", job.BatchID))
+		return nil
+	}
 
- status, err := provider.Get(ctx, job, nil)
- if err != nil {
-	w.log.Warn("batchimage: poll error", zap.String("batch_id", job.BatchID), zap.Error(err))
- }
+	status, err := provider.Get(ctx, job, nil)
+	if err != nil {
+		w.log.Warn("batchimage: poll error", zap.String("batch_id", job.BatchID), zap.Error(err))
+	}
 
 	// Map provider state to job status
 	job.Lock()
@@ -86,15 +86,15 @@ func (w *Worker) pollJob(ctx context.Context, job *BatchImageJob) error {
 
 	now := time.Now()
 	job.UpdatedAt = now
-if job.Status == BatchImageJobStatusCompleted || job.Status == BatchImageJobStatusFailed {
-    job.FinishedAt = &now
-}
-job.Unlock()
+	if job.Status == BatchImageJobStatusCompleted || job.Status == BatchImageJobStatusFailed {
+		job.FinishedAt = &now
+	}
+	job.Unlock()
 
-// Settle completed/failed jobs
-if CanSettle(job) {
-    _ = w.settle.Settle(ctx, job)
-}
+	// Settle completed/failed jobs
+	if CanSettle(job) {
+		_ = w.settle.Settle(ctx, job)
+	}
 
-return nil
+	return nil
 }

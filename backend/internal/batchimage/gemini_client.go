@@ -48,10 +48,10 @@ type GeminiBatchDest struct {
 
 // GeminiBatchResponse represents the response of a Gemini batch job.
 type GeminiBatchResponse struct {
-	ResponsesFile      string `json:"responsesFile"`
-	ResponsesFileSnake string `json:"responses_file"`
-	InlinedResponses   []any  `json:"inlinedResponses"`
-	InlinedResponsesAlt []any `json:"inlined_responses"`
+	ResponsesFile       string `json:"responsesFile"`
+	ResponsesFileSnake  string `json:"responses_file"`
+	InlinedResponses    []any  `json:"inlinedResponses"`
+	InlinedResponsesAlt []any  `json:"inlined_responses"`
 }
 
 // GeminiBatchError represents an error from Gemini.

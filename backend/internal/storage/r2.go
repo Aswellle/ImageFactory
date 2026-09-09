@@ -74,7 +74,6 @@ func (r *R2) ensureBucket(ctx context.Context) error {
 	return nil
 }
 
-
 func (r *R2) Put(ctx context.Context, in PutInput) (string, error) {
 	_, err := r.client.PutObject(ctx, &s3.PutObjectInput{
 		Bucket:      aws.String(r.bucket),

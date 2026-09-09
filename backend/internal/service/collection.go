@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/imageforge/imageforge/ent"
-	"github.com/imageforge/imageforge/ent/collection"
 	"github.com/imageforge/imageforge/ent/asset"
+	"github.com/imageforge/imageforge/ent/collection"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 )
 

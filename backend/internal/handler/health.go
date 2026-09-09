@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/imageforge/imageforge/ent"
 	"github.com/imageforge/imageforge/internal/pkg/response"
 	"github.com/redis/go-redis/v9"
-	"github.com/imageforge/imageforge/ent"
 )
 
 // HealthHandler exposes liveness and readiness probes.

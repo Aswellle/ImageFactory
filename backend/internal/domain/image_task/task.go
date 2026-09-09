@@ -26,37 +26,37 @@ const (
 // Record is the internal representation persisted in the store.
 // Ownership fields are intentionally excluded from the API view.
 type Record struct {
-	ID        string          `json:"id"`
-	UserID    int64           `json:"user_id"`
-	Status    Status          `json:"status"`
-	StatusCode int            `json:"status_code,omitempty"`
-	Result    []byte          `json:"result,omitempty"`
-	Error     []byte          `json:"error,omitempty"`
-	CreatedAt time.Time       `json:"created_at"`
-	UpdatedAt time.Time       `json:"updated_at"`
+	ID         string    `json:"id"`
+	UserID     int64     `json:"user_id"`
+	Status     Status    `json:"status"`
+	StatusCode int       `json:"status_code,omitempty"`
+	Result     []byte    `json:"result,omitempty"`
+	Error      []byte    `json:"error,omitempty"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
 }
 
 // Task is the API-safe representation returned to callers.
 type Task struct {
-	ID        string    `json:"id"`
-	Status    Status    `json:"status"`
-	StatusCode int      `json:"status_code,omitempty"`
-	Result    []byte    `json:"result,omitempty"`
-	Error     []byte    `json:"error,omitempty"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID         string    `json:"id"`
+	Status     Status    `json:"status"`
+	StatusCode int       `json:"status_code,omitempty"`
+	Result     []byte    `json:"result,omitempty"`
+	Error      []byte    `json:"error,omitempty"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
 }
 
 // ToPublic converts an internal record to the API-safe view.
 func ToPublic(r *Record) *Task {
 	return &Task{
-		ID:        r.ID,
-		Status:    r.Status,
+		ID:         r.ID,
+		Status:     r.Status,
 		StatusCode: r.StatusCode,
-		Result:    r.Result,
-		Error:     r.Error,
-		CreatedAt: r.CreatedAt,
-		UpdatedAt: r.UpdatedAt,
+		Result:     r.Result,
+		Error:      r.Error,
+		CreatedAt:  r.CreatedAt,
+		UpdatedAt:  r.UpdatedAt,
 	}
 }
 

@@ -24,7 +24,7 @@ type RateLimiter struct {
 
 	mu       sync.RWMutex
 	memLimit map[string]time.Time // email -> last request time
-	memDaily map[string]int      // email -> count today
+	memDaily map[string]int       // email -> count today
 }
 
 // NewRateLimiter builds a RateLimiter.

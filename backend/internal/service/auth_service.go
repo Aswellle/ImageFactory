@@ -10,17 +10,15 @@ import (
 	"github.com/imageforge/imageforge/internal/repository"
 )
 
-
 // AuthService handles registration and login. It owns password hashing and
 // JWT issuance but never persists plaintext secrets.
 type AuthService struct {
-	users         *repository.UserRepository
-	jwt           *JWTService
-	password      *Password
-	refreshStore  *RefreshTokenStore
-	refreshTTL    time.Duration
+	users        *repository.UserRepository
+	jwt          *JWTService
+	password     *Password
+	refreshStore *RefreshTokenStore
+	refreshTTL   time.Duration
 }
-
 
 // NewAuthService builds an AuthService.
 func NewAuthService(users *repository.UserRepository, jwt *JWTService, password *Password, opts ...RefreshOption) *AuthService {
@@ -41,6 +39,7 @@ func WithRefreshTokenStore(store *RefreshTokenStore) RefreshOption {
 		s.refreshStore = store
 	}
 }
+
 // AuthResult is the response envelope for auth success.
 type AuthResult struct {
 	Token        string `json:"token"`
@@ -144,4 +143,3 @@ func (s *AuthService) resultWithToken(ctx context.Context, id int64, email, name
 	}
 	return out, nil
 }
-

@@ -17,7 +17,7 @@ import (
 
 // RefreshHandler 处理 Token 刷新和吊销。
 type RefreshHandler struct {
-	jwt         *service.JWTService
+	jwt          *service.JWTService
 	refreshStore *service.RefreshTokenStore
 }
 

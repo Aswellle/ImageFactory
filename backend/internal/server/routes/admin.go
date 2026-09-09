@@ -17,7 +17,6 @@ type AdminHandlers struct {
 	Scheduling *admin.SchedulingHandler
 }
 
-
 // RegisterAdminRoutes mounts all admin routes under /v1/admin with the
 // adminAuth middleware applied to the whole group.
 func RegisterAdminRoutes(
@@ -88,4 +87,3 @@ func registerAccountRoutes(admin *gin.RouterGroup, h *AdminHandlers) {
 		a.POST("/:id/schedulable", h.Account.SetSchedulable)
 	}
 }
-

@@ -18,8 +18,8 @@ func (GenerationInput) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("job_id"),
 		field.Int64("source_asset_id").Optional(), // existing asset used as input
-		field.String("storage_key").Optional(),  // or a freshly uploaded source
-		field.String("role").Optional(),         // "reference", "mask", etc.
+		field.String("storage_key").Optional(),    // or a freshly uploaded source
+		field.String("role").Optional(),           // "reference", "mask", etc.
 		field.Time("created_at").Default(time.Now).Immutable(),
 	}
 }

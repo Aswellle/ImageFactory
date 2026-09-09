@@ -106,4 +106,3 @@ func (r *UserRepository) IncrementFailedLogin(ctx context.Context, id int64) err
 		Save(ctx)
 	return err
 }
-

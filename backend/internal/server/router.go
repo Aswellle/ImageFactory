@@ -15,6 +15,7 @@ import (
 	"github.com/imageforge/imageforge/internal/batchimage"
 	"github.com/imageforge/imageforge/internal/config"
 	"github.com/imageforge/imageforge/internal/handler"
+	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/imageforge/imageforge/internal/job"
 	"github.com/imageforge/imageforge/internal/pkg/crypto"
 	"github.com/imageforge/imageforge/internal/repository"
@@ -24,12 +25,9 @@ import (
 	"github.com/imageforge/imageforge/internal/storage"
 	"github.com/imageforge/imageforge/internal/web"
 	"github.com/imageforge/imageforge/migrations"
-	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
-
-
 
 // Router wraps a Gin engine and its runtime dependencies.
 type Router struct {
@@ -123,7 +121,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		log.Warn("credential encryption DISABLED — credentials stored in plaintext")
 	}
 
-
 	// --- Job queue + worker ---
 
 	queue := job.NewMemoryQueue(256, log)
@@ -161,7 +158,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	authHandler := handler.NewAuthHandler(authService, handler.WithLoginTracker(loginTracker))
 	authMW := middleware.NewAuth(jwt)
 	refreshHandler := handler.NewRefreshHandler(jwt, refreshStore)
-
 
 	// --- Email & password reset ---
 	emailSvc := service.NewEmailService(cfg.Email, log)
@@ -233,14 +229,13 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 	adminAuth := middleware.NewAdminAuth(authMW)
 	adminHandlers := &routes.AdminHandlers{
-		Dashboard: admin.NewDashboardHandler(adminSvc),
-		User:      admin.NewUserHandler(adminSvc),
-		Job:       admin.NewJobHandler(adminSvc),
-		APIKey:    admin.NewAPIKeyHandler(adminSvc),
-		Account:   admin.NewAccountHandler(accountSvc),
+		Dashboard:  admin.NewDashboardHandler(adminSvc),
+		User:       admin.NewUserHandler(adminSvc),
+		Job:        admin.NewJobHandler(adminSvc),
+		APIKey:     admin.NewAPIKeyHandler(adminSvc),
+		Account:    admin.NewAccountHandler(accountSvc),
 		Scheduling: admin.NewSchedulingHandler(schedulingSvc),
 	}
-
 
 	// --- Public routes ---
 	v1 := engine.Group("/v1")
@@ -272,7 +267,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 			auth.POST("/send-reset-code", resetHandler.SendResetCode)
 			auth.POST("/reset-password", resetHandler.ResetPassword)
 		}
-
 
 		v1.GET("/models", imageGW.Models)
 
@@ -351,9 +345,6 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 
 	return &Router{Engine: engine, db: db, rdb: rdb, processor: processor}, nil
 }
-
-
-
 
 // requestLogger logs method, path, status, duration, and request ID. It never
 // logs request bodies or headers (which may carry secrets).

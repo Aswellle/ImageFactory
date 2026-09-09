@@ -17,19 +17,17 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Host            string   `mapstructure:"host"`
-	Port            int      `mapstructure:"port"`
-	Mode            string   `mapstructure:"mode"` // debug, release, test
-	Timeout         int      `mapstructure:"timeout_seconds"`
-	AllowedOrigins  []string `mapstructure:"allowed_origins"`
-	TrustedProxies  []string `mapstructure:"trusted_proxies"`
+	Host           string   `mapstructure:"host"`
+	Port           int      `mapstructure:"port"`
+	Mode           string   `mapstructure:"mode"` // debug, release, test
+	Timeout        int      `mapstructure:"timeout_seconds"`
+	AllowedOrigins []string `mapstructure:"allowed_origins"`
+	TrustedProxies []string `mapstructure:"trusted_proxies"`
 	// TLS 可选配置。设置 TLSCertFile + TLSKeyFile 后启用 HTTPS。
 	// 生产环境通常在 Caddy 终止 TLS，后端保持 HTTP。
-	TLSCertFile     string   `mapstructure:"tls_cert_file"`
-	TLSKeyFile      string   `mapstructure:"tls_key_file"`
+	TLSCertFile string `mapstructure:"tls_cert_file"`
+	TLSKeyFile  string `mapstructure:"tls_key_file"`
 }
-
-
 
 type DatabaseConfig struct {
 	Host        string `mapstructure:"host"`
@@ -55,7 +53,6 @@ type AuthConfig struct {
 	AdminPanelKey      string `mapstructure:"admin_panel_key"` // optional service-to-service admin panel key
 }
 
-
 // EmailConfig configures the email delivery service (SendGrid).
 type EmailConfig struct {
 	// Provider selects the email delivery backend: "sendgrid" | "smtp" | "console".
@@ -68,15 +65,14 @@ type EmailConfig struct {
 	FromName string `mapstructure:"from_name"`
 }
 
-
 type StorageConfig struct {
 	// S3-compatible object storage (Cloudflare R2, MinIO, etc.)
 	Provider   string `mapstructure:"provider"` // "r2" | "minio" | "filesystem"
 	Bucket     string `mapstructure:"bucket"`
 	Region     string `mapstructure:"region"`
-	Endpoint   string `mapstructure:"endpoint"` // custom endpoint for R2/MinIO
-	AccessKey  string `mapstructure:"access_key"` // secret
-	SecretKey  string `mapstructure:"secret_key"` // secret
+	Endpoint   string `mapstructure:"endpoint"`    // custom endpoint for R2/MinIO
+	AccessKey  string `mapstructure:"access_key"`  // secret
+	SecretKey  string `mapstructure:"secret_key"`  // secret
 	PublicHost string `mapstructure:"public_host"` // optional CDN/public host override
 }
 
@@ -89,8 +85,8 @@ type Sub2APIConfig struct {
 	// AccountID is the Sub2API upstream account used for image generation.
 	AccountID string `mapstructure:"account_id"`
 	// GeminiAPIKey is the Google Gemini API key used for image generation.
-	GeminiAPIKey string `mapstructure:"gemini_api_key"`
-	TimeoutSeconds int `mapstructure:"timeout_seconds"`
+	GeminiAPIKey   string `mapstructure:"gemini_api_key"`
+	TimeoutSeconds int    `mapstructure:"timeout_seconds"`
 }
 
 // DSN returns the PostgreSQL connection string.
@@ -138,7 +134,6 @@ func Load(path string) (*Config, error) {
 	v.SetDefault("database.port", 5432)
 	v.SetDefault("database.sslmode", "disable")
 	v.SetDefault("database.auto_migrate", true)
-
 
 	v.SetDefault("redis.host", "localhost")
 	v.SetDefault("redis.port", 6379)

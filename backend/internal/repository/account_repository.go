@@ -10,8 +10,6 @@ import (
 	"github.com/imageforge/imageforge/internal/pkg/crypto"
 )
 
-
-
 // AccountRepository 定义账号数据访问接口。
 // 封装 Ent 操作，提供领域语义明确的方法。
 type AccountRepository struct {
@@ -22,6 +20,7 @@ type AccountRepository struct {
 func NewAccountRepository(db *ent.Client) *AccountRepository {
 	return &AccountRepository{db: db}
 }
+
 // Create 创建新账号。敏感凭证字段在存储前自动加密。
 func (r *AccountRepository) Create(ctx context.Context, name, platform, typ string, credentials map[string]any, priority int) (*ent.Account, error) {
 	encrypted, err := crypto.EncryptCredentials(credentials)
@@ -137,7 +136,6 @@ func (r *AccountRepository) decryptAccounts(accounts []*ent.Account) ([]*ent.Acc
 	return accounts, nil
 }
 
-
 // Update 更新账号。
 func (r *AccountRepository) Update(ctx context.Context, id int64, updater func(tx *ent.AccountUpdateOne) *ent.AccountUpdateOne) (*ent.Account, error) {
 	acc, err := r.GetByID(ctx, id)
@@ -196,7 +194,6 @@ func (r *AccountRepository) withTx(ctx context.Context, fn func(tx *ent.Tx) erro
 	}
 	return tx.Commit()
 }
-
 
 // ClearError 清除账号错误状态。
 func (r *AccountRepository) ClearError(ctx context.Context, id int64) error {

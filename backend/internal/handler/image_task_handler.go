@@ -166,6 +166,5 @@ func getUserID(c *gin.Context) int64 {
 // Ensure image_task types are referenced (silences unused import if needed).
 var _ = image_task.StatusCompleted
 
-
 // Ensure service types are referenced.
 var _ = service.ErrImageTaskNotFound

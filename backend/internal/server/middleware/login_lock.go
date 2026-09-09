@@ -126,7 +126,7 @@ func (t *LoginAttemptTracker) RecordSuccess(key string) {
 	t.mu.Unlock()
 }
 
-func lockKey(key string) string  { return "login_lock:" + key }
+func lockKey(key string) string     { return "login_lock:" + key }
 func attemptsKey(key string) string { return "login_attempts:" + key }
 
 func mustMarshal(v interface{}) string {

@@ -19,7 +19,7 @@ func (PromptTemplate) Fields() []ent.Field {
 		field.Int64("user_id"),
 		field.String("name").NotEmpty(),
 		field.String("description").Optional(),
-		field.String("content").NotEmpty(), // template body with {{vars}}
+		field.String("content").NotEmpty(),   // template body with {{vars}}
 		field.String("variables").Optional(), // comma-separated var names
 		field.Enum("category").Values("product", "scene", "style", "custom").Default("custom"),
 		field.Time("created_at").Default(time.Now).Immutable(),

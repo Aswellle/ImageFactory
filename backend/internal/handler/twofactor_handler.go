@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/imageforge/imageforge/ent"
 	appErrors "github.com/imageforge/imageforge/internal/pkg/errors"
 	"github.com/imageforge/imageforge/internal/pkg/response"
 	"github.com/imageforge/imageforge/internal/repository"
@@ -16,8 +15,8 @@ import (
 
 // TwoFactorHandler 处理 2FA 相关端点。
 type TwoFactorHandler struct {
-	totp      *service.TOTPService
-	users     *repository.UserRepository
+	totp  *service.TOTPService
+	users *repository.UserRepository
 }
 
 // NewTwoFactorHandler 创建 2FA handler。
@@ -25,10 +24,6 @@ func NewTwoFactorHandler(totp *service.TOTPService, users *repository.UserReposi
 	return &TwoFactorHandler{totp: totp, users: users}
 }
 
-// userWithTOTP 包含 2FA 相关字段的用户信息。
-type userWithTOTP struct {
-	*ent.User
-}
 
 // SetupResponse 返回设置信息。
 type SetupResponse struct {
@@ -71,7 +66,7 @@ func (h *TwoFactorHandler) Setup(c *gin.Context) {
 
 // EnableRequest 启用 2FA 请求。
 type EnableRequest struct {
-	Code        string `json:"code" binding:"required,len=6"`
+	Code            string `json:"code" binding:"required,len=6"`
 	TemporarySecret string `json:"secret"` // 设置时返回的 secret
 }
 

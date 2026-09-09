@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/imageforge/imageforge/ent"
-	"github.com/imageforge/imageforge/ent/tag"
-	"github.com/imageforge/imageforge/ent/assettag"
 	"github.com/imageforge/imageforge/ent/asset"
+	"github.com/imageforge/imageforge/ent/assettag"
+	"github.com/imageforge/imageforge/ent/tag"
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 )
 

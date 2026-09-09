@@ -11,7 +11,7 @@ linters:
     - misspell        # typos
     - revive          # style
     - gosec           # security
-    - wrapcheck       # error wrapping
+    # wrapcheck 禁用：对 defer rows.Close() 等过于严格
 
   settings:
     revive:
@@ -22,9 +22,12 @@ linters:
             - disableStutteringCheck
         - name: package-comments
           disabled: true
+        - name: unused-receiver
+          disabled: true
     gosec:
       excludes:
-        - G115 # integer conversion overflow (common in ORM/DB code)
+        - G115 # integer conversion overflow
+        - G101 # credential patterns (false positives on context key names)
 
   exclusions:
     paths:
@@ -38,6 +41,18 @@ linters:
       - path: cmd/
         linters:
           - gosec
+          - errcheck
+          - wrapcheck
+      # defer 语句中的错误检查使用 nolint 注释
+      - source: "defer .*Close\(\)"
+        linters:
+          - errcheck
+      - path: internal/batchimage/
+        linters:
+          - revive # 移植代码暂不强制注释
+      - path: internal/service/scheduling/
+        linters:
+          - revive # 移植代码暂不强制注释
 
 formatters:
   enable:

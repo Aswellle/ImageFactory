@@ -91,7 +91,6 @@ func imageTaskKey(id string) string {
 	return imageTaskKeyPrefix + strings.TrimSpace(id)
 }
 
-
 // Ensure image_task types are referenced.
 var _ = image_task.StatusProcessing
 

@@ -44,7 +44,6 @@ func (s *SchedulingService) GetThresholds() map[string]int {
 	return result
 }
 
-
 // EvaluateThreshold evaluates whether an account should be paused based on
 // its platform's scheduling threshold.
 //

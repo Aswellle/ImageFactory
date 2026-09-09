@@ -28,4 +28,3 @@ func CORS(allowedOrigins []string) gin.HandlerFunc {
 		MaxAge:           12 * time.Hour,
 	})
 }
-

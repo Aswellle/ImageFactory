@@ -19,7 +19,7 @@ func (APIKey) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("user_id").Optional(),
 		field.String("key_hash").Unique().NotEmpty(), // sha256 of the secret
-		field.String("key_prefix").NotEmpty(),         // first 8 chars for display
+		field.String("key_prefix").NotEmpty(),        // first 8 chars for display
 		field.String("name").Optional(),
 		field.Enum("status").Values("active", "revoked").Default("active"),
 		field.Int("permissions").Default(0), // bitmap; extend via migration

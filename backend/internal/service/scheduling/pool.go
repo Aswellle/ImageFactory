@@ -2,7 +2,7 @@ package scheduling
 
 import (
 	"container/heap"
-	"math/rand"
+	"math/rand/v2"
 	"sort"
 	"time"
 )
@@ -29,7 +29,7 @@ type Pool struct {
 func NewPool() *Pool {
 	return &Pool{
 		accounts: make([]*Account, 0),
-		rng:      rand.New(rand.NewSource(time.Now().UnixNano())),
+		rng:      rand.New(rand.NewPCG(uint64(time.Now().UnixNano()), uint64(time.Now().UnixNano())+1)), //nolint:gosec G404
 	}
 }
 
@@ -103,7 +103,7 @@ func (p *Pool) SelectByPriority(now time.Time) *Account {
 	if len(bestTier) == 1 {
 		return bestTier[0]
 	}
-	return bestTier[p.rng.Intn(len(bestTier))]
+	return bestTier[p.rng.IntN(len(bestTier))]
 }
 
 // SelectWithThreshold applies scheduling threshold evaluation before selection.
@@ -145,7 +145,7 @@ func (p *Pool) SelectWithThreshold(now time.Time, thresholds map[string]int) *Ac
 	if len(bestTier) == 1 {
 		return bestTier[0]
 	}
-	return bestTier[p.rng.Intn(len(bestTier))]
+	return bestTier[p.rng.IntN(len(bestTier))]
 }
 
 // CandidateScore holds a scored account candidate for load-aware selection.
@@ -229,13 +229,13 @@ func SelectTopK(candidates []CandidateScore, topK int) []CandidateScore {
 //
 // Ported from Sub2API: openai_account_scheduler.go GatewayOpenAIWSSchedulerScoreWeightsView
 type ScoreWeights struct {
-	Priority       float64
-	Load           float64
-	ErrorRate      float64
-	Reset          float64
-	QuotaHeadroom  float64
-	UpstreamCost   float64
-	SessionSticky  float64
+	Priority      float64
+	Load          float64
+	ErrorRate     float64
+	Reset         float64
+	QuotaHeadroom float64
+	UpstreamCost  float64
+	SessionSticky float64
 }
 
 // DefaultScoreWeights returns the default scoring weights.
@@ -347,7 +347,7 @@ func (p *Pool) SelectLoadAware(weights ScoreWeights, stickyAccountID *int64, now
 	}
 
 	if totalScore <= 0 {
-		return topK[p.rng.Intn(len(topK))].Account
+		return topK[p.rng.IntN(len(topK))].Account
 	}
 
 	r := p.rng.Float64() * totalScore
@@ -360,7 +360,6 @@ func (p *Pool) SelectLoadAware(weights ScoreWeights, stickyAccountID *int64, now
 
 	return topK[len(topK)-1].Account
 }
-
 
 // Count returns the total number of accounts in the pool.
 func (p *Pool) Count() int {

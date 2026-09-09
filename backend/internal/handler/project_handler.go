@@ -78,4 +78,3 @@ func (h *ProjectHandler) Get(c *gin.Context) {
 	}
 	response.OK(c, p)
 }
-

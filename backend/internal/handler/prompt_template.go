@@ -32,12 +32,12 @@ type templateRequest struct {
 
 // updateTemplateRequest is the update body; all fields optional (omitted = no change).
 type updateTemplateRequest struct {
-	Name            *string  `json:"name"`
-	Description     *string  `json:"description"`
-	Content         *string  `json:"content"`
-	Variables       []string `json:"variables"`
-	Category        *string  `json:"category"`
-	ClearVariables  bool     `json:"clear_variables"`
+	Name           *string  `json:"name"`
+	Description    *string  `json:"description"`
+	Content        *string  `json:"content"`
+	Variables      []string `json:"variables"`
+	Category       *string  `json:"category"`
+	ClearVariables bool     `json:"clear_variables"`
 }
 
 // applyRequest is the body for filling a template's variables.
@@ -71,6 +71,7 @@ func (h *PromptTemplateHandler) Create(c *gin.Context) {
 	}
 	response.Created(c, t)
 }
+
 // List handles GET /v1/prompt-templates. Pass built_in=true to fetch the
 // system-provided templates instead of the user's own.
 func (h *PromptTemplateHandler) List(c *gin.Context) {
@@ -185,4 +186,3 @@ func (h *PromptTemplateHandler) Apply(c *gin.Context) {
 	}
 	response.OK(c, gin.H{"prompt": prompt})
 }
-

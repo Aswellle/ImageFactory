@@ -27,8 +27,8 @@ func (r *OpenAIImagesRequest) Validate() error {
 
 // OpenAIImagesResponse is the OpenAI-compatible response format.
 type OpenAIImagesResponse struct {
-	Created int64                    `json:"created"`
-	Data    []OpenAIImagesData       `json:"data"`
+	Created int64              `json:"created"`
+	Data    []OpenAIImagesData `json:"data"`
 }
 
 // OpenAIImagesData represents a single image result.
@@ -49,32 +49,32 @@ type OpenAIImagesError struct {
 
 // ModelInfo describes an available image model.
 type ModelInfo struct {
-	ID         string   `json:"id"`
-	Name       string   `json:"name"`
-	Provider   string   `json:"provider"`
+	ID           string   `json:"id"`
+	Name         string   `json:"name"`
+	Provider     string   `json:"provider"`
 	Capabilities []string `json:"capabilities"`
-	Sizes      []string `json:"supported_sizes"`
-	Formats    []string `json:"supported_formats"`
+	Sizes        []string `json:"supported_sizes"`
+	Formats      []string `json:"supported_formats"`
 }
 
 // AvailableModels returns the list of supported image models.
 func AvailableModels() []ModelInfo {
 	return []ModelInfo{
 		{
-			ID:         "gpt-image-1",
-			Name:       "GPT Image 1",
-			Provider:   "openai",
+			ID:           "gpt-image-1",
+			Name:         "GPT Image 1",
+			Provider:     "openai",
 			Capabilities: []string{"generation", "edit"},
-			Sizes:      []string{"1024x1024", "1792x1024", "1024x1792"},
-			Formats:    []string{"png", "jpeg", "webp"},
+			Sizes:        []string{"1024x1024", "1792x1024", "1024x1792"},
+			Formats:      []string{"png", "jpeg", "webp"},
 		},
 		{
-			ID:         "dall-e-3",
-			Name:       "DALL-E 3",
-			Provider:   "openai",
+			ID:           "dall-e-3",
+			Name:         "DALL-E 3",
+			Provider:     "openai",
 			Capabilities: []string{"generation"},
-			Sizes:      []string{"1024x1024", "1792x1024", "1024x1792"},
-			Formats:    []string{"png"},
+			Sizes:        []string{"1024x1024", "1792x1024", "1024x1792"},
+			Formats:      []string{"png"},
 		},
 	}
 }

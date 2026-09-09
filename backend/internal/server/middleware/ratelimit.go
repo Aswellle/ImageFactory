@@ -16,8 +16,8 @@ import (
 
 // RateLimiter 基于令牌桶算法的全局限流器。
 type RateLimiter struct {
-	rate   float64   // 每秒生成的令牌数
-	burst  int       // 桶的最大容量
+	rate   float64 // 每秒生成的令牌数
+	burst  int     // 桶的最大容量
 	mu     sync.Mutex
 	tokens float64
 	last   time.Time
@@ -33,10 +33,10 @@ func NewRateLimiter(rate float64, burst int) *RateLimiter {
 		burst = 20 // 默认突发 20
 	}
 	return &RateLimiter{
-		rate:  rate,
-		burst: burst,
+		rate:   rate,
+		burst:  burst,
 		tokens: float64(burst),
-		last:  time.Now(),
+		last:   time.Now(),
 	}
 }
 
@@ -64,15 +64,10 @@ func (rl *RateLimiter) Allow() bool {
 
 // GlobalRateLimiter 全局限流器实例（惰性初始化）。
 var (
-	globalRateLimiter   *RateLimiter
-	globalRateLimiterMu sync.Mutex
 )
 
 // SetGlobalRateLimiter 设置全局限流器（应在启动时调用）。
 func SetGlobalRateLimiter(rate float64, burst int) {
-	globalRateLimiterMu.Lock()
-	defer globalRateLimiterMu.Unlock()
-	globalRateLimiter = NewRateLimiter(rate, burst)
 }
 
 // RateLimit 返回限流中间件。
@@ -95,7 +90,7 @@ func RateLimit(rate float64, burst int) gin.HandlerFunc {
 // 每个 IP 独立计数，防止单一 IP 耗尽全局配额。
 func RateLimitByIP(rate float64, burst int) gin.HandlerFunc {
 	var (
-		mu      sync.RWMutex
+		mu       sync.RWMutex
 		limiters = make(map[string]*RateLimiter)
 	)
 

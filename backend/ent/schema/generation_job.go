@@ -18,7 +18,7 @@ type GenerationJob struct {
 func (GenerationJob) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("user_id"),
-	field.String("external_id").Optional().Unique(),
+		field.String("external_id").Optional().Unique(),
 		field.Int64("project_id").Optional(),
 
 		field.Enum("type").Values("generation", "edit").Immutable(),

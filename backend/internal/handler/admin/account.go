@@ -61,7 +61,7 @@ func (h *AccountHandler) List(c *gin.Context) {
 		end = total
 	}
 
-	response.Paginated(c, filtered, total, page, pageSize)
+	response.Paginated(c, filtered[start:end], total, page, pageSize)
 }
 
 // Get returns a single account by ID.

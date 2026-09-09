@@ -9,13 +9,19 @@ import (
 
 // mockStateHandler implements AccountStateHandler for testing.
 type mockStateHandler struct {
-	rateLimits    []time.Time
-	cleared       bool
-	overloads     []time.Time
-	errors        []string
-	tempUnscheds  []struct{ until time.Time; reason string }
+	rateLimits   []time.Time
+	cleared      bool
+	overloads    []time.Time
+	errors       []string
+	tempUnscheds []struct {
+		until  time.Time
+		reason string
+	}
 	extraUpdates  []map[string]any
-	windowUpdates []struct{ start, end *time.Time; util float64 }
+	windowUpdates []struct {
+		start, end *time.Time
+		util       float64
+	}
 }
 
 func (m *mockStateHandler) UpdateRateLimit(_ context.Context, _ int64, resetAt time.Time) error {

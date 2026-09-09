@@ -12,6 +12,7 @@ import (
 	"github.com/imageforge/imageforge/internal/pkg/errors"
 	"go.uber.org/zap"
 )
+
 type APIKeyService struct {
 	db  *ent.Client
 	log *zap.Logger
@@ -31,9 +32,9 @@ type CreateKeyInput struct {
 
 // CreateKeyResult returns the created key with its plaintext secret.
 type CreateKeyResult struct {
-	ID        int64  `json:"id"`
-	Name      string `json:"name"`
-	Prefix    string `json:"prefix"`
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Prefix string `json:"prefix"`
 	// Plaintext is ONLY returned once at creation.
 	Plaintext string `json:"key"`
 	Status    string `json:"status"`
@@ -133,11 +134,11 @@ func (s *APIKeyService) Validate(ctx context.Context, plaintext string) (int64, 
 		return 0, errors.New(errors.ErrUnauthorized, "key expired")
 	}
 	// Best-effort last-used update.
-if _, err := s.db.APIKey.UpdateOneID(key.ID).SetLastUsedAt(time.Now()).Save(ctx); err != nil {
-	s.log.Debug("failed to update api key last_used", zap.Int64("key_id", key.ID), zap.Error(err))
-}
+	if _, err := s.db.APIKey.UpdateOneID(key.ID).SetLastUsedAt(time.Now()).Save(ctx); err != nil {
+		s.log.Debug("failed to update api key last_used", zap.Int64("key_id", key.ID), zap.Error(err))
+	}
 
-return key.UserID, nil
+	return key.UserID, nil
 }
 
 // GetUsage returns usage statistics for a user.

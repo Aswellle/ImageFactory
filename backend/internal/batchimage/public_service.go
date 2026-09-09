@@ -16,12 +16,12 @@ import (
 
 // SubmitInput is the provider-independent submission request.
 type SubmitInput struct {
-	UserID    int64
-	AccountID *int64
-	Provider  string
-	Model     string
-	TaskName  string
-	Prompt    string
+	UserID      int64
+	AccountID   *int64
+	Provider    string
+	Model       string
+	TaskName    string
+	Prompt      string
 	AspectRatio string
 	ImageSize   string
 }
@@ -376,7 +376,7 @@ func (s *PublicService) getFromDB(batchID string) *BatchImageJob {
 		return nil
 	}
 	var state struct {
-		Job   *BatchImageJob  `json:"job"`
+		Job   *BatchImageJob   `json:"job"`
 		Items []BatchImageItem `json:"items"`
 	}
 	if err := json.Unmarshal([]byte(data), &state); err != nil {
@@ -408,7 +408,7 @@ func (s *PublicService) restoreFromDB(ctx context.Context) {
 			continue
 		}
 		var state struct {
-			Job   *BatchImageJob  `json:"job"`
+			Job   *BatchImageJob   `json:"job"`
 			Items []BatchImageItem `json:"items"`
 		}
 		if err := json.Unmarshal([]byte(data), &state); err != nil {

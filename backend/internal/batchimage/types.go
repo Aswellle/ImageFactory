@@ -9,8 +9,8 @@ import (
 // Account is a minimal stub of Sub2API's service.Account.
 // In the full port, this wraps or aliases ent.Account.
 type Account struct {
-	ID       int64
-	Platform string
+	ID          int64
+	Platform    string
 	Credentials map[string]string
 }
 
@@ -24,51 +24,51 @@ func (a *Account) GetCredential(key string) string {
 // BatchImageJob is a minimal stub of Sub2API's service.BatchImageJob.
 // In the full port, this mirrors ent.BatchImageJob fields.
 type BatchImageJob struct {
-	mu              sync.RWMutex
-	ID              int64
-	BatchID         string
-	UserID          int64
-	APIKeyID        *int64
-	AccountID       *int64
-	Provider        string
-	Model           string
-	TaskName        string
-	ParentBatchID   *string
-	AspectRatio     string
-	ImageSize       string
-	Status          string
-	ProviderJobName *string
-	ProviderInputRef *string
-	ProviderOutputRef *string
-	ItemCount       int
-	SuccessCount    int
-	FailCount       int
-	CancelledCount  int
-	EstimatedCost   float64
-	HoldAmount      *float64
-	ActualCost      *float64
-	BillableUnitPrice float64
-	HoldUnitPrice   float64
-	Currency        string
-	HoldID          *string
-	IdempotencyKey  *string
-	RequestHash     *string
-	ManifestHash    *string
-	SessionID       *string
+	mu                     sync.RWMutex
+	ID                     int64
+	BatchID                string
+	UserID                 int64
+	APIKeyID               *int64
+	AccountID              *int64
+	Provider               string
+	Model                  string
+	TaskName               string
+	ParentBatchID          *string
+	AspectRatio            string
+	ImageSize              string
+	Status                 string
+	ProviderJobName        *string
+	ProviderInputRef       *string
+	ProviderOutputRef      *string
+	ItemCount              int
+	SuccessCount           int
+	FailCount              int
+	CancelledCount         int
+	EstimatedCost          float64
+	HoldAmount             *float64
+	ActualCost             *float64
+	BillableUnitPrice      float64
+	HoldUnitPrice          float64
+	Currency               string
+	HoldID                 *string
+	IdempotencyKey         *string
+	RequestHash            *string
+	ManifestHash           *string
+	SessionID              *string
 	PricingSnapshotVersion int
-	RetryCount      int
-	Version         int
-	LastErrorCode   *string
-	LastErrorMessage *string
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
-	SubmittedAt     *time.Time
-	StartedAt       *time.Time
-	FinishedAt      *time.Time
-	SettledAt       *time.Time
-	OutputExpiresAt *time.Time
-	InputDeletedAt  *time.Time
-	OutputDeletedAt *time.Time
+	RetryCount             int
+	Version                int
+	LastErrorCode          *string
+	LastErrorMessage       *string
+	CreatedAt              time.Time
+	UpdatedAt              time.Time
+	SubmittedAt            *time.Time
+	StartedAt              *time.Time
+	FinishedAt             *time.Time
+	SettledAt              *time.Time
+	OutputExpiresAt        *time.Time
+	InputDeletedAt         *time.Time
+	OutputDeletedAt        *time.Time
 }
 
 // Lock acquires the write lock for external mutation safety.
@@ -82,6 +82,7 @@ func (j *BatchImageJob) RLock() { j.mu.RLock() }
 
 // RUnlock releases the read lock.
 func (j *BatchImageJob) RUnlock() { j.mu.RUnlock() }
+
 // ---------------------------------------------------------------------------
 // Additional fields used by the settlement/worker/download/cleanup pipeline.
 // The existing BatchImageJob is extended (not replaced) to stay compatible
@@ -124,27 +125,27 @@ type BatchImageOwner struct {
 
 // CreateBatchImageJobParams captures the fields needed to persist a new job.
 type CreateBatchImageJobParams struct {
-	BatchID         string
-	UserID          int64
-	APIKeyID        *int64
-	AccountID       *int64
-	Provider        string
-	Model           string
-	TaskName        string
-	ParentBatchID   *string
-	HoldID          *string
-	IdempotencyKey  *string
-	RequestHash     *string
-	ManifestHash    *string
-	SessionID       *string
-	ItemCount       int
-	EstimatedCost   float64
-	HoldAmount      *float64
-	Currency        string
-	PricingSnapshot int
-	HoldUnitPrice   float64
+	BatchID           string
+	UserID            int64
+	APIKeyID          *int64
+	AccountID         *int64
+	Provider          string
+	Model             string
+	TaskName          string
+	ParentBatchID     *string
+	HoldID            *string
+	IdempotencyKey    *string
+	RequestHash       *string
+	ManifestHash      *string
+	SessionID         *string
+	ItemCount         int
+	EstimatedCost     float64
+	HoldAmount        *float64
+	Currency          string
+	PricingSnapshot   int
+	HoldUnitPrice     float64
 	BillableUnitPrice float64
-	RetryCount      int
+	RetryCount        int
 }
 
 // CreateBatchImageItemParams captures the fields needed to persist a new item.
@@ -321,17 +322,17 @@ type BatchImagePublicModel struct {
 
 // BatchImagePublicModelsResponse is the ListModels response envelope.
 type BatchImagePublicModelsResponse struct {
-	Object string                `json:"object"`
+	Object string                  `json:"object"`
 	Data   []BatchImagePublicModel `json:"data"`
 }
 
 // BatchImagePublicItem is the public view of a batch item.
 type BatchImagePublicItem struct {
-	Object    string  `json:"object"`
-	CustomID  string  `json:"custom_id"`
-	Status    string  `json:"status"`
-	ImageCount int    `json:"image_count"`
-	ErrorCode *string `json:"error_code,omitempty"`
+	Object     string  `json:"object"`
+	CustomID   string  `json:"custom_id"`
+	Status     string  `json:"status"`
+	ImageCount int     `json:"image_count"`
+	ErrorCode  *string `json:"error_code,omitempty"`
 }
 
 // BatchImagePublicItemsResponse is the ListItems response envelope.
@@ -343,19 +344,19 @@ type BatchImagePublicItemsResponse struct {
 
 // BatchImagePublicBatch is the public view of a batch job.
 type BatchImagePublicBatch struct {
-	Object        string     `json:"object"`
-	BatchID       string     `json:"batch_id"`
+	Object  string `json:"object"`
+	BatchID string `json:"batch_id"`
 
-	Status        string     `json:"status"`
-	Model         string     `json:"model"`
-	Provider      string     `json:"provider"`
-	TaskName      string     `json:"task_name"`
-	ItemCount     int        `json:"item_count"`
-	SuccessCount  int        `json:"success_count"`
-	FailCount     int        `json:"fail_count"`
-	CreatedAt     time.Time  `json:"created_at"`
-	StartedAt     *time.Time `json:"started_at,omitempty"`
-	CompletedAt   *time.Time `json:"completed_at,omitempty"`
+	Status       string     `json:"status"`
+	Model        string     `json:"model"`
+	Provider     string     `json:"provider"`
+	TaskName     string     `json:"task_name"`
+	ItemCount    int        `json:"item_count"`
+	SuccessCount int        `json:"success_count"`
+	FailCount    int        `json:"fail_count"`
+	CreatedAt    time.Time  `json:"created_at"`
+	StartedAt    *time.Time `json:"started_at,omitempty"`
+	CompletedAt  *time.Time `json:"completed_at,omitempty"`
 }
 
 // ---------------------------------------------------------------------------

@@ -26,7 +26,7 @@ type Job struct {
 	Prompt    string
 
 	// Retry tracking.
-	Attempt    int
+	Attempt     int
 	MaxAttempts int
 
 	// Provider linkage.
@@ -43,19 +43,19 @@ type Job struct {
 // New creates a job with sensible defaults.
 func New(userID int64, typ string) *Job {
 	return &Job{
-		ID:           "job_" + uuid.New().String(),
-		UserID:       userID,
-		Type:         typ,
-		Status:       domain.JobStatusPending,
-		MaxAttempts:  3,
-		CreatedAt:    time.Now(),
+		ID:          "job_" + uuid.New().String(),
+		UserID:      userID,
+		Type:        typ,
+		Status:      domain.JobStatusPending,
+		MaxAttempts: 3,
+		CreatedAt:   time.Now(),
 	}
 }
 
 // Task is the unit of work submitted to a worker. It carries a handle to
 // update job status and persist the resulting asset.
 type Task struct {
-	Job   *Job
+	Job *Job
 	// Run executes the task. On success it must register the output asset.
 	// On failure it returns a stable ImageForge error.
 	Run func(ctx context.Context) error

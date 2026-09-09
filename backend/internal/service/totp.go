@@ -16,8 +16,6 @@ import (
 	"github.com/pquerna/otp/totp"
 )
 
-
-
 // TOTPService 管理 TOTP 2FA 的设置和验证。
 type TOTPService struct {
 	issuer string
@@ -33,8 +31,8 @@ func NewTOTPService(issuer string) *TOTPService {
 
 // SetupResult 返回给客户端的设置信息。
 type SetupResult struct {
-	Secret   string `json:"secret"`
-	QRCode   string `json:"qr_code"` // Base64 PNG
+	Secret      string   `json:"secret"`
+	QRCode      string   `json:"qr_code"` // Base64 PNG
 	BackupCodes []string `json:"backup_codes"`
 }
 
@@ -117,4 +115,3 @@ func GenerateBackupCodesJSON(codes []string) string {
 	data, _ := json.Marshal(codes)
 	return string(data)
 }
-

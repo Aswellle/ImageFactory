@@ -33,10 +33,10 @@ const (
 // AnthropicRateLimitHeaders holds parsed Anthropic rate-limit information
 // from response headers.
 type AnthropicRateLimitHeaders struct {
-	Window     string
-	ResetAt    time.Time
+	Window      string
+	ResetAt     time.Time
 	Utilization float64
-	Status     string
+	Status      string
 }
 
 // ParseAnthropicRateLimitHeaders parses Anthropic rate-limit headers from an HTTP response.

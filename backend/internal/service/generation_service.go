@@ -20,15 +20,16 @@ import (
 // delegates to the batch-image pipeline (ported from Sub2API), and tracks
 // completion. The actual upstream calls go through batchimage providers.
 type GenerationService struct {
-	db               *ent.Client
-	batch            *batchimage.PublicService
-	store            storage.Storage
-	queue            job.Queue
-	assets           *AssetService
-	usage            *UsageService
-	accountResolver  AccountResolverInterface
-	log              *zap.Logger
+	db              *ent.Client
+	batch           *batchimage.PublicService
+	store           storage.Storage
+	queue           job.Queue
+	assets          *AssetService
+	usage           *UsageService
+	accountResolver AccountResolverInterface
+	log             *zap.Logger
 }
+
 // GenerationConfig holds all dependencies for GenerationService.
 type GenerationConfig struct {
 	DB              *ent.Client
@@ -43,7 +44,7 @@ type GenerationConfig struct {
 // NewGenerationService builds a GenerationService from a config.
 func NewGenerationService(cfg GenerationConfig) *GenerationService {
 	return &GenerationService{db: cfg.DB, batch: cfg.Batch, store: cfg.Store, queue: cfg.Queue, assets: cfg.Assets, usage: cfg.Usage, accountResolver: cfg.AccountResolver, log: zap.NewNop()}
- }
+}
 
 type SubmitRequest struct {
 	UserID         int64
@@ -61,11 +62,11 @@ type SubmitRequest struct {
 
 // SubmitResult returns the created job for the caller to track.
 type SubmitResult struct {
-	JobID       string `json:"job_id"`
-	Status      string `json:"status"`
-	Provider    string `json:"provider"`
-	Model       string `json:"model"`
-	CreatedAt   string `json:"created_at"`
+	JobID     string `json:"job_id"`
+	Status    string `json:"status"`
+	Provider  string `json:"provider"`
+	Model     string `json:"model"`
+	CreatedAt string `json:"created_at"`
 }
 
 // Submit creates a job, sends it to the batch-image pipeline, and enqueues a poll.
@@ -117,7 +118,7 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 			Where(generationjob.ExternalID(externalID)).
 			SetStatus(generationjob.StatusFailed).
 			SetErrorCode("NO_ACCOUNT").
-			SetErrorMessage("no available AI account: "+err.Error()).
+			SetErrorMessage("no available AI account: " + err.Error()).
 			Save(ctx)
 		return nil, errors.Wrap(errors.ErrImageGeneration, "failed to resolve account", err)
 	}
@@ -167,7 +168,7 @@ func (s *GenerationService) Submit(ctx context.Context, req SubmitRequest) (*Sub
 				SetStatus(generationjob.StatusFailed).
 				SetErrorCode("QUEUE_FULL").
 				SetErrorMessage("internal error: failed to enqueue generation task").
-			Save(ctx)
+				Save(ctx)
 		}
 	}
 
@@ -263,7 +264,6 @@ func (s *GenerationService) handleCompleted(ctx context.Context, externalID stri
 	return err
 }
 
-
 // storageKeysFromBatch derives storage keys from a completed batch-image job.
 // In the full port the download pipeline uploads bytes to object storage and
 // returns real keys; here the ProviderOutputRef stands in for the original.
@@ -277,7 +277,6 @@ func storageKeysFromBatch(bj *batchimage.BatchImageJob) StorageKeys {
 	}
 	return keys
 }
-
 
 // Get returns a job by external ID, enforcing user ownership.
 func (s *GenerationService) Get(ctx context.Context, externalID string, userID int64) (*ent.GenerationJob, error) {
@@ -328,4 +327,3 @@ func toString(s *string) string {
 	}
 	return *s
 }
-

@@ -90,7 +90,6 @@ func printUsage() {
 	fmt.Println("  admin-cli gen-key           Generate AES-256 key for IF_CREDENTIAL_KEY")
 }
 
-
 // dbClient is a simple database client for the CLI tool.
 type dbClient struct {
 	pool *pgxpool.Pool

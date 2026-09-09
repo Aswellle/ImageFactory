@@ -91,11 +91,11 @@ type ImageEditData struct {
 // ImageEditService orchestrates image edits: parse + validate the request,
 // store the source images, run the edit through the generation pipeline, and
 type ImageEditService struct {
-	db               *ent.Client
-	batch            *batchimage.PublicService
-	store            storage.Storage
-	queue            job.Queue
-	accountResolver  AccountResolverInterface
+	db              *ent.Client
+	batch           *batchimage.PublicService
+	store           storage.Storage
+	queue           job.Queue
+	accountResolver AccountResolverInterface
 }
 
 // NewImageEditService builds an ImageEditService.
@@ -443,7 +443,6 @@ func (s *ImageEditService) submitEditJob(ctx context.Context, userID int64, sour
 	externalID := "editjob_" + uuid.New().String()
 
 	editJob, err := s.db.GenerationJob.Create().
-
 		SetExternalID(externalID).
 		SetUserID(userID).
 		SetType(generationjob.TypeEdit).
@@ -473,7 +472,7 @@ func (s *ImageEditService) submitEditJob(ctx context.Context, userID int64, sour
 		_, _ = s.db.GenerationJob.Update().Where(generationjob.ExternalID(externalID)).
 			SetStatus(generationjob.StatusFailed).
 			SetErrorCode("NO_ACCOUNT").
-			SetErrorMessage("no available AI account: "+err.Error()).
+			SetErrorMessage("no available AI account: " + err.Error()).
 			Save(ctx)
 		return editJob, errors.Wrap(errors.ErrorCodeImageEdit, "failed to resolve account", err)
 	}

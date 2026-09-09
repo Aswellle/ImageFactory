@@ -390,4 +390,3 @@ func extractForbiddenMessage(body []byte) string {
 	}
 	return msg
 }
-

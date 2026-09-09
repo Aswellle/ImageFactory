@@ -24,4 +24,3 @@ func InitializeApplication(cfg *config.Config, log *zap.Logger) (*app, func(), e
 	}
 	return &app{Router: router}, cleanup, nil
 }
-

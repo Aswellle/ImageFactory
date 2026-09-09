@@ -107,12 +107,12 @@ func (h *GenerationHandler) List(c *gin.Context) {
 	items := make([]gin.H, 0, len(jobs))
 	for _, j := range jobs {
 		items = append(items, gin.H{
-			"job_id":        j.ExternalID,
-			"status":        j.Status,
-			"prompt":        j.Prompt,
-			"model":         j.Model,
-			"error_code":    j.ErrorCode,
-			"created_at":    j.CreatedAt,
+			"job_id":     j.ExternalID,
+			"status":     j.Status,
+			"prompt":     j.Prompt,
+			"model":      j.Model,
+			"error_code": j.ErrorCode,
+			"created_at": j.CreatedAt,
 		})
 	}
 	response.OK(c, items)

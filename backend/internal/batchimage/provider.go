@@ -56,7 +56,7 @@ var (
 	ErrBatchImageProviderInvalidInput            = newError(http.StatusBadRequest, "BATCH_IMAGE_PROVIDER_INVALID_INPUT", "invalid batch image provider input")
 	ErrBatchImageProviderUnsafeCleanupPath       = newError(http.StatusBadRequest, "VERTEX_UNSAFE_CLEANUP_PATH", "unsafe batch image cleanup path")
 	ErrUnsupportedCleanupTarget                  = newError(http.StatusBadRequest, "BATCH_IMAGE_PROVIDER_UNSUPPORTED_CLEANUP_TARGET", "unsupported batch image cleanup target")
-	ErrBatchImageOutputDeleteNotReady        = newError(http.StatusConflict, "BATCH_IMAGE_OUTPUT_DELETE_NOT_READY", "batch image output is not ready for deletion")
+	ErrBatchImageOutputDeleteNotReady            = newError(http.StatusConflict, "BATCH_IMAGE_OUTPUT_DELETE_NOT_READY", "batch image output is not ready for deletion")
 )
 
 // --- Provider interface (preserved from Sub2API) ---
@@ -140,10 +140,10 @@ type BatchImageReference struct {
 }
 
 type BatchProviderJob struct {
-	ProviderJobName  string
-	ProviderInputRef string
+	ProviderJobName   string
+	ProviderInputRef  string
 	ProviderOutputRef string
-	RawState         string
+	RawState          string
 }
 
 // BatchProviderInternalState is the normalized provider state.
@@ -160,12 +160,12 @@ const (
 
 // BatchProviderStatus is the normalized poll result.
 type BatchProviderStatus struct {
-	RawState             string
-	InternalState        BatchProviderInternalState
-	Done                 bool
-	ProviderOutputRef    string
-	ErrorCode            string
-	ErrorMessage         string
+	RawState              string
+	InternalState         BatchProviderInternalState
+	Done                  bool
+	ProviderOutputRef     string
+	ErrorCode             string
+	ErrorMessage          string
 	SuggestedRequeueAfter time.Duration
 }
 

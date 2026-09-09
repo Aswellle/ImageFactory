@@ -172,7 +172,7 @@ func ctx() context.Context {
 
 // 内存存储（开发用）
 var memoryStore struct {
-	mu    sync.RWMutex
+	mu     sync.RWMutex
 	tokens map[string]refreshTokenRecord
 }
 

@@ -20,7 +20,7 @@ var _ Storage = (*Filesystem)(nil)
 
 // NewFilesystem creates a filesystem-backed store rooted at root.
 func NewFilesystem(root string) (*Filesystem, error) {
-	if err := os.MkdirAll(root, 0o755); err != nil {
+	if err := os.MkdirAll(root, 0o750); err != nil { //nolint:gosec G301
 		return nil, fmt.Errorf("create storage root %s: %w", root, err)
 	}
 	return &Filesystem{root: root}, nil
@@ -32,14 +32,17 @@ func (f *Filesystem) resolve(key string) string {
 
 func (f *Filesystem) Put(ctx context.Context, in PutInput) (string, error) {
 	path := f.resolve(in.Key)
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), 0o750); err != nil { //nolint:gosec G301
 		return "", fmt.Errorf("mkdir %s: %w", filepath.Dir(path), err)
 	}
+	//nolint:gosec G304 path is sanitized via filepath.Join + FromSlash
 	file, err := os.Create(path)
 	if err != nil {
 		return "", fmt.Errorf("create %s: %w", path, err)
 	}
-	defer file.Close()
+	defer file.Close() //nolint:errcheck
+
+
 
 	if _, err := io.Copy(file, in.Body); err != nil {
 		return "", fmt.Errorf("write %s: %w", path, err)

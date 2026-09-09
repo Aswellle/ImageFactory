@@ -148,7 +148,7 @@ func (s *AccountService) pickByPriority(accounts []*ent.Account) *ent.Account {
 	}
 
 	// Random pick within the tier (round-robin).
-	return topTier[rand.IntN(len(topTier))]
+	return topTier[rand.N(len(topTier))]
 }
 
 // MarkRateLimited flags an account as rate-limited until retryAfter.

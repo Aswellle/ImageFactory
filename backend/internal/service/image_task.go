@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	defaultImageTaskTTL             = 30 * time.Minute
+	defaultImageTaskTTL              = 30 * time.Minute
 	defaultImageTaskExecutionTimeout = 5 * time.Minute
 )
 

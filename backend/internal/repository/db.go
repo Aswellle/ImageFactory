@@ -24,4 +24,3 @@ func NewEntClient(dsn string, migrate bool) (*ent.Client, error) {
 	}
 	return client, nil
 }
-

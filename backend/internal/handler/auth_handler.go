@@ -8,7 +8,6 @@ import (
 	"github.com/imageforge/imageforge/internal/service"
 )
 
-
 // AuthHandler handles register/login.
 type AuthHandler struct {
 	auth         *service.AuthService
@@ -33,8 +32,6 @@ func WithLoginTracker(tracker *middleware.LoginAttemptTracker) AuthOption {
 		h.loginTracker = tracker
 	}
 }
-
-
 
 // registerRequest is the register body.
 type registerRequest struct {
@@ -67,7 +64,6 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	}
 	response.Created(c, result)
 }
-
 
 // Login handles POST /v1/auth/login.
 func (h *AuthHandler) Login(c *gin.Context) {
@@ -107,7 +103,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	}
 	response.OK(c, result)
 }
-
 
 // Me returns the current user (populated by auth middleware).
 func (h *AuthHandler) Me(c *gin.Context) {
