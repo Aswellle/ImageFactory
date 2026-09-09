@@ -2,6 +2,8 @@
 build/
 dist/
 *.exe
+# 但保留 web embed 的 placeholder（CI 编译需要）
+!backend/internal/web/dist/.gitkeep
 
 # Dependencies
 node_modules/
