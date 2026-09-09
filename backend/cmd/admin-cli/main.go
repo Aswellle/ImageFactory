@@ -6,10 +6,11 @@ import (
 	"os"
 	"time"
 
+	"github.com/jackc/pgx/v5/pgxpool"
+
 	"github.com/imageforge/imageforge/ent/user"
 	"github.com/imageforge/imageforge/internal/config"
 	"github.com/imageforge/imageforge/internal/pkg/crypto"
-	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {

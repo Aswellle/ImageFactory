@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/imageforge/imageforge/ent"
 	_ "github.com/jackc/pgx/v5/stdlib"
+
+	"github.com/imageforge/imageforge/ent"
 )
 
 // NewEntClient opens a PostgreSQL connection and returns an Ent client.
