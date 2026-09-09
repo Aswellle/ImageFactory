@@ -251,4 +251,3 @@ func IsTerminalBatchImageJobStatus(status string) bool {
 		return false
 	}
 }
-

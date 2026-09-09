@@ -89,7 +89,6 @@ func TestParseAnthropicResetTimestamp(t *testing.T) {
 		t.Error("should parse unix milliseconds timestamp")
 	}
 
-
 	_, ok = parseAnthropicResetTimestamp("", now, 8*24*time.Hour)
 	if ok {
 		t.Error("empty string should not be valid")

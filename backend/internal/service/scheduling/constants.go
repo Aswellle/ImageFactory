@@ -65,9 +65,7 @@ func cnExtraKey(provider, suffix string) string {
 const openAICodexAutoPauseStaleAfter = 6 * 30 * 24 * time.Hour // ~6 months
 
 // Cooldown durations for various error conditions.
-const (
-)
+const ()
 
 // Reason strings for temp-unschedulable states.
-const (
-)
+const ()

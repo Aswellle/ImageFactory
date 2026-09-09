@@ -259,4 +259,3 @@ func joinVariables(vars []string) string {
 	}
 	return strings.Join(out, ",")
 }
-

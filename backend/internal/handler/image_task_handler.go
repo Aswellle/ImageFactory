@@ -106,7 +106,6 @@ func (h *AsyncImageHandler) executeGeneration(ctx context.Context, body []byte) 
 	return errPayload, http.StatusNotImplemented
 }
 
-
 // extractImageTaskError extracts an error payload from an upstream response.
 func extractImageTaskError(body []byte) json.RawMessage {
 	if len(body) == 0 {

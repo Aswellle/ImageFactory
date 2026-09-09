@@ -91,7 +91,6 @@ func parseExtraFloat64(v any) float64 {
 	return 0
 }
 
-
 // openAIQuotaWindowReset reports whether the Codex usage window's reset time has
 // already passed relative to now. It prefers the absolute codex_<window>_reset_at
 // timestamp and falls back to codex_<window>_reset_after_seconds anchored at
@@ -139,4 +138,3 @@ func openAICodexSnapshotStaleForPause(extra map[string]any, now time.Time) bool 
 	}
 	return now.Sub(updatedAt) >= openAICodexAutoPauseStaleAfter
 }
-
