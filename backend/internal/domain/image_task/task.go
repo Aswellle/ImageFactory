@@ -3,9 +3,10 @@
 // service layer and the repository layer can import without creating cycles.
 package imagetask
 
-import "time"
-
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 // Domain errors for image tasks.
 var (
