@@ -9,8 +9,8 @@ import (
 )
 
 // NewEntClient opens a PostgreSQL connection and returns an Ent client.
-// Auto-migrate runs schema migration when migrate=true (use sparingly; prefer
-// versioned SQL migrations in production).
+// When migrate=true, Ent auto-migrate runs (use sparingly; prefer versioned
+// SQL migrations via MigrateUp in production).
 func NewEntClient(dsn string, migrate bool) (*ent.Client, error) {
 	client, err := ent.Open("postgres", dsn)
 	if err != nil {
@@ -24,3 +24,4 @@ func NewEntClient(dsn string, migrate bool) (*ent.Client, error) {
 	}
 	return client, nil
 }
+

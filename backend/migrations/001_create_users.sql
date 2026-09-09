@@ -15,10 +15,12 @@ CREATE TABLE IF NOT EXISTS users (
     name            VARCHAR(255),                          -- 可选显示名
     role            VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
     status          VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'deleted')),
+    token_version   INT NOT NULL DEFAULT 0,                -- Token 版本号，密码重置时递增以失效所有 JWT
     last_login_at   TIMESTAMPTZ,                           -- 可选
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);

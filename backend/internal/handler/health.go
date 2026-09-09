@@ -58,5 +58,6 @@ func (h *HealthHandler) Readiness(c *gin.Context) {
 		response.OK(c, gin.H{"status": "ok", "checks": checks})
 		return
 	}
-	c.JSON(http.StatusServiceUnavailable, gin.H{"data": gin.H{"status": "degraded", "checks": checks}})
+	c.JSON(http.StatusServiceUnavailable, gin.H{"error": gin.H{"code": "SERVICE_UNAVAILABLE", "message": "service degraded", "checks": checks}})
+
 }

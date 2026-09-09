@@ -6,23 +6,28 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/imageforge/imageforge/ent"
+	"github.com/imageforge/imageforge/internal/batchimage"
 	"github.com/imageforge/imageforge/internal/config"
 	"github.com/imageforge/imageforge/internal/handler"
 	"github.com/imageforge/imageforge/internal/job"
-	"github.com/imageforge/imageforge/internal/batchimage"
 	"github.com/imageforge/imageforge/internal/repository"
 	"github.com/imageforge/imageforge/internal/server/middleware"
 	"github.com/imageforge/imageforge/internal/server/routes"
 	"github.com/imageforge/imageforge/internal/service"
 	"github.com/imageforge/imageforge/internal/storage"
+	"github.com/imageforge/imageforge/internal/web"
+	"github.com/imageforge/imageforge/migrations"
+
 	admin "github.com/imageforge/imageforge/internal/handler/admin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
+
 
 // Router wraps a Gin engine and its runtime dependencies.
 type Router struct {
@@ -85,11 +90,20 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 		return nil, fmt.Errorf("connect database: %w", err)
 	}
 
+	// --- Versioned SQL migrations (production-safe) ---
+	// Run embedded SQL migrations before serving traffic. Idempotent: only
+	// applies untracked migrations.
+	if err := repository.MigrateUp(db, migrations.FS); err != nil {
+		db.Close()
+		return nil, fmt.Errorf("run migrations: %w", err)
+	}
+
 	store, err := storage.New(cfg.Storage)
 	if err != nil {
 		db.Close()
 		return nil, fmt.Errorf("init storage: %w", err)
 	}
+
 
 	// --- Job queue + worker ---
 	queue := job.NewMemoryQueue(256, log)
@@ -269,8 +283,25 @@ func NewRouter(cfg *config.Config, log *zap.Logger) (*Router, error) {
 	// --- Admin routes (adminAuth enforced at group level) ---
 	routes.RegisterAdminRoutes(v1, adminHandlers, adminAuth)
 
+	// --- Embedded SPA (must be registered last) ---
+	// Serve the compiled frontend from go:embed. Static assets are served
+	// directly; all other paths fall back to index.html for client-side routing.
+	engine.StaticFS("/", http.FS(web.Dist))
+	engine.NoRoute(func(c *gin.Context) {
+		// Only fall back to index.html for non-API GET requests.
+		if c.Request.Method != "GET" || strings.HasPrefix(c.Request.URL.Path, "/v1/") {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		c.Header("Cache-Control", "no-cache")
+		c.FileFromFS("/", http.FS(web.Dist))
+	})
+
 	return &Router{Engine: engine, db: db, rdb: rdb, processor: processor}, nil
 }
+
+
+
 
 // requestLogger logs method, path, status, duration, and request ID. It never
 // logs request bodies or headers (which may carry secrets).
